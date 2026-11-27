@@ -80,27 +80,26 @@ void _dynamic_initializer_for__s_cacheLbTaskData__(void)
 
 // 8293E728  `dynamic_initializer_for_'s_lbCacheStats''  (leaderboard/com_leaderboard.cpp:135)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__s_lbCacheStats__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
+  longlong lVar1;
   LeaderBoardRow<10> (*this) [30];
   
-  __savegprlr_29();
-  lVar2 = 0x77;
+  lVar1 = 0x77;
   this = s_lbCacheStats;
   do {
     bdStatsInfo::bdStatsInfo((bdStatsInfo *)this);
     ((bdStatsInfo *)this)->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
     memset();
-    lVar2 = lVar2 + -1;
+    lVar1 = lVar1 + -1;
     this = (LeaderBoardRow<10> (*) [30])((bdStatsInfo *)((int)this + 0x70))->m_entityName;
-  } while (-1 < lVar2);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_lbCacheStats__);
-  __restgprlr_29(iVar1);
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_lbCacheStats__);
   return;
 }
 
@@ -129,6 +128,9 @@ void _dynamic_initializer_for__s_teamUserInfos__(void)
 
 // 826CBA70  LB_RowDebugPrint  (leaderboard/com_leaderboard.cpp:142)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LB_RowDebugPrint(int param_1,ulong64 param_2,LeaderboardDef *param_3,
                      LeaderBoardRow<10> *param_4)
 
@@ -137,7 +139,6 @@ void LB_RowDebugPrint(int param_1,ulong64 param_2,LeaderboardDef *param_3,
   int iVar2;
   int iVar3;
   
-  __savegprlr_25(param_1);
   Com_DPrintf(0x16,"\nWriting client_num %i with npid %llx to leaderboard %i\n");
   iVar2 = 0;
   if (0 < param_3->columnCount) {
@@ -163,132 +164,122 @@ LAB_826cbb48:
       iVar3 = iVar3 + 0x28;
     } while (iVar2 < param_3->columnCount);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826CCCE0  LB_MakeRow  (leaderboard/com_leaderboard.cpp:189)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 int LB_MakeRow(int param_1,LeaderboardDef *param_2,LeaderBoardRow<10> *param_3,LbAggType param_4,
               ulong64 param_5)
 
 {
   char cVar1;
-  int iVar2;
+  char *pcVar2;
   int iVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  ulonglong uVar7;
-  LbColumnDef *pLVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  LbColumnDef *pLVar4;
+  int *piVar5;
+  char *pcVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
   longlong lVar11;
-  char *pcVar12;
-  int iVar13;
-  LbAggType LVar14;
-  int iVar15;
-  uint uVar16;
-  longlong lVar17;
   ulong64 local_90 [18];
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_16(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xc3,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xc4,0,"%s");
   }
-  lVar11 = uVar9 + 0x6c;
-  lVar17 = 10;
+  piVar5 = &param_3->_padding_;
+  lVar11 = 10;
   do {
-    lVar11 = lVar11 + 4;
-    *(undefined4 *)lVar11 = 0x7fffffff;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  iVar2 = (int)uVar7;
-  lVar11 = 0;
-  iVar13 = 0;
-  iVar3 = (int)uVar9;
-  if (0 < *(int *)(iVar2 + 8)) {
-    iVar15 = 0;
+    piVar5 = piVar5 + 1;
+    *piVar5 = 0x7fffffff;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  iVar9 = 0;
+  iVar7 = 0;
+  if (0 < param_2->columnCount) {
+    iVar8 = 0;
     do {
-      pLVar8 = (LbColumnDef *)(iVar15 + *(int *)(iVar2 + 0x14));
-      uVar16 = pLVar8->id;
-      LVar14 = (LbAggType)uVar10;
-      if ((int)uVar16 < 0xfffa) {
+      pLVar4 = (LbColumnDef *)((int)&param_2->columns->name + iVar8);
+      uVar10 = pLVar4->id;
+      if ((int)uVar10 < 0xfffa) {
 LAB_826ccdf4:
-        if (*pLVar8->statName != '\0') {
-          if ((((uVar16 - 0xfff9 < 7) && (uVar16 != 0xfffa)) && (uVar16 != 0xfffb)) &&
-             (uVar16 != 0xfffc)) {
-            if (uVar16 != 0xfffd) {
-              if (uVar16 == 0xfffe) {
-                uVar16 = 0;
-                if (pLVar8->agg == LVar14) {
-                  iVar6 = LB_GetPlayerData(iVar4,pLVar8);
-                  *(longlong *)(iVar3 + 0x18) = (longlong)iVar6;
+        if (*pLVar4->statName != '\0') {
+          if ((((uVar10 - 0xfff9 < 7) && (uVar10 != 0xfffa)) && (uVar10 != 0xfffb)) &&
+             (uVar10 != 0xfffc)) {
+            if (uVar10 != 0xfffd) {
+              if (uVar10 == 0xfffe) {
+                uVar10 = 0;
+                if (pLVar4->agg == param_4) {
+                  iVar3 = LB_GetPlayerData(param_1,pLVar4);
+                  param_3->_padding_ = (int)((ulonglong)(longlong)iVar3 >> 0x20);
+                  param_3->_padding_ = (int)(longlong)iVar3;
                 }
                 else {
-                  *(undefined8 *)(iVar3 + 0x18) = 0x7fffffffffffffff;
+                  param_3->_padding_ = 0x7fffffff;
+                  param_3->_padding_ = -1;
                 }
                 goto LAB_826ccedc;
               }
-              if ((uVar16 == 0xfff9) && (pLVar8->agg == LVar14)) {
-                pcVar5 = LB_GetPlayerDataString(iVar4,pLVar8);
-                pcVar12 = pcVar5;
+              if ((uVar10 == 0xfff9) && (pLVar4->agg == param_4)) {
+                pcVar2 = LB_GetPlayerDataString(param_1,pLVar4);
+                pcVar6 = pcVar2;
                 do {
-                  cVar1 = *pcVar12;
-                  pcVar12 = pcVar12 + 1;
+                  cVar1 = *pcVar6;
+                  pcVar6 = pcVar6 + 1;
                 } while (cVar1 != '\0');
-                if ((int)pcVar12 - (int)pcVar5 != 1) {
-                  StringToXUID(pcVar5,local_90);
-                  *(int *)(iVar3 + 0x8c) = (int)(local_90[0] >> 0x20);
-                  *(int *)(iVar3 + 0x90) = (int)local_90[0];
+                if ((int)pcVar6 - (int)pcVar2 != 1) {
+                  StringToXUID(pcVar2,local_90);
+                  param_3->m_columns[7] = (int)(local_90[0] >> 0x20);
+                  param_3->m_columns[8] = (int)local_90[0];
                   goto LAB_826ccf04;
                 }
               }
             }
           }
           else {
-            if (9 < uVar16) {
+            if (9 < uVar10) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                               ,0x103,0,
                               "writeId doesn\'t index row->getNumColumns()\n\t%i not in [0, %i)");
             }
 LAB_826ccedc:
-            pLVar8 = (LbColumnDef *)(iVar15 + *(int *)(iVar2 + 0x14));
-            if (pLVar8->agg == LVar14) {
-              iVar6 = LB_GetPlayerData(iVar4,pLVar8);
-              *(int *)((uVar16 + 0x1c) * 4 + iVar3) = iVar6;
+            pLVar4 = (LbColumnDef *)((int)&param_2->columns->name + iVar8);
+            if (pLVar4->agg == param_4) {
+              iVar3 = LB_GetPlayerData(param_1,pLVar4);
+              param_3->m_columns[uVar10] = iVar3;
               goto LAB_826ccf04;
             }
           }
         }
       }
-      else if (0xfffb < (int)uVar16) {
-        if (uVar16 != 0xfffc) goto LAB_826ccdf4;
-        if (pLVar8->agg != LVar14) goto LAB_826ccf08;
-        *(undefined4 *)(iVar3 + 0x94) = 1;
+      else if (0xfffb < (int)uVar10) {
+        if (uVar10 != 0xfffc) goto LAB_826ccdf4;
+        if (pLVar4->agg != param_4) goto LAB_826ccf08;
+        param_3->m_columns[9] = 1;
 LAB_826ccf04:
-        lVar11 = lVar11 + 1;
+        iVar9 = iVar9 + 1;
       }
 LAB_826ccf08:
-      iVar13 = iVar13 + 1;
-      iVar15 = iVar15 + 0x28;
-    } while (iVar13 < *(int *)(iVar2 + 8));
+      iVar7 = iVar7 + 1;
+      iVar8 = iVar8 + 0x28;
+    } while (iVar7 < param_2->columnCount);
   }
-  *(ulong64 *)(iVar3 + 8) = param_5;
-  *(undefined4 *)(iVar3 + 4) = *(undefined4 *)(iVar2 + 4);
-  *(undefined4 *)(iVar3 + 0x10) =
-       *(undefined4 *)((int)WriteTypeMap + (int)((uVar10 & 0xffffffff) << 2));
-  iVar4 = __restgprlr_16(lVar11);
-  return iVar4;
+  param_3->_padding_ = (int)(param_5 >> 0x20);
+  param_3->_padding_ = (int)param_5;
+  param_3->_padding_ = param_2->id;
+  param_3->_padding_ = WriteTypeMap[param_4];
+  return iVar9;
 }
 
 
@@ -380,6 +371,8 @@ void LB_ClearCache(void)
 
 // 826D0008  LB_CacheLeaderboardValues  (leaderboard/com_leaderboard.cpp:326)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -407,7 +400,6 @@ void LB_CacheLeaderboardValues(void)
   CacheLbTaskData *pCVar19;
   bdStatsInfoEx abStack_b0 [11];
   
-  __savegprlr();
   pCVar19 = (CacheLbTaskData *)0x0;
   LB_ClearCache();
   piVar17 = s_lbCacheStatsCount;
@@ -481,7 +473,6 @@ void LB_CacheLeaderboardValues(void)
     iVar15 = iVar15 + 6;
     iVar14 = iVar14 + 0x1e;
   } while ((int)piVar17 < -0x7bb6c028);
-  __restgprlr();
   return;
 }
 
@@ -500,169 +491,162 @@ void LB_RequestCacheLeaderboardValues(void)
 
 // 826CBD10  LB_CopyAccoladesStats  (leaderboard/com_leaderboard.cpp:402)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void LB_CopyAccoladesStats(LocalClientNum_t param_1)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  char *pcVar6;
-  int iVar7;
+  char *pcVar5;
+  int iVar6;
   StringTable *local_40 [2];
   char *local_38;
   char *local_34;
   
-  LVar2 = __savegprlr_28(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
   memset();
   StringTable_GetAsset("mp/awardTable.csv",local_40);
   if (local_40[0] != (StringTable *)0x0) {
-    iVar4 = StringTable_GetRowCount(local_40[0]);
-    iVar7 = 0;
+    iVar3 = StringTable_GetRowCount(local_40[0]);
+    iVar6 = 0;
     local_38 = "awards";
-    if (0 < iVar4) {
+    if (0 < iVar3) {
       do {
-        local_34 = StringTable_GetColumnValueForRow(local_40[0],iVar7,1);
-        pcVar6 = local_34;
+        local_34 = StringTable_GetColumnValueForRow(local_40[0],iVar6,1);
+        pcVar5 = local_34;
         do {
-          cVar1 = *pcVar6;
-          pcVar6 = pcVar6 + 1;
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        if ((int)pcVar6 - (int)local_34 != 1) {
-          iVar5 = LiveStorage_PlayerDataGetInt(iVar3,&local_38,2);
-          s_accoladeHistory[iVar3][iVar7] = iVar5;
+        if ((int)pcVar5 - (int)local_34 != 1) {
+          iVar4 = LiveStorage_PlayerDataGetInt(iVar2,&local_38,2);
+          s_accoladeHistory[iVar2][iVar6] = iVar4;
         }
-        iVar7 = iVar7 + 1;
-      } while (iVar7 < iVar4);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 < iVar3);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826CCF48  LB_MakeAccoladesRows  (leaderboard/com_leaderboard.cpp:431)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void LB_MakeAccoladesRows(int param_1,ulong64 param_2,LeaderBoardRow<10> *param_3,int *param_4)
 
 {
   char cVar1;
   LeaderboardDef *pLVar2;
-  ulonglong uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  char *pcVar5;
   int iVar6;
-  char *pcVar7;
-  int iVar8;
+  int iVar7;
+  LbColumnDef *pLVar8;
   int iVar9;
-  LbColumnDef *pLVar10;
-  int iVar11;
-  char *pcVar12;
-  char *pcVar13;
-  bool *pbVar14;
-  uint uVar15;
-  LbAggType LVar16;
-  bdWriteType *pbVar17;
-  LeaderboardDef **ppLVar19;
-  longlong lVar18;
-  int iVar20;
+  char *pcVar10;
+  char *pcVar11;
+  bool *pbVar12;
+  uint uVar13;
+  LbAggType LVar14;
+  bdWriteType *pbVar15;
+  LeaderboardDef **ppLVar16;
+  int iVar17;
   StringTable *local_130;
   int local_12c;
   char *local_128;
   char *local_124;
   char acStack_120 [288];
   
-  uVar3 = (ulonglong)param_1;
-  __savegprlr();
   StringTable_GetAsset("mp/awardTable.csv",&local_130);
   if (local_130 != (StringTable *)0x0) {
-    iVar4 = StringTable_GetRowCount(local_130);
+    iVar3 = StringTable_GetRowCount(local_130);
     local_128 = "awards";
-    iVar5 = (int)uVar3;
-    local_12c = LiveStorage_PlayerDataGetIntByName(iVar5,"prestige");
-    iVar20 = 0;
+    local_12c = LiveStorage_PlayerDataGetIntByName(param_1,"prestige");
+    iVar17 = 0;
     if (0 < lbGlob.writeCount) {
-      ppLVar19 = lbGlob.writeLeaderboards;
+      ppLVar16 = lbGlob.writeLeaderboards;
       while( true ) {
-        pLVar2 = *ppLVar19;
-        iVar6 = I_stricmp(pLVar2->name,"LB_ACCOLADES");
-        if (iVar6 == 0) break;
-        iVar20 = iVar20 + 1;
-        ppLVar19 = ppLVar19 + 1;
-        if (lbGlob.writeCount <= iVar20) {
-          __restgprlr();
+        pLVar2 = *ppLVar16;
+        iVar4 = I_stricmp(pLVar2->name,"LB_ACCOLADES");
+        if (iVar4 == 0) break;
+        iVar17 = iVar17 + 1;
+        ppLVar16 = ppLVar16 + 1;
+        if (lbGlob.writeCount <= iVar17) {
           return;
         }
       }
-      iVar20 = pLVar2->columnCount;
-      iVar6 = 0;
-      if (0 < iVar20) {
-        pLVar10 = pLVar2->columns;
-        iVar8 = 0;
+      iVar17 = pLVar2->columnCount;
+      iVar4 = 0;
+      if (0 < iVar17) {
+        pLVar8 = pLVar2->columns;
+        iVar9 = 0;
         do {
-          if (pLVar10->id == 0xfffe) break;
-          iVar6 = iVar6 + 1;
-          pLVar10 = (LbColumnDef *)((int)&pLVar2->columns[1].name + iVar8);
-          iVar8 = iVar8 + 0x28;
-        } while (iVar6 < iVar20);
+          if (pLVar8->id == 0xfffe) break;
+          iVar4 = iVar4 + 1;
+          pLVar8 = (LbColumnDef *)((int)&pLVar2->columns[1].name + iVar9);
+          iVar9 = iVar9 + 0x28;
+        } while (iVar4 < iVar17);
       }
-      if (iVar6 < iVar20) {
-        pbVar14 = &lbTrackTypes[0].prestige;
-        uVar15 = 0;
-        iVar20 = 0;
+      if (iVar4 < iVar17) {
+        pbVar12 = &lbTrackTypes[0].prestige;
+        uVar13 = 0;
+        iVar17 = 0;
         do {
-          if (((1 << (uVar15 & 0x3f) & pLVar2->trackTypes) != 0) &&
-             ((*pbVar14 == false || (local_12c != 0)))) {
-            LVar16 = LBAGG_TYPE_MIN;
-            pbVar17 = WriteTypeMap;
+          if (((1 << (uVar13 & 0x3f) & pLVar2->trackTypes) != 0) &&
+             ((*pbVar12 == false || (local_12c != 0)))) {
+            LVar14 = LBAGG_TYPE_MIN;
+            pbVar15 = WriteTypeMap;
             do {
-              iVar8 = pLVar2->columnCount;
-              iVar9 = 0;
-              if (0 < iVar8) {
-                pLVar10 = pLVar2->columns;
-                iVar11 = 0;
+              iVar9 = pLVar2->columnCount;
+              iVar6 = 0;
+              if (0 < iVar9) {
+                pLVar8 = pLVar2->columns;
+                iVar7 = 0;
                 do {
-                  if (LVar16 == pLVar10->agg) break;
-                  iVar9 = iVar9 + 1;
-                  pLVar10 = (LbColumnDef *)((int)&pLVar2->columns[1].name + iVar11);
-                  iVar11 = iVar11 + 0x28;
-                } while (iVar9 < iVar8);
+                  if (LVar14 == pLVar8->agg) break;
+                  iVar6 = iVar6 + 1;
+                  pLVar8 = (LbColumnDef *)((int)&pLVar2->columns[1].name + iVar7);
+                  iVar7 = iVar7 + 0x28;
+                } while (iVar6 < iVar9);
               }
-              if ((iVar9 < iVar8) && (lVar18 = 0, 0 < iVar4)) {
+              if ((iVar6 < iVar9) && (iVar9 = 0, 0 < iVar3)) {
                 do {
-                  pcVar7 = StringTable_GetColumnValueForRow(local_130,(int)lVar18,0);
-                  local_124 = StringTable_GetColumnValueForRow(local_130,(int)lVar18,1);
-                  pcVar12 = local_124;
+                  pcVar5 = StringTable_GetColumnValueForRow(local_130,iVar9,0);
+                  local_124 = StringTable_GetColumnValueForRow(local_130,iVar9,1);
+                  pcVar10 = local_124;
                   do {
-                    cVar1 = *pcVar12;
-                    pcVar12 = pcVar12 + 1;
+                    cVar1 = *pcVar10;
+                    pcVar10 = pcVar10 + 1;
                   } while (cVar1 != '\0');
-                  pcVar13 = pcVar7;
-                  if ((int)pcVar12 - (int)local_124 != 1) {
+                  pcVar11 = pcVar5;
+                  if ((int)pcVar10 - (int)local_124 != 1) {
                     do {
-                      cVar1 = *pcVar13;
-                      pcVar13 = pcVar13 + 1;
+                      cVar1 = *pcVar11;
+                      pcVar11 = pcVar11 + 1;
                     } while (cVar1 != '\0');
-                    if ((int)pcVar13 - (int)pcVar7 != 1) {
-                      iVar8 = atoi(pcVar7);
-                      iVar9 = LiveStorage_PlayerDataGetInt(iVar5,&local_128,2);
-                      if (*(int *)((int)s_accoladeHistory[0] +
-                                  (int)(((uVar3 & 0x1ffffff) * 0x80 + lVar18 & 0xffffffff) << 2)) <
-                          iVar9) {
+                    if ((int)pcVar11 - (int)pcVar5 != 1) {
+                      iVar6 = atoi(pcVar5);
+                      iVar7 = LiveStorage_PlayerDataGetInt(param_1,&local_128,2);
+                      if (s_accoladeHistory[param_1][iVar9] < iVar7) {
                         Com_sprintf(acStack_120,0x80,"awards %s");
-                        pLVar2->columns[iVar6].statName = acStack_120;
-                        iVar9 = LB_MakeRow(iVar5,pLVar2,param_3 + *param_4,LVar16,param_2);
-                        if (iVar9 != 0) {
-                          param_3[*param_4]._padding_ = pLVar2->id + iVar20 + iVar8;
-                          param_3[*param_4]._padding_ = *pbVar17;
-                          LB_RowDebugPrint(iVar5,param_2,pLVar2,param_3 + *param_4);
-                          iVar8 = *param_4;
-                          *param_4 = iVar8 + 1;
-                          if (99 < iVar8 + 1) {
+                        pLVar2->columns[iVar4].statName = acStack_120;
+                        iVar7 = LB_MakeRow(param_1,pLVar2,param_3 + *param_4,LVar14,param_2);
+                        if (iVar7 != 0) {
+                          param_3[*param_4]._padding_ = pLVar2->id + iVar17 + iVar6;
+                          param_3[*param_4]._padding_ = *pbVar15;
+                          LB_RowDebugPrint(param_1,param_2,pLVar2,param_3 + *param_4);
+                          iVar6 = *param_4;
+                          *param_4 = iVar6 + 1;
+                          if (99 < iVar6 + 1) {
                             if (alwaysfails == 0) {
                               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                                               ,0x209,0,
@@ -672,32 +656,29 @@ void LB_MakeAccoladesRows(int param_1,ulong64 param_2,LeaderBoardRow<10> *param_
                             Com_PrintError(0x16,
                                            "LB_MakeAccoladesRows(): Way too many accolades have been awarded.\n"
                                           );
-                            goto LAB_826cd2d8;
+                            return;
                           }
                         }
                       }
                     }
                   }
-                  lVar18 = lVar18 + 1;
-                } while ((int)lVar18 < iVar4);
+                  iVar9 = iVar9 + 1;
+                } while (iVar9 < iVar3);
               }
-              pbVar17 = pbVar17 + 1;
-              LVar16 = LVar16 + LBAGG_TYPE_MAX;
-            } while ((int)pbVar17 < -0x7de5e248);
+              pbVar15 = pbVar15 + 1;
+              LVar14 = LVar14 + LBAGG_TYPE_MAX;
+            } while ((int)pbVar15 < -0x7de5e248);
           }
-          uVar15 = uVar15 + 1;
-          pbVar14 = pbVar14 + 8;
-          iVar20 = iVar20 + 100;
-          if (7 < uVar15) {
-            __restgprlr();
+          uVar13 = uVar13 + 1;
+          pbVar12 = pbVar12 + 8;
+          iVar17 = iVar17 + 100;
+          if (7 < uVar13) {
             return;
           }
         } while( true );
       }
     }
   }
-LAB_826cd2d8:
-  __restgprlr();
   return;
 }
 
@@ -737,6 +718,8 @@ void Stats_Test(int param_1)
 
 // 826CBDF0  Stats_TestComplete  (leaderboard/com_leaderboard.cpp:559)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Stats_TestComplete(void)
@@ -745,20 +728,14 @@ void Stats_TestComplete(void)
   LeaderboardDef *pLVar1;
   taskCompleteResults tVar2;
   
-  __savegprlr_29();
   pLVar1 = LB_LoadDef("LB_KILLS");
-  if (pLVar1 == (LeaderboardDef *)0x0) {
-LAB_826cbeec:
-    if (g_testTask != DW_NONE) goto LAB_826cbf00;
-  }
-  else {
+  if (pLVar1 != (LeaderboardDef *)0x0) {
     if (g_testTask == DW_WRITE_STATS) {
       tVar2 = dwWriteStatsComplete(&g_statsTask);
       if (tVar2 == TASK_COMPLETE) {
         g_statsTask.data = &lbGlob.leaderboard;
         dwReadStatsByRank(&g_statsTask,pLVar1->id,1,0x32);
         g_testTask = DW_READ_STATS;
-        __restgprlr_29();
         return;
       }
     }
@@ -767,7 +744,6 @@ LAB_826cbeec:
       if (tVar2 == TASK_COMPLETE) {
         dwDeleteStats(&g_statsTask,pLVar1->id);
         g_testTask = DW_DELETE_STATS;
-        __restgprlr_29();
         return;
       }
     }
@@ -777,292 +753,277 @@ LAB_826cbeec:
       if (tVar2 == TASK_COMPLETE) {
         g_testTask = DW_NONE;
         g_statsTest = false;
-        __restgprlr_29();
         return;
       }
     }
-    if (tVar2 != TASK_ERROR) goto LAB_826cbeec;
+    if (tVar2 == TASK_ERROR) {
+      g_statsTest = false;
+      return;
+    }
   }
-  g_statsTest = false;
-LAB_826cbf00:
-  __restgprlr_29();
+LAB_826cbeec:
+  if (g_testTask == DW_NONE) {
+    g_statsTest = false;
+    return;
+  }
   return;
 }
 
 
 // 826CBF08  LB_CompareXUserStatsRowRanks  (leaderboard/com_leaderboard.cpp:608)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int LB_CompareXUserStatsRowRanks(void *param_1,void *param_2)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x264,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x265,0,"%s");
   }
-  uVar2 = *(ulonglong *)(iVar1 + 0x20);
-  uVar3 = *(ulonglong *)((int)uVar3 + 0x20);
-  if (uVar2 == 0) {
-    if (uVar3 != 0) {
-LAB_826cbfb8:
-      iVar1 = __restgprlr_28(1);
-      return iVar1;
+  uVar1 = *(ulonglong *)((int)param_1 + 0x20);
+  uVar2 = *(ulonglong *)((int)param_2 + 0x20);
+  if (uVar1 == 0) {
+    if (uVar2 != 0) {
+      return 1;
     }
   }
   else {
-    if ((uVar3 == 0) || (uVar2 < uVar3)) {
-      iVar1 = __restgprlr_28(0xffffffffffffffff);
-      return iVar1;
+    if ((uVar2 == 0) || (uVar1 < uVar2)) {
+      return -1;
     }
-    if (uVar3 < uVar2) goto LAB_826cbfb8;
+    if (uVar2 < uVar1) {
+      return 1;
+    }
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 826CD3B0  LB_GetByRank  (leaderboard/com_leaderboard.cpp:642)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_GetByRank(Leaderboard *param_1,LocalClientNum_t param_2,uint param_3)
 
 {
-  void *pvVar1;
-  int iVar2;
-  bool bVar5;
-  overlappedTask *poVar3;
-  taskCompleteResults tVar4;
-  undefined1 uVar6;
+  int iVar1;
+  bool bVar4;
+  overlappedTask *poVar2;
+  taskCompleteResults tVar3;
   
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x283,0,"%s");
   }
-  if (*(int *)((int)pvVar1 + 0x3c04) == 0) {
+  if (param_1->lbDef == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x284,0,"%s");
   }
-  if (*(char *)((int)pvVar1 + 0x3c11) != '\0') {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x285,0,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(param_2);
-  bVar5 = Live_IsUserSignedInToDemonware(iVar2);
-  if (bVar5) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_2);
-    poVar3 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar2,2);
-    if (poVar3 == (overlappedTask *)0x0) {
+  iVar1 = CL_ControllerIndexFromClientNum(param_2);
+  bVar4 = Live_IsUserSignedInToDemonware(iVar1);
+  if (bVar4) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_2);
+    poVar2 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar1,2);
+    if (poVar2 == (overlappedTask *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                       ,0x28d,0,"%s");
     }
     Com_DPrintf(0x16,"getting starting at rank %i\n");
-    poVar3->data = pvVar1;
-    dwReadStatsByRank(poVar3,*(uint *)(*(int *)((int)pvVar1 + 0x3c04) + 4),param_3,
-                      (lb_maxrows->current).unsignedInt);
-    tVar4 = dwGetTaskStatus(poVar3);
-    if (tVar4 == TASK_NOTCOMPLETE) {
-      bdRemoteTask::setTimeout((poVar3->u).remoteTask.m_ptr,20.0);
-      uVar6 = __restgprlr_27(1);
-      return (bool)uVar6;
+    poVar2->data = param_1;
+    dwReadStatsByRank(poVar2,param_1->lbDef->id,param_3,(lb_maxrows->current).unsignedInt);
+    tVar3 = dwGetTaskStatus(poVar2);
+    if (tVar3 == TASK_NOTCOMPLETE) {
+      bdRemoteTask::setTimeout((poVar2->u).remoteTask.m_ptr,20.0);
+      return true;
     }
     Com_PrintError(0x16,"dwReadStatsByRank() failed.\n");
-    TaskManager_ClearTask(poVar3);
+    TaskManager_ClearTask(poVar2);
   }
-  uVar6 = __restgprlr_27(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826CD530  LB_GetByPlayer  (leaderboard/com_leaderboard.cpp:673)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_GetByPlayer(Leaderboard *param_1,LocalClientNum_t param_2)
 
 {
-  void *pvVar1;
-  int iVar2;
-  bool bVar5;
-  undefined1 uVar6;
-  overlappedTask *poVar3;
-  taskCompleteResults tVar4;
+  int iVar1;
+  bool bVar4;
+  overlappedTask *poVar2;
+  taskCompleteResults tVar3;
   ulong64 local_30 [6];
   
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2a2,0,"%s");
   }
-  if (*(int *)((int)pvVar1 + 0x3c04) == 0) {
+  if (param_1->lbDef == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2a3,0,"%s");
   }
-  if (*(char *)((int)pvVar1 + 0x3c11) != '\0') {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2a4,0,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(param_2);
-  bVar5 = Live_IsUserSignedInToDemonware(iVar2);
-  if (bVar5) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_2);
-    bVar5 = dwGetOnlineUserID(iVar2,local_30);
-    if (bVar5) {
-      iVar2 = CL_ControllerIndexFromClientNum(param_2);
-      poVar3 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar2,1);
-      if (poVar3 == (overlappedTask *)0x0) {
+  iVar1 = CL_ControllerIndexFromClientNum(param_2);
+  bVar4 = Live_IsUserSignedInToDemonware(iVar1);
+  if (bVar4) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_2);
+    bVar4 = dwGetOnlineUserID(iVar1,local_30);
+    if (bVar4) {
+      iVar1 = CL_ControllerIndexFromClientNum(param_2);
+      poVar2 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar1,1);
+      if (poVar2 == (overlappedTask *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                         ,0x2b4,0,"%s");
       }
-      poVar3->data = pvVar1;
-      dwReadStatsByUser(poVar3,*(uint *)(*(int *)((int)pvVar1 + 0x3c04) + 4),local_30[0]);
-      tVar4 = dwGetTaskStatus(poVar3);
-      if (tVar4 != TASK_NOTCOMPLETE) {
+      poVar2->data = param_1;
+      dwReadStatsByUser(poVar2,param_1->lbDef->id,local_30[0]);
+      tVar3 = dwGetTaskStatus(poVar2);
+      if (tVar3 != TASK_NOTCOMPLETE) {
         Com_PrintError(0x16,"dwReadStatsByUser() failed.\n");
-        TaskManager_ClearTask(poVar3);
-        uVar6 = __restgprlr_28(0);
-        return (bool)uVar6;
+        TaskManager_ClearTask(poVar2);
+        return false;
       }
-      bdRemoteTask::setTimeout((poVar3->u).remoteTask.m_ptr,20.0);
-      uVar6 = __restgprlr_28(1);
-      return (bool)uVar6;
+      bdRemoteTask::setTimeout((poVar2->u).remoteTask.m_ptr,20.0);
+      return true;
     }
     Com_PrintError(0x16,
                    "dwGetOnlineUserID() failed, probably called before NP logon has completed\n");
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826CD6C8  LB_GetStatsByXuids  (leaderboard/com_leaderboard.cpp:711)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool LB_GetStatsByXuids(int param_1,Leaderboard *param_2,ulong64 *param_3,uint param_4)
 
 {
-  void *pvVar1;
-  int iVar2;
-  overlappedTask *poVar3;
-  taskCompleteResults tVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  overlappedTask *poVar1;
+  taskCompleteResults tVar2;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2c8,0,"%s");
   }
-  pvVar1 = (void *)uVar6;
-  if (*(char *)((int)pvVar1 + 0x3c11) != '\0') {
+  if (param_2->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2c9,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2cb,0,"%s\n\t(userIndex) = %i");
   }
-  poVar3 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar2,0);
-  if (poVar3 == (overlappedTask *)0x0) {
+  poVar1 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,0);
+  if (poVar1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2ce,0,"%s");
   }
-  poVar3->data = pvVar1;
-  dwReadStatsForUsers(poVar3,*(uint *)(*(int *)((int)pvVar1 + 0x3c04) + 4),param_3,(uint)uVar7);
-  tVar4 = dwGetTaskStatus(poVar3);
-  if (tVar4 != TASK_NOTCOMPLETE) {
+  poVar1->data = param_2;
+  dwReadStatsForUsers(poVar1,param_2->lbDef->id,param_3,param_4);
+  tVar2 = dwGetTaskStatus(poVar1);
+  if (tVar2 != TASK_NOTCOMPLETE) {
     Com_PrintError(0x16,"dwReadStatsForUsers() failed.\n");
-    TaskManager_ClearTask(poVar3);
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+    TaskManager_ClearTask(poVar1);
+    return false;
   }
-  bdRemoteTask::setTimeout((poVar3->u).remoteTask.m_ptr,20.0);
-  uVar5 = __restgprlr_26(1);
-  return (bool)uVar5;
+  bdRemoteTask::setTimeout((poVar1->u).remoteTask.m_ptr,20.0);
+  return true;
 }
 
 
 // 826CD818  LB_GetFriends  (leaderboard/com_leaderboard.cpp:737)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_GetFriends(Leaderboard *param_1,LocalClientNum_t param_2)
 
 {
-  Leaderboard *pLVar2;
-  int iVar3;
-  bool bVar6;
-  undefined1 uVar7;
-  uint uVar4;
-  FriendStatus FVar5;
+  int iVar2;
+  bool bVar5;
+  uint uVar3;
+  FriendStatus FVar4;
   ulong64 uVar1;
+  uint uVar6;
+  ulong64 *puVar7;
   uint uVar8;
-  ulong64 *puVar9;
-  uint uVar10;
   ulong64 local_370 [2];
   ulong64 local_360;
   ulong64 local_358 [107];
   
-  pLVar2 = (Leaderboard *)__savegprlr_26(param_1);
-  if (pLVar2 == (Leaderboard *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2e2,0,"%s");
   }
-  if (pLVar2->isUpdating != false) {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2e3,0,"%s");
   }
-  iVar3 = CL_ControllerIndexFromClientNum(param_2);
-  bVar6 = Live_IsUserSignedInToDemonware(iVar3);
-  if (bVar6) {
-    bVar6 = dwGetOnlineUserID(iVar3,local_370);
-    if (bVar6) {
-      uVar8 = 1;
+  iVar2 = CL_ControllerIndexFromClientNum(param_2);
+  bVar5 = Live_IsUserSignedInToDemonware(iVar2);
+  if (bVar5) {
+    bVar5 = dwGetOnlineUserID(iVar2,local_370);
+    if (bVar5) {
+      uVar6 = 1;
       local_360 = local_370[0];
-      uVar4 = Friends_GetNumFriends(iVar3);
-      uVar10 = 0;
-      if (uVar4 != 0) {
-        puVar9 = local_358;
+      uVar3 = Friends_GetNumFriends(iVar2);
+      uVar8 = 0;
+      if (uVar3 != 0) {
+        puVar7 = local_358;
         do {
-          if (99 < uVar8) break;
-          FVar5 = FriendsMenu_GetStatus(iVar3,uVar10);
-          if ((FVar5 != FRIEND_STATUS_REQUEST_PENDING) && (FVar5 != FRIEND_STATUS_REQUEST_RECEIVED))
+          if (99 < uVar6) break;
+          FVar4 = FriendsMenu_GetStatus(iVar2,uVar8);
+          if ((FVar4 != FRIEND_STATUS_REQUEST_PENDING) && (FVar4 != FRIEND_STATUS_REQUEST_RECEIVED))
           {
-            uVar1 = Live_Friends_GetUserId(iVar3,uVar10);
-            *puVar9 = uVar1;
+            uVar1 = Live_Friends_GetUserId(iVar2,uVar8);
+            *puVar7 = uVar1;
             if (uVar1 != 0) {
-              uVar8 = uVar8 + 1;
-              puVar9 = puVar9 + 1;
+              uVar6 = uVar6 + 1;
+              puVar7 = puVar7 + 1;
             }
           }
-          uVar10 = uVar10 + 1;
-        } while (uVar10 < uVar4);
+          uVar8 = uVar8 + 1;
+        } while (uVar8 < uVar3);
       }
-      bVar6 = LB_GetStatsByXuids(iVar3,pLVar2,&local_360,uVar8);
-      uVar7 = __restgprlr_26(bVar6);
-      return (bool)uVar7;
+      bVar5 = LB_GetStatsByXuids(iVar2,param_1,&local_360,uVar6);
+      return bVar5;
     }
     Com_PrintError(0x16,"dwGetOnlineUserID() failed.\n");
   }
-  uVar7 = __restgprlr_26(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 826CD970  LB_GetClan  (leaderboard/com_leaderboard.cpp:792)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_GetClan(Leaderboard *param_1,LocalClientNum_t param_2)
@@ -1070,289 +1031,270 @@ bool LB_GetClan(Leaderboard *param_1,LocalClientNum_t param_2)
 {
   uint uVar1;
   int iVar2;
-  void *pvVar3;
-  int iVar4;
-  undefined1 uVar7;
-  bool bVar8;
-  overlappedTask *poVar5;
-  taskCompleteResults tVar6;
-  undefined8 *puVar9;
-  int iVar10;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  int iVar3;
+  bool bVar6;
+  overlappedTask *poVar4;
+  taskCompleteResults tVar5;
+  undefined8 *puVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   undefined8 uStack_378;
   ulong64 local_370 [110];
   
-  pvVar3 = (void *)__savegprlr_24(param_1);
-  if (pvVar3 == (void *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x319,0,"%s");
   }
-  if (*(char *)((int)pvVar3 + 0x3c11) != '\0') {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x31a,0,"%s");
   }
-  iVar4 = CL_ControllerIndexFromClientNum(param_2);
-  if ((g_EliteClanStore[iVar4].numMembers == 0) ||
-     (bVar8 = Live_IsUserSignedInToDemonware(iVar4), !bVar8)) {
-    uVar7 = __restgprlr_24(0);
-    return (bool)uVar7;
+  iVar3 = CL_ControllerIndexFromClientNum(param_2);
+  if ((g_EliteClanStore[iVar3].numMembers == 0) ||
+     (bVar6 = Live_IsUserSignedInToDemonware(iVar3), !bVar6)) {
+    return false;
   }
-  uVar1 = g_EliteClanStore[iVar4].numMembers;
-  uVar12 = 0;
+  uVar1 = g_EliteClanStore[iVar3].numMembers;
+  uVar10 = 0;
   if (0 < (int)uVar1) {
-    iVar11 = 0;
-    puVar9 = &uStack_378;
-    uVar13 = (ulonglong)uVar1;
-    iVar10 = iVar4 * 0x66b8;
+    iVar9 = 0;
+    puVar7 = &uStack_378;
+    uVar11 = (ulonglong)uVar1;
+    iVar8 = iVar3 * 0x66b8;
     do {
-      iVar11 = iVar11 + 0x60;
-      iVar2 = iVar10 + -8;
-      iVar10 = iVar11 + iVar4 * 0x66b8;
-      puVar9 = puVar9 + 1;
-      *puVar9 = *(undefined8 *)(g_EliteClanStore[0].members[0].m_userName + iVar2);
-      uVar13 = uVar13 - 1;
-      uVar12 = (ulonglong)uVar1;
-    } while (uVar13 != 0);
+      iVar9 = iVar9 + 0x60;
+      iVar2 = iVar8 + -8;
+      iVar8 = iVar9 + iVar3 * 0x66b8;
+      puVar7 = puVar7 + 1;
+      *puVar7 = *(undefined8 *)(g_EliteClanStore[0].members[0].m_userName + iVar2);
+      uVar11 = uVar11 - 1;
+      uVar10 = (ulonglong)uVar1;
+    } while (uVar11 != 0);
   }
-  if (*(char *)((int)pvVar3 + 0x3c11) != '\0') {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2c9,0,"%s");
   }
-  if (uVar12 == 0) {
+  if (uVar10 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2cb,0,"%s\n\t(userIndex) = %i");
   }
-  poVar5 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar4,0);
-  if (poVar5 == (overlappedTask *)0x0) {
+  poVar4 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar3,0);
+  if (poVar4 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x2ce,0,"%s");
   }
-  poVar5->data = pvVar3;
-  dwReadStatsForUsers(poVar5,*(uint *)(*(int *)((int)pvVar3 + 0x3c04) + 4),local_370,(uint)uVar12);
-  tVar6 = dwGetTaskStatus(poVar5);
-  if (tVar6 != TASK_NOTCOMPLETE) {
+  poVar4->data = param_1;
+  dwReadStatsForUsers(poVar4,param_1->lbDef->id,local_370,(uint)uVar10);
+  tVar5 = dwGetTaskStatus(poVar4);
+  if (tVar5 != TASK_NOTCOMPLETE) {
     Com_PrintError(0x16,"dwReadStatsForUsers() failed.\n");
-    TaskManager_ClearTask(poVar5);
-    uVar7 = __restgprlr_24(0);
-    return (bool)uVar7;
+    TaskManager_ClearTask(poVar4);
+    return false;
   }
-  bdRemoteTask::setTimeout((poVar5->u).remoteTask.m_ptr,20.0);
-  uVar7 = __restgprlr_24(1);
-  return (bool)uVar7;
+  bdRemoteTask::setTimeout((poVar4->u).remoteTask.m_ptr,20.0);
+  return true;
 }
 
 
 // 826CDB60  LB_GetLobbyMembers  (leaderboard/com_leaderboard.cpp:824)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool LB_GetLobbyMembers(Leaderboard *param_1,LocalClientNum_t param_2)
 
 {
-  Leaderboard *pLVar1;
+  int iVar1;
+  bool bVar4;
   int iVar2;
-  bool bVar5;
-  undefined1 uVar6;
-  int iVar3;
-  PartyData *pPVar4;
-  ulong64 *puVar7;
-  undefined8 *puVar8;
-  uint uVar9;
-  longlong lVar10;
+  PartyData *pPVar3;
+  ulong64 *puVar5;
+  undefined8 *puVar6;
+  uint uVar7;
+  longlong lVar8;
   ulong64 local_360;
   undefined8 uStack_358;
   ulong64 local_350 [106];
   
-  pLVar1 = (Leaderboard *)__savegprlr_28(param_1);
-  if (pLVar1 == (Leaderboard *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x339,0,"%s");
   }
-  if (pLVar1->isUpdating != false) {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x33a,0,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(param_2);
-  bVar5 = Live_IsUserSignedInToDemonware(iVar2);
-  if (!bVar5) {
-LAB_826cdc14:
-    uVar6 = __restgprlr_28(0);
-    return (bool)uVar6;
+  iVar1 = CL_ControllerIndexFromClientNum(param_2);
+  bVar4 = Live_IsUserSignedInToDemonware(iVar1);
+  if (!bVar4) {
+    return false;
   }
-  bVar5 = dwGetOnlineUserID(iVar2,&local_360);
-  if (!bVar5) {
+  bVar4 = dwGetOnlineUserID(iVar1,&local_360);
+  if (!bVar4) {
     Com_PrintError(0x16,"dwGetOnlineUserID() failed.\n");
-    goto LAB_826cdc14;
+    return false;
   }
-  uVar9 = 0;
-  pPVar4 = &g_partyData;
-  iVar3 = Party_InParty(&g_partyData);
-  if ((iVar3 != 0) ||
-     ((bVar5 = Lobby_IsInRunningLobby(), bVar5 &&
-      (pPVar4 = Lobby_GetPartyData(), pPVar4 != (PartyData *)0x0)))) {
-    puVar8 = &uStack_358;
-    puVar7 = &pPVar4->partyMembers[0].player;
-    lVar10 = 3;
+  uVar7 = 0;
+  pPVar3 = &g_partyData;
+  iVar2 = Party_InParty(&g_partyData);
+  if ((iVar2 != 0) ||
+     ((bVar4 = Lobby_IsInRunningLobby(), bVar4 &&
+      (pPVar3 = Lobby_GetPartyData(), pPVar3 != (PartyData *)0x0)))) {
+    puVar6 = &uStack_358;
+    puVar5 = &pPVar3->partyMembers[0].player;
+    lVar8 = 3;
     do {
-      if (1 < ((PartyMember *)(puVar7 + -0x25))->status) {
-        uVar9 = uVar9 + 1;
-        puVar8[1] = *puVar7;
-        puVar8 = puVar8 + 1;
+      if (1 < ((PartyMember *)(puVar5 + -0x25))->status) {
+        uVar7 = uVar7 + 1;
+        puVar6[1] = *puVar5;
+        puVar6 = puVar6 + 1;
       }
-      if (1 < *(byte *)(puVar7 + 5)) {
-        uVar9 = uVar9 + 1;
-        puVar8[1] = puVar7[0x2a];
-        puVar8 = puVar8 + 1;
+      if (1 < *(byte *)(puVar5 + 5)) {
+        uVar7 = uVar7 + 1;
+        puVar6[1] = puVar5[0x2a];
+        puVar6 = puVar6 + 1;
       }
-      if (1 < *(byte *)(puVar7 + 0x2f)) {
-        uVar9 = uVar9 + 1;
-        puVar8[1] = puVar7[0x54];
-        puVar8 = puVar8 + 1;
+      if (1 < *(byte *)(puVar5 + 0x2f)) {
+        uVar7 = uVar7 + 1;
+        puVar6[1] = puVar5[0x54];
+        puVar6 = puVar6 + 1;
       }
-      if (1 < *(byte *)(puVar7 + 0x59)) {
-        uVar9 = uVar9 + 1;
-        puVar8[1] = puVar7[0x7e];
-        puVar8 = puVar8 + 1;
+      if (1 < *(byte *)(puVar5 + 0x59)) {
+        uVar7 = uVar7 + 1;
+        puVar6[1] = puVar5[0x7e];
+        puVar6 = puVar6 + 1;
       }
-      if (1 < *(byte *)(puVar7 + 0x83)) {
-        uVar9 = uVar9 + 1;
-        puVar8[1] = puVar7[0xa8];
-        puVar8 = puVar8 + 1;
+      if (1 < *(byte *)(puVar5 + 0x83)) {
+        uVar7 = uVar7 + 1;
+        puVar6[1] = puVar5[0xa8];
+        puVar6 = puVar6 + 1;
       }
-      if (1 < *(byte *)(puVar7 + 0xad)) {
-        uVar9 = uVar9 + 1;
-        puVar8 = puVar8 + 1;
-        *puVar8 = puVar7[0xd2];
+      if (1 < *(byte *)(puVar5 + 0xad)) {
+        uVar7 = uVar7 + 1;
+        puVar6 = puVar6 + 1;
+        *puVar6 = puVar5[0xd2];
       }
-      puVar7 = puVar7 + 0xfc;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    if (uVar9 != 0) goto LAB_826cdd30;
+      puVar5 = puVar5 + 0xfc;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    if (uVar7 != 0) goto LAB_826cdd30;
   }
-  uVar9 = 1;
+  uVar7 = 1;
   local_350[0] = local_360;
 LAB_826cdd30:
-  bVar5 = LB_GetStatsByXuids(iVar2,pLVar1,local_350,uVar9);
-  uVar6 = __restgprlr_28(bVar5);
-  return (bool)uVar6;
+  bVar4 = LB_GetStatsByXuids(iVar1,param_1,local_350,uVar7);
+  return bVar4;
 }
 
 
 // 826CDD50  LB_GetFacebookFriendStats  (leaderboard/com_leaderboard.cpp:887)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool LB_GetFacebookFriendStats(int param_1,Leaderboard *param_2)
 
 {
-  void *pvVar1;
-  int iVar3;
-  bool bVar7;
-  undefined1 uVar8;
-  uint uVar4;
-  ulong64 uVar2;
-  overlappedTask *poVar5;
-  taskCompleteResults tVar6;
-  ulonglong uVar9;
-  uint uVar10;
-  ulong64 *puVar11;
-  uint uVar12;
+  bool bVar5;
+  uint uVar2;
+  ulong64 uVar1;
+  overlappedTask *poVar3;
+  taskCompleteResults tVar4;
+  uint uVar6;
+  ulong64 *puVar7;
+  uint uVar8;
   ulong64 local_380 [2];
   ulong64 local_370;
   ulong64 local_368 [109];
   
-  uVar9 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x378,0,"%s");
   }
-  pvVar1 = (void *)uVar9;
-  if (*(int *)((int)pvVar1 + 0x3c04) == 0) {
+  if (param_2->lbDef == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x379,0,"%s");
   }
-  if (*(char *)((int)pvVar1 + 0x3c11) != '\0') {
+  if (param_2->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x37a,0,"%s");
   }
-  bVar7 = Live_IsUserSignedInToDemonware(iVar3);
-  if (bVar7) {
-    bVar7 = dwGetOnlineUserID(iVar3,local_380);
-    if (bVar7) {
-      uVar10 = 1;
+  bVar5 = Live_IsUserSignedInToDemonware(param_1);
+  if (bVar5) {
+    bVar5 = dwGetOnlineUserID(param_1,local_380);
+    if (bVar5) {
+      uVar6 = 1;
       local_370 = local_380[0];
-      uVar4 = Facebook_GetCount(iVar3);
-      uVar12 = 0;
-      if (uVar4 != 0) {
-        puVar11 = local_368;
+      uVar2 = Facebook_GetCount(param_1);
+      uVar8 = 0;
+      if (uVar2 != 0) {
+        puVar7 = local_368;
         do {
-          if (99 < uVar10) break;
-          uVar2 = Facebook_GetUserId(iVar3,uVar12);
-          *puVar11 = uVar2;
-          if (uVar2 != 0) {
-            uVar10 = uVar10 + 1;
-            puVar11 = puVar11 + 1;
+          if (99 < uVar6) break;
+          uVar1 = Facebook_GetUserId(param_1,uVar8);
+          *puVar7 = uVar1;
+          if (uVar1 != 0) {
+            uVar6 = uVar6 + 1;
+            puVar7 = puVar7 + 1;
           }
-          uVar12 = uVar12 + 1;
-        } while (uVar12 < uVar4);
-        if (uVar10 == 0) {
+          uVar8 = uVar8 + 1;
+        } while (uVar8 < uVar2);
+        if (uVar6 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                           ,0x39b,0,"%s\n\t(userIndex) = %i");
         }
       }
-      poVar5 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar3,0);
-      if (poVar5 == (overlappedTask *)0x0) {
+      poVar3 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,0);
+      if (poVar3 == (overlappedTask *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                         ,0x39e,0,"%s");
       }
-      poVar5->data = pvVar1;
-      dwReadStatsForUsers(poVar5,*(uint *)(*(int *)((int)pvVar1 + 0x3c04) + 4),&local_370,uVar10);
-      tVar6 = dwGetTaskStatus(poVar5);
-      if (tVar6 != TASK_NOTCOMPLETE) {
+      poVar3->data = param_2;
+      dwReadStatsForUsers(poVar3,param_2->lbDef->id,&local_370,uVar6);
+      tVar4 = dwGetTaskStatus(poVar3);
+      if (tVar4 != TASK_NOTCOMPLETE) {
         Com_PrintError(0x16,"dwReadStatsForUsers() failed.\n");
-        TaskManager_ClearTask(poVar5);
-        uVar8 = __restgprlr_24(0);
-        return (bool)uVar8;
+        TaskManager_ClearTask(poVar3);
+        return false;
       }
-      bdRemoteTask::setTimeout((poVar5->u).remoteTask.m_ptr,20.0);
-      uVar8 = __restgprlr_24(1);
-      return (bool)uVar8;
+      bdRemoteTask::setTimeout((poVar3->u).remoteTask.m_ptr,20.0);
+      return true;
     }
     Com_PrintError(0x16,
                    "dwGetOnlineUserID() failed, probably called before NP logon has completed\n");
   }
-  uVar8 = __restgprlr_24(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
 // 826CDF60  LB_GetFacebookFriends  (leaderboard/com_leaderboard.cpp:944)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_GetFacebookFriends(Leaderboard *param_1,LocalClientNum_t param_2)
 
 {
-  Leaderboard *pLVar1;
-  int iVar2;
-  bool bVar3;
-  undefined1 uVar4;
+  int iVar1;
+  bool bVar2;
   
-  pLVar1 = (Leaderboard *)__savegprlr_28(param_1);
-  if (pLVar1 == (Leaderboard *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x3b1,0,"%s");
   }
-  if (pLVar1->isUpdating != false) {
+  if (param_1->isUpdating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x3b2,0,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(param_2);
-  bVar3 = LB_GetFacebookFriendStats(iVar2,pLVar1);
-  uVar4 = __restgprlr_28(bVar3);
-  return (bool)uVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_2);
+  bVar2 = LB_GetFacebookFriendStats(iVar1,param_1);
+  return bVar2;
 }
 
 
@@ -1415,6 +1357,8 @@ int LB_CalcPlayerIndex(int param_1,bdLeaderBoardResult<LeaderBoardRow<10>,100> *
 
 // 826CC0D8  LB_UploadPlayersCmd  (leaderboard/com_leaderboard.cpp:997)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1426,7 +1370,6 @@ void LB_UploadPlayersCmd(void)
   bool bVar3;
   uint uVar4;
   
-  __savegprlr_25();
   uVar4 = 0;
   do {
     bVar2 = Live_IsSignedIn(uVar4);
@@ -1444,49 +1387,49 @@ void LB_UploadPlayersCmd(void)
     }
     uVar4 = uVar4 + 1;
   } while (uVar4 < 4);
-  __restgprlr_25();
   return;
 }
 
 
 // 826CDFE8  LB_GetTeamGamertags  (leaderboard/com_leaderboard.cpp:1036)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool LB_GetTeamGamertags(Leaderboard *param_1,int param_2)
 
 {
-  int iVar1;
-  bdRemoteTask *pbVar2;
-  void *pvVar3;
+  LeaderboardDef *pLVar1;
+  uint uVar2;
+  bdRemoteTask *pbVar3;
   overlappedTask *poVar4;
   bdTitleUtilities *pbVar5;
   bdReference<bdRemoteTask> bVar6;
   taskCompleteResults tVar7;
-  undefined1 uVar8;
-  longlong *plVar9;
+  longlong *plVar8;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  undefined4 *puVar12;
+  int *piVar11;
   bdTitleUtilities bStack_360;
   longlong lStack_358;
   longlong local_350 [106];
   
-  pvVar3 = (void *)__savegprlr_28(param_1);
-  if (pvVar3 == (void *)0x0) {
+  if (param_1 == (Leaderboard *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x411,0,"%s");
   }
-  if (((*(int *)((int)pvVar3 + 0x3b60) != 0) && (*(char *)((int)pvVar3 + 0x3c11) != '\x01')) &&
-     (iVar1 = *(int *)((int)pvVar3 + 0x3c04), iVar1 != 0)) {
-    iVar11 = 0;
-    if (0 < *(int *)(iVar1 + 8)) {
-      iVar10 = 0;
+  if ((((param_1->userStats).numResults != 0) && (param_1->isUpdating != true)) &&
+     (pLVar1 = param_1->lbDef, pLVar1 != (LeaderboardDef *)0x0)) {
+    iVar10 = 0;
+    if (0 < pLVar1->columnCount) {
+      iVar9 = 0;
       do {
-        if (*(int *)(*(int *)(iVar1 + 0x14) + iVar10 + 4) == 0xfff9) break;
-        iVar11 = iVar11 + 1;
-        iVar10 = iVar10 + 0x28;
-      } while (iVar11 < *(int *)(*(int *)((int)pvVar3 + 0x3c04) + 8));
+        if (*(int *)((int)&pLVar1->columns->id + iVar9) == 0xfff9) break;
+        iVar10 = iVar10 + 1;
+        iVar9 = iVar9 + 0x28;
+      } while (iVar10 < param_1->lbDef->columnCount);
     }
-    if (iVar11 < *(int *)(iVar1 + 8)) {
+    if (iVar10 < pLVar1->columnCount) {
       Com_DPrintf(0x16,"Getting gamertags for team leaderboards.\n");
       poVar4 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_2,6);
       if (poVar4 == (overlappedTask *)0x0) {
@@ -1494,301 +1437,299 @@ bool LB_GetTeamGamertags(Leaderboard *param_1,int param_2)
                         ,0x426,0,"%s");
       }
       memset();
-      iVar1 = *(int *)((int)pvVar3 + 0x3b60);
+      uVar2 = (param_1->userStats).numResults;
+      iVar9 = 0;
       iVar10 = 0;
-      iVar11 = 0;
       s_teamUserInfoCount = 0;
-      if (0 < iVar1) {
-        puVar12 = (undefined4 *)((int)pvVar3 + 0x90);
-        plVar9 = &lStack_358;
+      if (0 < (int)uVar2) {
+        piVar11 = (param_1->userStats).m_leaderBoardEntries[0].m_columns + 8;
+        plVar8 = &lStack_358;
         do {
-          if (CONCAT44(puVar12[-1],*puVar12) != 0) {
-            plVar9 = plVar9 + 1;
-            *plVar9 = CONCAT44(puVar12[-1],*puVar12);
-            iVar10 = iVar10 + 1;
+          if (CONCAT44(piVar11[-1],*piVar11) != 0) {
+            plVar8 = plVar8 + 1;
+            *plVar8 = CONCAT44(piVar11[-1],*piVar11);
+            iVar9 = iVar9 + 1;
           }
-          iVar11 = iVar11 + 1;
-          puVar12 = puVar12 + 0x26;
-          s_teamUserInfoCount = iVar10;
-        } while (iVar11 < iVar1);
+          iVar10 = iVar10 + 1;
+          piVar11 = piVar11 + 0x26;
+          s_teamUserInfoCount = iVar9;
+        } while (iVar10 < (int)uVar2);
       }
-      poVar4->data = pvVar3;
+      poVar4->data = param_1;
       pbVar5 = dwGetTitleUtilities((uint)poVar4->controllerIndex);
       if (pbVar5 != (bdTitleUtilities *)0x0) {
         pbVar5 = dwGetTitleUtilities((uint)poVar4->controllerIndex);
         bVar6 = bdTitleUtilities::getUserNames
                           (&bStack_360,(ulong64 *)pbVar5,(uint)local_350,
                            (bdUserInfo *)s_teamUserInfoCount);
-        pbVar2 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+        pbVar3 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
                   ((bdReference<bdRemoteTask> *)&bStack_360);
-        if (pbVar2 != (bdRemoteTask *)0x0) {
-          bdReference<bdRemoteTask>::operator=(&(poVar4->u).remoteTask,pbVar2);
+        if (pbVar3 != (bdRemoteTask *)0x0) {
+          bdReference<bdRemoteTask>::operator=(&(poVar4->u).remoteTask,pbVar3);
         }
       }
       tVar7 = dwGetTaskStatus(poVar4);
       if (tVar7 != TASK_NOTCOMPLETE) {
         Com_PrintError(0x16,"getUserNames() failed.\n");
         TaskManager_ClearTask(poVar4);
-        uVar8 = __restgprlr_28(0);
-        return (bool)uVar8;
+        return false;
       }
-      *(undefined1 *)((int)pvVar3 + 0x3c11) = 1;
+      param_1->isUpdating = true;
     }
   }
-  uVar8 = __restgprlr_28(1);
-  return (bool)uVar8;
+  return true;
 }
 
 
 // 826CC180  LB_GetTeamGamertagsComplete  (leaderboard/com_leaderboard.cpp:1105)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_GetTeamGamertagsComplete(int param_1)
 
 {
-  uint uVar1;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
+  overlappedTask *poVar1;
+  taskCompleteResults tVar2;
   
-  uVar1 = __savegprlr_27(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar1;
-  if (0x1f < uVar1) {
+  poVar1 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x456,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar1].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x457,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar1].type != 6) {
+  if (lbGlob.tasks.tasks[param_1].type != 6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x458,0,"%s");
   }
-  tVar3 = dwGetTitleUtilitiesComplete(poVar2);
-  if (tVar3 != TASK_NOTCOMPLETE) {
-    *(undefined1 *)((int)lbGlob.tasks.tasks[uVar1].data + 0x3c11) = 0;
-    TaskManager_ClearTask(poVar2);
+  tVar2 = dwGetTitleUtilitiesComplete(poVar1);
+  if (tVar2 != TASK_NOTCOMPLETE) {
+    *(undefined1 *)((int)lbGlob.tasks.tasks[param_1].data + 0x3c11) = 0;
+    TaskManager_ClearTask(poVar1);
   }
-  tVar3 = __restgprlr_27(tVar3);
-  return tVar3;
+  return tVar2;
 }
 
 
 // 826CC270  LB_UploadPlayerDataComplete  (leaderboard/com_leaderboard.cpp:1128)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_UploadPlayerDataComplete(int param_1)
 
 {
-  uint uVar1;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
+  overlappedTask *poVar1;
+  taskCompleteResults tVar2;
   
-  uVar1 = __savegprlr_27(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar1;
-  if (0x1f < uVar1) {
+  poVar1 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x46b,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar1].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x46c,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar1].type != 5) {
+  if (lbGlob.tasks.tasks[param_1].type != 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x46d,0,"%s");
   }
-  tVar3 = dwWriteStatsComplete(poVar2);
-  if (tVar3 != TASK_NOTCOMPLETE) {
-    TaskManager_ClearTask(poVar2);
+  tVar2 = dwWriteStatsComplete(poVar1);
+  if (tVar2 != TASK_NOTCOMPLETE) {
+    TaskManager_ClearTask(poVar1);
   }
-  tVar3 = __restgprlr_27(tVar3);
-  return tVar3;
+  return tVar2;
 }
 
 
 // 826CE200  LB_ReadLeaderboardComplete  (leaderboard/com_leaderboard.cpp:1147)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 taskCompleteResults LB_ReadLeaderboardComplete(int param_1)
 
 {
   Leaderboard *pLVar1;
-  overlappedTask *poVar2;
-  uint uVar3;
-  taskCompleteResults tVar4;
-  int iVar5;
-  char *pcVar6;
-  LocalClientNum_t LVar7;
-  bool bVar8;
-  undefined4 uVar9;
+  taskCompleteResults tVar2;
+  int iVar3;
+  char *pcVar4;
+  LocalClientNum_t LVar5;
+  bool bVar6;
+  undefined4 uVar7;
+  overlappedTask *poVar8;
   
-  uVar3 = __savegprlr_27(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar3;
-  if (0x1f < uVar3) {
+  poVar8 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x47f,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar3].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x480,0,"%s");
   }
-  iVar5 = lbGlob.tasks.tasks[uVar3].type;
-  if (((iVar5 != 0) && (iVar5 != 1)) && (iVar5 != 2)) {
+  iVar3 = lbGlob.tasks.tasks[param_1].type;
+  if (((iVar3 != 0) && (iVar3 != 1)) && (iVar3 != 2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x483,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].data == (void *)0x0) {
+  if (lbGlob.tasks.tasks[param_1].data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x484,0,"%s");
   }
-  pLVar1 = lbGlob.tasks.tasks[uVar3].data;
-  bVar8 = pLVar1->isUpdating;
+  pLVar1 = lbGlob.tasks.tasks[param_1].data;
+  bVar6 = pLVar1->isUpdating;
   pLVar1->isUpdating = false;
-  tVar4 = dwReadStatsComplete(poVar2);
-  pLVar1->isUpdating = bVar8;
-  iVar5 = Sys_Milliseconds();
-  if (iVar5 < pLVar1->readDelay) {
-    tVar4 = __restgprlr_27(0);
-    return tVar4;
-  }
-  if (tVar4 != TASK_NOTCOMPLETE) {
-    pLVar1->isUpdating = false;
-    pLVar1->forceRefresh = false;
-  }
-  if (tVar4 == TASK_COMPLETE) {
-    if (pLVar1->filter == 0) {
-      if (pLVar1->notSameFilter != false) {
-        if ((pLVar1->userStats).numResults == 0) {
-          if (lbGlob.tasks.tasks[uVar3].type != 2) {
-            Com_DPrintf(0x16,"%s\n");
-            LVar7 = CL_LocalClientNumFromControllerIndex
-                              ((uint)lbGlob.tasks.tasks[uVar3].controllerIndex);
-            bVar8 = LB_GetByRank(pLVar1,LVar7,1);
-            pLVar1->isUpdating = bVar8;
+  tVar2 = dwReadStatsComplete(poVar8);
+  pLVar1->isUpdating = bVar6;
+  iVar3 = Sys_Milliseconds();
+  if (pLVar1->readDelay <= iVar3) {
+    if (tVar2 != TASK_NOTCOMPLETE) {
+      pLVar1->isUpdating = false;
+      pLVar1->forceRefresh = false;
+    }
+    if (tVar2 == TASK_COMPLETE) {
+      if (pLVar1->filter == 0) {
+        if (pLVar1->notSameFilter != false) {
+          if ((pLVar1->userStats).numResults == 0) {
+            if (lbGlob.tasks.tasks[param_1].type != 2) {
+              Com_DPrintf(0x16,"%s\n");
+              LVar5 = CL_LocalClientNumFromControllerIndex
+                                ((uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+              bVar6 = LB_GetByRank(pLVar1,LVar5,1);
+              pLVar1->isUpdating = bVar6;
+            }
+            pLVar1->curIdx = 0;
+            pLVar1->offset = 0;
           }
-          pLVar1->curIdx = 0;
-          pLVar1->offset = 0;
+          else {
+            uVar7 = (pLVar1->userStats).m_leaderBoardEntries[0]._padding_;
+            pLVar1->offset = uVar7 + -1;
+            iVar3 = LB_CalcPlayerIndex((uint)lbGlob.tasks.tasks[param_1].controllerIndex,
+                                       &pLVar1->userStats);
+            pLVar1->curIdx = iVar3 + pLVar1->offset;
+          }
         }
-        else {
-          uVar9 = (pLVar1->userStats).m_leaderBoardEntries[0]._padding_;
-          pLVar1->offset = uVar9 + -1;
-          iVar5 = LB_CalcPlayerIndex((uint)lbGlob.tasks.tasks[uVar3].controllerIndex,
+      }
+      else if ((uint)pLVar1->filter < 5) {
+        LB_SortXUserStatsByRank(&pLVar1->userStats);
+        if (pLVar1->notSameFilter != false) {
+          iVar3 = LB_CalcPlayerIndex((uint)lbGlob.tasks.tasks[param_1].controllerIndex,
                                      &pLVar1->userStats);
-          pLVar1->curIdx = iVar5 + pLVar1->offset;
+          pLVar1->curIdx = iVar3;
         }
       }
-    }
-    else if ((uint)pLVar1->filter < 5) {
-      LB_SortXUserStatsByRank(&pLVar1->userStats);
-      if (pLVar1->notSameFilter != false) {
-        iVar5 = LB_CalcPlayerIndex((uint)lbGlob.tasks.tasks[uVar3].controllerIndex,
-                                   &pLVar1->userStats);
-        pLVar1->curIdx = iVar5;
+      else if (alwaysfails == 0) {
+        pcVar4 = va("Unknown filter type: %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
+                        ,0x4c1,0,pcVar4);
       }
     }
-    else if (alwaysfails == 0) {
-      pcVar6 = va("Unknown filter type: %i\n");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
-                      ,0x4c1,0,pcVar6);
+    else if (tVar2 == TASK_ERROR) {
+      (pLVar1->userStats).numResults = 0;
+      (pLVar1->userStats).totalResults = 0;
+      iVar3 = (**(code **)((lbGlob.tasks.tasks[param_1].u.remoteTask.m_ptr)->_padding_ + 4))();
+      if (iVar3 == 4) {
+        TaskManager_ClearTask(poVar8);
+        Live_DemonwareDisconnectCleanup((uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+      }
     }
-  }
-  else if (tVar4 == TASK_ERROR) {
-    (pLVar1->userStats).numResults = 0;
-    (pLVar1->userStats).totalResults = 0;
-    iVar5 = (**(code **)((lbGlob.tasks.tasks[uVar3].u.remoteTask.m_ptr)->_padding_ + 4))();
-    if (iVar5 == 4) {
-      TaskManager_ClearTask(poVar2);
-      Live_DemonwareDisconnectCleanup((uint)lbGlob.tasks.tasks[uVar3].controllerIndex);
+    else if (tVar2 == TASK_NOTCOMPLETE) {
+      return TASK_NOTCOMPLETE;
     }
+    TaskManager_ClearTask(poVar8);
+    if (tVar2 == TASK_COMPLETE) {
+      LB_GetTeamGamertags(pLVar1,(uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+    }
+    return tVar2;
   }
-  else if (tVar4 == TASK_NOTCOMPLETE) goto LAB_826ce4a0;
-  TaskManager_ClearTask(poVar2);
-  if (tVar4 == TASK_COMPLETE) {
-    LB_GetTeamGamertags(pLVar1,(uint)lbGlob.tasks.tasks[uVar3].controllerIndex);
-  }
-LAB_826ce4a0:
-  tVar4 = __restgprlr_27(tVar4);
-  return tVar4;
+  return TASK_NOTCOMPLETE;
 }
 
 
 // 826CE4B0  LB_ReadLeaderboardToCacheComplete  (leaderboard/com_leaderboard.cpp:1251)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
+
 taskCompleteResults LB_ReadLeaderboardToCacheComplete(int param_1)
 
 {
   void *pvVar1;
-  overlappedTask *poVar2;
+  taskCompleteResults tVar2;
   uint uVar3;
-  taskCompleteResults tVar4;
+  int *piVar4;
   int *piVar5;
-  int *piVar6;
+  overlappedTask *poVar6;
   int iVar7;
   longlong lVar8;
   
-  uVar3 = __savegprlr_26(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar3;
-  if (0x1f < uVar3) {
+  poVar6 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x4eb,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar3].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x4ec,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].type != 4) {
+  if (lbGlob.tasks.tasks[param_1].type != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x4ed,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].data == (void *)0x0) {
+  if (lbGlob.tasks.tasks[param_1].data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x4ee,0,"%s");
   }
-  tVar4 = dwReadStatsByLeaderboardIDsComplete(poVar2);
-  if (tVar4 == TASK_COMPLETE) {
-    pvVar1 = lbGlob.tasks.tasks[uVar3].data;
-    uVar3 = bdRemoteTask::getNumResults(lbGlob.tasks.tasks[uVar3].u.remoteTask.m_ptr);
+  tVar2 = dwReadStatsByLeaderboardIDsComplete(poVar6);
+  if (tVar2 == TASK_COMPLETE) {
+    pvVar1 = lbGlob.tasks.tasks[param_1].data;
+    uVar3 = bdRemoteTask::getNumResults(lbGlob.tasks.tasks[param_1].u.remoteTask.m_ptr);
     lVar8 = (longlong)(int)uVar3;
     if (0 < (int)uVar3) {
-      piVar5 = (int *)((int)pvVar1 + 0x68);
-      piVar6 = (int *)((int)pvVar1 + 0x24);
+      piVar4 = (int *)((int)pvVar1 + 0x68);
+      piVar5 = (int *)((int)pvVar1 + 0x24);
       do {
-        if ((pvVar1 != (void *)0xffffff98) && (*(int *)(*piVar5 + 8) == 0x197)) {
-          *(undefined4 *)(*piVar6 + 4) = *(undefined4 *)(*piVar5 + 4);
+        if ((pvVar1 != (void *)0xffffff98) && (*(int *)(*piVar4 + 8) == 0x197)) {
+          *(undefined4 *)(*piVar5 + 4) = *(undefined4 *)(*piVar4 + 4);
         }
-        piVar5 = piVar5 + 1;
-        piVar6 = piVar6 + 4;
+        piVar4 = piVar4 + 1;
+        piVar5 = piVar5 + 4;
         lVar8 = lVar8 + -1;
       } while (lVar8 != 0);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_26(1);
-      return tVar4;
+      TaskManager_ClearTask(poVar6);
+      return TASK_COMPLETE;
     }
   }
-  else if (tVar4 == TASK_ERROR) {
-    piVar5 = lbGlob.tasks.tasks[uVar3].data;
+  else if (tVar2 == TASK_ERROR) {
+    piVar4 = lbGlob.tasks.tasks[param_1].data;
     Com_DPrintf(0x16,"Failed to cache leaderboards for controllerIndex: %i\n");
     iVar7 = 0;
-    if (0 < *piVar5) {
+    if (0 < *piVar4) {
       do {
         Com_DPrintf(0x16,"LB: %i\n");
         iVar7 = iVar7 + 1;
-      } while (iVar7 < *piVar5);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_26(2);
-      return tVar4;
+      } while (iVar7 < *piVar4);
+      TaskManager_ClearTask(poVar6);
+      return TASK_ERROR;
     }
   }
-  else if (tVar4 == TASK_NOTCOMPLETE) goto LAB_826ce684;
-  TaskManager_ClearTask(poVar2);
-LAB_826ce684:
-  tVar4 = __restgprlr_26(tVar4);
-  return tVar4;
+  else if (tVar2 == TASK_NOTCOMPLETE) {
+    return TASK_NOTCOMPLETE;
+  }
+  TaskManager_ClearTask(poVar6);
+  return tVar2;
 }
 
 
@@ -1825,106 +1766,102 @@ bool LB_CalcOffset(int param_1,Leaderboard *param_2)
 
 // 826CE690  LB_UpdateLeaderboard  (leaderboard/com_leaderboard.cpp:1337)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bdLeaderBoardResult<LeaderBoardRow<10>,100> *
 LB_UpdateLeaderboard(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar5;
-  char *pcVar3;
-  bool bVar6;
-  bdLeaderBoardResult<LeaderBoardRow<10>,100> *pbVar4;
-  ulonglong uVar7;
+  int iVar1;
+  bool bVar3;
+  char *pcVar2;
+  bool bVar4;
+  ulonglong uVar5;
   
-  LVar1 = __savegprlr_22(param_1);
   if (0 < (lb_readDelay->current).integer) {
-    iVar2 = Sys_Milliseconds();
-    lbGlob.leaderboard.readDelay = (int)((lb_readDelay->current).string + iVar2);
+    iVar1 = Sys_Milliseconds();
+    lbGlob.leaderboard.readDelay = (int)((lb_readDelay->current).string + iVar1);
     Dvar_SetInt(lb_readDelay,0);
   }
   if ((lbGlob.leaderboard.isUpdating == false) &&
      (lbGlob.leaderboard.lbDef != (LeaderboardDef *)0x0)) {
-    iVar2 = Sys_Milliseconds();
+    iVar1 = Sys_Milliseconds();
     if ((lbGlob.leaderboard.filter != (lb_filter->current).integer) ||
-       (bVar6 = false, currLbId != (lbGlob.leaderboard.lbDef)->id)) {
-      bVar6 = true;
+       (bVar4 = false, currLbId != (lbGlob.leaderboard.lbDef)->id)) {
+      bVar4 = true;
     }
     if ((lb_minrefresh->current).unsignedInt == 0) {
-      uVar7 = 0;
+      uVar5 = 0;
     }
     else {
-      uVar7 = (ulonglong)(lb_minrefresh->current).unsignedInt * 1000;
-      uVar7 = ((uVar7 & 0xffffffff) >> 0x1f) +
+      uVar5 = (ulonglong)(lb_minrefresh->current).unsignedInt * 1000;
+      uVar5 = ((uVar5 & 0xffffffff) >> 0x1f) +
               (longlong)
-              ((int)((longlong)iVar2 - (ulonglong)(uint)lbGlob.leaderboard.lastUpdate) >> 0x1f) +
-              (ulonglong)(uVar7 <= (longlong)iVar2 - (ulonglong)(uint)lbGlob.leaderboard.lastUpdate)
+              ((int)((longlong)iVar1 - (ulonglong)(uint)lbGlob.leaderboard.lastUpdate) >> 0x1f) +
+              (ulonglong)(uVar5 <= (longlong)iVar1 - (ulonglong)(uint)lbGlob.leaderboard.lastUpdate)
       ;
     }
-    if (bVar6) {
-      bVar5 = false;
+    if (bVar4) {
+      bVar3 = false;
     }
     else {
-      bVar5 = LB_CalcOffset(param_2,&lbGlob.leaderboard);
+      bVar3 = LB_CalcOffset(param_2,&lbGlob.leaderboard);
     }
-    if ((((lbGlob.leaderboard.forceRefresh != false) || (bVar6)) || (bVar5 != false)) ||
-       ((uVar7 & 0xff) != 0)) {
+    if ((((lbGlob.leaderboard.forceRefresh != false) || (bVar4)) || (bVar3 != false)) ||
+       ((uVar5 & 0xff) != 0)) {
       lbGlob.leaderboard.userStats.numResults = 0;
       lbGlob.leaderboard.userStats.totalResults = 0;
-      if (lbGlob.leaderboard.readDelay <= iVar2) {
+      if (lbGlob.leaderboard.readDelay <= iVar1) {
         lbGlob.leaderboard.filter = (lb_filter->current).integer;
         currLbId = (lbGlob.leaderboard.lbDef)->id;
         if ((uint)lbGlob.leaderboard.filter < 5) {
           if (lbGlob.leaderboard.filter == 1) {
-            lbGlob.leaderboard.isUpdating = LB_GetFriends(&lbGlob.leaderboard,LVar1);
+            lbGlob.leaderboard.isUpdating = LB_GetFriends(&lbGlob.leaderboard,param_1);
           }
           else if (lbGlob.leaderboard.filter == 2) {
-            lbGlob.leaderboard.isUpdating = LB_GetClan(&lbGlob.leaderboard,LVar1);
+            lbGlob.leaderboard.isUpdating = LB_GetClan(&lbGlob.leaderboard,param_1);
           }
           else if (lbGlob.leaderboard.filter == 3) {
-            lbGlob.leaderboard.isUpdating = LB_GetLobbyMembers(&lbGlob.leaderboard,LVar1);
+            lbGlob.leaderboard.isUpdating = LB_GetLobbyMembers(&lbGlob.leaderboard,param_1);
           }
           else if (lbGlob.leaderboard.filter == 0) {
-            if (bVar6) {
-              lbGlob.leaderboard.isUpdating = LB_GetByPlayer(&lbGlob.leaderboard,LVar1);
+            if (bVar4) {
+              lbGlob.leaderboard.isUpdating = LB_GetByPlayer(&lbGlob.leaderboard,param_1);
             }
             else {
               lbGlob.leaderboard.isUpdating =
-                   LB_GetByRank(&lbGlob.leaderboard,LVar1,lbGlob.leaderboard.offset + 1);
+                   LB_GetByRank(&lbGlob.leaderboard,param_1,lbGlob.leaderboard.offset + 1);
               Dvar_SetInt(lb_readDelay,1000);
             }
           }
           else {
-            lbGlob.leaderboard.isUpdating = LB_GetFacebookFriends(&lbGlob.leaderboard,LVar1);
+            lbGlob.leaderboard.isUpdating = LB_GetFacebookFriends(&lbGlob.leaderboard,param_1);
             Dvar_SetInt(lb_readDelay,1000);
           }
         }
         else if (alwaysfails == 0) {
-          pcVar3 = va("Unknown filter type: %i\n");
+          pcVar2 = va("Unknown filter type: %i\n");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
-                          ,0x583,0,pcVar3);
+                          ,0x583,0,pcVar2);
         }
         if (lbGlob.leaderboard.isUpdating == false) {
-          UI_CloseMenu(LVar1,"popup_gettinglb");
+          UI_CloseMenu(param_1,"popup_gettinglb");
         }
         else {
-          lbGlob.leaderboard.notSameFilter = bVar6;
-          lbGlob.leaderboard.lastUpdate = iVar2;
-          bVar6 = Menu_IsMenuOpenAndVisible(LVar1,"popup_gettinglb");
-          if (!bVar6) {
-            UI_OpenMenu(LVar1,"popup_gettinglb");
-            pbVar4 = (bdLeaderBoardResult<LeaderBoardRow<10>,100> *)
-                     __restgprlr_22(0xffffffff8449cb20);
-            return pbVar4;
+          lbGlob.leaderboard.notSameFilter = bVar4;
+          lbGlob.leaderboard.lastUpdate = iVar1;
+          bVar4 = Menu_IsMenuOpenAndVisible(param_1,"popup_gettinglb");
+          if (!bVar4) {
+            UI_OpenMenu(param_1,"popup_gettinglb");
+            return &lbGlob.leaderboard.userStats;
           }
         }
       }
     }
   }
-  pbVar4 = (bdLeaderBoardResult<LeaderBoardRow<10>,100> *)__restgprlr_22(0xffffffff8449cb20);
-  return pbVar4;
+  return &lbGlob.leaderboard.userStats;
 }
 
 
@@ -1942,31 +1879,30 @@ void LB_Init_Platform(void)
 
 // 826CE950  LB_NormalUpdate  (leaderboard/com_leaderboard.cpp:1444)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool LB_NormalUpdate(int param_1,ulong64 param_2,LeaderboardDef *param_3,LeaderBoardRow<10> *param_4
                     ,int param_5,int param_6,int *param_7)
 
 {
   int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_5;
-  iVar1 = __savegprlr_27(param_1);
-  iVar1 = LB_MakeRow(iVar1,param_3,param_4,(LbAggType)uVar3,param_2);
+  iVar1 = LB_MakeRow(param_1,param_3,param_4,param_5,param_2);
   if (iVar1 == 0) {
-    uVar2 = __restgprlr_27();
-    return (bool)uVar2;
+    return false;
   }
   param_4->_padding_ = param_6 * 100 + param_3->id;
-  param_4->_padding_ = *(int *)((int)WriteTypeMap + (int)((uVar3 & 0xffffffff) << 2));
+  param_4->_padding_ = WriteTypeMap[param_5];
   *param_7 = *param_7 + 1;
-  uVar2 = __restgprlr_27(1);
-  return (bool)uVar2;
+  return true;
 }
 
 
 // 826CE9D0  LB_RankUpdate  (leaderboard/com_leaderboard.cpp:1458)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_RankUpdate(int param_1,ulong64 param_2,LeaderboardDef *param_3,LeaderBoardRow<10> *param_4,
@@ -1974,46 +1910,41 @@ bool LB_RankUpdate(int param_1,ulong64 param_2,LeaderboardDef *param_3,LeaderBoa
 
 {
   int iVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  LocalClientNum_t LVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar5 = (ulonglong)param_5;
-  iVar1 = __savegprlr_26(param_1);
-  iVar2 = LB_MakeRow(iVar1,param_3,param_4,(LbAggType)uVar5,param_2);
-  if (iVar2 != 0) {
+  iVar1 = LB_MakeRow(param_1,param_3,param_4,param_5,param_2);
+  if (iVar1 != 0) {
     param_4->_padding_ = param_6 * 100 + param_3->id;
-    param_4->_padding_ = *(int *)((int)WriteTypeMap + (int)((uVar5 & 0xffffffff) << 2));
-    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    param_4->_padding_ = WriteTypeMap[param_5];
+    LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
     iVar1 = 0;
-    if (0 < s_lbCacheStatsCount[LVar3]) {
+    if (0 < s_lbCacheStatsCount[LVar2]) {
       do {
-        if (s_lbCacheStats[LVar3][iVar1]._padding_ == param_4->_padding_) {
-          lVar7._0_4_ = param_4->_padding_;
-          lVar7._4_4_ = param_4->_padding_;
-          lVar6._0_4_ = s_lbCacheStats[LVar3][iVar1]._padding_;
-          lVar6._4_4_ = s_lbCacheStats[LVar3][iVar1]._padding_;
-          if (lVar6 < lVar7) {
-            *param_7 = *param_7 + 1;
-            uVar4 = __restgprlr_26(1);
-            return (bool)uVar4;
+        if (s_lbCacheStats[LVar2][iVar1]._padding_ == param_4->_padding_) {
+          lVar4._0_4_ = param_4->_padding_;
+          lVar4._4_4_ = param_4->_padding_;
+          lVar3._0_4_ = s_lbCacheStats[LVar2][iVar1]._padding_;
+          lVar3._4_4_ = s_lbCacheStats[LVar2][iVar1]._padding_;
+          if (lVar4 <= lVar3) {
+            return false;
           }
-          break;
+          *param_7 = *param_7 + 1;
+          return true;
         }
         iVar1 = iVar1 + 1;
-      } while (iVar1 < s_lbCacheStatsCount[LVar3]);
+      } while (iVar1 < s_lbCacheStatsCount[LVar2]);
     }
   }
-  uVar4 = __restgprlr_26(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 826CEAC8  LB_CombineUpdate  (leaderboard/com_leaderboard.cpp:1489)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LB_CombineUpdate(int param_1,ulong64 param_2,LeaderboardDef *param_3,
@@ -2024,132 +1955,124 @@ bool LB_CombineUpdate(int param_1,ulong64 param_2,LeaderboardDef *param_3,
   LbColumnDef *pLVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  LocalClientNum_t LVar6;
-  undefined1 uVar8;
-  int iVar7;
-  LeaderBoardRow<10> *pLVar9;
-  longlong lVar10;
-  longlong lVar11;
+  LocalClientNum_t LVar5;
+  int iVar6;
+  int *piVar7;
+  int iVar10;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar12;
+  int *piVar13;
   int iVar14;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  int iVar16;
-  undefined4 *puVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  longlong lVar20;
-  undefined4 uStack_84;
+  ulonglong uVar15;
+  longlong lVar16;
+  int iStack_84;
   int local_80 [32];
-  LbColumnDef *pLVar15;
+  LbColumnDef *pLVar11;
   
-  lVar10 = (longlong)param_5;
-  lVar11 = (longlong)(int)param_4;
-  iVar5 = __savegprlr_22(param_1);
-  LVar6 = CL_LocalClientNumFromControllerIndex(iVar5);
-  puVar17 = &uStack_84;
-  lVar20 = 10;
+  LVar5 = CL_LocalClientNumFromControllerIndex(param_1);
+  piVar13 = &iStack_84;
+  lVar16 = 10;
   do {
-    puVar17 = puVar17 + 1;
-    *puVar17 = 0x7fffffff;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  iVar7 = s_lbCacheStatsCount[LVar6];
-  uVar18 = lVar10 * 100 + (ulonglong)(uint)param_3->id;
-  iVar14 = 0;
-  if (0 < iVar7) {
+    piVar13 = piVar13 + 1;
+    *piVar13 = 0x7fffffff;
+    lVar16 = lVar16 + -1;
+  } while (lVar16 != 0);
+  iVar6 = s_lbCacheStatsCount[LVar5];
+  iVar14 = param_5 * 100 + param_3->id;
+  iVar10 = 0;
+  if (0 < iVar6) {
     do {
-      if ((ulonglong)(uint)s_lbCacheStats[LVar6][iVar14]._padding_ == (uVar18 & 0xffffffff)) break;
-      iVar14 = iVar14 + 1;
-    } while (iVar14 < iVar7);
+      if (s_lbCacheStats[LVar5][iVar10]._padding_ == iVar14) break;
+      iVar10 = iVar10 + 1;
+    } while (iVar10 < iVar6);
   }
-  if (iVar14 < iVar7) {
-    uVar19 = 0;
+  if (iVar10 < iVar6) {
+    uVar15 = 0;
     do {
-      pLVar9 = (LeaderBoardRow<10> *)lVar11;
-      iVar7 = LB_MakeRow(iVar5,param_3,pLVar9,(LbAggType)uVar19,param_2);
-      if ((iVar7 != 0) && (uVar12 = (ulonglong)(uint)param_3->columnCount, 0 < param_3->columnCount)
-         ) {
+      iVar6 = LB_MakeRow(param_1,param_3,param_4,(LbAggType)uVar15,param_2);
+      if ((iVar6 != 0) && (uVar8 = (ulonglong)(uint)param_3->columnCount, 0 < param_3->columnCount))
+      {
         pLVar2 = param_3->columns;
-        pLVar15 = pLVar2;
-        iVar7 = 0;
+        pLVar11 = pLVar2;
+        iVar6 = 0;
         do {
-          uVar13 = (ulonglong)(uint)pLVar15->id;
-          if ((uVar13 - 0xfff9 & 0xffffffff) < 7) {
-            if ((((int)(uVar13 - 0xfff9) != 0) && (uVar13 != 0xfffa)) && (uVar13 != 0xfffb)) {
-              if (uVar13 == 0xfffc) {
-                uVar13 = 9;
+          uVar9 = (ulonglong)(uint)pLVar11->id;
+          if ((uVar9 - 0xfff9 & 0xffffffff) < 7) {
+            if ((((int)(uVar9 - 0xfff9) != 0) && (uVar9 != 0xfffa)) && (uVar9 != 0xfffb)) {
+              if (uVar9 == 0xfffc) {
+                uVar9 = 9;
               }
               else {
-                if ((uVar13 == 0xfffd) || (uVar13 != 0xfffe)) goto LAB_826cec60;
-                uVar13 = 0;
+                if ((uVar9 == 0xfffd) || (uVar9 != 0xfffe)) goto LAB_826cec60;
+                uVar9 = 0;
               }
               goto LAB_826cec14;
             }
           }
           else {
 LAB_826cec14:
-            iVar4 = (int)((uVar13 & 0x3fffffff) << 2);
-            iVar3 = *(int *)(iVar4 + (LVar6 * 0x1e + iVar14) * 0x98 + -0x7bb694c8);
-            iVar16 = *(int *)((int)pLVar9->m_columns +
-                             (int)((uVar13 + 0x1c & 0xffffffff) << 2) + -0x70);
-            if ((iVar16 != 0x7fffffff) && ((uVar19 & 0xffffffff) < 4)) {
-              bVar1 = (LbAggType)uVar19 != LBAGG_TYPE_MIN;
-              if (uVar19 == 1 && bVar1) {
-                bVar1 = iVar16 < iVar3;
+            iVar4 = (int)((uVar9 & 0x3fffffff) << 2);
+            iVar3 = *(int *)(iVar4 + (LVar5 * 0x1e + iVar10) * 0x98 + -0x7bb694c8);
+            iVar12 = *(int *)((int)param_4->m_columns +
+                             (int)((uVar9 + 0x1c & 0xffffffff) << 2) + -0x70);
+            if ((iVar12 != 0x7fffffff) && ((uVar15 & 0xffffffff) < 4)) {
+              bVar1 = (LbAggType)uVar15 != LBAGG_TYPE_MIN;
+              if (uVar15 == 1 && bVar1) {
+                bVar1 = iVar12 < iVar3;
 LAB_826cec50:
                 if (bVar1) {
-                  iVar16 = iVar3;
+                  iVar12 = iVar3;
                 }
               }
               else {
-                if (uVar19 == 2 && bVar1) {
-                  *(int *)((int)local_80 + iVar4) = iVar3 + iVar16;
+                if (uVar15 == 2 && bVar1) {
+                  *(int *)((int)local_80 + iVar4) = iVar3 + iVar12;
                   goto LAB_826cec60;
                 }
                 if (!bVar1) {
-                  bVar1 = iVar3 < iVar16;
+                  bVar1 = iVar3 < iVar12;
                   goto LAB_826cec50;
                 }
               }
-              *(int *)((int)local_80 + iVar4) = iVar16;
+              *(int *)((int)local_80 + iVar4) = iVar12;
             }
           }
 LAB_826cec60:
-          uVar12 = uVar12 - 1;
-          pLVar15 = (LbColumnDef *)((int)&pLVar2[1].name + iVar7);
-          iVar7 = iVar7 + 0x28;
-        } while (uVar12 != 0);
+          uVar8 = uVar8 - 1;
+          pLVar11 = (LbColumnDef *)((int)&pLVar2[1].name + iVar6);
+          iVar6 = iVar6 + 0x28;
+        } while (uVar8 != 0);
       }
-      uVar19 = uVar19 + 1;
-    } while ((int)uVar19 < 4);
-    lVar10 = (longlong)local_80[0];
-    pLVar9->_padding_ = (int)((ulonglong)lVar10 >> 0x20);
-    pLVar9->_padding_ = (int)lVar10;
-    if (lVar10 != 0x7fffffff) {
-      lVar11 = lVar11 + 0x6c;
-      puVar17 = &uStack_84;
-      lVar10 = 10;
+      uVar15 = uVar15 + 1;
+    } while ((int)uVar15 < 4);
+    lVar16 = (longlong)local_80[0];
+    param_4->_padding_ = (int)((ulonglong)lVar16 >> 0x20);
+    param_4->_padding_ = (int)lVar16;
+    if (lVar16 != 0x7fffffff) {
+      piVar7 = &param_4->_padding_;
+      piVar13 = &iStack_84;
+      lVar16 = 10;
       do {
-        puVar17 = puVar17 + 1;
-        lVar11 = lVar11 + 4;
-        *(undefined4 *)lVar11 = *puVar17;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      pLVar9->_padding_ = (int)uVar18;
-      pLVar9->_padding_ = 0;
+        piVar13 = piVar13 + 1;
+        piVar7 = piVar7 + 1;
+        *piVar7 = *piVar13;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      param_4->_padding_ = iVar14;
+      param_4->_padding_ = 0;
       *param_6 = *param_6 + 1;
-      uVar8 = __restgprlr_22(1);
-      return (bool)uVar8;
+      return true;
     }
   }
-  uVar8 = __restgprlr_22(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
 // 826CECF0  LB_UploadPlayerData_Platform  (leaderboard/com_leaderboard.cpp:1584)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool LB_UploadPlayerData_Platform(int param_1)
@@ -2157,26 +2080,25 @@ bool LB_UploadPlayerData_Platform(int param_1)
 {
   LeaderboardDef *pLVar1;
   bdWriteType bVar2;
+  bool bVar8;
   int iVar3;
-  undefined1 uVar10;
   int iVar4;
   int iVar5;
-  int iVar6;
-  overlappedTask *poVar7;
-  taskCompleteResults tVar8;
-  undefined4 *puVar11;
-  undefined1 *puVar12;
-  LeaderboardDef **ppLVar13;
-  int iVar14;
-  bool *pbVar15;
-  ulonglong uVar16;
-  uint uVar17;
-  bdWriteType *pbVar18;
-  undefined **ppuVar19;
-  LbAggType LVar20;
-  uint uVar21;
-  longlong lVar22;
-  bdStatsInfo *pbVar23;
+  overlappedTask *poVar6;
+  taskCompleteResults tVar7;
+  undefined4 *puVar9;
+  undefined1 *puVar10;
+  LeaderboardDef **ppLVar11;
+  int iVar12;
+  bool *pbVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  bdWriteType *pbVar16;
+  undefined **ppuVar17;
+  LbAggType LVar18;
+  uint uVar19;
+  longlong lVar20;
+  bdStatsInfo *pbVar21;
   uint local_3db0 [2];
   ulong64 local_3da8;
   undefined **local_3da0;
@@ -2185,170 +2107,158 @@ bool LB_UploadPlayerData_Platform(int param_1)
   LeaderBoardRow<10> LStack_3c98;
   LeaderBoardRow<10> local_3c00 [100];
   bdStatsInfo bStack_a0;
-  bool bVar9;
   
-  uVar16 = (ulonglong)param_1;
-  __savegprlr();
-  ppuVar19 = &LeaderBoardRow<10>::_vftable_;
-  pbVar23 = (bdStatsInfo *)local_3c00;
-  lVar22 = 99;
+  ppuVar17 = &LeaderBoardRow<10>::_vftable_;
+  pbVar21 = (bdStatsInfo *)local_3c00;
+  lVar20 = 99;
   local_3da0 = &LeaderBoardRow<10>::_vftable_;
   do {
-    bdStatsInfo::bdStatsInfo(pbVar23);
-    pbVar23->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
+    bdStatsInfo::bdStatsInfo(pbVar21);
+    pbVar21->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
     memset();
-    lVar22 = lVar22 + -1;
-    pbVar23 = (bdStatsInfo *)((int)(pbVar23 + 1) + 0x28);
-  } while (-1 < lVar22);
-  if (3 < (uVar16 & 0xffffffff)) {
+    lVar20 = lVar20 + -1;
+    pbVar21 = (bdStatsInfo *)((int)(pbVar21 + 1) + 0x28);
+  } while (-1 < lVar20);
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x643,0,
                     "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)uVar16;
-  bVar9 = dwGetOnlineUserID(iVar3,&local_3da8);
-  if (!bVar9) {
-    pbVar23 = &bStack_a0;
-    lVar22 = 99;
+  bVar8 = dwGetOnlineUserID(param_1,&local_3da8);
+  if (!bVar8) {
+    pbVar21 = &bStack_a0;
+    lVar20 = 99;
     do {
-      pbVar23 = (bdStatsInfo *)(pbVar23[-2].m_entityName + 0x20);
-      pbVar23->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
-      bdStatsInfo::~bdStatsInfo(pbVar23);
-      lVar22 = lVar22 + -1;
-    } while (-1 < lVar22);
-    uVar10 = 0;
-    __restgprlr();
-    return (bool)uVar10;
+      pbVar21 = (bdStatsInfo *)(pbVar21[-2].m_entityName + 0x20);
+      pbVar21->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
+      bdStatsInfo::~bdStatsInfo(pbVar21);
+      lVar20 = lVar20 + -1;
+    } while (-1 < lVar20);
+    return false;
   }
-  uVar21 = 0;
+  uVar19 = 0;
   local_3db0[0] = 0;
-  iVar4 = LiveStorage_PlayerDataGetIntByName(iVar3,"prestige");
-  iVar14 = 0;
+  iVar3 = LiveStorage_PlayerDataGetIntByName(param_1,"prestige");
+  iVar12 = 0;
   if (0 < lbGlob.writeCount) {
-    ppLVar13 = lbGlob.writeLeaderboards;
+    ppLVar11 = lbGlob.writeLeaderboards;
     do {
-      pLVar1 = *ppLVar13;
-      iVar5 = I_stricmp(pLVar1->name,"LB_ACCOLADES");
-      if (iVar5 != 0) {
-        uVar17 = 0;
-        uVar16 = 1;
-        iVar5 = 0;
-        pbVar15 = &lbTrackTypes[0].prestige;
+      pLVar1 = *ppLVar11;
+      iVar4 = I_stricmp(pLVar1->name,"LB_ACCOLADES");
+      if (iVar4 != 0) {
+        uVar15 = 0;
+        uVar14 = 1;
+        iVar4 = 0;
+        pbVar13 = &lbTrackTypes[0].prestige;
         do {
-          if (((pLVar1->trackTypes & (uint)uVar16) != 0) && ((*pbVar15 == false || (iVar4 != 0)))) {
-            bVar9 = false;
+          if (((pLVar1->trackTypes & (uint)uVar14) != 0) && ((*pbVar13 == false || (iVar3 != 0)))) {
+            bVar8 = false;
             if (pLVar1->updateType == LBUPDATE_TYPE_COMBINE) {
-              bVar9 = LB_CombineUpdate(iVar3,local_3da8,pLVar1,
-                                       (LeaderBoardRow<10> *)((int)local_3c00 + uVar21 * 0x98),
-                                       uVar17,(int *)local_3db0);
-              uVar21 = local_3db0[0];
-              if (bVar9) {
-                LB_RowDebugPrint(iVar3,local_3da8,pLVar1,&LStack_3c98 + local_3db0[0]);
+              bVar8 = LB_CombineUpdate(param_1,local_3da8,pLVar1,
+                                       (LeaderBoardRow<10> *)((int)local_3c00 + uVar19 * 0x98),
+                                       uVar15,(int *)local_3db0);
+              uVar19 = local_3db0[0];
+              if (bVar8) {
+                LB_RowDebugPrint(param_1,local_3da8,pLVar1,&LStack_3c98 + local_3db0[0]);
               }
             }
             else {
-              LVar20 = LBAGG_TYPE_MIN;
-              pbVar18 = WriteTypeMap;
+              LVar18 = LBAGG_TYPE_MIN;
+              pbVar16 = WriteTypeMap;
               do {
                 if (pLVar1->updateType == LBUPDATE_TYPE_NORMAL) {
-                  iVar6 = LB_MakeRow(iVar3,pLVar1,
-                                     (LeaderBoardRow<10> *)((int)local_3c00 + uVar21 * 0x98),LVar20,
+                  iVar5 = LB_MakeRow(param_1,pLVar1,
+                                     (LeaderBoardRow<10> *)((int)local_3c00 + uVar19 * 0x98),LVar18,
                                      local_3da8);
-                  if (iVar6 == 0) {
-                    bVar9 = false;
+                  if (iVar5 == 0) {
+                    bVar8 = false;
                   }
                   else {
-                    local_3db0[0] = uVar21 + 1;
-                    bVar2 = *pbVar18;
-                    bVar9 = true;
-                    local_3c00[uVar21]._padding_ = pLVar1->id + iVar5;
-                    local_3c00[uVar21]._padding_ = bVar2;
-                    uVar21 = local_3db0[0];
+                    local_3db0[0] = uVar19 + 1;
+                    bVar2 = *pbVar16;
+                    bVar8 = true;
+                    local_3c00[uVar19]._padding_ = pLVar1->id + iVar4;
+                    local_3c00[uVar19]._padding_ = bVar2;
+                    uVar19 = local_3db0[0];
                   }
                 }
                 else if (pLVar1->updateType == LBUPDATE_TYPE_RANK) {
-                  bVar9 = LB_RankUpdate(iVar3,local_3da8,pLVar1,
-                                        (LeaderBoardRow<10> *)((int)local_3c00 + uVar21 * 0x98),
-                                        LVar20,uVar17,(int *)local_3db0);
-                  uVar21 = local_3db0[0];
+                  bVar8 = LB_RankUpdate(param_1,local_3da8,pLVar1,
+                                        (LeaderBoardRow<10> *)((int)local_3c00 + uVar19 * 0x98),
+                                        LVar18,uVar15,(int *)local_3db0);
+                  uVar19 = local_3db0[0];
                 }
-                if (bVar9 == true) {
-                  LB_RowDebugPrint(iVar3,local_3da8,pLVar1,&LStack_3c98 + uVar21);
+                if (bVar8 == true) {
+                  LB_RowDebugPrint(param_1,local_3da8,pLVar1,&LStack_3c98 + uVar19);
                 }
-                pbVar18 = pbVar18 + 1;
-                LVar20 = LVar20 + LBAGG_TYPE_MAX;
-                ppuVar19 = local_3da0;
-              } while ((int)pbVar18 < -0x7de5e248);
+                pbVar16 = pbVar16 + 1;
+                LVar18 = LVar18 + LBAGG_TYPE_MAX;
+                ppuVar17 = local_3da0;
+              } while ((int)pbVar16 < -0x7de5e248);
             }
           }
-          uVar17 = uVar17 + 1;
-          pbVar15 = pbVar15 + 8;
-          iVar5 = iVar5 + 100;
-          uVar16 = (uVar16 & 0x7fffffff) << 1 | uVar16 >> 0x1f;
-        } while (uVar17 < 8);
+          uVar15 = uVar15 + 1;
+          pbVar13 = pbVar13 + 8;
+          iVar4 = iVar4 + 100;
+          uVar14 = (uVar14 & 0x7fffffff) << 1 | uVar14 >> 0x1f;
+        } while (uVar15 < 8);
       }
-      iVar14 = iVar14 + 1;
-      ppLVar13 = ppLVar13 + 1;
-    } while (iVar14 < lbGlob.writeCount);
+      iVar12 = iVar12 + 1;
+      ppLVar11 = ppLVar11 + 1;
+    } while (iVar12 < lbGlob.writeCount);
   }
-  LB_MakeAccoladesRows(iVar3,local_3da8,local_3c00,(int *)local_3db0);
-  uVar21 = local_3db0[0];
-  uVar16 = (ulonglong)local_3db0[0];
+  LB_MakeAccoladesRows(param_1,local_3da8,local_3c00,(int *)local_3db0);
+  uVar19 = local_3db0[0];
+  uVar14 = (ulonglong)local_3db0[0];
   Com_DPrintf(0x16,"\nLeaderboard writes - General: %i, Accolade: %i.\n\n");
-  if (0 < (int)uVar21) {
-    poVar7 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar3,5);
-    if (poVar7 == (overlappedTask *)0x0) {
-      pbVar23 = &bStack_a0;
-      lVar22 = 99;
+  if (0 < (int)uVar19) {
+    poVar6 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,5);
+    if (poVar6 == (overlappedTask *)0x0) {
+      pbVar21 = &bStack_a0;
+      lVar20 = 99;
       do {
-        pbVar23 = (bdStatsInfo *)(pbVar23[-2].m_entityName + 0x20);
-        pbVar23->_padding_ = (int)ppuVar19;
-        bdStatsInfo::~bdStatsInfo(pbVar23);
-        lVar22 = lVar22 + -1;
-      } while (-1 < lVar22);
-      uVar10 = 0;
-      __restgprlr();
-      return (bool)uVar10;
+        pbVar21 = (bdStatsInfo *)(pbVar21[-2].m_entityName + 0x20);
+        pbVar21->_padding_ = (int)ppuVar17;
+        bdStatsInfo::~bdStatsInfo(pbVar21);
+        lVar20 = lVar20 + -1;
+      } while (-1 < lVar20);
+      return false;
     }
-    if (0 < (int)uVar21) {
-      puVar11 = &uStack_3d94;
-      puVar12 = (undefined1 *)local_3c00;
+    if (0 < (int)uVar19) {
+      puVar9 = &uStack_3d94;
+      puVar10 = (undefined1 *)local_3c00;
       do {
-        puVar11 = puVar11 + 1;
-        *puVar11 = puVar12;
-        puVar12 = puVar12 + 0x98;
-        uVar16 = uVar16 - 1;
-      } while (uVar16 != 0);
+        puVar9 = puVar9 + 1;
+        *puVar9 = puVar10;
+        puVar10 = puVar10 + 0x98;
+        uVar14 = uVar14 - 1;
+      } while (uVar14 != 0);
     }
-    dwWriteStats(poVar7,local_3d90,uVar21);
-    tVar8 = dwGetTaskStatus(poVar7);
-    if (tVar8 != TASK_NOTCOMPLETE) {
+    dwWriteStats(poVar6,local_3d90,uVar19);
+    tVar7 = dwGetTaskStatus(poVar6);
+    if (tVar7 != TASK_NOTCOMPLETE) {
       Com_PrintError(0x16,"dwWriteStats() failed in LB_UploadPlayerData()\n");
-      TaskManager_ClearTask(poVar7);
-      pbVar23 = &bStack_a0;
-      lVar22 = 99;
+      TaskManager_ClearTask(poVar6);
+      pbVar21 = &bStack_a0;
+      lVar20 = 99;
       do {
-        pbVar23 = (bdStatsInfo *)(pbVar23[-2].m_entityName + 0x20);
-        pbVar23->_padding_ = (int)ppuVar19;
-        bdStatsInfo::~bdStatsInfo(pbVar23);
-        lVar22 = lVar22 + -1;
-      } while (-1 < lVar22);
-      uVar10 = 0;
-      __restgprlr();
-      return (bool)uVar10;
+        pbVar21 = (bdStatsInfo *)(pbVar21[-2].m_entityName + 0x20);
+        pbVar21->_padding_ = (int)ppuVar17;
+        bdStatsInfo::~bdStatsInfo(pbVar21);
+        lVar20 = lVar20 + -1;
+      } while (-1 < lVar20);
+      return false;
     }
   }
-  pbVar23 = &bStack_a0;
-  lVar22 = 99;
+  pbVar21 = &bStack_a0;
+  lVar20 = 99;
   do {
-    pbVar23 = (bdStatsInfo *)(pbVar23[-2].m_entityName + 0x20);
-    pbVar23->_padding_ = (int)ppuVar19;
-    bdStatsInfo::~bdStatsInfo(pbVar23);
-    lVar22 = lVar22 + -1;
-  } while (-1 < lVar22);
-  uVar10 = 1;
-  __restgprlr();
-  return (bool)uVar10;
+    pbVar21 = (bdStatsInfo *)(pbVar21[-2].m_entityName + 0x20);
+    pbVar21->_padding_ = (int)ppuVar17;
+    bdStatsInfo::~bdStatsInfo(pbVar21);
+    lVar20 = lVar20 + -1;
+  } while (-1 < lVar20);
+  return true;
 }
 
 
@@ -2368,64 +2278,64 @@ bool LB_UploadTrackersToLeaderboardInProgress(void)
 
 // 826CC460  LB_UploadTrackersToLeaderboard  (leaderboard/com_leaderboard.cpp:1811)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool LB_UploadTrackersToLeaderboard(int param_1,bdStatsInfo **param_2,int param_3)
 
 {
-  int iVar1;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
-  undefined1 uVar4;
+  overlappedTask *poVar1;
+  taskCompleteResults tVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  poVar2 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar1,7);
-  dwWriteStats(poVar2,param_2,param_3);
-  tVar3 = dwGetTaskStatus(poVar2);
-  if (tVar3 != TASK_NOTCOMPLETE) {
+  poVar1 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,7);
+  dwWriteStats(poVar1,param_2,param_3);
+  tVar2 = dwGetTaskStatus(poVar1);
+  if (tVar2 != TASK_NOTCOMPLETE) {
     Com_PrintError(0x16,"dwWriteStats() failed in LB_ReportUserToLeaderboard()\n");
-    TaskManager_ClearTask(poVar2);
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    TaskManager_ClearTask(poVar1);
+    return false;
   }
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 826CC4E0  LB_UploadTrackersToLeaderboardComplete  (leaderboard/com_leaderboard.cpp:1828)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_UploadTrackersToLeaderboardComplete(int param_1)
 
 {
-  overlappedTask *poVar1;
-  uint uVar2;
-  taskCompleteResults tVar3;
+  taskCompleteResults tVar1;
+  overlappedTask *poVar2;
   
-  uVar2 = __savegprlr_29(param_1);
-  poVar1 = lbGlob.tasks.tasks + uVar2;
-  if (0x1f < uVar2) {
+  poVar2 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x727,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar2].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x728,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar2].type != 7) {
+  if (lbGlob.tasks.tasks[param_1].type != 7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x729,0,"%s");
   }
-  tVar3 = dwWriteStatsComplete(poVar1);
-  if (tVar3 != TASK_NOTCOMPLETE) {
-    TaskManager_ClearTask(poVar1);
+  tVar1 = dwWriteStatsComplete(poVar2);
+  if (tVar1 != TASK_NOTCOMPLETE) {
+    TaskManager_ClearTask(poVar2);
   }
-  tVar3 = __restgprlr_29(tVar3);
-  return tVar3;
+  return tVar1;
 }
 
 
 // 826D0238  LB_CheckOngoingTasks  (leaderboard/com_leaderboard.cpp:1848)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2438,7 +2348,6 @@ void LB_CheckOngoingTasks(void)
   uchar *puVar4;
   int iVar5;
   
-  __savegprlr_16();
   iVar5 = 0;
   puVar4 = &lbGlob.tasks.tasks[0].controllerIndex;
   do {
@@ -2523,7 +2432,6 @@ LAB_826d035c:
         s_lbCacheRequest = false;
         LB_CacheLeaderboardValues();
       }
-      __restgprlr_16();
       return;
     }
   } while( true );
@@ -2532,6 +2440,8 @@ LAB_826d035c:
 
 // 826D04F0  LB_EndOngoingTasks  (leaderboard/com_leaderboard.cpp:1995)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2546,12 +2456,9 @@ void LB_EndOngoingTasks(void)
   int iVar5;
   uchar *puVar7;
   
-  __savegprlr();
   iVar1 = Sys_Milliseconds();
   bVar6 = TaskManager_AnyTaskInProgress(&lbGlob.tasks);
   if (!bVar6) {
-LAB_826d07f4:
-    __restgprlr();
     return;
   }
   do {
@@ -2642,11 +2549,10 @@ LAB_826d0634:
     iVar5 = Sys_Milliseconds();
     if (999 < iVar5 - iVar1) {
       Com_PrintWarning(0x16,"Aborting LB_EndOngoingTasks...\n");
-      goto LAB_826d07f4;
+      return;
     }
     bVar6 = TaskManager_AnyTaskInProgress(&lbGlob.tasks);
     if (!bVar6) {
-      __restgprlr();
       return;
     }
   } while( true );
@@ -2718,121 +2624,107 @@ void ColumnIDToDemonwareID(int *param_1)
 
 // 826CF228  LB_CalculateUIValue  (leaderboard/com_leaderboard.cpp:2063)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LB_CalculateUIValue(LeaderBoardRow<10> *param_1,int param_2,int param_3,int param_4)
 
 {
   uint uVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  ulonglong uVar2;
   
-  lVar3 = (longlong)param_4;
-  uVar4 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar2 = __savegprlr_27(param_1,uVar5,uVar4,lVar3);
-  if ((uVar5 & 0xffffffff) == 0xfffe) {
-    uVar5 = 0;
+  if (param_2 == 0xfffe) {
+    param_2 = 0;
   }
-  else if ((uVar5 & 0xffffffff) == 0xfffc) {
-    uVar5 = 9;
+  else if (param_2 == 0xfffc) {
+    param_2 = 9;
   }
-  if ((uVar4 & 0xffffffff) == 0xfffe) {
-    uVar4 = 0;
+  if (param_3 == 0xfffe) {
+    param_3 = 0;
   }
-  else if ((uVar4 & 0xffffffff) == 0xfffc) {
-    uVar4 = 9;
+  else if (param_3 == 0xfffc) {
+    param_3 = 9;
   }
-  if (9 < (uVar5 & 0xffffffff)) {
+  if (9 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x816,0,"colX doesn\'t index row->getNumColumns()\n\t%i not in [0, %i)");
   }
-  if (9 < (uVar4 & 0xffffffff)) {
+  if (9 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x817,0,"colY doesn\'t index row->getNumColumns()\n\t%i not in [0, %i)");
   }
-  uVar1 = *(uint *)((int)((uVar4 + 0x1c & 0xffffffff) << 2) + iVar2);
-  uVar4 = (ulonglong)uVar1;
-  if (uVar1 == 0) {
-    uVar4 = 1;
+  uVar2 = (ulonglong)(uint)param_1->m_columns[param_3];
+  if (param_1->m_columns[param_3] == 0) {
+    uVar2 = 1;
   }
-  uVar5 = (longlong)*(int *)((int)((uVar5 + 0x1c & 0xffffffff) << 2) + iVar2) * (longlong)(int)lVar3
-  ;
-  trapWord(6,uVar4,0);
-  trapWord(5,uVar4 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar2 = __restgprlr_27((int)uVar5 / (int)uVar4);
-  return iVar2;
+  uVar1 = param_1->m_columns[param_2] * param_4;
+  trapWord(6,uVar2,0);
+  trapWord(5,uVar2 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
+           0xffff);
+  return (int)uVar1 / (int)uVar2;
 }
 
 
 // 826CF320  LB_GetXUserCol  (leaderboard/com_leaderboard.cpp:2084)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int LB_GetXUserCol(LeaderBoardRow<10> *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x827,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0xfffe) {
-    iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 0x70));
-    return iVar1;
+  if (param_2 == 0xfffe) {
+    return param_1->m_columns[0];
   }
-  if (9 < (uVar2 & 0xffffffff)) {
+  if (9 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x82e,0,"index doesn\'t index row->getNumColumns()\n\t%i not in [0, %i)");
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)((int)((uVar2 + 0x1c & 0xffffffff) << 2) + iVar1));
-  return iVar1;
+  return param_1->m_columns[param_2];
 }
 
 
 // 826CF3C0  LB_GetXUserColExt  (leaderboard/com_leaderboard.cpp:2100)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int LB_GetXUserColExt(LeaderBoardRow<10> *param_1,LbColumnDef *param_2)
 
 {
   uint uVar1;
-  LeaderBoardRow<10> *pLVar2;
-  int iVar3;
+  int iVar2;
   
-  pLVar2 = (LeaderBoardRow<10> *)__savegprlr_29(param_1);
-  if (pLVar2 == (LeaderBoardRow<10> *)0x0) {
+  if (param_1 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x837,0,"%s");
   }
   uVar1 = param_2->id;
   if (uVar1 - 0xfffa < 5) {
     if (uVar1 == 0xfffa) {
-      iVar3 = LB_CalculateUIValue(pLVar2,param_2->uiCalColX,param_2->uiCalColY,1);
-      iVar3 = __restgprlr_29(iVar3);
-      return iVar3;
+      iVar2 = LB_CalculateUIValue(param_1,param_2->uiCalColX,param_2->uiCalColY,1);
+      return iVar2;
     }
     if (uVar1 == 0xfffb) {
-      iVar3 = LB_CalculateUIValue(pLVar2,param_2->uiCalColX,param_2->uiCalColY,1000);
-      iVar3 = __restgprlr_29(iVar3);
-      return iVar3;
+      iVar2 = LB_CalculateUIValue(param_1,param_2->uiCalColX,param_2->uiCalColY,1000);
+      return iVar2;
     }
     if (uVar1 == 0xfffc) {
-      iVar3 = __restgprlr_29(pLVar2->m_columns[9]);
-      return iVar3;
+      return param_1->m_columns[9];
     }
     if (uVar1 != 0xfffd) {
-      iVar3 = __restgprlr_29(pLVar2->m_columns[0]);
-      return iVar3;
+      return param_1->m_columns[0];
     }
   }
   if (9 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x84c,0,"index doesn\'t index row->getNumColumns()\n\t%i not in [0, %i)");
   }
-  iVar3 = __restgprlr_29(pLVar2->m_columns[uVar1]);
-  return iVar3;
+  return param_1->m_columns[uVar1];
 }
 
 
@@ -2852,175 +2744,165 @@ char * HandleNumber(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **
 
 // 826CF518  HandleTime  (leaderboard/com_leaderboard.cpp:2138)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * HandleTime(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **param_3)
 
 {
-  LbColumnDef *pLVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  int iVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pLVar1 = (LbColumnDef *)__savegprlr_28(param_1,uVar4,param_3);
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x85d,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x85e,0,"%s");
   }
-  iVar2 = LB_GetXUserColExt((LeaderBoardRow<10> *)uVar4,pLVar1);
-  pcVar3 = LB_HandleTime(pLVar1,iVar2);
-  pcVar3 = (char *)__restgprlr_28(pcVar3);
-  return pcVar3;
+  iVar1 = LB_GetXUserColExt(param_2,param_1);
+  pcVar2 = LB_HandleTime(param_1,iVar1);
+  return pcVar2;
 }
 
 
 // 826CF5A8  HandleTimeFull  (leaderboard/com_leaderboard.cpp:2150)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * HandleTimeFull(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **param_3)
 
 {
-  LbColumnDef *pLVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  int iVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pLVar1 = (LbColumnDef *)__savegprlr_28(param_1,uVar4,param_3);
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x869,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x86a,0,"%s");
   }
-  iVar2 = LB_GetXUserColExt((LeaderBoardRow<10> *)uVar4,pLVar1);
-  pcVar3 = LB_HandleTimeFull(pLVar1,iVar2);
-  pcVar3 = (char *)__restgprlr_28(pcVar3);
-  return pcVar3;
+  iVar1 = LB_GetXUserColExt(param_2,param_1);
+  pcVar2 = LB_HandleTimeFull(param_1,iVar1);
+  return pcVar2;
 }
 
 
 // 826CF638  HandleLevelDisplay  (leaderboard/com_leaderboard.cpp:2162)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * HandleLevelDisplay(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **param_3)
 
 {
-  LbColumnDef *pLVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  int iVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pLVar1 = (LbColumnDef *)__savegprlr_28(param_1,uVar4,param_3);
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x875,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x876,0,"%s");
   }
-  iVar2 = LB_GetXUserCol((LeaderBoardRow<10> *)uVar4,pLVar1->id);
-  pcVar3 = LB_HandleLevelDisplay(pLVar1,iVar2);
-  pcVar3 = (char *)__restgprlr_28(pcVar3);
-  return pcVar3;
+  iVar1 = LB_GetXUserCol(param_2,param_1->id);
+  pcVar2 = LB_HandleLevelDisplay(param_1,iVar1);
+  return pcVar2;
 }
 
 
 // 826CF6C8  HandleLevelIcon  (leaderboard/com_leaderboard.cpp:2174)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 char * HandleLevelIcon(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **param_3)
 
 {
-  LbColumnDef *pLVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  char *pcVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pLVar1 = (LbColumnDef *)__savegprlr_26(param_1);
   if (lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x882,0,"%s");
   }
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x883,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x884,0,"%s");
   }
   if ((-1 < (lbGlob.leaderboard.lbDef)->prestigeColId) && (-1 < (lbGlob.leaderboard.lbDef)->xpColId)
      ) {
-    iVar2 = LB_GetXUserCol((LeaderBoardRow<10> *)uVar5,(lbGlob.leaderboard.lbDef)->prestigeColId);
-    iVar3 = LB_GetXUserCol((LeaderBoardRow<10> *)uVar5,(lbGlob.leaderboard.lbDef)->xpColId);
-    pcVar4 = LB_HandleLevelIcon(pLVar1,iVar3,iVar2,param_3);
-    pcVar4 = (char *)__restgprlr_26(pcVar4);
-    return pcVar4;
+    iVar1 = LB_GetXUserCol(param_2,(lbGlob.leaderboard.lbDef)->prestigeColId);
+    iVar2 = LB_GetXUserCol(param_2,(lbGlob.leaderboard.lbDef)->xpColId);
+    pcVar3 = LB_HandleLevelIcon(param_1,iVar2,iVar1,param_3);
+    return pcVar3;
   }
-  pcVar4 = (char *)__restgprlr_26(0xffffffff820068af);
-  return pcVar4;
+  return "";
 }
 
 
 // 826CF7D0  HandlePercent  (leaderboard/com_leaderboard.cpp:2193)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * HandlePercent(LbColumnDef *param_1,LeaderBoardRow<10> *param_2,Material **param_3)
 
 {
-  LbColumnDef *pLVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  int iVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pLVar1 = (LbColumnDef *)__savegprlr_28(param_1,uVar4,param_3);
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x894,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (LeaderBoardRow<10> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x895,0,"%s");
   }
-  iVar2 = LB_GetXUserColExt((LeaderBoardRow<10> *)uVar4,pLVar1);
-  pcVar3 = LB_HandlePercent(pLVar1,iVar2);
-  pcVar3 = (char *)__restgprlr_28(pcVar3);
-  return pcVar3;
+  iVar1 = LB_GetXUserColExt(param_2,param_1);
+  pcVar2 = LB_HandlePercent(param_1,iVar1);
+  return pcVar2;
 }
 
 
 // 826CC5E8  PrepareFacebookUserNameForUI  (leaderboard/com_leaderboard.cpp:2218)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PrepareFacebookUserNameForUI(LocalClientNum_t param_1,char *param_2)
 
 {
-  char *pcVar1;
-  bool bVar2;
+  bool bVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1,param_2);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x8ad,0,"%s");
   }
-  I_strncpyz(facebookUserName,pcVar1,0x400);
-  bVar2 = MakeUTF8NameSafeForAllLanguages(facebookUserName,0x400);
-  facebookUserName[0] = -bVar2 & facebookUserName[0];
-  pcVar1 = (char *)__restgprlr_29(0xffffffff8449b2c0);
-  return pcVar1;
+  I_strncpyz(facebookUserName,(char *)param_1,0x400);
+  bVar1 = MakeUTF8NameSafeForAllLanguages(facebookUserName,0x400);
+  facebookUserName[0] = -bVar1 & facebookUserName[0];
+  return facebookUserName;
 }
 
 
 // 826CF860  LB_FeederItemText_Platform  (leaderboard/com_leaderboard.cpp:2232)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * LB_FeederItemText_Platform
@@ -3028,75 +2910,69 @@ char * LB_FeederItemText_Platform
 
 {
   LeaderBoardRow<10> *pLVar1;
-  LocalClientNum_t LVar3;
-  bdLeaderBoardResult<LeaderBoardRow<10>,100> *pbVar4;
-  char *pcVar5;
+  bdLeaderBoardResult<LeaderBoardRow<10>,100> *pbVar2;
+  int iVar3;
+  char *pcVar4;
+  Material *pMVar5;
   int iVar6;
   char *pcVar7;
-  ulonglong uVar2;
-  Material *pMVar8;
-  int iVar9;
-  ulong64 *puVar10;
-  longlong lVar11;
-  int iVar12;
-  ulonglong uVar13;
-  ulong64 uVar14;
-  ulong64 *puVar15;
-  ulong64 *puVar16;
-  longlong lVar17;
+  ulong64 *puVar8;
+  longlong lVar9;
+  int iVar10;
+  ulonglong uVar11;
+  ulong64 uVar12;
+  ulong64 *puVar13;
+  ulong64 *puVar14;
+  longlong lVar15;
   ulong64 local_70 [14];
   
-  uVar2 = (ulonglong)param_2;
-  LVar3 = __savegprlr_20(param_1);
-  pbVar4 = LB_UpdateLeaderboard(LVar3,(int)uVar2);
+  pbVar2 = LB_UpdateLeaderboard(param_1,param_2);
   if (lbGlob.leaderboard.isUpdating != false) {
-    pcVar5 = (char *)__restgprlr_20(0xffffffff820068af);
-    return pcVar5;
+    return "";
   }
-  if ((ulonglong)lbGlob.leaderboard.userStats.totalResults <= (uVar2 & 0xffffffff)) {
+  if (lbGlob.leaderboard.userStats.totalResults <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x8c6,0,
                     "index doesn\'t index lbGlob.leaderboard.userStats.totalResults\n\t%i not in [0, %i)"
                    );
   }
-  uVar13 = (ulonglong)(uint)lbGlob.leaderboard.offset;
+  uVar11 = (ulonglong)(uint)lbGlob.leaderboard.offset;
   lbGlob.feederText[0] = '\0';
-  if ((longlong)(uVar2 - uVar13) < 0) {
+  if ((longlong)((longlong)param_2 - uVar11) < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x8ca,0,"%s");
-    uVar13 = (ulonglong)(uint)lbGlob.leaderboard.offset;
+    uVar11 = (ulonglong)(uint)lbGlob.leaderboard.offset;
   }
-  lVar17 = (uVar2 - uVar13) * 0x98 + (longlong)(int)pbVar4;
-  if (lVar17 == 0) {
+  lVar15 = ((longlong)param_2 - uVar11) * 0x98 + (longlong)(int)pbVar2;
+  if (lVar15 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0x8cd,0,"%s");
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  iVar9 = param_3->id;
-  pLVar1 = (LeaderBoardRow<10> *)lVar17;
-  if (8 < iVar9 - 0xfff7U) goto LAB_826cffd4;
-  if (iVar9 == 0xfff7) {
-    uVar14 = *(ulong64 *)(pLVar1->m_columns + 7);
-    if (uVar14 != 0) {
-      iVar9 = CL_ControllerIndexFromClientNum(LVar3);
-      dwGetOnlineUserID(iVar9,local_70);
-      if (uVar14 != local_70[0]) {
-        iVar6 = 0;
-        puVar10 = &g_FacebookFriendStore[iVar9].facebookFriends[0].m_userID;
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
+  iVar6 = param_3->id;
+  pLVar1 = (LeaderBoardRow<10> *)lVar15;
+  if (8 < iVar6 - 0xfff7U) goto LAB_826cffd4;
+  if (iVar6 == 0xfff7) {
+    uVar12 = *(ulong64 *)(pLVar1->m_columns + 7);
+    if (uVar12 != 0) {
+      iVar6 = CL_ControllerIndexFromClientNum(param_1);
+      dwGetOnlineUserID(iVar6,local_70);
+      if (uVar12 != local_70[0]) {
+        iVar3 = 0;
+        puVar8 = &g_FacebookFriendStore[iVar6].facebookFriends[0].m_userID;
         do {
-          if ((uVar14 == *puVar10) && (iVar9 = 0, 0 < s_teamUserInfoCount)) {
-            puVar16 = &s_teamUserInfos[0].m_userID;
+          if ((uVar12 == *puVar8) && (iVar6 = 0, 0 < s_teamUserInfoCount)) {
+            puVar14 = &s_teamUserInfos[0].m_userID;
             do {
-              if (*puVar16 == uVar14) goto LAB_826cff00;
-              iVar9 = iVar9 + 1;
-              puVar16 = puVar16 + 10;
-            } while (iVar9 < s_teamUserInfoCount);
+              if (*puVar14 == uVar12) goto LAB_826cff00;
+              iVar6 = iVar6 + 1;
+              puVar14 = puVar14 + 10;
+            } while (iVar6 < s_teamUserInfoCount);
           }
-          iVar6 = iVar6 + 1;
-          puVar10 = puVar10 + 0x24;
-          if (99 < iVar6) {
-            pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-            return pcVar5;
+          iVar3 = iVar3 + 1;
+          puVar8 = puVar8 + 0x24;
+          if (99 < iVar3) {
+            return lbGlob.feederText;
           }
         } while( true );
       }
@@ -3104,78 +2980,70 @@ char * LB_FeederItemText_Platform
     }
     goto LAB_826cf9a0;
   }
-  if (iVar9 == 0xfff8) {
+  if (iVar6 == 0xfff8) {
 LAB_826cff00:
-    pMVar8 = Material_RegisterHandle("facebook",3);
-    *param_4 = pMVar8;
-    pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-    return pcVar5;
+    pMVar5 = Material_RegisterHandle("facebook",3);
+    *param_4 = pMVar5;
+    return lbGlob.feederText;
   }
-  if (iVar9 == 0xfff9) {
+  if (iVar6 == 0xfff9) {
     if ((com_wideScreen != (dvar_t *)0x0) && ((com_wideScreen->current).enabled == false)) {
       Com_sprintf(lbGlob.feederText,0xa3,"");
-      pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-      return pcVar5;
+      return lbGlob.feederText;
     }
-    uVar14 = *(ulong64 *)(pLVar1->m_columns + 7);
-    if (uVar14 != 0) {
+    uVar12 = *(ulong64 *)(pLVar1->m_columns + 7);
+    if (uVar12 != 0) {
       if (lbGlob.leaderboard.filter == 4) {
-        puVar10 = local_70;
-        dwGetOnlineUserID(iVar6,puVar10);
-        if (uVar14 == local_70[0]) {
-          pcVar5 = Facebook_GetUsersName(iVar6);
-          PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar5,(char *)puVar10);
+        puVar8 = local_70;
+        dwGetOnlineUserID(iVar3,puVar8);
+        if (uVar12 == local_70[0]) {
+          pcVar7 = Facebook_GetUsersName(iVar3);
+          PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar7,(char *)puVar8);
           Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-          pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-          return pcVar5;
+          return lbGlob.feederText;
         }
-        iVar9 = 0;
-        puVar16 = &g_FacebookFriendStore[iVar6].facebookFriends[0].m_userID;
+        iVar6 = 0;
+        puVar14 = &g_FacebookFriendStore[iVar3].facebookFriends[0].m_userID;
         do {
-          if ((uVar14 == *puVar16) && (iVar12 = 0, 0 < s_teamUserInfoCount)) {
-            puVar15 = &s_teamUserInfos[0].m_userID;
+          if ((uVar12 == *puVar14) && (iVar10 = 0, 0 < s_teamUserInfoCount)) {
+            puVar13 = &s_teamUserInfos[0].m_userID;
             do {
-              if (*puVar15 == uVar14) {
+              if (*puVar13 == uVar12) {
                 PrepareFacebookUserNameForUI
-                          (iVar9 * 0x120 + iVar6 * 0x70a0 + 0x8451e0b0,(char *)puVar10);
+                          (iVar6 * 0x120 + iVar3 * 0x70a0 + 0x8451e0b0,(char *)puVar8);
                 Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-                pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-                return pcVar5;
+                return lbGlob.feederText;
               }
-              iVar12 = iVar12 + 1;
-              puVar15 = puVar15 + 10;
-            } while (iVar12 < s_teamUserInfoCount);
+              iVar10 = iVar10 + 1;
+              puVar13 = puVar13 + 10;
+            } while (iVar10 < s_teamUserInfoCount);
           }
-          iVar9 = iVar9 + 1;
-          puVar16 = puVar16 + 0x24;
-        } while (iVar9 < 100);
+          iVar6 = iVar6 + 1;
+          puVar14 = puVar14 + 0x24;
+        } while (iVar6 < 100);
       }
-      uVar2 = 0;
+      iVar6 = 0;
       if (0 < s_teamUserInfoCount) {
-        puVar10 = &s_teamUserInfos[0].m_userID;
+        puVar8 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar10 == uVar14) {
-            pcVar5 = (char *)__restgprlr_20((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 +
-                                            -0x7bb6c008);
-            return pcVar5;
+          if (*puVar8 == uVar12) {
+            return s_teamUserInfos[iVar6].m_userName;
           }
-          uVar2 = uVar2 + 1;
-          puVar10 = puVar10 + 10;
-        } while ((int)uVar2 < s_teamUserInfoCount);
+          iVar6 = iVar6 + 1;
+          puVar8 = puVar8 + 10;
+        } while (iVar6 < s_teamUserInfoCount);
       }
     }
-    pcVar5 = UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
-    pcVar5 = (char *)__restgprlr_20(pcVar5);
-    return pcVar5;
+    pcVar7 = UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
+    return pcVar7;
   }
-  if (((iVar9 == 0xfffa) || (iVar9 == 0xfffb)) || (iVar9 == 0xfffc)) {
+  if (((iVar6 == 0xfffa) || (iVar6 == 0xfffb)) || (iVar6 == 0xfffc)) {
 LAB_826cffd4:
-    (*lbFeederItemTextHandlers[param_3->type])(param_3,pLVar1,param_4);
-    pcVar5 = (char *)__restgprlr_20();
-    return pcVar5;
+    pcVar7 = (*lbFeederItemTextHandlers[param_3->type])(param_3,pLVar1,param_4);
+    return pcVar7;
   }
-  if (iVar9 != 0xfffd) {
-    if (iVar9 != 0xfffe) {
+  if (iVar6 != 0xfffd) {
+    if (iVar6 != 0xfffe) {
       Com_sprintf(lbGlob.feederText,0xa3,"%i");
       goto LAB_826cf9a0;
     }
@@ -3183,53 +3051,53 @@ LAB_826cffd4:
   }
   Com_sprintf(lbGlob.feederText,0xa3,(char *)&pLVar1->_padding_);
   if (lbGlob.leaderboard.filter == 4) {
-    lVar17 = ZEXT48(&stack0x00000000) - 0x70;
-    dwGetOnlineUserID(iVar6,(ulong64 *)lVar17);
-    pcVar5 = (char *)lVar17;
-    uVar14._0_4_ = pLVar1->_padding_;
-    uVar14._4_4_ = pLVar1->_padding_;
-    if (uVar14 == local_70[0]) {
-      pcVar7 = Facebook_GetUsersName(iVar6);
-      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar7,pcVar5);
+    lVar15 = ZEXT48(&stack0x00000000) - 0x70;
+    dwGetOnlineUserID(iVar3,(ulong64 *)lVar15);
+    pcVar7 = (char *)lVar15;
+    uVar12._0_4_ = pLVar1->_padding_;
+    uVar12._4_4_ = pLVar1->_padding_;
+    if (uVar12 == local_70[0]) {
+      pcVar4 = Facebook_GetUsersName(iVar3);
+      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar4,pcVar7);
       Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
     }
     else {
-      iVar9 = 0;
+      iVar6 = 0;
       do {
-        lVar11._0_4_ = pLVar1->_padding_;
-        lVar11._4_4_ = pLVar1->_padding_;
-        if (lVar11 == *(longlong *)
-                       (g_FacebookFriendStore[iVar6].facebookFriends[0].m_userName + iVar9 + -8)) {
-          PrepareFacebookUserNameForUI(iVar9 + iVar6 * 0x70a0 + 0x8451e0b0,(char *)lVar17);
-          lVar17 = 0xa3;
+        lVar9._0_4_ = pLVar1->_padding_;
+        lVar9._4_4_ = pLVar1->_padding_;
+        if (lVar9 == *(longlong *)
+                      (g_FacebookFriendStore[iVar3].facebookFriends[0].m_userName + iVar6 + -8)) {
+          PrepareFacebookUserNameForUI(iVar6 + iVar3 * 0x70a0 + 0x8451e0b0,(char *)lVar15);
+          lVar15 = 0xa3;
           Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
         }
-        iVar9 = iVar9 + 0x120;
-      } while (iVar9 < 0x7080);
+        iVar6 = iVar6 + 0x120;
+      } while (iVar6 < 0x7080);
     }
   }
   if (((com_wideScreen != (dvar_t *)0x0) && ((com_wideScreen->current).enabled == false)) &&
-     ((pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar5 != (char *)0x0 &&
-      (pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar5 != (char *)0x0)))) {
+     ((pcVar7 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar7 != (char *)0x0 &&
+      (pcVar7 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar7 != (char *)0x0)))) {
     if (*(ulong64 *)(pLVar1->m_columns + 7) == 0) {
       UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
     }
     else {
-      iVar9 = 0;
+      iVar6 = 0;
       if (0 < s_teamUserInfoCount) {
-        puVar10 = &s_teamUserInfos[0].m_userID;
+        puVar8 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar10 == *(ulong64 *)(pLVar1->m_columns + 7)) {
+          if (*puVar8 == *(ulong64 *)(pLVar1->m_columns + 7)) {
             Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
             break;
           }
-          iVar9 = iVar9 + 1;
-          puVar10 = puVar10 + 10;
-        } while (iVar9 < s_teamUserInfoCount);
+          iVar6 = iVar6 + 1;
+          puVar8 = puVar8 + 10;
+        } while (iVar6 < s_teamUserInfoCount);
       }
-      uVar2 = 0xffffffff844a0740;
+      uVar11 = 0xffffffff844a0740;
       strchr();
-      if ((uVar2 & 0xffffffff) != 0) goto LAB_826cfbbc;
+      if ((uVar11 & 0xffffffff) != 0) goto LAB_826cfbbc;
       UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
     }
     Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
@@ -3237,234 +3105,220 @@ LAB_826cffd4:
 LAB_826cfbbc:
   if (((lbGlob.leaderboard.filter == 4) && (com_wideScreen != (dvar_t *)0x0)) &&
      (((com_wideScreen->current).enabled == false &&
-      (((pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar5 != (char *)0x0 &&
-        (pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar5 != (char *)0x0)) &&
-       (uVar14 = *(ulong64 *)(pLVar1->m_columns + 7), uVar14 != 0)))))) {
-    puVar10 = local_70;
-    dwGetOnlineUserID(iVar6,puVar10);
-    if (uVar14 == local_70[0]) {
-      pcVar5 = Facebook_GetUsersName(iVar6);
-      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar5,(char *)puVar10);
+      (((pcVar7 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar7 != (char *)0x0 &&
+        (pcVar7 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar7 != (char *)0x0)) &&
+       (uVar12 = *(ulong64 *)(pLVar1->m_columns + 7), uVar12 != 0)))))) {
+    puVar8 = local_70;
+    dwGetOnlineUserID(iVar3,puVar8);
+    if (uVar12 == local_70[0]) {
+      pcVar7 = Facebook_GetUsersName(iVar3);
+      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar7,(char *)puVar8);
       Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-      pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-      return pcVar5;
+      return lbGlob.feederText;
     }
-    iVar9 = 0;
-    puVar16 = &g_FacebookFriendStore[iVar6].facebookFriends[0].m_userID;
+    iVar6 = 0;
+    puVar14 = &g_FacebookFriendStore[iVar3].facebookFriends[0].m_userID;
     do {
-      if ((uVar14 == *puVar16) && (iVar12 = 0, 0 < s_teamUserInfoCount)) {
-        puVar15 = &s_teamUserInfos[0].m_userID;
+      if ((uVar12 == *puVar14) && (iVar10 = 0, 0 < s_teamUserInfoCount)) {
+        puVar13 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar15 == uVar14) {
-            PrepareFacebookUserNameForUI
-                      (iVar9 * 0x120 + iVar6 * 0x70a0 + 0x8451e0b0,(char *)puVar10);
+          if (*puVar13 == uVar12) {
+            PrepareFacebookUserNameForUI(iVar6 * 0x120 + iVar3 * 0x70a0 + 0x8451e0b0,(char *)puVar8)
+            ;
             Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-            pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-            return pcVar5;
+            return lbGlob.feederText;
           }
-          iVar12 = iVar12 + 1;
-          puVar15 = puVar15 + 10;
-        } while (iVar12 < s_teamUserInfoCount);
+          iVar10 = iVar10 + 1;
+          puVar13 = puVar13 + 10;
+        } while (iVar10 < s_teamUserInfoCount);
       }
-      iVar9 = iVar9 + 1;
-      puVar16 = puVar16 + 0x24;
-    } while (iVar9 < 100);
-    pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-    return pcVar5;
+      iVar6 = iVar6 + 1;
+      puVar14 = puVar14 + 0x24;
+    } while (iVar6 < 100);
+    return lbGlob.feederText;
   }
 LAB_826cf9a0:
-  pcVar5 = (char *)__restgprlr_20(0xffffffff844a0740);
-  return pcVar5;
+  return lbGlob.feederText;
 }
 
 
 // 826D0800  LB_FeederItemText_Player  (leaderboard/com_leaderboard.cpp:2467)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * LB_FeederItemText_Player(LocalClientNum_t param_1,LbColumnDef *param_2,Material **param_3)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  bool bVar8;
+  int iVar3;
+  bool bVar7;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
   ulonglong uVar2;
-  Material *pMVar7;
-  ulong64 uVar9;
-  ulong64 *puVar10;
-  int iVar11;
-  int *piVar12;
-  int iVar13;
-  ulong64 *puVar14;
-  uint uVar15;
+  Material *pMVar6;
+  ulong64 uVar8;
+  ulong64 *puVar9;
+  int iVar10;
+  int *piVar11;
+  int iVar12;
+  ulong64 *puVar13;
+  uint uVar14;
   ulong64 local_70;
   ulong64 local_68 [13];
   
-  LVar3 = __savegprlr_22(param_1);
-  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-  bVar8 = dwGetOnlineUserID(iVar4,&local_70);
-  uVar9 = local_70;
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
+  bVar7 = dwGetOnlineUserID(iVar3,&local_70);
+  uVar8 = local_70;
   uVar1 = lbGlob.leaderboard.userStats.numResults;
-  if (bVar8) {
-    uVar15 = 0;
+  if (bVar7) {
+    uVar14 = 0;
     if (lbGlob.leaderboard.userStats.numResults != 0) {
-      piVar12 = &lbGlob.leaderboard.userStats.m_leaderBoardEntries[0]._padding_;
+      piVar11 = &lbGlob.leaderboard.userStats.m_leaderBoardEntries[0]._padding_;
       do {
-        if (*(ulong64 *)piVar12 == local_70) {
+        if (*(ulong64 *)piVar11 == local_70) {
           LeaderBoardRow<10>::operator=
                     (&lbGlob.leaderboard.playerStats,
-                     lbGlob.leaderboard.userStats.m_leaderBoardEntries + uVar15);
+                     lbGlob.leaderboard.userStats.m_leaderBoardEntries + uVar14);
           lbGlob.leaderboard.playerStatsLeaderboardID = (lbGlob.leaderboard.lbDef)->id;
           break;
         }
-        uVar15 = uVar15 + 1;
-        piVar12 = piVar12 + 0x26;
-      } while (uVar15 < lbGlob.leaderboard.userStats.numResults);
+        uVar14 = uVar14 + 1;
+        piVar11 = piVar11 + 0x26;
+      } while (uVar14 < lbGlob.leaderboard.userStats.numResults);
     }
-    if (((uVar15 == uVar1) &&
+    if (((uVar14 == uVar1) &&
         (lbGlob.leaderboard.playerStatsLeaderboardID != (lbGlob.leaderboard.lbDef)->id)) ||
-       (lbGlob.leaderboard.playerStats._8_8_ != uVar9)) {
+       (lbGlob.leaderboard.playerStats._8_8_ != uVar8)) {
       if (param_2->id != 0xfffd) {
-        pcVar5 = (char *)__restgprlr_22(0);
-        return pcVar5;
+        return (char *)0x0;
       }
-      pcVar5 = UI_SafeTranslateString("MENU_UNRANKED_CAPS");
-      pcVar5 = (char *)__restgprlr_22(pcVar5);
-      return pcVar5;
+      pcVar4 = UI_SafeTranslateString("MENU_UNRANKED_CAPS");
+      return pcVar4;
     }
   }
   lbGlob.feederText[0] = '\0';
-  iVar13 = param_2->id;
-  if (8 < iVar13 - 0xfff7U) goto LAB_826d0ee8;
-  if (iVar13 == 0xfff7) {
+  iVar12 = param_2->id;
+  if (8 < iVar12 - 0xfff7U) goto LAB_826d0ee8;
+  if (iVar12 == 0xfff7) {
     local_70 = CONCAT44(lbGlob.leaderboard.playerStats.m_columns[7],
                         lbGlob.leaderboard.playerStats.m_columns[8]);
     if (local_70 != 0) {
-      iVar13 = 0;
-      puVar10 = &g_FacebookFriendStore[iVar4].facebookFriends[0].m_userID;
+      iVar12 = 0;
+      puVar9 = &g_FacebookFriendStore[iVar3].facebookFriends[0].m_userID;
       do {
-        if ((local_70 == *puVar10) && (iVar4 = 0, 0 < s_teamUserInfoCount)) {
-          puVar14 = &s_teamUserInfos[0].m_userID;
+        if ((local_70 == *puVar9) && (iVar3 = 0, 0 < s_teamUserInfoCount)) {
+          puVar13 = &s_teamUserInfos[0].m_userID;
           do {
-            if (*puVar14 == local_70) goto LAB_826d0e30;
-            iVar4 = iVar4 + 1;
-            puVar14 = puVar14 + 10;
-          } while (iVar4 < s_teamUserInfoCount);
+            if (*puVar13 == local_70) goto LAB_826d0e30;
+            iVar3 = iVar3 + 1;
+            puVar13 = puVar13 + 10;
+          } while (iVar3 < s_teamUserInfoCount);
         }
-        iVar13 = iVar13 + 1;
-        puVar10 = puVar10 + 0x24;
-        if (99 < iVar13) {
-          pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-          return pcVar5;
+        iVar12 = iVar12 + 1;
+        puVar9 = puVar9 + 0x24;
+        if (99 < iVar12) {
+          return lbGlob.feederText;
         }
       } while( true );
     }
     goto LAB_826d0940;
   }
-  if (iVar13 == 0xfff8) {
+  if (iVar12 == 0xfff8) {
 LAB_826d0e30:
-    pMVar7 = Material_RegisterHandle("facebook",3);
-    *param_3 = pMVar7;
-    pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-    return pcVar5;
+    pMVar6 = Material_RegisterHandle("facebook",3);
+    *param_3 = pMVar6;
+    return lbGlob.feederText;
   }
-  if (iVar13 == 0xfff9) {
+  if (iVar12 == 0xfff9) {
     if ((com_wideScreen != (dvar_t *)0x0) && ((com_wideScreen->current).enabled == false)) {
       Com_sprintf(lbGlob.feederText,0xa3,"");
-      pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-      return pcVar5;
+      return lbGlob.feederText;
     }
     local_70 = CONCAT44(lbGlob.leaderboard.playerStats.m_columns[7],
                         lbGlob.leaderboard.playerStats.m_columns[8]);
     if (local_70 != 0) {
       if (lbGlob.leaderboard.filter == 4) {
-        dwGetOnlineUserID(iVar4,local_68);
+        dwGetOnlineUserID(iVar3,local_68);
         if (local_70 == local_68[0]) {
-          Facebook_GetUsersName(iVar4);
+          Facebook_GetUsersName(iVar3);
           Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-          pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-          return pcVar5;
+          return lbGlob.feederText;
         }
-        iVar13 = 0;
-        puVar10 = &g_FacebookFriendStore[iVar4].facebookFriends[0].m_userID;
+        iVar12 = 0;
+        puVar9 = &g_FacebookFriendStore[iVar3].facebookFriends[0].m_userID;
         do {
-          if ((local_70 == *puVar10) && (iVar4 = 0, 0 < s_teamUserInfoCount)) {
-            puVar14 = &s_teamUserInfos[0].m_userID;
+          if ((local_70 == *puVar9) && (iVar3 = 0, 0 < s_teamUserInfoCount)) {
+            puVar13 = &s_teamUserInfos[0].m_userID;
             do {
-              if (*puVar14 == local_70) {
+              if (*puVar13 == local_70) {
                 Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-                pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-                return pcVar5;
+                return lbGlob.feederText;
               }
-              iVar4 = iVar4 + 1;
-              puVar14 = puVar14 + 10;
-            } while (iVar4 < s_teamUserInfoCount);
+              iVar3 = iVar3 + 1;
+              puVar13 = puVar13 + 10;
+            } while (iVar3 < s_teamUserInfoCount);
           }
-          iVar13 = iVar13 + 1;
-          puVar10 = puVar10 + 0x24;
-        } while (iVar13 < 100);
+          iVar12 = iVar12 + 1;
+          puVar9 = puVar9 + 0x24;
+        } while (iVar12 < 100);
       }
-      uVar2 = 0;
+      iVar3 = 0;
       if (0 < s_teamUserInfoCount) {
-        puVar10 = &s_teamUserInfos[0].m_userID;
+        puVar9 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar10 == local_70) {
-            pcVar5 = (char *)__restgprlr_22((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 +
-                                            -0x7bb6c008);
-            return pcVar5;
+          if (*puVar9 == local_70) {
+            return s_teamUserInfos[iVar3].m_userName;
           }
-          uVar2 = uVar2 + 1;
-          puVar10 = puVar10 + 10;
-        } while ((int)uVar2 < s_teamUserInfoCount);
+          iVar3 = iVar3 + 1;
+          puVar9 = puVar9 + 10;
+        } while (iVar3 < s_teamUserInfoCount);
       }
     }
-    pcVar5 = UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
-    pcVar5 = (char *)__restgprlr_22(pcVar5);
-    return pcVar5;
+    pcVar4 = UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
+    return pcVar4;
   }
-  if (((iVar13 == 0xfffa) || (iVar13 == 0xfffb)) || (iVar13 == 0xfffc)) {
+  if (((iVar12 == 0xfffa) || (iVar12 == 0xfffb)) || (iVar12 == 0xfffc)) {
 LAB_826d0ee8:
-    (*lbFeederItemTextHandlers[param_2->type])(param_2,(LeaderBoardRow<10> *)0x844a0688,param_3);
-    pcVar5 = (char *)__restgprlr_22();
-    return pcVar5;
+    pcVar4 = (*lbFeederItemTextHandlers[param_2->type])
+                       (param_2,(LeaderBoardRow<10> *)0x844a0688,param_3);
+    return pcVar4;
   }
-  if (iVar13 != 0xfffd) {
-    if (iVar13 != 0xfffe) {
+  if (iVar12 != 0xfffd) {
+    if (iVar12 != 0xfffe) {
       Com_sprintf(lbGlob.feederText,0xa3,"%i");
       goto LAB_826d0940;
     }
     goto LAB_826d0ee8;
   }
-  pcVar5 = (char *)0xa3;
+  pcVar4 = (char *)0xa3;
   Com_sprintf(lbGlob.feederText,0xa3,(char *)&lbGlob.leaderboard.playerStats._padding_);
   if (lbGlob.leaderboard.filter == 4) {
-    pcVar6 = Facebook_GetUsersName(iVar4);
-    PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar6,pcVar5);
+    pcVar5 = Facebook_GetUsersName(iVar3);
+    PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar5,pcVar4);
     Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
   }
   if (((com_wideScreen != (dvar_t *)0x0) && ((com_wideScreen->current).enabled == false)) &&
-     ((pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar5 != (char *)0x0 &&
-      (pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar5 != (char *)0x0)))) {
+     ((pcVar4 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar4 != (char *)0x0 &&
+      (pcVar4 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar4 != (char *)0x0)))) {
     local_70 = CONCAT44(lbGlob.leaderboard.playerStats.m_columns[7],
                         lbGlob.leaderboard.playerStats.m_columns[8]);
     if (local_70 == 0) {
       UI_SafeTranslateString("MENU_SP_SPEC_OPS_GUEST_CAP");
     }
     else {
-      iVar13 = 0;
+      iVar12 = 0;
       if (0 < s_teamUserInfoCount) {
-        puVar10 = &s_teamUserInfos[0].m_userID;
+        puVar9 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar10 == local_70) {
+          if (*puVar9 == local_70) {
             Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
             break;
           }
-          iVar13 = iVar13 + 1;
-          puVar10 = puVar10 + 10;
-        } while (iVar13 < s_teamUserInfoCount);
+          iVar12 = iVar12 + 1;
+          puVar9 = puVar9 + 10;
+        } while (iVar12 < s_teamUserInfoCount);
       }
       uVar2 = 0xffffffff844a0740;
       strchr();
@@ -3476,166 +3330,148 @@ LAB_826d0ee8:
 LAB_826d0ae4:
   if (((lbGlob.leaderboard.filter == 4) && (com_wideScreen != (dvar_t *)0x0)) &&
      (((com_wideScreen->current).enabled == false &&
-      (((pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar5 != (char *)0x0 &&
-        (pcVar5 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar5 != (char *)0x0)) &&
+      (((pcVar4 = I_stristr((lbGlob.leaderboard.lbDef)->name,"lb_so"), pcVar4 != (char *)0x0 &&
+        (pcVar4 = I_stristr((lbGlob.leaderboard.lbDef)->name,"_team"), pcVar4 != (char *)0x0)) &&
        (local_70 = CONCAT44(lbGlob.leaderboard.playerStats.m_columns[7],
                             lbGlob.leaderboard.playerStats.m_columns[8]), local_70 != 0)))))) {
-    dwGetOnlineUserID(iVar4,local_68);
+    dwGetOnlineUserID(iVar3,local_68);
     if (local_70 == local_68[0]) {
-      uVar9 = local_70;
-      pcVar5 = Facebook_GetUsersName(iVar4);
-      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar5,(char *)uVar9);
+      uVar8 = local_70;
+      pcVar4 = Facebook_GetUsersName(iVar3);
+      PrepareFacebookUserNameForUI((LocalClientNum_t)pcVar4,(char *)uVar8);
       Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-      pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-      return pcVar5;
+      return lbGlob.feederText;
     }
-    iVar13 = 0;
-    puVar10 = &g_FacebookFriendStore[iVar4].facebookFriends[0].m_userID;
+    iVar12 = 0;
+    puVar9 = &g_FacebookFriendStore[iVar3].facebookFriends[0].m_userID;
     do {
-      if ((local_70 == *puVar10) && (iVar11 = 0, 0 < s_teamUserInfoCount)) {
-        puVar14 = &s_teamUserInfos[0].m_userID;
+      if ((local_70 == *puVar9) && (iVar10 = 0, 0 < s_teamUserInfoCount)) {
+        puVar13 = &s_teamUserInfos[0].m_userID;
         do {
-          if (*puVar14 == local_70) {
+          if (*puVar13 == local_70) {
             PrepareFacebookUserNameForUI
-                      (iVar13 * 0x120 + iVar4 * 0x70a0 + 0x8451e0b0,(char *)local_70);
+                      (iVar12 * 0x120 + iVar3 * 0x70a0 + 0x8451e0b0,(char *)local_70);
             Com_sprintf(lbGlob.feederText,0xa3,"%s\n%s%s");
-            pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-            return pcVar5;
+            return lbGlob.feederText;
           }
-          iVar11 = iVar11 + 1;
-          puVar14 = puVar14 + 10;
-        } while (iVar11 < s_teamUserInfoCount);
+          iVar10 = iVar10 + 1;
+          puVar13 = puVar13 + 10;
+        } while (iVar10 < s_teamUserInfoCount);
       }
-      iVar13 = iVar13 + 1;
-      puVar10 = puVar10 + 0x24;
-    } while (iVar13 < 100);
-    pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-    return pcVar5;
+      iVar12 = iVar12 + 1;
+      puVar9 = puVar9 + 0x24;
+    } while (iVar12 < 100);
+    return lbGlob.feederText;
   }
 LAB_826d0940:
-  pcVar5 = (char *)__restgprlr_22(0xffffffff844a0740);
-  return pcVar5;
+  return lbGlob.feederText;
 }
 
 
 // 826CC670  LB_GetCol  (leaderboard/com_leaderboard.cpp:2687)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool LB_GetCol(int param_1,char *param_2,char *param_3,ulong64 param_4,LbGetColData *param_5,
               overlappedTask *param_6)
 
 {
-  overlappedTask *poVar1;
-  int iVar2;
-  DWOnlineStatus DVar3;
-  LeaderboardDef *pLVar4;
-  LbColumnDef *pLVar5;
-  undefined1 uVar7;
-  taskCompleteResults tVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  DWOnlineStatus DVar1;
+  LeaderboardDef *pLVar2;
+  LbColumnDef *pLVar3;
+  taskCompleteResults tVar4;
   ulong64 uStack00000028;
   
-  uVar10 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
   uStack00000028 = param_4;
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xa82,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (LbGetColData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xa83,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_6 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xa84,0,"%s");
   }
-  DVar3 = dwGetLogOnStatus(iVar2);
-  if (((DVar3 == DW_LIVE_CONNECTED) && (uStack00000028 != 0)) &&
-     (pLVar4 = LB_LoadDef((char *)uVar8), pLVar4 != (LeaderboardDef *)0x0)) {
-    pLVar5 = LB_GetColumnByName(pLVar4,param_3);
-    *(LbColumnDef **)((int)uVar9 + 0x194) = pLVar5;
-    if (pLVar5 != (LbColumnDef *)0x0) {
-      poVar1 = (overlappedTask *)uVar10;
-      poVar1->data = *(void **)((int)uVar9 + 400);
-      dwReadStatsForUsers(poVar1,pLVar4->id,&stack0x00000028,1);
-      tVar6 = dwGetTaskStatus(poVar1);
-      if (tVar6 != TASK_NOTCOMPLETE) {
+  DVar1 = dwGetLogOnStatus(param_1);
+  if (((DVar1 == DW_LIVE_CONNECTED) && (uStack00000028 != 0)) &&
+     (pLVar2 = LB_LoadDef(param_2), pLVar2 != (LeaderboardDef *)0x0)) {
+    pLVar3 = LB_GetColumnByName(pLVar2,param_3);
+    param_5->lbColDef = pLVar3;
+    if (pLVar3 != (LbColumnDef *)0x0) {
+      param_6->data = param_5->userStats;
+      dwReadStatsForUsers(param_6,pLVar2->id,&stack0x00000028,1);
+      tVar4 = dwGetTaskStatus(param_6);
+      if (tVar4 != TASK_NOTCOMPLETE) {
         Com_PrintError(0x16,"dwReadStatsForUsers() failed.\n");
-        uVar7 = __restgprlr_25(0);
-        return (bool)uVar7;
+        return false;
       }
-      uVar7 = __restgprlr_25(1);
-      return (bool)uVar7;
+      return true;
     }
     Com_PrintError(1,"Unknown column name \'%s\' for leaderboard \'%s\'\n");
   }
-  uVar7 = __restgprlr_25(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 826CC7D0  LB_GetColComplete  (leaderboard/com_leaderboard.cpp:2724)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_GetColComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
+  taskCompleteResults tVar1;
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaa5,0,"%s");
   }
-  if (poVar1->active == false) {
+  if (param_1->active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaa6,0,"%s");
   }
-  tVar2 = dwReadStatsComplete(poVar1);
-  tVar2 = __restgprlr_29(tVar2);
-  return tVar2;
+  tVar1 = dwReadStatsComplete(param_1);
+  return tVar1;
 }
 
 
 // 826CC850  LB_GetColString  (leaderboard/com_leaderboard.cpp:2732)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * LB_GetColString(LbGetColData *param_1)
 
 {
-  LeaderBoardRow<10> *pLVar1;
+  bdLeaderBoardResult<LeaderBoardRow<10>,100> *pbVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
+  char *pcVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  if (*(int *)(*(int *)(iVar3 + 400) + 0x3b60) == 0) {
-    pcVar4 = (char *)__restgprlr_29(0xffffffff820068af);
-    return pcVar4;
+  if (param_1->userStats->numResults == 0) {
+    return "";
   }
   lbGlob.feederText[0] = '\0';
-  pLVar1 = *(LeaderBoardRow<10> **)(iVar3 + 400);
-  if (ZEXT48(pLVar1) == 0) {
+  pbVar1 = param_1->userStats;
+  if (pbVar1 == (bdLeaderBoardResult<LeaderBoardRow<10>,100> *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xab6,0,"%s");
   }
-  iVar2 = *(int *)(*(int *)(iVar3 + 0x194) + 4);
+  iVar2 = param_1->lbColDef->id;
   if (iVar2 != 0xfffd) {
     if (iVar2 != 0xffff) {
-      (*lbFeederItemTextHandlers[(*(LbColumnDef **)(iVar3 + 0x194))->type])
-                (*(LbColumnDef **)(iVar3 + 0x194),pLVar1,(Material **)0x0);
-      pcVar4 = (char *)__restgprlr_29();
-      return pcVar4;
+      pcVar3 = (*lbFeederItemTextHandlers[param_1->lbColDef->type])
+                         (param_1->lbColDef,pbVar1->m_leaderBoardEntries,(Material **)0x0);
+      return pcVar3;
     }
     Com_sprintf(lbGlob.feederText,0xa3,"%i");
-    pcVar4 = (char *)__restgprlr_29(0xffffffff844a0740);
-    return pcVar4;
+    return lbGlob.feederText;
   }
-  pcVar4 = (char *)__restgprlr_29(ZEXT48(pLVar1) + 0x28);
-  return pcVar4;
+  return (char *)&pbVar1->m_leaderBoardEntries[0]._padding_;
 }
 
 
@@ -3651,125 +3487,125 @@ void LB_ClearDWOverlappedTasks(int param_1)
 
 // 826CC950  LB_ReadPlayerBanComplete  (leaderboard/com_leaderboard.cpp:2768)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_ReadPlayerBanComplete(int param_1)
 
 {
   void *pvVar1;
-  overlappedTask *poVar2;
-  uint uVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  uVar3 = __savegprlr_27(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar3;
-  if (0x1f < uVar3) {
+  poVar3 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xad4,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar3].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xad5,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].type != 8) {
+  if (lbGlob.tasks.tasks[param_1].type != 8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xad6,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].data == (void *)0x0) {
+  if (lbGlob.tasks.tasks[param_1].data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xad7,0,"%s");
   }
-  tVar4 = dwReadStatsComplete(poVar2);
-  if (tVar4 != TASK_NOTCOMPLETE) {
-    pvVar1 = lbGlob.tasks.tasks[uVar3].data;
-    if (((pvVar1 != (void *)0x0) && (tVar4 == TASK_COMPLETE)) &&
+  tVar2 = dwReadStatsComplete(poVar3);
+  if (tVar2 != TASK_NOTCOMPLETE) {
+    pvVar1 = lbGlob.tasks.tasks[param_1].data;
+    if (((pvVar1 != (void *)0x0) && (tVar2 == TASK_COMPLETE)) &&
        (0 < *(int *)((int)pvVar1 + 0x3b60))) {
-      LiveAntiCheat_PlayerBanGetInfoComplete((uint)lbGlob.tasks.tasks[uVar3].controllerIndex);
+      LiveAntiCheat_PlayerBanGetInfoComplete((uint)lbGlob.tasks.tasks[param_1].controllerIndex);
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(poVar3);
   }
-  tVar4 = __restgprlr_27(tVar4);
-  return tVar4;
+  return tVar2;
 }
 
 
 // 826CCA80  LB_ReadConsoleBanComplete  (leaderboard/com_leaderboard.cpp:2801)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LB_ReadConsoleBanComplete(int param_1)
 
 {
   void *pvVar1;
-  overlappedTask *poVar2;
-  uint uVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  uVar3 = __savegprlr_27(param_1);
-  poVar2 = lbGlob.tasks.tasks + uVar3;
-  if (0x1f < uVar3) {
+  poVar3 = lbGlob.tasks.tasks + param_1;
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaf5,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)"
                    );
   }
-  if (lbGlob.tasks.tasks[uVar3].active == false) {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaf6,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].type != 9) {
+  if (lbGlob.tasks.tasks[param_1].type != 9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaf7,0,"%s");
   }
-  if (lbGlob.tasks.tasks[uVar3].data == (void *)0x0) {
+  if (lbGlob.tasks.tasks[param_1].data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                     ,0xaf8,0,"%s");
   }
-  tVar4 = dwReadStatsComplete(poVar2);
-  if (tVar4 != TASK_NOTCOMPLETE) {
-    pvVar1 = lbGlob.tasks.tasks[uVar3].data;
-    if (((pvVar1 != (void *)0x0) && (tVar4 == TASK_COMPLETE)) &&
+  tVar2 = dwReadStatsComplete(poVar3);
+  if (tVar2 != TASK_NOTCOMPLETE) {
+    pvVar1 = lbGlob.tasks.tasks[param_1].data;
+    if (((pvVar1 != (void *)0x0) && (tVar2 == TASK_COMPLETE)) &&
        (0 < *(int *)((int)pvVar1 + 0x3b60))) {
       LiveAntiCheat_ConsoleBanGetInfoComplete();
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(poVar3);
   }
-  tVar4 = __restgprlr_27(tVar4);
-  return tVar4;
+  return tVar2;
 }
 
 
 // 826CCBB0  LB_ReadRowForUser  (leaderboard/com_leaderboard.cpp:2834)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void LB_ReadRowForUser(int param_1,ulong64 param_2,uint param_3,int param_4,void *param_5)
 
 {
-  uint uVar1;
-  bool bVar4;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
+  bool bVar3;
+  overlappedTask *poVar1;
+  taskCompleteResults tVar2;
   
-  uVar1 = __savegprlr_24(param_1);
-  bVar4 = TaskManager_TaskIsInProgressForController(&lbGlob.tasks,param_4,uVar1);
-  if (!bVar4) {
-    if (3 < uVar1) {
+  bVar3 = TaskManager_TaskIsInProgressForController(&lbGlob.tasks,param_4,param_1);
+  if (!bVar3) {
+    if (3 < (uint)param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                       ,0xb1a,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)")
       ;
     }
-    if (((int)uVar1 < 4) && (bVar4 = Live_IsUserSignedInToLive(uVar1), bVar4)) {
-      poVar2 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,uVar1,param_4);
-      if (poVar2 == (overlappedTask *)0x0) {
+    if ((param_1 < 4) && (bVar3 = Live_IsUserSignedInToLive(param_1), bVar3)) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,param_4);
+      if (poVar1 == (overlappedTask *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\com_leaderboard.cpp"
                         ,0xb22,0,"%s");
       }
-      poVar2->data = param_5;
-      dwReadStatsByUser(poVar2,param_3,param_2);
-      tVar3 = dwGetTaskStatus(poVar2);
-      if (tVar3 != TASK_NOTCOMPLETE) {
+      poVar1->data = param_5;
+      dwReadStatsByUser(poVar1,param_3,param_2);
+      tVar2 = dwGetTaskStatus(poVar1);
+      if (tVar2 != TASK_NOTCOMPLETE) {
         Com_PrintError(0x16,"dwReadStatsByUser() failed in LB_ReadRowForUser()\n");
-        TaskManager_ClearTask(poVar2);
+        TaskManager_ClearTask(poVar1);
         dwConnectionErrorHandler(8);
       }
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -3841,6 +3677,8 @@ void _dynamic_atexit_destructor_for__s_teamUserInfos__(void)
 
 // 829401A0  `dynamic_atexit_destructor_for_'s_lbCacheStats''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_lbCacheStats__(void)
@@ -3849,7 +3687,6 @@ void _dynamic_atexit_destructor_for__s_lbCacheStats__(void)
   longlong lVar1;
   overlappedTask *this;
   
-  __savegprlr_29();
   lVar1 = 0x77;
   this = &g_statsTask;
   do {
@@ -3858,7 +3695,6 @@ void _dynamic_atexit_destructor_for__s_lbCacheStats__(void)
     bdStatsInfo::~bdStatsInfo((bdStatsInfo *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
-  __restgprlr_29();
   return;
 }
 

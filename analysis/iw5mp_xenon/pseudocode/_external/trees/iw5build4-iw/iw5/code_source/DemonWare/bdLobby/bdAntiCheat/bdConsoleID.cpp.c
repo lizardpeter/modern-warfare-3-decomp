@@ -61,23 +61,21 @@ LAB_82914170:
 
 // 829142D0  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdconsoleid.cpp:40)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdConsoleID::deserialize(bdConsoleID *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  bdByteBuffer *pbStack0000001c;
+  bool bVar1;
+  bdReference<bdByteBuffer> bStack0000001c;
   uint local_30 [12];
   
-  iVar1 = __savegprlr_29(this);
   local_30[0] = 8;
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readBlob
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)(iVar1 + 4),local_30);
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readBlob((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_id,local_30);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_29(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

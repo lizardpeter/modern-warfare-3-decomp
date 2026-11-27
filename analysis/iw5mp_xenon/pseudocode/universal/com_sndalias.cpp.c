@@ -24,6 +24,8 @@ int Com_GetVolumeFalloffCurve(SndCurve *param_1,float (**param_2) [2])
 
 // 825E6C48  Com_VolumeFalloffCurveGraphEventCallback  (universal/com_sndalias.cpp:207)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_VolumeFalloffCurveGraphEventCallback
@@ -31,41 +33,38 @@ void Com_VolumeFalloffCurveGraphEventCallback
 
 {
   int iVar1;
-  longlong lVar2;
-  int iVar3;
   char acStack_2050 [32];
   char acStack_2030 [8240];
   
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1,lVar2,param_3);
-  if (iVar1 == 0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0xd5,0,"%s");
   }
-  if (0x1f < *(uint *)(iVar1 + 0x18)) {
+  if ((void *)0x1f < param_1->data) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0xd7,0,
                     "curveIndex doesn\'t index SA_VOLUMEFALLOFFCURVECOUNT\n\t%i not in [0, %i)");
   }
-  if ((int)lVar2 == 2) {
+  if (param_2 == EVENT_ACCEPT) {
     sprintf(acStack_2030,"Volume Falloff Curve #%02d\nKnot Count: %d\n");
-    iVar3 = 0;
-    if (**(short **)(iVar1 + 4) != 0) {
+    iVar1 = 0;
+    if (*param_1->knotCount != 0) {
       do {
         Com_sprintf(acStack_2050,0x20,"%.4f %.4f\n");
         I_strncat(acStack_2030,0x2000,acStack_2050);
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < (int)(uint)**(ushort **)(iVar1 + 4));
+        iVar1 = iVar1 + 1;
+      } while (iVar1 < (int)(uint)*param_1->knotCount);
     }
     Com_Printf(9,"^6%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825E6D78  Com_GetGraphList  (universal/com_sndalias.cpp:263)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -76,25 +75,22 @@ void Com_GetGraphList(XAssetHeader param_1,void *param_2)
 
 {
   void *pvVar1;
-  undefined4 *puVar2;
   char acStack_130 [304];
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1.physPreset);
   pvVar1 = *(void **)param_2;
   if ((int)pvVar1 < 0x20) {
-    if (*(char *)*puVar2 != '\0') {
+    if (*(param_1.physPreset)->name != '\0') {
       sprintf(acStack_130,"Main:1/Snd:6/Volume Falloff Curves/%s:%d");
       g_sa.curveDevGraphs[(int)pvVar1].data = pvVar1;
       g_sa.curveDevGraphs[(int)pvVar1].knotCountMax = 0x10;
-      g_sa.curveDevGraphs[(int)pvVar1].knots = (float (*) [2])(puVar2 + 2);
-      g_sa.curveDevGraphs[(int)pvVar1].knotCount = (ushort *)(puVar2 + 1);
+      g_sa.curveDevGraphs[(int)pvVar1].knots = (float (*) [2])&(param_1.physPreset)->mass;
+      g_sa.curveDevGraphs[(int)pvVar1].knotCount = (ushort *)&(param_1.physPreset)->type;
       g_sa.curveDevGraphs[(int)pvVar1].eventCallback = Com_VolumeFalloffCurveGraphEventCallback;
       g_sa.curveDevGraphs[(int)pvVar1].disableEditingEndPoints = true;
       DevGui_AddGraph(acStack_130,g_sa.curveDevGraphs + (int)pvVar1);
       *(int *)param_2 = *(int *)param_2 + 1;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -301,38 +297,37 @@ void Load_SndAliasCustom(snd_alias_list_t **param_1)
 
 // 825E7138  SND_GetAliasOffset  (universal/com_sndalias.cpp:668)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SND_GetAliasOffset(snd_alias_t *param_1)
 
 {
-  snd_alias_t *psVar2;
-  snd_alias_list_t *psVar3;
-  longlong lVar1;
-  int iVar4;
-  snd_alias_t *psVar5;
+  snd_alias_list_t *psVar1;
+  int iVar2;
+  snd_alias_t *psVar3;
   
-  psVar2 = (snd_alias_t *)__savegprlr_28(param_1);
-  if (psVar2->aliasName == (char *)0x0) {
+  if (param_1->aliasName == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0x2a1,0,"%s");
   }
-  psVar3 = Com_FindSoundAlias_FastFile(psVar2->aliasName);
-  if (psVar3 == (snd_alias_list_t *)0x0) {
+  psVar1 = Com_FindSoundAlias_FastFile(param_1->aliasName);
+  if (psVar1 == (snd_alias_list_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0x2a4,0,"%s");
   }
-  lVar1 = 0;
-  psVar5 = psVar3->head;
-  if (0 < psVar3->count) {
+  iVar2 = 0;
+  psVar3 = psVar1->head;
+  if (0 < psVar1->count) {
     do {
-      if (psVar5 == psVar2) goto LAB_825e71e0;
-      lVar1 = lVar1 + 1;
-      psVar5 = psVar5 + 1;
-    } while ((int)lVar1 < psVar3->count);
+      if (psVar3 == param_1) {
+        return iVar2;
+      }
+      iVar2 = iVar2 + 1;
+      psVar3 = psVar3 + 1;
+    } while (iVar2 < psVar1->count);
   }
-  lVar1 = 0;
-LAB_825e71e0:
-  iVar4 = __restgprlr_28(lVar1);
-  return iVar4;
+  return 0;
 }
 
 
@@ -375,34 +370,32 @@ snd_alias_t * SND_GetAliasWithOffset(char *param_1,int param_2)
 
 // 825E72B8  Com_GetSoundFileName  (universal/com_sndalias.cpp:764)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_GetSoundFileName(snd_alias_t *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
+  SoundFile *pSVar1;
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0x2ff,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x14) == 0) {
+  if (param_1->soundFile == (SoundFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
                     0x300,0,"%s");
   }
-  pcVar1 = *(char **)(iVar2 + 0x14);
-  if (*pcVar1 == '\x01') {
-    I_strncpyz(param_2,(char *)**(undefined4 **)(pcVar1 + 4),param_3);
-    __restgprlr_27();
+  pSVar1 = param_1->soundFile;
+  if (pSVar1->type == '\x01') {
+    I_strncpyz(param_2,((pSVar1->u).loadSnd)->name,param_3);
     return;
   }
-  if (*pcVar1 == '\x03') {
-    iVar2 = Com_sprintf(param_2,param_3,"voice data");
-    __restgprlr_27(iVar2);
+  if (pSVar1->type == '\x03') {
+    Com_sprintf(param_2,param_3,"voice data");
     return;
   }
-  StreamFileNameGetName((StreamFileName *)(pcVar1 + 4),param_2,param_3);
-  __restgprlr_27();
+  StreamFileNameGetName(&(pSVar1->u).streamSnd.filename,param_2,param_3);
   return;
 }
 
@@ -446,6 +439,8 @@ int Com_SoundAliasRand(void)
 
 // 825E73E8  Com_PickSoundAliasFromListInternal  (universal/com_sndalias.cpp:1083)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -455,82 +450,75 @@ snd_alias_t * Com_PickSoundAliasFromListInternal(snd_alias_list_t *param_1,bool 
   float fVar1;
   float fVar2;
   ushort uVar3;
-  undefined4 *puVar4;
+  int iVar4;
   int iVar5;
-  snd_alias_t *psVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  float *pfVar11;
-  float *pfVar12;
-  float *pfVar13;
-  float fVar14;
+  int iVar6;
+  int iVar7;
+  snd_alias_t *psVar8;
+  int *piVar9;
+  float *pfVar10;
+  float fVar11;
   
-  uVar7 = (ulonglong)param_2;
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar4 != (undefined4 *)0x0) {
-    iVar5 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,(char *)*puVar4);
-    if (iVar5 == 0) {
-      pfVar11 = (float *)puVar4[1];
-      pfVar13 = pfVar11 + 0x13;
-      fVar1 = *pfVar13;
-      fVar14 = pfVar11[6];
-      iVar8 = 1;
+  if (param_1 != (snd_alias_list_t *)0x0) {
+    iVar4 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,param_1->aliasName);
+    if (iVar4 == 0) {
+      psVar8 = param_1->head;
+      pfVar10 = &psVar8->probability;
+      fVar1 = *pfVar10;
+      fVar11 = (float)psVar8->sequence;
       iVar5 = 1;
-      pfVar12 = pfVar11 + 6;
-      iVar10 = g_sa.randSeed;
-      if (puVar4[2] != 1) {
+      iVar4 = 1;
+      piVar9 = &psVar8->sequence;
+      iVar7 = g_sa.randSeed;
+      if (param_1->count != 1) {
         do {
-          iVar9 = iVar10 * 0x343fd;
-          fVar1 = pfVar12[0x29] + fVar1;
-          iVar10 = iVar10 * 0x343fd + 0x269ec3;
-          iVar9 = iVar9 + 0x269ec3;
-          g_sa.randSeed._0_2_ = (ushort)((uint)iVar9 >> 0x10);
-          if ((float)(g_sa.randSeed._0_2_ & 0x7fff) * fVar1 < pfVar12[0x29] * 32768.0) {
-            pfVar11 = pfVar12 + 0x16;
+          iVar6 = iVar7 * 0x343fd;
+          fVar1 = (float)piVar9[0x29] + fVar1;
+          iVar7 = iVar7 * 0x343fd + 0x269ec3;
+          iVar6 = iVar6 + 0x269ec3;
+          g_sa.randSeed._0_2_ = (ushort)((uint)iVar6 >> 0x10);
+          if ((float)(g_sa.randSeed._0_2_ & 0x7fff) * fVar1 < (float)piVar9[0x29] * 32768.0) {
+            psVar8 = (snd_alias_t *)(piVar9 + 0x16);
           }
-          fVar2 = pfVar12[0x1c];
-          if ((int)fVar14 < (int)fVar2) {
-            fVar14 = fVar2;
+          fVar2 = (float)piVar9[0x1c];
+          if ((int)fVar11 < (int)fVar2) {
+            fVar11 = fVar2;
           }
-          iVar5 = puVar4[2];
-          iVar8 = iVar8 + 1;
-          g_sa.randSeed = iVar9;
-          pfVar12 = pfVar12 + 0x1c;
-        } while (iVar8 != iVar5);
+          iVar4 = param_1->count;
+          iVar5 = iVar5 + 1;
+          piVar9 = piVar9 + 0x1c;
+          g_sa.randSeed = iVar6;
+        } while (iVar5 != iVar4);
       }
-      if ((2 < iVar5) && (fVar14 == pfVar11[6])) {
-        iVar8 = 0;
+      if ((2 < iVar4) && (fVar11 == (float)psVar8->sequence)) {
+        iVar5 = 0;
         fVar1 = 0.0;
-        iVar10 = g_sa.randSeed;
-        if (0 < iVar5) {
+        iVar7 = g_sa.randSeed;
+        if (0 < iVar4) {
           do {
-            if (fVar14 != pfVar13[-0xd]) {
-              fVar1 = *pfVar13 + fVar1;
-              iVar10 = iVar10 * 0x343fd + 0x269ec3;
-              g_sa.randSeed._0_2_ = (ushort)((uint)iVar10 >> 0x10);
+            if (fVar11 != pfVar10[-0xd]) {
+              fVar1 = *pfVar10 + fVar1;
+              iVar7 = iVar7 * 0x343fd + 0x269ec3;
+              g_sa.randSeed._0_2_ = (ushort)((uint)iVar7 >> 0x10);
               uVar3 = g_sa.randSeed._0_2_ & 0x7fff;
-              g_sa.randSeed = iVar10;
-              if ((float)uVar3 * fVar1 < *pfVar13 * 32768.0) {
-                pfVar11 = pfVar13 + -0x13;
+              g_sa.randSeed = iVar7;
+              if ((float)uVar3 * fVar1 < *pfVar10 * 32768.0) {
+                psVar8 = (snd_alias_t *)(pfVar10 + -0x13);
               }
             }
-            iVar8 = iVar8 + 1;
-            pfVar13 = pfVar13 + 0x1c;
-          } while (iVar8 < (int)puVar4[2]);
+            iVar5 = iVar5 + 1;
+            pfVar10 = pfVar10 + 0x1c;
+          } while (iVar5 < param_1->count);
         }
       }
-      pfVar11[6] = (float)((int)fVar14 + 1);
-      psVar6 = (snd_alias_t *)__restgprlr_29(pfVar11);
-      return psVar6;
+      psVar8->sequence = (int)fVar11 + 1;
+      return psVar8;
     }
-    if ((uVar7 & 0xff) != 0) {
+    if (param_2) {
       Com_PrintWarning(9,"Sound not loaded: \"%s\"\n");
     }
   }
-  psVar6 = (snd_alias_t *)__restgprlr_29(0);
-  return psVar6;
+  return (snd_alias_t *)0x0;
 }
 
 

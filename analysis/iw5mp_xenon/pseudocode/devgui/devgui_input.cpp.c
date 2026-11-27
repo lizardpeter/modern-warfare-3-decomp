@@ -2,6 +2,8 @@
 
 // 8240AC68  DevGui_UpdateScrollInputs  (devgui/devgui_input.cpp:131)
 
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
@@ -18,23 +20,22 @@ void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
   double dVar9;
   float fVar10;
   
-  __savefpr_23(param_1);
   dVar8 = 1.0;
   dVar9 = 0.0;
   dVar6 = dVar9;
-  if (s_input.buttonDown[3] != false) {
+  if (s_input.buttonDown[3]) {
     dVar6 = dVar8;
   }
   dVar2 = dVar9;
-  if (s_input.buttonDown[2] != false) {
+  if (s_input.buttonDown[2]) {
     dVar2 = dVar8;
   }
   dVar3 = dVar9;
-  if (s_input.buttonDown[0] != false) {
+  if (s_input.buttonDown[0]) {
     dVar3 = dVar8;
   }
   dVar5 = dVar9;
-  if (s_input.buttonDown[1] != false) {
+  if (s_input.buttonDown[1]) {
     dVar5 = dVar8;
   }
   fVar10 = GPad_GetStick(s_input.gamePadIndex,GPAD_LX);
@@ -64,7 +65,6 @@ void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
   s_input.analogAxis[0] = (float)dVar4;
   s_input.analogAxis[1] = (float)dVar7;
   s_input.scrollScale = (float)(dVar1 * 4.0 + dVar8) * (float)((double)fVar10 + dVar8);
-  __restfpr_23();
   return;
 }
 
@@ -245,48 +245,47 @@ bool DevGui_InputUpdateGamepad(void)
 
 // 8240ADD0  DevGui_InputUpdate  (devgui/devgui_input.cpp:359)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool DevGui_InputUpdate(LocalClientNum_t param_1,float param_2)
 
 {
   bool bVar2;
-  undefined1 uVar3;
   DevGuiInputState *pDVar1;
-  GamePadButton *pGVar4;
-  int iVar5;
+  GamePadButton *pGVar3;
+  int iVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
-  dVar6 = (double)__savegprlr_27((double)param_2,param_1);
+  dVar5 = (double)param_2;
   bVar2 = DevGui_InputUpdateGamepad();
   if (!bVar2) {
-    uVar3 = __restgprlr_27(0);
-    return (bool)uVar3;
+    return false;
   }
-  pGVar4 = s_butMapsGamepad;
-  iVar5 = 0;
-  dVar7 = 0.0;
+  pGVar3 = s_butMapsGamepad;
+  iVar4 = 0;
+  dVar6 = 0.0;
   do {
-    s_input.prevButtonDown[iVar5] = s_input.buttonDown[iVar5];
+    s_input.prevButtonDown[iVar4] = s_input.buttonDown[iVar4];
     pDVar1 = (DevGuiInputState *)s_input.gamePadIndex;
     if (-1 < s_input.gamePadIndex) {
-      fVar8 = GPad_GetButton(s_input.gamePadIndex,*pGVar4);
-      *(bool *)(iVar5 + -0x7cce55c0) = dVar7 < (double)fVar8;
+      fVar7 = GPad_GetButton(s_input.gamePadIndex,*pGVar3);
+      *(bool *)(iVar4 + -0x7cce55c0) = dVar6 < (double)fVar7;
     }
-    pGVar4 = pGVar4 + 1;
-    iVar5 = iVar5 + 1;
-  } while ((int)pGVar4 < -0x7d698084);
+    pGVar3 = pGVar3 + 1;
+    iVar4 = iVar4 + 1;
+  } while ((int)pGVar3 < -0x7d698084);
   DevGui_UpdateScrollInputs((LocalClientNum_t)pDVar1);
-  dVar7 = (double)(float)dVar6;
-  DevGui_UpdateScrollStates((float)dVar6,pDVar1,(float *)s_input.digitalStates,s_input.digitalAxis);
+  dVar6 = (double)(float)dVar5;
+  DevGui_UpdateScrollStates((float)dVar5,pDVar1,(float *)s_input.digitalStates,s_input.digitalAxis);
   if (-1 < s_input.gamePadIndex) {
-    DevGui_UpdateScrollStates((float)dVar7,pDVar1,(float *)s_input.analogStates,s_input.analogAxis);
+    DevGui_UpdateScrollStates((float)dVar6,pDVar1,(float *)s_input.analogStates,s_input.analogAxis);
   }
-  DevGui_UpdateMenuScroll((float)dVar6);
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  DevGui_UpdateMenuScroll((float)dVar5);
+  return true;
 }
 
 
@@ -310,198 +309,179 @@ short DevGui_GetMenuScroll(DevGuiInputAxis param_1)
 
 // 8240A780  DevGui_UpdateIntScroll  (devgui/devgui_input.cpp:448)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int DevGui_UpdateIntScroll
               (float param_1,int param_2,int param_3,int param_4,DevGuiInputAxis param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  float fVar3;
+  float fVar1;
+  DevGuiInputAxis DVar2;
+  int in_r7;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong in_r7;
-  ulonglong uVar8;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)param_3;
-  __savegprlr_24((double)param_1,param_2);
-  dVar10 = (double)__savefpr_28();
-  if (lVar7 - lVar6 < 0) {
+  dVar6 = (double)param_1;
+  if ((longlong)(int)param_5 - (longlong)param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x1c6
                     ,0,"%s");
   }
-  if (((int)in_r7 < 0) || (1 < (int)in_r7)) {
+  if ((in_r7 < 0) || (1 < in_r7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x1c7
                     ,0,"%s");
   }
-  iVar4 = (int)(lVar7 - lVar6);
-  if (iVar4 == 0) {
-    __restfpr_28(0);
-    iVar4 = __restgprlr_24();
-    return iVar4;
+  iVar3 = (int)((longlong)(int)param_5 - (longlong)param_4);
+  if (iVar3 == 0) {
+    return 0;
   }
-  uVar8 = 0;
-  dVar13 = 0.0;
-  iVar2 = (int)((in_r7 & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)s_input.digitalStates + iVar2);
-  if (iVar1 == 3) {
-    dVar9 = (double)s_input.sliderScrollMaxTimeStep;
-    dVar12 = (double)(0.1 / s_input.scrollScale);
-    if (dVar9 < (double)(0.1 / s_input.scrollScale)) {
-      dVar12 = dVar9;
+  iVar4 = 0;
+  dVar9 = 0.0;
+  if (s_input.digitalStates[in_r7] == SCROLL_HELD) {
+    dVar5 = (double)s_input.sliderScrollMaxTimeStep;
+    dVar8 = (double)(0.1 / s_input.scrollScale);
+    if (dVar5 < (double)(0.1 / s_input.scrollScale)) {
+      dVar8 = dVar5;
     }
-    s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar10);
-    if ((double)s_input.digitalSliderTime <= dVar12) goto LAB_8240a900;
-    dVar9 = 0.5;
+    s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar6);
+    if ((double)s_input.digitalSliderTime <= dVar8) goto LAB_8240a900;
+    dVar5 = 0.5;
     do {
-      dVar11 = floor((double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) + dVar9));
-      s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime - dVar12);
-      uVar8 = (uint)(int)dVar11 + uVar8;
-    } while (dVar12 < (double)s_input.digitalSliderTime);
+      dVar7 = floor((double)(float)((double)s_input.digitalAxis[in_r7] + dVar5));
+      s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime - dVar8);
+      iVar4 = (int)dVar7 + iVar4;
+    } while (dVar8 < (double)s_input.digitalSliderTime);
   }
-  else if (iVar1 == 1) {
-    dVar12 = floor((double)(*(float *)((int)s_input.digitalAxis + iVar2) + 0.5));
-    uVar8 = (ulonglong)(uint)(int)dVar12;
+  else if (s_input.digitalStates[in_r7] == SCROLL_PRESSED) {
+    dVar8 = floor((double)(s_input.digitalAxis[in_r7] + 0.5));
+    iVar4 = (int)dVar8;
   }
   else {
     s_input.digitalSliderTime = 0.0;
   }
-  dVar9 = (double)s_input.sliderScrollMaxTimeStep;
+  dVar5 = (double)s_input.sliderScrollMaxTimeStep;
 LAB_8240a900:
-  iVar1 = *(int *)((int)s_input.analogStates + iVar2);
-  if (iVar1 == 3) {
-    dVar13 = (double)((s_input.sliderScrollTime / (float)(longlong)iVar4) /
-                     ABS(*(float *)((int)s_input.analogAxis + iVar2) * s_input.scrollScale));
-    if (dVar9 < dVar13) {
-      dVar13 = dVar9;
+  if (s_input.analogStates[in_r7] == SCROLL_HELD) {
+    dVar9 = (double)((s_input.sliderScrollTime / (float)(longlong)iVar3) /
+                    ABS(s_input.analogAxis[in_r7] * s_input.scrollScale));
+    if (dVar5 < dVar9) {
+      dVar9 = dVar5;
     }
-    s_input.analogSliderTime = (float)((double)s_input.analogSliderTime + dVar10);
-    dVar10 = (double)s_input.analogSliderTime;
-    if (dVar13 <= dVar10) {
+    s_input.analogSliderTime = (float)((double)s_input.analogSliderTime + dVar6);
+    dVar6 = (double)s_input.analogSliderTime;
+    if (dVar9 <= dVar6) {
       do {
-        s_input.analogSliderTime = (float)(dVar10 - dVar13);
-        dVar10 = (double)s_input.analogSliderTime;
-        fVar3 = 1.0;
-        if (*(float *)((int)s_input.analogAxis + iVar2) < 0.0) {
-          fVar3 = -1.0;
+        s_input.analogSliderTime = (float)(dVar6 - dVar9);
+        dVar6 = (double)s_input.analogSliderTime;
+        fVar1 = 1.0;
+        if (s_input.analogAxis[in_r7] < 0.0) {
+          fVar1 = -1.0;
         }
-        uVar8 = (uint)(int)fVar3 + uVar8;
-      } while (dVar13 <= dVar10);
+        iVar4 = (int)fVar1 + iVar4;
+      } while (dVar9 <= dVar6);
     }
   }
-  else if (iVar1 == 1) {
-    fVar3 = 1.0;
-    if (*(float *)((int)s_input.analogAxis + iVar2) < 0.0) {
-      fVar3 = -1.0;
+  else if (s_input.analogStates[in_r7] == SCROLL_PRESSED) {
+    fVar1 = 1.0;
+    if (s_input.analogAxis[in_r7] < 0.0) {
+      fVar1 = -1.0;
     }
-    uVar8 = (uint)(int)fVar3 + uVar8;
+    iVar4 = (int)fVar1 + iVar4;
   }
   else {
-    s_input.analogSliderTime = (float)dVar13;
+    s_input.analogSliderTime = (float)dVar9;
   }
-  iVar4 = (int)(uVar8 + lVar5);
-  if ((int)lVar6 < iVar4) {
-    lVar5 = uVar8 + lVar5;
-    if ((int)lVar7 <= iVar4) {
-      lVar5 = lVar7;
+  DVar2 = iVar4 + param_3;
+  if (param_4 < (int)DVar2) {
+    if ((int)param_5 <= (int)DVar2) {
+      DVar2 = param_5;
     }
-    __restfpr_28(lVar5);
-    iVar4 = __restgprlr_24();
-    return iVar4;
+    return DVar2;
   }
-  __restfpr_28(lVar6);
-  iVar4 = __restgprlr_24();
-  return iVar4;
+  return param_4;
 }
 
 
 // 8240AA18  DevGui_UpdateFloatScroll  (devgui/devgui_input.cpp:537)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 float DevGui_UpdateFloatScroll
                 (float param_1,float param_2,float param_3,float param_4,float param_5,
                 DevGuiInputAxis param_6,float param_7)
 
 {
-  int iVar1;
-  int iVar2;
-  float fVar3;
-  ulonglong in_r8;
+  float fVar1;
+  int in_r8;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
   
-  dVar8 = (double)param_5;
-  dVar9 = (double)param_7;
-  dVar7 = (double)param_4;
-  dVar5 = (double)param_2;
-  dVar6 = (double)param_3;
-  __savegprlr_29((double)param_1,param_6);
-  dVar4 = (double)__savefpr_24();
-  dVar11 = (double)(float)(dVar7 - dVar6);
-  dVar10 = 0.0;
-  if (dVar11 < 0.0) {
+  dVar6 = (double)param_5;
+  dVar7 = (double)param_7;
+  dVar5 = (double)param_4;
+  dVar2 = (double)param_1;
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  dVar9 = (double)(float)(dVar5 - dVar4);
+  dVar8 = 0.0;
+  if (dVar9 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x220
                     ,0,"%s");
   }
-  if (dVar8 == dVar10) {
+  if (dVar6 == dVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x221
                     ,0,"%s");
   }
-  if (((int)in_r8 < 0) || (1 < (int)in_r8)) {
+  if ((in_r8 < 0) || (1 < in_r8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x222
                     ,0,"%s");
   }
-  iVar2 = (int)((in_r8 & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)s_input.digitalStates + iVar2);
-  dVar11 = (double)(float)((double)(float)((double)((*(float *)((int)s_input.analogAxis + iVar2) *
-                                                    s_input.scrollScale) / s_input.sliderScrollTime)
-                                          * dVar11) * dVar4);
-  if (iVar1 == 3) {
-    fVar3 = 0.1 / s_input.scrollScale;
+  dVar9 = (double)(float)((double)(float)((double)((s_input.analogAxis[in_r8] * s_input.scrollScale)
+                                                  / s_input.sliderScrollTime) * dVar9) * dVar2);
+  if (s_input.digitalStates[in_r8] == SCROLL_HELD) {
+    fVar1 = 0.1 / s_input.scrollScale;
     if (s_input.sliderScrollMaxTimeStep < 0.1 / s_input.scrollScale) {
-      fVar3 = s_input.sliderScrollMaxTimeStep;
+      fVar1 = s_input.sliderScrollMaxTimeStep;
     }
-    for (s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar4);
-        fVar3 < s_input.digitalSliderTime;
-        s_input.digitalSliderTime = s_input.digitalSliderTime - fVar3) {
-      dVar11 = (double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) * dVar8 + dVar11
-                              );
+    for (s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar2);
+        fVar1 < s_input.digitalSliderTime;
+        s_input.digitalSliderTime = s_input.digitalSliderTime - fVar1) {
+      dVar9 = (double)(float)((double)s_input.digitalAxis[in_r8] * dVar6 + dVar9);
     }
   }
-  else if (iVar1 == 1) {
-    dVar11 = (double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) * dVar8 + dVar11);
+  else if (s_input.digitalStates[in_r8] == SCROLL_PRESSED) {
+    dVar9 = (double)(float)((double)s_input.digitalAxis[in_r8] * dVar6 + dVar9);
   }
-  if ((dVar11 < dVar10) && (-dVar9 < dVar11)) {
-    dVar11 = -dVar9;
+  if ((dVar9 < dVar8) && (-dVar7 < dVar9)) {
+    dVar9 = -dVar7;
   }
-  if ((dVar10 < dVar11) && (dVar11 < dVar9)) {
-    dVar11 = dVar9;
+  if ((dVar8 < dVar9) && (dVar9 < dVar7)) {
+    dVar9 = dVar7;
   }
-  dVar4 = (double)(float)(dVar11 + dVar5);
-  if (dVar4 <= dVar6) {
-    __restfpr_24(dVar6);
-    dVar4 = (double)__restgprlr_29();
+  dVar2 = (double)(float)(dVar9 + dVar3);
+  if (dVar2 <= dVar4) {
     return (float)dVar4;
   }
-  if (dVar7 <= dVar4) {
-    dVar4 = dVar7;
+  if (dVar5 <= dVar2) {
+    dVar2 = dVar5;
   }
-  __restfpr_24(dVar4);
-  dVar4 = (double)__restgprlr_29();
-  return (float)dVar4;
+  return (float)dVar2;
 }
 
 

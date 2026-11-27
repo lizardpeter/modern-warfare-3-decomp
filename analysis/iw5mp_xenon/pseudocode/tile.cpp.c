@@ -23,6 +23,8 @@ void D3D::ConfigureForZPass(CDevice *param_1)
 
 // 8287FAD8  ConfigureForOnePassZPass  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/tile.cpp:62)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::ConfigureForOnePassZPass
@@ -31,69 +33,64 @@ void D3D::ConfigureForOnePassZPass
 {
   byte bVar1;
   uint *puVar2;
-  int iVar4;
   ulonglong uVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int *piVar8;
-  uint *puVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  long *plVar6;
+  long *plVar7;
+  ulonglong uVar8;
+  longlong lVar9;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  iVar4 = __savegprlr_28(param_1);
-  bVar1 = *(byte *)(iVar4 + 0x2b3f);
-  *(byte *)(iVar4 + 0x2b3f) = bVar1 | 0x20;
+  lVar9 = (longlong)(int)param_3;
+  bVar1 = param_1->field_0x2b3f;
+  param_1->m_OnePassZPass = true;
   if (param_2 != 0) {
-    *(byte *)(iVar4 + 0x2b3f) = bVar1 | 0x30;
+    param_1->field_0x2b3f = bVar1 | 0x30;
   }
-  if ((*(ushort *)(iVar4 + 0x2880) & 3) == 0) {
-    uVar5 = 0x10;
+  if ((*(ushort *)&param_1->field_0x2880 & 3) == 0) {
+    uVar4 = 0x10;
   }
   else {
-    uVar5 = 8;
-    if ((*(ushort *)(iVar4 + 0x2880) & 3) != 1) {
-      uVar10 = 0x10;
+    uVar4 = 8;
+    if ((*(ushort *)&param_1->field_0x2880 & 3) != 1) {
+      uVar8 = 0x10;
       uVar3 = 0x28;
       goto LAB_8287fb48;
     }
   }
-  uVar10 = 0x20;
+  uVar8 = 0x20;
   uVar3 = 0x50;
 LAB_8287fb48:
-  uVar6 = (uVar10 + lVar7) - 1 & ~(uVar10 - 1);
-  trapWord(6,uVar10,0);
-  if ((uVar11 & 0xffffffff) != 0) {
-    piVar8 = (int *)(iVar4 + 0x342c);
-    puVar9 = (uint *)(iVar4 + 0x33b4);
+  uVar5 = (uVar8 + (longlong)(int)param_4) - 1 & ~(uVar8 - 1);
+  trapWord(6,uVar8,0);
+  if (param_3 != 0) {
+    plVar6 = &param_1->m_TileOffsets[0xe].y;
+    plVar7 = &param_1->m_TileRects[0xe].y2;
     do {
-      puVar2 = puVar9 + 1;
-      trapWord(6,uVar10,0);
-      puVar9 = puVar9 + 2;
-      trapWord(6,uVar5,0);
-      piVar8 = piVar8 + 1;
-      *piVar8 = (int)(*puVar9 / uVar5) * (int)((uVar6 & 0xffffffff) / uVar10) +
-                (int)(*puVar2 / uVar10);
-      uVar11 = uVar11 - 1;
-    } while (uVar11 != 0);
+      puVar2 = (uint *)(plVar7 + 1);
+      trapWord(6,uVar8,0);
+      plVar7 = plVar7 + 2;
+      trapWord(6,uVar4,0);
+      plVar6 = plVar6 + 1;
+      *plVar6 = (int)((uint)*plVar7 / uVar4) * (int)((uVar5 & 0xffffffff) / uVar8) +
+                (int)(*puVar2 / uVar8);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
-  *(int *)(iVar4 + 0x346c) = (int)uVar6;
+  param_1->m_TileHiZPitch = (ulong)uVar5;
   trapWord(6,uVar3,0);
-  *(uint *)(iVar4 + 0x2880) =
-       (uint)((uVar6 & 0xffffffff) << 0x12) | *(uint *)(iVar4 + 0x2880) & 0x3ffff;
-  *(ulonglong *)(iVar4 + 0x10) = *(ulonglong *)(iVar4 + 0x10) | 0x100;
-  *(int *)(iVar4 + 0x3470) = (int)(((uVar3 + lVar7) - 1 & 0xffffffff) / uVar3) * (int)uVar3;
-  if (((*(byte *)(iVar4 + 0x2b3f) & 0x20) == 0) &&
-     ((*(uint *)(iVar4 + 0x2f7c) & 0xe0000) == 0x40000)) {
-    uVar11 = *(ulonglong *)(iVar4 + 0x28) & 0xfffffffffffffeff;
+  *(uint *)&param_1->field_0x2880 =
+       (uint)((uVar5 & 0xffffffff) << 0x12) | *(uint *)&param_1->field_0x2880 & 0x3ffff;
+  *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 | 0x100;
+  param_1->m_TileZPassSurfacePitch =
+       (int)(((uVar3 + (longlong)(int)param_4) - 1 & 0xffffffff) / uVar3) * (int)uVar3;
+  if ((param_1->m_OnePassZPass) || ((param_1->m_StatePacket).HiZWriteEnable != 2)) {
+    uVar4 = *(ulonglong *)&param_1->field_0x28 | 0x100;
   }
   else {
-    uVar11 = *(ulonglong *)(iVar4 + 0x28) | 0x100;
+    uVar4 = *(ulonglong *)&param_1->field_0x28 & 0xfffffffffffffeff;
   }
-  *(ulonglong *)(iVar4 + 0x28) = uVar11;
-  __restgprlr_28();
+  *(ulonglong *)&param_1->field_0x28 = uVar4;
   return;
 }
 

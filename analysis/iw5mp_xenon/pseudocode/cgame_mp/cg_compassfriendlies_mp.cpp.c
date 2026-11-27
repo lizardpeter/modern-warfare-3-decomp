@@ -49,31 +49,30 @@ void CG_ClearCompassPingData(void)
 
 // 822AC4C0  BG_CopyPerks  (bgame/bg_perks.h:132)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void BG_CopyPerks(uint *param_1,uint *param_2)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x85,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x86,0,"%s");
   }
-  *(undefined4 *)uVar2 = *puVar1;
-  ((undefined4 *)uVar2)[1] = puVar1[1];
-  __restgprlr_28();
+  *param_2 = *param_1;
+  param_2[1] = param_1[1];
   return;
 }
 
 
 // 822AC6C0  GetRadarLineMargin  (cgame_mp/cg_compassfriendlies_mp.cpp:136)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -83,27 +82,22 @@ float GetRadarLineMargin(cg_s *param_1)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  double dVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x8d,0,"%s");
   }
-  if (*(float *)(iVar3 + 0x79800) == 0.0) {
+  if (param_1->compassMapWorldSize[0] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x8e,0,"%s");
   }
-  fVar1 = (cg_hudMapRadarLineThickness->current).value * *(float *)(iVar3 + 0x79800);
+  fVar1 = (cg_hudMapRadarLineThickness->current).value * param_1->compassMapWorldSize[0];
   fVar2 = (compassRadarLineThickness->current).value * (compassMaxRange->current).value +
           (compassMaxRange->current).value * SQRT2;
   if (fVar1 < fVar2) {
-    dVar4 = (double)__restgprlr_29((double)(fVar2 * 0.5));
-    return (float)dVar4;
+    return fVar2 * 0.5;
   }
-  dVar4 = (double)__restgprlr_29((double)(fVar1 * 0.5));
-  return (float)dVar4;
+  return fVar1 * 0.5;
 }
 
 
@@ -161,6 +155,8 @@ void GetRadarLine(cg_s *param_1,float param_2,float *param_3)
 
 // 822AC8E0  DoesMovementCrossRadar  (cgame_mp/cg_compassfriendlies_mp.cpp:186)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -168,31 +164,28 @@ void GetRadarLine(cg_s *param_1,float param_2,float *param_3)
 bool DoesMovementCrossRadar(cg_s *param_1,float param_2,float *param_3,float *param_4)
 
 {
-  cg_s *pcVar1;
-  undefined1 uVar2;
   float *in_r6;
-  double extraout_f1;
-  double dVar3;
+  double dVar1;
   float local_40;
   float local_3c;
   float local_38;
   
-  pcVar1 = (cg_s *)__savegprlr_29((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (pcVar1 == (cg_s *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (cg_s *)0x0) {
     param_3 = (float *)0xbf;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0xbf,0,"%s");
   }
-  GetRadarLine(pcVar1,(float)dVar3,param_3);
-  uVar2 = __restgprlr_29((in_r6[1] * local_3c + *in_r6 * local_40) - local_38 < 0.0 !=
-                         (param_4[1] * local_3c + *param_4 * local_40) - local_38 < 0.0);
-  return (bool)uVar2;
+  GetRadarLine(param_1,(float)dVar1,param_3);
+  return (bool)('\x01' - ((in_r6[1] * local_3c + *in_r6 * local_40) - local_38 < 0.0 ==
+                         (param_4[1] * local_3c + *param_4 * local_40) - local_38 < 0.0));
 }
 
 
 // 822AC9B0  DoLinesSurroundPoint  (cgame_mp/cg_compassfriendlies_mp.cpp:202)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -200,61 +193,51 @@ bool DoesMovementCrossRadar(cg_s *param_1,float param_2,float *param_3,float *pa
 bool DoLinesSurroundPoint(cg_s *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0xce,0,"%s");
   }
-  uVar2 = __restgprlr_29((param_3[1] * param_4[1] + *param_3 * *param_4) - param_3[2] < 0.0 !=
-                         (param_2[1] * param_4[1] + *param_2 * *param_4) - param_2[2] < 0.0);
-  return (bool)uVar2;
+  return (bool)('\x01' - ((param_3[1] * param_4[1] + *param_3 * *param_4) - param_3[2] < 0.0 ==
+                         (param_2[1] * param_4[1] + *param_2 * *param_4) - param_2[2] < 0.0));
 }
 
 
 // 822ACA68  RadarPingEnemyPlayer  (cgame_mp/cg_compassfriendlies_mp.cpp:216)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool RadarPingEnemyPlayer(CompassActor *param_1,int param_2)
 
 {
-  int *piVar1;
-  undefined1 uVar2;
-  uint *puVar3;
-  
-  piVar1 = (int *)__savegprlr_26(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (CompassActor *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0xd9,0,"%s");
   }
-  if (param_2 < *piVar1) {
-    *piVar1 = 0;
+  if (param_2 < param_1->lastUpdate) {
+    param_1->lastUpdate = 0;
   }
-  if (param_2 + -500 <= *piVar1) {
-    puVar3 = (uint *)(piVar1 + 0xf);
-    if (puVar3 == (uint *)0x0) {
+  if (param_2 + -500 <= param_1->lastUpdate) {
+    if (param_1->perks == (uint *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                       0x4f,0,"%s");
     }
-    if ((*puVar3 & 0x2000000) == 0) {
-      if (puVar3 == (uint *)0x0) {
+    if ((param_1->perks[0] & 0x2000000) == 0) {
+      if (param_1 == (CompassActor *)0xffffffc4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                         ,0x4f,0,"%s");
       }
-      if ((piVar1[0x10] & 0x10U) == 0) {
-        piVar1[4] = piVar1[1];
-        piVar1[5] = piVar1[2];
-        piVar1[6] = piVar1[3];
-        piVar1[0xc] = param_2;
-        piVar1[7] = piVar1[9];
-        uVar2 = __restgprlr_26(1);
-        return (bool)uVar2;
+      if ((param_1->perks[1] & 0x10) == 0) {
+        param_1->lastEnemyPos[0] = param_1->lastPos[0];
+        param_1->lastEnemyPos[1] = param_1->lastPos[1];
+        param_1->lastEnemyPos[2] = param_1->lastPos[2];
+        param_1->beginRadarFadeTime = param_2;
+        param_1->lastEnemyYaw = param_1->lastYaw;
+        return true;
       }
     }
   }
-  uVar2 = __restgprlr_26(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
@@ -291,35 +274,36 @@ int Compass_TurretHasRecentUpdate(CompassTurret *param_1,int param_2)
 
 // 822ACC40  Compass_TurretRadarPingEnemy  (cgame_mp/cg_compassfriendlies_mp.cpp:265)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Compass_TurretRadarPingEnemy(CompassTurret *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (CompassTurret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x10a,0,"%s");
   }
-  if (param_2 < *(int *)(iVar1 + 4)) {
-    *(undefined4 *)(iVar1 + 4) = 0;
+  if (param_2 < param_1->lastUpdateTime) {
+    param_1->lastUpdateTime = 0;
   }
-  if ((*(int *)(iVar1 + 4) == 0) || (*(int *)(iVar1 + 4) < param_2 + -500)) {
+  if ((param_1->lastUpdateTime == 0) || (param_1->lastUpdateTime < param_2 + -500)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x10e,0,"%s");
   }
-  *(int *)(iVar1 + 0xc) = param_2;
-  *(undefined4 *)(iVar1 + 0x2c) = *(undefined4 *)(iVar1 + 0x28);
-  *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(iVar1 + 0x10);
-  *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(iVar1 + 0x14);
-  *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(iVar1 + 0x18);
-  __restgprlr_28();
+  param_1->radarPingTime = param_2;
+  param_1->yawLastKnown = param_1->yawCurrent;
+  param_1->positionLastKnown[0] = param_1->positionCurrent[0];
+  param_1->positionLastKnown[1] = param_1->positionCurrent[1];
+  param_1->positionLastKnown[2] = param_1->positionCurrent[2];
   return;
 }
 
 
 // 822ACD00  CanLocalPlayerHearActorFootsteps  (cgame_mp/cg_compassfriendlies_mp.cpp:280)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -331,65 +315,56 @@ bool CanLocalPlayerHearActorFootsteps(LocalClientNum_t param_1,float *param_2,in
   snapshot_s *psVar2;
   float fVar3;
   float fVar4;
-  LocalClientNum_t LVar5;
-  undefined1 uVar8;
-  cg_s *pcVar6;
-  centity_s *pcVar7;
-  longlong lVar9;
-  longlong lVar10;
-  double dVar11;
+  cg_s *pcVar5;
+  centity_s *pcVar6;
+  uint *puVar7;
+  double dVar8;
   float local_68;
   float local_64;
   float local_58;
   float local_54;
   
-  lVar9 = (longlong)param_3;
-  LVar5 = __savegprlr_26(param_1);
-  if ((compassEnemyFootstepEnabled->current).enabled != false) {
-    pcVar6 = CG_GetLocalClientGlobals(LVar5);
-    if ((pcVar6->predictedPlayerState).pm_type == 0) {
-      lVar10 = lVar9 * 0x590 + (longlong)(int)pcVar6;
-      if (*(int *)((int)lVar10 + 0x100b88) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
-                        ,0x12f,0,"%s");
-      }
-      lVar10 = lVar10 + 0x100bcc;
-      if (lVar10 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
-                        ,0x4f,0,"%s");
-      }
-      if ((((*(uint *)lVar10 & 0x20000000) == 0) &&
-          (fVar3 = *param_2 - (pcVar6->predictedPlayerState).origin[0],
-          fVar4 = param_2[1] - (pcVar6->predictedPlayerState).origin[1],
-          fVar4 * fVar4 + fVar3 * fVar3 <=
-          (compassEnemyFootstepMaxRange->current).value *
-          (compassEnemyFootstepMaxRange->current).value)) &&
-         (ABS(param_2[2] - (pcVar6->predictedPlayerState).origin[2]) <=
-          (compassEnemyFootstepMaxZ->current).value)) {
-        psVar1 = pcVar6->snap;
-        psVar2 = pcVar6->nextSnap;
-        dVar11 = (double)((float)(longlong)(psVar2->serverTime - psVar1->serverTime) * 0.001);
-        if (0.0 < dVar11) {
-          pcVar7 = CG_GetEntity(LVar5,(int)lVar9);
-          BG_EvaluateTrajectory(&(pcVar7->prevState).pos,psVar1->serverTime,&local_68);
-          BG_EvaluateTrajectory(&(pcVar7->nextState).lerp.pos,psVar2->serverTime,&local_58);
-          fVar3 = (local_58 - local_68) * (float)(1.0 / dVar11);
-          fVar4 = (local_54 - local_64) * (float)(1.0 / dVar11);
-          uVar8 = __restgprlr_26((compassEnemyFootstepMinSpeed->current).value *
-                                 (compassEnemyFootstepMinSpeed->current).value <=
-                                 fVar4 * fVar4 + fVar3 * fVar3);
-          return (bool)uVar8;
-        }
+  if (((compassEnemyFootstepEnabled->current).enabled != false) &&
+     (pcVar5 = CG_GetLocalClientGlobals(param_1), (pcVar5->predictedPlayerState).pm_type == 0)) {
+    if ((pcVar5->bgs).clientinfo[param_3].infoValid == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
+                      ,0x12f,0,"%s");
+    }
+    puVar7 = (pcVar5->bgs).clientinfo[param_3].perks;
+    if (puVar7 == (uint *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                      0x4f,0,"%s");
+    }
+    if ((((*puVar7 & 0x20000000) == 0) &&
+        (fVar3 = *param_2 - (pcVar5->predictedPlayerState).origin[0],
+        fVar4 = param_2[1] - (pcVar5->predictedPlayerState).origin[1],
+        fVar4 * fVar4 + fVar3 * fVar3 <=
+        (compassEnemyFootstepMaxRange->current).value *
+        (compassEnemyFootstepMaxRange->current).value)) &&
+       (ABS(param_2[2] - (pcVar5->predictedPlayerState).origin[2]) <=
+        (compassEnemyFootstepMaxZ->current).value)) {
+      psVar1 = pcVar5->snap;
+      psVar2 = pcVar5->nextSnap;
+      dVar8 = (double)((float)(longlong)(psVar2->serverTime - psVar1->serverTime) * 0.001);
+      if (0.0 < dVar8) {
+        pcVar6 = CG_GetEntity(param_1,param_3);
+        BG_EvaluateTrajectory(&(pcVar6->prevState).pos,psVar1->serverTime,&local_68);
+        BG_EvaluateTrajectory(&(pcVar6->nextState).lerp.pos,psVar2->serverTime,&local_58);
+        fVar3 = (local_58 - local_68) * (float)(1.0 / dVar8);
+        fVar4 = (local_54 - local_64) * (float)(1.0 / dVar8);
+        return (compassEnemyFootstepMinSpeed->current).value *
+               (compassEnemyFootstepMinSpeed->current).value <= fVar4 * fVar4 + fVar3 * fVar3;
       }
     }
   }
-  uVar8 = __restgprlr_26(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
 // 822ACF10  ActorUpdatePos  (cgame_mp/cg_compassfriendlies_mp.cpp:336)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -397,39 +372,32 @@ bool CanLocalPlayerHearActorFootsteps(LocalClientNum_t param_1,float *param_2,in
 void ActorUpdatePos(LocalClientNum_t param_1,CompassActor *param_2,float *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  CompassActor *pCVar5;
-  CompassActor *pCVar6;
+  cg_s *pcVar1;
+  bool bVar2;
+  CompassActor *pCVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_25(param_1);
-  pCVar5 = (CompassActor *)uVar4;
-  pCVar6 = pCVar5;
-  if ((uVar4 & 0xffffffff) == 0) {
-    pCVar6 = (CompassActor *)0x153;
+  pCVar3 = param_2;
+  if (param_2 == (CompassActor *)0x0) {
+    pCVar3 = (CompassActor *)0x153;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x153,0,"%s");
   }
-  if ((pCVar5->flags & 1U) != 0) {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    if ((((pcVar2->predictedPlayerState).radarEnabled != 0) &&
-        (pcVar2->time + -500 < pCVar5->lastUpdate)) &&
-       (bVar3 = DoesMovementCrossRadar(pcVar2,pcVar2->radarProgress,(float *)pCVar6,pCVar5->lastPos)
-       , bVar3)) {
-      RadarPingEnemyPlayer(pCVar5,pcVar2->time);
+  if ((param_2->flags & 1U) != 0) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    if ((((pcVar1->predictedPlayerState).radarEnabled != 0) &&
+        (pcVar1->time + -500 < param_2->lastUpdate)) &&
+       (bVar2 = DoesMovementCrossRadar
+                          (pcVar1,pcVar1->radarProgress,(float *)pCVar3,param_2->lastPos), bVar2)) {
+      RadarPingEnemyPlayer(param_2,pcVar1->time);
     }
-    if ((param_4 < 0x12) && (bVar3 = CanLocalPlayerHearActorFootsteps(LVar1,param_3,param_4), bVar3)
-       ) {
-      RadarPingEnemyPlayer(pCVar5,pcVar2->time);
+    if ((param_4 < 0x12) &&
+       (bVar2 = CanLocalPlayerHearActorFootsteps(param_1,param_3,param_4), bVar2)) {
+      RadarPingEnemyPlayer(param_2,pcVar1->time);
     }
   }
-  pCVar5->lastPos[0] = *param_3;
-  pCVar5->lastPos[1] = param_3[1];
-  pCVar5->lastPos[2] = param_3[2];
-  __restgprlr_25();
+  param_2->lastPos[0] = *param_3;
+  param_2->lastPos[1] = param_3[1];
+  param_2->lastPos[2] = param_3[2];
   return;
 }
 
@@ -714,6 +682,8 @@ int CG_CompassTurretIsPingType(centity_s *param_1)
 
 // 822B1B48  Compass_TurretUpdateInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:415)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -724,70 +694,61 @@ void Compass_TurretUpdateInfo(LocalClientNum_t param_1,centity_s *param_2)
   FxEffect *pFVar1;
   uint uVar2;
   team_t tVar3;
-  centity_s *pcVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  int iVar7;
-  CompassTurret *pCVar8;
-  ulonglong uVar9;
-  float fVar10;
+  cg_s *pcVar4;
+  int iVar5;
+  CompassTurret *pCVar6;
+  float fVar7;
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar5 = __savegprlr_27(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x1a6,0,"%s");
   }
-  pcVar4 = (centity_s *)uVar9;
-  if ((pcVar4->flags & 1U) != 0) {
-    if ((pcVar4->nextState).eType != 0xb) {
+  if ((param_2->flags & 1U) != 0) {
+    if ((param_2->nextState).eType != 0xb) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x1ab,0,"%s");
     }
-    pcVar6 = CG_GetLocalClientGlobals(LVar5);
-    if (pcVar6 == (cg_s *)0x0) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar4 == (cg_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x1ae,0,"%s");
     }
-    if (pcVar6->nextSnap == (snapshot_s *)0x0) {
+    if (pcVar4->nextSnap == (snapshot_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x1af,0,"%s");
     }
-    if ((pcVar6->inKillCam == 0) && (iVar7 = CG_CompassTurretIsPingType(pcVar4), iVar7 != 0)) {
-      pCVar8 = Compass_TurretGetInfo(LVar5,(pcVar4->nextState).number);
-      pCVar8->lastUpdateTime = pcVar6->time;
-      pCVar8->positionCurrent[0] = (pcVar4->pose).origin[0];
-      pCVar8->positionCurrent[1] = (pcVar4->pose).origin[1];
-      pCVar8->positionCurrent[2] = (pcVar4->pose).origin[2];
-      if ((pcVar4->pose).field9_0x2c.turret.remoteTurret == false) {
+    if ((pcVar4->inKillCam == 0) && (iVar5 = CG_CompassTurretIsPingType(param_2), iVar5 != 0)) {
+      pCVar6 = Compass_TurretGetInfo(param_1,(param_2->nextState).number);
+      pCVar6->lastUpdateTime = pcVar4->time;
+      pCVar6->positionCurrent[0] = (param_2->pose).origin[0];
+      pCVar6->positionCurrent[1] = (param_2->pose).origin[1];
+      pCVar6->positionCurrent[2] = (param_2->pose).origin[2];
+      if ((param_2->pose).field9_0x2c.turret.remoteTurret == false) {
         pFVar1 = (FxEffect *)
-                 (*(float *)((int)&(pcVar4->pose).field9_0x2c + 4) + (pcVar4->pose).angles[1]);
+                 (*(float *)((int)&(param_2->pose).field9_0x2c + 4) + (param_2->pose).angles[1]);
       }
       else {
-        pFVar1 = (pcVar4->pose).field9_0x2c.fx.effect;
+        pFVar1 = (param_2->pose).field9_0x2c.fx.effect;
       }
-      fVar10 = AngleNormalize360((float)pFVar1);
-      pCVar8->yawCurrent = fVar10;
-      uVar2 = (pcVar4->nextState).otherEntityNum;
-      if (uVar2 == pcVar6->clientNum) {
-        pCVar8->isFriendly = true;
-        __restgprlr_27();
+      fVar7 = AngleNormalize360((float)pFVar1);
+      pCVar6->yawCurrent = fVar7;
+      uVar2 = (param_2->nextState).otherEntityNum;
+      if (uVar2 == pcVar4->clientNum) {
+        pCVar6->isFriendly = true;
         return;
       }
       if (0x11 < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x1d1,0,"ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      tVar3 = (pcVar6->bgs).clientinfo[uVar2].team;
+      tVar3 = (pcVar4->bgs).clientinfo[uVar2].team;
       if ((tVar3 != TEAM_FREE) && (tVar3 != TEAM_SPECTATOR)) {
-        pCVar8->isFriendly = tVar3 == (pcVar6->bgs).clientinfo[pcVar6->clientNum].team;
-        __restgprlr_27();
+        pCVar6->isFriendly = tVar3 == (pcVar4->bgs).clientinfo[pcVar4->clientNum].team;
         return;
       }
-      pCVar8->isFriendly = false;
+      pCVar6->isFriendly = false;
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -856,6 +817,8 @@ LAB_822b1e9c:
 
 // 822B1ED8  CG_CompassUpdatePlaneInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:487)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -865,63 +828,60 @@ void CG_CompassUpdatePlaneInfo(LocalClientNum_t param_1,int param_2)
 {
   uint uVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  centity_s *pcVar5;
-  CompassPlane *pCVar6;
-  char *pcVar7;
-  Material *pMVar8;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
+  CompassPlane *pCVar5;
+  char *pcVar6;
+  Material *pMVar7;
   
-  LVar3 = __savegprlr_26(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  if (pcVar4->nextSnap == (snapshot_s *)0x0) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x1ee,0,"%s");
   }
-  pcVar5 = CG_GetEntity(LVar3,param_2);
-  if ((pcVar5->nextState).eType != 0xd) {
+  pcVar4 = CG_GetEntity(param_1,param_2);
+  if ((pcVar4->nextState).eType != 0xd) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x1f0,0,"%s");
   }
-  pCVar6 = GetPlane(LVar3,param_2);
-  pCVar6->lastUpdateTime = pcVar4->time;
-  pCVar6->lastPos[0] = (pcVar5->pose).origin[0];
-  pCVar6->lastPos[1] = (pcVar5->pose).origin[1];
-  pCVar6->lastPos[2] = (pcVar5->pose).origin[2];
-  pCVar6->lastYaw = (pcVar5->pose).angles[1];
-  uVar1 = (pcVar5->nextState).lerp.u.vehicle.indices;
-  pCVar6->ownerNum = uVar1;
+  pCVar5 = GetPlane(param_1,param_2);
+  pCVar5->lastUpdateTime = pcVar3->time;
+  pCVar5->lastPos[0] = (pcVar4->pose).origin[0];
+  pCVar5->lastPos[1] = (pcVar4->pose).origin[1];
+  pCVar5->lastPos[2] = (pcVar4->pose).origin[2];
+  pCVar5->lastYaw = (pcVar4->pose).angles[1];
+  uVar1 = (pcVar4->nextState).lerp.u.vehicle.indices;
+  pCVar5->ownerNum = uVar1;
   if (0x11 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x1f7,0,"plane->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  pCVar6->planeMedia[0].friendly = (Material *)0x0;
-  pCVar6->planeMedia[0].enemy = (Material *)0x0;
-  pCVar6->planeMedia[1].friendly = (Material *)0x0;
-  pCVar6->planeMedia[1].enemy = (Material *)0x0;
-  iVar2 = (pcVar5->nextState).lerp.u.plane.friendIcon;
+  pCVar5->planeMedia[0].friendly = (Material *)0x0;
+  pCVar5->planeMedia[0].enemy = (Material *)0x0;
+  pCVar5->planeMedia[1].friendly = (Material *)0x0;
+  pCVar5->planeMedia[1].enemy = (Material *)0x0;
+  iVar2 = (pcVar4->nextState).lerp.u.plane.friendIcon;
   if (iVar2 != 0) {
-    pcVar7 = CL_GetConfigString(iVar2 + 0xe19);
-    pMVar8 = Material_RegisterHandle(pcVar7,7);
-    pCVar6->planeMedia[0].friendly = pMVar8;
-    pcVar7 = Colorblind_MaterialAlternative(pcVar7);
-    if (pcVar7 != (char *)0x0) {
-      pMVar8 = Material_RegisterHandle(pcVar7,7);
-      pCVar6->planeMedia[1].friendly = pMVar8;
+    pcVar6 = CL_GetConfigString(iVar2 + 0xe19);
+    pMVar7 = Material_RegisterHandle(pcVar6,7);
+    pCVar5->planeMedia[0].friendly = pMVar7;
+    pcVar6 = Colorblind_MaterialAlternative(pcVar6);
+    if (pcVar6 != (char *)0x0) {
+      pMVar7 = Material_RegisterHandle(pcVar6,7);
+      pCVar5->planeMedia[1].friendly = pMVar7;
     }
   }
-  iVar2 = (pcVar5->nextState).lerp.u.loopFx.period;
+  iVar2 = (pcVar4->nextState).lerp.u.loopFx.period;
   if (iVar2 != 0) {
-    pcVar7 = CL_GetConfigString(iVar2 + 0xe19);
-    pMVar8 = Material_RegisterHandle(pcVar7,7);
-    pCVar6->planeMedia[0].enemy = pMVar8;
-    pcVar7 = Colorblind_MaterialAlternative(pcVar7);
-    if (pcVar7 != (char *)0x0) {
-      pMVar8 = Material_RegisterHandle(pcVar7,7);
-      pCVar6->planeMedia[1].enemy = pMVar8;
+    pcVar6 = CL_GetConfigString(iVar2 + 0xe19);
+    pMVar7 = Material_RegisterHandle(pcVar6,7);
+    pCVar5->planeMedia[0].enemy = pMVar7;
+    pcVar6 = Colorblind_MaterialAlternative(pcVar6);
+    if (pcVar6 != (char *)0x0) {
+      pMVar7 = Material_RegisterHandle(pcVar6,7);
+      pCVar5->planeMedia[1].enemy = pMVar7;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1020,6 +980,8 @@ bool FindRayPlaneIntersection
 
 // 822B21D0  Compass_MissileUpdateInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:553)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1030,81 +992,76 @@ void Compass_MissileUpdateInfo(LocalClientNum_t param_1,centity_s *param_2)
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  CompassMissile *pCVar7;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  CompassMissile *pCVar5;
+  bool bVar6;
+  float *pfVar7;
   float *pfVar8;
-  bool bVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  float *pfVar12;
-  float fVar13;
+  float *pfVar9;
+  float fVar10;
   float afStack_50 [20];
   
-  uVar10 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_26(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x22f,0,"%s");
   }
-  iVar3 = (int)uVar10;
-  if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) {
-    pcVar5 = CG_GetLocalClientGlobals(LVar4);
-    if (pcVar5 == (cg_s *)0x0) {
+  if ((param_2->flags & 1U) != 0) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar3 == (cg_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x235,0,"%s");
     }
-    if (pcVar5->nextSnap == (snapshot_s *)0x0) {
+    if (pcVar3->nextSnap == (snapshot_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x236,0,"%s");
     }
-    if (pcVar5->inKillCam == 0) {
-      WVar6 = BG_GetAlternateWeapon
-                        (*(Weapon *)(iVar3 + 0x18c),(bool)('\x01' - (*(int *)(iVar3 + 400) == 0)));
-      if (((bg_weaponDefs[WVar6.data & 0xff]->guidedMissileType == MISSILE_GUIDANCE_HELLFIRE) &&
-          (iVar1 = *(int *)(iVar3 + 0x13c), iVar1 != 0x7ff)) && (iVar1 < 0x12)) {
-        if (*(int *)(iVar3 + 200) != 4) {
+    if (pcVar3->inKillCam == 0) {
+      WVar4 = BG_GetAlternateWeapon
+                        ((param_2->nextState).weapon,
+                         (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)));
+      if (((bg_weaponDefs[WVar4.data & 0xff]->guidedMissileType == MISSILE_GUIDANCE_HELLFIRE) &&
+          (iVar1 = (param_2->nextState).otherEntityNum, iVar1 != 0x7ff)) && (iVar1 < 0x12)) {
+        if ((param_2->nextState).eType != 4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                           ,0x243,0,"%s");
         }
-        pCVar7 = Compass_MissileGetInfo(LVar4,*(int *)(iVar3 + 0xc4));
-        iVar2 = pcVar5->time;
-        pCVar7->ownerNum = iVar1;
-        pCVar7->lastUpdateTime = iVar2;
-        fVar13 = AngleNormalize360(*(float *)(iVar3 + 0x24));
-        pCVar7->yaw = fVar13;
+        pCVar5 = Compass_MissileGetInfo(param_1,(param_2->nextState).number);
+        iVar2 = pcVar3->time;
+        pCVar5->ownerNum = iVar1;
+        pCVar5->lastUpdateTime = iVar2;
+        fVar10 = AngleNormalize360((param_2->pose).angles[1]);
+        pCVar5->yaw = fVar10;
         if ((compassHellfireTargetSpot->current).enabled == false) {
-          pCVar7->pos[0] = *(float *)(iVar3 + 0x14);
-          pCVar7->pos[1] = *(float *)(iVar3 + 0x18);
-          pCVar7->pos[2] = *(float *)(iVar3 + 0x1c);
+          pCVar5->pos[0] = (param_2->pose).origin[0];
+          pCVar5->pos[1] = (param_2->pose).origin[1];
+          pCVar5->pos[2] = (param_2->pose).origin[2];
         }
         else {
-          pfVar11 = (float *)0x0;
-          AngleVectors((float *)(iVar3 + 0x20),afStack_50,(float *)0x0,(float *)0x0);
-          pfVar8 = (float *)(iVar3 + 0x14);
-          pfVar12 = pCVar7->pos;
-          bVar9 = FindRayPlaneIntersection
-                            (pfVar8,afStack_50,MY_NORMAL,-(pcVar5->refdef).view.org[2],pfVar11);
-          if (!bVar9) {
-            *pfVar12 = *pfVar8;
-            pfVar12[1] = pfVar8[1];
-            pfVar12[2] = pfVar8[2];
-            __restgprlr_26();
+          pfVar7 = (float *)0x0;
+          AngleVectors((param_2->pose).angles,afStack_50,(float *)0x0,(float *)0x0);
+          pfVar9 = (param_2->pose).origin;
+          pfVar8 = pCVar5->pos;
+          bVar6 = FindRayPlaneIntersection
+                            (pfVar9,afStack_50,MY_NORMAL,-(pcVar3->refdef).view.org[2],pfVar7);
+          if (!bVar6) {
+            *pfVar8 = *pfVar9;
+            pfVar8[1] = pfVar9[1];
+            pfVar8[2] = pfVar9[2];
             return;
           }
         }
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822AD130  CG_CompassUpdatePortableRadar  (cgame_mp/cg_compassfriendlies_mp.cpp:607)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1117,36 +1074,31 @@ void CG_CompassUpdatePortableRadar(LocalClientNum_t param_1,centity_s *param_2)
   team_t tVar3;
   int iVar4;
   CompassPortableRadar *pCVar5;
-  CompassActor *pCVar6;
-  CompassTurret *pCVar7;
-  dvar_t *pdVar8;
-  dvar_t *pdVar9;
-  ulonglong uVar10;
-  cg_s *pcVar11;
-  bool bVar14;
-  centity_s *pcVar13;
+  dvar_t *pdVar6;
+  dvar_t *pdVar7;
+  cg_s *pcVar8;
+  bool bVar10;
+  centity_s *pcVar9;
+  uint uVar11;
+  float *pfVar12;
+  ulonglong uVar13;
+  team_t *ptVar14;
   uint uVar15;
-  float *pfVar16;
-  ulonglong uVar17;
-  team_t *ptVar18;
-  uint uVar19;
-  int iVar20;
-  int *piVar21;
-  longlong lVar22;
+  int iVar16;
+  int *piVar17;
+  CompassActor *pCVar18;
+  CompassTurret *pCVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  float fVar27;
-  float fVar28;
+  float fVar24;
+  float fVar25;
   float local_c8;
   float local_c4;
   float local_c0;
-  LocalClientNum_t LVar12;
   
-  uVar10 = (ulonglong)(int)param_1;
-  __savegprlr();
-  if (3 < (uVar10 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x26f,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
@@ -1155,14 +1107,13 @@ void CG_CompassUpdatePortableRadar(LocalClientNum_t param_1,centity_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x270,0,"%s");
   }
-  LVar12 = (LocalClientNum_t)uVar10;
-  pcVar11 = CG_GetLocalClientGlobals(LVar12);
-  if (pcVar11 == (cg_s *)0x0) {
+  pcVar8 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar8 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x273,0,"%s");
   }
-  if (pcVar11->inKillCam == 0) {
-    if (0x11 < (uint)pcVar11->clientNum) {
+  if (pcVar8->inKillCam == 0) {
+    if (0x11 < (uint)pcVar8->clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x279,0,
                       "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
@@ -1173,128 +1124,127 @@ void CG_CompassUpdatePortableRadar(LocalClientNum_t param_1,centity_s *param_2)
                       "cent->nextState.otherEntityNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                      );
     }
-    pdVar9 = compassPortableRadarSweepTime;
+    pdVar7 = compassPortableRadarSweepTime;
     uVar1 = (param_2->nextState).otherEntityNum;
-    iVar20 = pcVar11->clientNum;
-    pCVar5 = s_compassPortableRadarList[LVar12] + uVar1;
-    s_compassPortableRadarList[LVar12][uVar1].isActive = true;
+    iVar16 = pcVar8->clientNum;
+    pCVar5 = s_compassPortableRadarList[param_1] + uVar1;
+    s_compassPortableRadarList[param_1][uVar1].isActive = true;
     pCVar5->pos[0] = (param_2->pose).origin[0];
-    uVar15 = s_compassPortableRadarList[LVar12][uVar1].sweepTimer;
-    lVar22 = uVar10 * 0xe38 + -0x7d5e55a8;
-    s_compassPortableRadarList[LVar12][uVar1].pos[1] = (param_2->pose).origin[1];
-    s_compassPortableRadarList[LVar12][uVar1].pos[2] = (param_2->pose).origin[2];
-    pdVar8 = compassPortableRadarRadius;
-    local_c8 = (pcVar11->predictedPlayerState).origin[0];
-    local_c4 = (pcVar11->predictedPlayerState).origin[1];
-    uVar19 = 0;
-    local_c0 = (pcVar11->predictedPlayerState).origin[2];
-    ptVar18 = &(pcVar11->bgs).clientinfo[0].team;
-    uVar2 = (pdVar9->current).integer;
-    uVar17 = (ulonglong)(uint)pcVar11->frametime + (ulonglong)uVar15;
-    uVar15 = -((int)((uVar17 & 0xffffffff) >> 0x1f) + (uint)(uVar17 < uVar2)) - ((int)uVar2 >> 0x1f)
-             & (uint)uVar17;
-    s_compassPortableRadarList[LVar12][uVar1].sweepTimer = uVar15;
-    dVar25 = 2.0;
-    dVar24 = (double)(((float)(longlong)(int)uVar15 / (float)(longlong)(pdVar9->current).integer) *
-                     (pdVar8->current).value);
+    uVar11 = s_compassPortableRadarList[param_1][uVar1].sweepTimer;
+    pCVar18 = s_compassActors[param_1];
+    s_compassPortableRadarList[param_1][uVar1].pos[1] = (param_2->pose).origin[1];
+    s_compassPortableRadarList[param_1][uVar1].pos[2] = (param_2->pose).origin[2];
+    pdVar6 = compassPortableRadarRadius;
+    local_c8 = (pcVar8->predictedPlayerState).origin[0];
+    local_c4 = (pcVar8->predictedPlayerState).origin[1];
+    uVar15 = 0;
+    local_c0 = (pcVar8->predictedPlayerState).origin[2];
+    ptVar14 = &(pcVar8->bgs).clientinfo[0].team;
+    uVar2 = (pdVar7->current).integer;
+    uVar13 = (ulonglong)(uint)pcVar8->frametime + (ulonglong)uVar11;
+    uVar11 = -((int)((uVar13 & 0xffffffff) >> 0x1f) + (uint)(uVar13 < uVar2)) - ((int)uVar2 >> 0x1f)
+             & (uint)uVar13;
+    s_compassPortableRadarList[param_1][uVar1].sweepTimer = uVar11;
+    dVar22 = 2.0;
+    dVar21 = (double)(((float)(longlong)(int)uVar11 / (float)(longlong)(pdVar7->current).integer) *
+                     (pdVar6->current).value);
     do {
-      if (0x11 < uVar19) {
+      if (0x11 < uVar15) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x292,0,"entryIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if ((((clientInfo_t *)(ptVar18 + -0xb))->infoValid != 0) && (*ptVar18 != TEAM_SPECTATOR)) {
-        tVar3 = (pcVar11->bgs).clientinfo[iVar20].team;
-        if ((tVar3 == TEAM_FREE) || (bVar14 = true, tVar3 != *ptVar18)) {
-          bVar14 = false;
+      if ((((clientInfo_t *)(ptVar14 + -0xb))->infoValid != 0) && (*ptVar14 != TEAM_SPECTATOR)) {
+        tVar3 = (pcVar8->bgs).clientinfo[iVar16].team;
+        if ((tVar3 == TEAM_FREE) || (bVar10 = true, tVar3 != *ptVar14)) {
+          bVar10 = false;
         }
-        pCVar6 = (CompassActor *)lVar22;
-        if ((bVar14) || (uVar19 == (param_2->nextState).otherEntityNum)) {
-          uVar15 = pCVar6->flags & 0xfffffffe;
+        if ((bVar10) || (uVar15 == (param_2->nextState).otherEntityNum)) {
+          uVar11 = pCVar18->flags & 0xfffffffe;
         }
         else {
-          uVar15 = pCVar6->flags | 1;
+          uVar11 = pCVar18->flags | 1;
         }
-        pCVar6->flags = uVar15;
-        BG_CopyPerks(ptVar18 + 6,pCVar6->perks);
-        if (((pCVar6->flags & 1U) != 0) && ((pCVar6->flags & 2U) == 0)) {
-          if (s_compassPortableRadarList[LVar12][uVar1].sweepTimer == 0) {
+        pCVar18->flags = uVar11;
+        BG_CopyPerks(ptVar14 + 6,pCVar18->perks);
+        if (((pCVar18->flags & 1U) != 0) && ((pCVar18->flags & 2U) == 0)) {
+          if (s_compassPortableRadarList[param_1][uVar1].sweepTimer == 0) {
             *(undefined4 *)
-             ((int)pCVar6->lastPos + (int)(((ulonglong)uVar1 + 0x11 & 0xffffffff) << 2) + -4) = 0;
+             ((int)pCVar18->lastPos + (int)(((ulonglong)uVar1 + 0x11 & 0xffffffff) << 2) + -4) = 0;
           }
-          pfVar16 = pCVar6->lastPos;
-          fVar27 = Vec2Distance(pCVar5->pos,pfVar16);
-          if (((double)fVar27 < dVar24) &&
-             (fVar27 = pCVar6->lastPos[1] - local_c4, fVar28 = pCVar6->lastPos[2] - local_c0,
-             dVar26 = (double)SQRT((*pfVar16 - local_c8) * (*pfVar16 - local_c8) +
-                                   fVar28 * fVar28 + fVar27 * fVar27),
-             (compassPortableRadarMinVelocity->current).value <= pCVar6->lastVel)) {
+          pfVar12 = pCVar18->lastPos;
+          fVar24 = Vec2Distance(pCVar5->pos,pfVar12);
+          if (((double)fVar24 < dVar21) &&
+             (fVar24 = pCVar18->lastPos[1] - local_c4, fVar25 = pCVar18->lastPos[2] - local_c0,
+             dVar23 = (double)SQRT((*pfVar12 - local_c8) * (*pfVar12 - local_c8) +
+                                   fVar25 * fVar25 + fVar24 * fVar24),
+             (compassPortableRadarMinVelocity->current).value <= pCVar18->lastVel)) {
             iVar4 = (int)(((ulonglong)uVar1 + 0x11 & 0xffffffff) << 2);
-            if (*(int *)((int)pCVar6->lastPos + iVar4 + -4) <= pcVar11->time) {
-              *(char **)((int)pCVar6->lastPos + iVar4 + -4) =
-                   (compassPortableRadarSweepTime->current).string + pcVar11->time;
-              bVar14 = RadarPingEnemyPlayer(pCVar6,pcVar11->time);
-              if ((bVar14) &&
-                 (dVar23 = (double)(float)((double)(compassPortableRadarRadius->current).value *
-                                          dVar25), dVar26 < dVar23)) {
-                CG_PlayEntitySoundAliasCompassPing(LVar12,uVar19,pfVar16,(float)(dVar26 / dVar23));
+            if (*(int *)((int)pCVar18->lastPos + iVar4 + -4) <= pcVar8->time) {
+              *(char **)((int)pCVar18->lastPos + iVar4 + -4) =
+                   (compassPortableRadarSweepTime->current).string + pcVar8->time;
+              bVar10 = RadarPingEnemyPlayer(pCVar18,pcVar8->time);
+              if ((bVar10) &&
+                 (dVar20 = (double)(float)((double)(compassPortableRadarRadius->current).value *
+                                          dVar22), dVar23 < dVar20)) {
+                CG_PlayEntitySoundAliasCompassPing(param_1,uVar15,pfVar12,(float)(dVar23 / dVar20));
               }
             }
           }
         }
       }
-      uVar19 = uVar19 + 1;
-      ptVar18 = ptVar18 + 0x164;
-      lVar22 = lVar22 + 0x8c;
-    } while ((int)uVar19 < 0x12);
+      uVar15 = uVar15 + 1;
+      ptVar14 = ptVar14 + 0x164;
+      pCVar18 = pCVar18 + 1;
+    } while ((int)uVar15 < 0x12);
     if ((compassPortableRadarMinVelocity->current).value == 0.0) {
-      iVar20 = 0;
-      lVar22 = uVar10 * 0xf80 + -0x7d5e9828;
-      piVar21 = &pcVar11->time;
+      iVar16 = 0;
+      pCVar19 = s_compassTurrets[param_1];
+      piVar17 = &pcVar8->time;
       do {
-        iVar4 = *piVar21;
-        pCVar7 = (CompassTurret *)lVar22;
-        if (iVar4 < pCVar7->lastUpdateTime) {
-          pCVar7->lastUpdateTime = 0;
+        iVar4 = *piVar17;
+        if (iVar4 < pCVar19->lastUpdateTime) {
+          pCVar19->lastUpdateTime = 0;
         }
-        if ((((pCVar7->lastUpdateTime != 0) && (iVar4 + -500 <= pCVar7->lastUpdateTime)) &&
-            (pCVar7->isFriendly == false)) && ((g_compassShowEnemies->current).enabled == false)) {
-          pcVar13 = CG_GetEntity(LVar12,(param_2->nextState).otherEntityNum);
-          uVar15 = (pcVar13->nextState).clientNum;
-          if (0x11 < uVar15) {
+        if ((((pCVar19->lastUpdateTime != 0) && (iVar4 + -500 <= pCVar19->lastUpdateTime)) &&
+            (pCVar19->isFriendly == false)) && ((g_compassShowEnemies->current).enabled == false)) {
+          pcVar9 = CG_GetEntity(param_1,(param_2->nextState).otherEntityNum);
+          uVar11 = (pcVar9->nextState).clientNum;
+          if (0x11 < uVar11) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                             ,0x2d8,0,
                             "ownerClientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
           }
-          if (s_compassPortableRadarList[LVar12][uVar1].sweepTimer == 0) {
-            pCVar7->nextPortableRadarPingTimeList[uVar15] = 0;
+          if (s_compassPortableRadarList[param_1][uVar1].sweepTimer == 0) {
+            pCVar19->nextPortableRadarPingTimeList[uVar11] = 0;
           }
-          pfVar16 = pCVar7->positionCurrent;
-          fVar27 = Vec2Distance(pCVar5->pos,pfVar16);
-          if ((double)fVar27 < dVar24) {
-            if (pCVar7->nextPortableRadarPingTimeList[uVar15] <= *piVar21) {
-              pCVar7->nextPortableRadarPingTimeList[uVar15] =
-                   (int)((compassPortableRadarSweepTime->current).string + *piVar21);
-              Compass_TurretRadarPingEnemy(pCVar7,*piVar21);
-              fVar28 = Vec2Distance(&local_c8,pfVar16);
-              fVar27 = (float)((double)(compassPortableRadarRadius->current).value * dVar25);
-              if (fVar28 < fVar27) {
-                CG_PlayEntitySoundAliasCompassPing(LVar12,iVar20,pfVar16,fVar28 / fVar27);
+          pfVar12 = pCVar19->positionCurrent;
+          fVar24 = Vec2Distance(pCVar5->pos,pfVar12);
+          if ((double)fVar24 < dVar21) {
+            if (pCVar19->nextPortableRadarPingTimeList[uVar11] <= *piVar17) {
+              pCVar19->nextPortableRadarPingTimeList[uVar11] =
+                   (int)((compassPortableRadarSweepTime->current).string + *piVar17);
+              Compass_TurretRadarPingEnemy(pCVar19,*piVar17);
+              fVar25 = Vec2Distance(&local_c8,pfVar12);
+              fVar24 = (float)((double)(compassPortableRadarRadius->current).value * dVar22);
+              if (fVar25 < fVar24) {
+                CG_PlayEntitySoundAliasCompassPing(param_1,iVar16,pfVar12,fVar25 / fVar24);
               }
             }
           }
         }
-        iVar20 = iVar20 + 1;
-        lVar22 = lVar22 + 0x7c;
-      } while (iVar20 < 0x20);
+        iVar16 = iVar16 + 1;
+        pCVar19 = pCVar19 + 1;
+      } while (iVar16 < 0x20);
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 822AD6A0  CG_CompassUpdateScrambler  (cgame_mp/cg_compassfriendlies_mp.cpp:761)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1303,22 +1253,20 @@ void CG_CompassUpdateScrambler(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
+  cg_s *pcVar2;
   
-  LVar2 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x2fe,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3 == (cg_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x301,0,"%s");
   }
-  if (pcVar3->inKillCam == 0) {
-    if (0x11 < (uint)pcVar3->clientNum) {
+  if (pcVar2->inKillCam == 0) {
+    if (0x11 < (uint)pcVar2->clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x307,0,
                       "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
@@ -1330,18 +1278,19 @@ void CG_CompassUpdateScrambler(LocalClientNum_t param_1,centity_s *param_2)
                      );
     }
     iVar1 = (param_2->nextState).otherEntityNum;
-    s_compassScramblers[LVar2][iVar1].isActive = true;
-    s_compassScramblers[LVar2][iVar1].pos[0] = (param_2->pose).origin[0];
-    s_compassScramblers[LVar2][iVar1].pos[1] = (param_2->pose).origin[1];
-    s_compassScramblers[LVar2][iVar1].pos[2] = (param_2->pose).origin[2];
+    s_compassScramblers[param_1][iVar1].isActive = true;
+    s_compassScramblers[param_1][iVar1].pos[0] = (param_2->pose).origin[0];
+    s_compassScramblers[param_1][iVar1].pos[1] = (param_2->pose).origin[1];
+    s_compassScramblers[param_1][iVar1].pos[2] = (param_2->pose).origin[2];
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822AD7C8  PingEnemyPlayers  (cgame_mp/cg_compassfriendlies_mp.cpp:786)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1351,106 +1300,104 @@ void PingEnemyPlayers(LocalClientNum_t param_1,float param_2,float param_3)
 {
   int iVar1;
   team_t tVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  bool bVar5;
+  cg_s *pcVar3;
+  bool bVar4;
   float *in_r4;
-  uint uVar6;
-  team_t *ptVar8;
-  longlong lVar7;
-  uint uVar9;
-  CompassActor *pCVar10;
-  CompassTurret *pCVar11;
-  double extraout_f1;
+  uint uVar5;
+  team_t *ptVar7;
+  longlong lVar6;
+  uint uVar8;
+  CompassActor *pCVar9;
+  CompassTurret *pCVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
   float afStack_90 [4];
   float afStack_80 [32];
   
   dVar12 = (double)param_3;
-  LVar3 = __savegprlr_22((double)param_2,param_1);
-  if (extraout_f1 <= dVar12) {
-    dVar13 = extraout_f1;
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
-    if (pcVar4 == (cg_s *)0x0) {
+  dVar11 = (double)param_2;
+  if (dVar11 <= dVar12) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar3 == (cg_s *)0x0) {
       in_r4 = (float *)0x321;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x321,0,"%s");
     }
-    if (pcVar4->inKillCam == 0) {
-      if (0x11 < (uint)(pcVar4->predictedPlayerState).clientNum) {
+    if (pcVar3->inKillCam == 0) {
+      if (0x11 < (uint)(pcVar3->predictedPlayerState).clientNum) {
         in_r4 = (float *)0x327;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x327,0,
                         "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      iVar1 = (pcVar4->predictedPlayerState).clientNum;
-      GetRadarLine(pcVar4,(float)dVar13,in_r4);
-      GetRadarLine(pcVar4,(float)dVar12,in_r4);
-      if (LOCAL_CLIENT_3 < LVar3) {
+      iVar1 = (pcVar3->predictedPlayerState).clientNum;
+      GetRadarLine(pcVar3,(float)dVar11,in_r4);
+      GetRadarLine(pcVar3,(float)dVar12,in_r4);
+      if (LOCAL_CLIENT_3 < param_1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x32f,0,
                         "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      pCVar10 = s_compassActors[LVar3];
-      uVar9 = 0;
-      ptVar8 = &(pcVar4->bgs).clientinfo[0].team;
+      pCVar9 = s_compassActors[param_1];
+      uVar8 = 0;
+      ptVar7 = &(pcVar3->bgs).clientinfo[0].team;
       do {
-        if (0x11 < uVar9) {
+        if (0x11 < uVar8) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                           ,0x333,0,"entryIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        if (((clientInfo_t *)(ptVar8 + -0xb))->infoValid != 0) {
-          if (0x11 < uVar9) {
+        if (((clientInfo_t *)(ptVar7 + -0xb))->infoValid != 0) {
+          if (0x11 < uVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                             ,0x337,0,"entryIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
           }
-          tVar2 = (pcVar4->bgs).clientinfo[iVar1].team;
-          if ((tVar2 == TEAM_FREE) || (*ptVar8 != tVar2)) {
-            uVar6 = pCVar10->flags | 1;
+          tVar2 = (pcVar3->bgs).clientinfo[iVar1].team;
+          if ((tVar2 == TEAM_FREE) || (*ptVar7 != tVar2)) {
+            uVar5 = pCVar9->flags | 1;
           }
           else {
-            uVar6 = pCVar10->flags & 0xfffffffe;
+            uVar5 = pCVar9->flags & 0xfffffffe;
           }
-          pCVar10->flags = uVar6;
-          BG_CopyPerks(ptVar8 + 6,pCVar10->perks);
-          if ((((pCVar10->flags & 1U) != 0) && ((pCVar10->flags & 2U) == 0)) &&
-             (bVar5 = DoLinesSurroundPoint(pcVar4,afStack_80,afStack_90,pCVar10->lastPos), bVar5)) {
-            RadarPingEnemyPlayer(pCVar10,pcVar4->time);
+          pCVar9->flags = uVar5;
+          BG_CopyPerks(ptVar7 + 6,pCVar9->perks);
+          if ((((pCVar9->flags & 1U) != 0) && ((pCVar9->flags & 2U) == 0)) &&
+             (bVar4 = DoLinesSurroundPoint(pcVar3,afStack_80,afStack_90,pCVar9->lastPos), bVar4)) {
+            RadarPingEnemyPlayer(pCVar9,pcVar3->time);
           }
         }
-        uVar9 = uVar9 + 1;
-        ptVar8 = ptVar8 + 0x164;
-        pCVar10 = pCVar10 + 1;
-      } while ((int)uVar9 < 0x12);
-      pCVar11 = s_compassTurrets[LVar3];
-      lVar7 = 0x20;
+        uVar8 = uVar8 + 1;
+        ptVar7 = ptVar7 + 0x164;
+        pCVar9 = pCVar9 + 1;
+      } while ((int)uVar8 < 0x12);
+      pCVar10 = s_compassTurrets[param_1];
+      lVar6 = 0x20;
       do {
-        iVar1 = pcVar4->time;
-        if (iVar1 < pCVar11->lastUpdateTime) {
-          pCVar11->lastUpdateTime = 0;
+        iVar1 = pcVar3->time;
+        if (iVar1 < pCVar10->lastUpdateTime) {
+          pCVar10->lastUpdateTime = 0;
         }
-        if (((pCVar11->lastUpdateTime != 0) && (iVar1 + -500 <= pCVar11->lastUpdateTime)) &&
-           ((pCVar11->isFriendly == false &&
+        if (((pCVar10->lastUpdateTime != 0) && (iVar1 + -500 <= pCVar10->lastUpdateTime)) &&
+           ((pCVar10->isFriendly == false &&
             (((g_compassShowEnemies->current).enabled == false &&
-             (bVar5 = DoLinesSurroundPoint(pcVar4,afStack_80,afStack_90,pCVar11->positionCurrent),
-             bVar5)))))) {
-          Compass_TurretRadarPingEnemy(pCVar11,pcVar4->time);
+             (bVar4 = DoLinesSurroundPoint(pcVar3,afStack_80,afStack_90,pCVar10->positionCurrent),
+             bVar4)))))) {
+          Compass_TurretRadarPingEnemy(pCVar10,pcVar3->time);
         }
-        lVar7 = lVar7 + -1;
-        pCVar11 = pCVar11 + 1;
-      } while (lVar7 != 0);
+        lVar6 = lVar6 + -1;
+        pCVar10 = pCVar10 + 1;
+      } while (lVar6 != 0);
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 822ADA88  CG_CompassIncreaseRadarTime  (cgame_mp/cg_compassfriendlies_mp.cpp:860)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1460,43 +1407,41 @@ void CG_CompassIncreaseRadarTime(LocalClientNum_t param_1)
 {
   float fVar1;
   dvar_t *pdVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  float *pfVar5;
+  cg_s *pcVar3;
+  float *pfVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
   
-  LVar3 = __savegprlr_29(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  if (pcVar4 == (cg_s *)0x0) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar3 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x362,0,"%s");
   }
-  if ((pcVar4->predictedPlayerState).radarEnabled != 0) {
-    pfVar5 = &pcVar4->radarProgress;
-    dVar7 = (double)*pfVar5;
+  if ((pcVar3->predictedPlayerState).radarEnabled != 0) {
+    pfVar4 = &pcVar3->radarProgress;
+    dVar6 = (double)*pfVar4;
     pdVar2 = compassFastRadarUpdateTime;
-    if ((pcVar4->predictedPlayerState).radarMode == 0) {
+    if ((pcVar3->predictedPlayerState).radarMode == 0) {
       pdVar2 = compassRadarUpdateTime;
     }
-    fVar1 = (float)((double)((float)(longlong)pcVar4->frametime / ((pdVar2->current).value * 1000.0)
-                            ) + dVar7);
-    *pfVar5 = fVar1;
-    dVar6 = floor((double)fVar1);
-    fVar1 = *pfVar5;
-    *pfVar5 = fVar1 - (float)dVar6;
-    PingEnemyPlayers(LVar3,(float)dVar7,fVar1 - (float)dVar6);
-    __restgprlr_29();
+    fVar1 = (float)((double)((float)(longlong)pcVar3->frametime / ((pdVar2->current).value * 1000.0)
+                            ) + dVar6);
+    *pfVar4 = fVar1;
+    dVar5 = floor((double)fVar1);
+    fVar1 = *pfVar4;
+    *pfVar4 = fVar1 - (float)dVar5;
+    PingEnemyPlayers(param_1,(float)dVar6,fVar1 - (float)dVar5);
     return;
   }
-  pcVar4->radarProgress = 0.0;
-  __restgprlr_29();
+  pcVar3->radarProgress = 0.0;
   return;
 }
 
 
 // 822ADB90  Compass_AddClientWeaponPingInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:889)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1509,12 +1454,10 @@ void Compass_AddClientWeaponPingInfo
   int iVar2;
   team_t tVar3;
   team_t tVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  uint uVar7;
+  cg_s *pcVar5;
+  uint uVar6;
   
-  LVar5 = __savegprlr_22(param_1);
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
   if ((param_2->nextState).eType != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,899,0,"%s");
@@ -1524,56 +1467,57 @@ void Compass_AddClientWeaponPingInfo
                     ,900,0,"cent->nextState.number doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if (0x11 < (uint)(pcVar6->predictedPlayerState).clientNum) {
+  if (0x11 < (uint)(pcVar5->predictedPlayerState).clientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x385,0,
                     "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  if (pcVar6->inKillCam == 0) {
-    iVar1 = (pcVar6->predictedPlayerState).clientNum;
-    if ((pcVar6->bgs).clientinfo[iVar1].infoValid != 0) {
+  if (pcVar5->inKillCam == 0) {
+    iVar1 = (pcVar5->predictedPlayerState).clientNum;
+    if ((pcVar5->bgs).clientinfo[iVar1].infoValid != 0) {
       iVar2 = (param_2->nextState).clientNum;
-      if (((pcVar6->bgs).clientinfo[iVar2].infoValid != 0) && (iVar1 != iVar2)) {
-        tVar3 = (pcVar6->bgs).clientinfo[iVar2].team;
+      if (((pcVar5->bgs).clientinfo[iVar2].infoValid != 0) && (iVar1 != iVar2)) {
+        tVar3 = (pcVar5->bgs).clientinfo[iVar2].team;
         iVar2 = (param_2->nextState).number;
         if (tVar3 != TEAM_SPECTATOR) {
           if (((tVar3 != TEAM_ALLIES) && (tVar3 != TEAM_AXIS)) && (tVar3 != TEAM_FREE)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                             ,0x39b,0,"%s");
           }
-          s_compassActors[LVar5][iVar2].beginFadeTime = pcVar6->time + param_4;
-          tVar4 = (pcVar6->bgs).clientinfo[iVar1].team;
+          s_compassActors[param_1][iVar2].beginFadeTime = pcVar5->time + param_4;
+          tVar4 = (pcVar5->bgs).clientinfo[iVar1].team;
           if ((tVar4 == TEAM_FREE) || (tVar3 != tVar4)) {
-            uVar7 = s_compassActors[LVar5][iVar2].flags | 1;
+            uVar6 = s_compassActors[param_1][iVar2].flags | 1;
           }
           else {
-            uVar7 = s_compassActors[LVar5][iVar2].flags & 0xfffffffe;
+            uVar6 = s_compassActors[param_1][iVar2].flags & 0xfffffffe;
           }
-          s_compassActors[LVar5][iVar2].flags = uVar7;
-          BG_CopyPerks((pcVar6->bgs).clientinfo[iVar2].perks,s_compassActors[LVar5][iVar2].perks);
-          if ((s_compassActors[LVar5][iVar2].flags & 1U) != 0) {
-            ActorUpdatePos(LVar5,s_compassActors[LVar5] + iVar2,param_3,
+          s_compassActors[param_1][iVar2].flags = uVar6;
+          BG_CopyPerks((pcVar5->bgs).clientinfo[iVar2].perks,s_compassActors[param_1][iVar2].perks);
+          if ((s_compassActors[param_1][iVar2].flags & 1U) != 0) {
+            ActorUpdatePos(param_1,s_compassActors[param_1] + iVar2,param_3,
                            (param_2->nextState).clientNum);
-            s_compassActors[LVar5][iVar2].lastEnemyPos[0] = s_compassActors[LVar5][iVar2].lastPos[0]
-            ;
-            s_compassActors[LVar5][iVar2].lastEnemyPos[1] = s_compassActors[LVar5][iVar2].lastPos[1]
-            ;
-            s_compassActors[LVar5][iVar2].lastEnemyPos[2] = s_compassActors[LVar5][iVar2].lastPos[2]
-            ;
-            s_compassActors[LVar5][iVar2].lastEnemyYaw = s_compassActors[LVar5][iVar2].lastYaw;
+            s_compassActors[param_1][iVar2].lastEnemyPos[0] =
+                 s_compassActors[param_1][iVar2].lastPos[0];
+            s_compassActors[param_1][iVar2].lastEnemyPos[1] =
+                 s_compassActors[param_1][iVar2].lastPos[1];
+            s_compassActors[param_1][iVar2].lastEnemyPos[2] =
+                 s_compassActors[param_1][iVar2].lastPos[2];
+            s_compassActors[param_1][iVar2].lastEnemyYaw = s_compassActors[param_1][iVar2].lastYaw;
           }
         }
       }
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 822B23D0  Compass_AddTurretWeaponPingInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:943)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1582,64 +1526,59 @@ void Compass_AddTurretWeaponPingInfo
                (LocalClientNum_t param_1,centity_s *param_2,float *param_3,int param_4)
 
 {
-  centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  cg_s *pcVar4;
-  CompassTurret *pCVar5;
-  ulonglong uVar6;
+  int iVar1;
+  cg_s *pcVar2;
+  CompassTurret *pCVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1,uVar6,param_3,param_4);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x3b3,0,"%s");
   }
-  pcVar1 = (centity_s *)uVar6;
-  if ((pcVar1->flags & 1U) == 0) {
+  if ((param_2->flags & 1U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x3b5,0,"%s");
   }
-  if ((pcVar1->nextState).eType != 0xb) {
+  if ((param_2->nextState).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x3b6,0,"%s");
   }
-  iVar3 = CG_CompassTurretIsPingType(pcVar1);
-  if (iVar3 != 0) {
-    pcVar4 = CG_GetLocalClientGlobals(LVar2);
-    if (pcVar4 == (cg_s *)0x0) {
+  iVar1 = CG_CompassTurretIsPingType(param_2);
+  if (iVar1 != 0) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar2 == (cg_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x3bd,1,"%s");
     }
-    if (pcVar4->nextSnap == (snapshot_s *)0x0) {
+    if (pcVar2->nextSnap == (snapshot_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x3be,1,"%s");
     }
-    pCVar5 = Compass_TurretGetInfo(LVar2,(pcVar1->nextState).number);
-    if (pCVar5 == (CompassTurret *)0x0) {
+    pCVar3 = Compass_TurretGetInfo(param_1,(param_2->nextState).number);
+    if (pCVar3 == (CompassTurret *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x3c1,1,"%s");
     }
-    iVar3 = pcVar4->time;
-    if (iVar3 < pCVar5->lastUpdateTime) {
-      pCVar5->lastUpdateTime = 0;
+    iVar1 = pcVar2->time;
+    if (iVar1 < pCVar3->lastUpdateTime) {
+      pCVar3->lastUpdateTime = 0;
     }
-    if ((pCVar5->lastUpdateTime != 0) && (iVar3 + -500 <= pCVar5->lastUpdateTime)) {
-      iVar3 = pcVar4->time;
-      pCVar5->yawLastKnown = pCVar5->yawCurrent;
-      pCVar5->firePingTime = iVar3;
-      pCVar5->positionLastKnown[0] = pCVar5->positionCurrent[0];
-      pCVar5->positionLastKnown[1] = pCVar5->positionCurrent[1];
-      pCVar5->positionLastKnown[2] = pCVar5->positionCurrent[2];
+    if ((pCVar3->lastUpdateTime != 0) && (iVar1 + -500 <= pCVar3->lastUpdateTime)) {
+      iVar1 = pcVar2->time;
+      pCVar3->yawLastKnown = pCVar3->yawCurrent;
+      pCVar3->firePingTime = iVar1;
+      pCVar3->positionLastKnown[0] = pCVar3->positionCurrent[0];
+      pCVar3->positionLastKnown[1] = pCVar3->positionCurrent[1];
+      pCVar3->positionLastKnown[2] = pCVar3->positionCurrent[2];
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822B2570  CG_CompassAddWeaponPingInfo  (cgame_mp/cg_compassfriendlies_mp.cpp:974)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1649,70 +1588,61 @@ void CG_CompassAddWeaponPingInfo
 
 {
   int iVar1;
-  centity_s *pcVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  float *pfVar7;
+  cg_s *pcVar2;
+  char *pcVar3;
+  float *pfVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_24(param_1);
-  pfVar7 = param_3;
-  pcVar5 = (char *)param_4;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pfVar7 = (float *)0x0;
-    pcVar5 = "%s";
+  pfVar4 = param_3;
+  pcVar3 = (char *)param_4;
+  if (param_2 == (centity_s *)0x0) {
+    pfVar4 = (float *)0x0;
+    pcVar3 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x3d1,0,"%s");
   }
-  pcVar2 = (centity_s *)uVar6;
-  if ((pcVar2->flags & 1U) != 0) {
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
-    if (pcVar4 == (cg_s *)0x0) {
-      pfVar7 = (float *)0x1;
-      pcVar5 = "%s";
+  if ((param_2->flags & 1U) != 0) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar2 == (cg_s *)0x0) {
+      pfVar4 = (float *)0x1;
+      pcVar3 = "%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x3d7,1,"%s");
     }
-    if (pcVar4->nextSnap == (snapshot_s *)0x0) {
-      pfVar7 = (float *)0x1;
-      pcVar5 = "%s";
+    if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+      pfVar4 = (float *)0x1;
+      pcVar3 = "%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x3d8,1,"%s");
     }
-    if (pcVar4->inKillCam == 0) {
-      if (pcVar4 == (cg_s *)0xfffffb14) {
-        pfVar7 = (float *)0x0;
-        pcVar5 = "%s";
+    if (pcVar2->inKillCam == 0) {
+      if (pcVar2 == (cg_s *)0xfffffb14) {
+        pfVar4 = (float *)0x0;
+        pcVar3 = "%s";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                         ,0x4f,0,"%s");
       }
-      if ((((pcVar4->predictedPlayerState).perks[1] & 0x2000) != 0) ||
+      if ((((pcVar2->predictedPlayerState).perks[1] & 0x2000) != 0) ||
          ((bg_counterUAVStrengthLevelShowFriendlyOnly->current).integer <
-          (pcVar4->predictedPlayerState).radarStrength)) {
-        iVar1 = (pcVar2->nextState).eType;
+          (pcVar2->predictedPlayerState).radarStrength)) {
+        iVar1 = (param_2->nextState).eType;
         if (iVar1 == 1) {
-          Compass_AddClientWeaponPingInfo(LVar3,pcVar2,param_3,param_4);
+          Compass_AddClientWeaponPingInfo(param_1,param_2,param_3,param_4);
         }
         else if (iVar1 != 2) {
           if (iVar1 == 0xb) {
-            Compass_AddTurretWeaponPingInfo(LVar3,pcVar2,pfVar7,(int)pcVar5);
-            __restgprlr_24();
+            Compass_AddTurretWeaponPingInfo(param_1,param_2,pfVar4,(int)pcVar3);
             return;
           }
           if (alwaysfails == 0) {
-            pcVar5 = va("Compass weapon-ping unhandled for entity with eType \'%i\'.");
+            pcVar3 = va("Compass weapon-ping unhandled for entity with eType \'%i\'.");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
-                            ,0x3f6,0,pcVar5);
-            __restgprlr_24();
+                            ,0x3f6,0,pcVar3);
             return;
           }
         }
       }
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1760,6 +1690,8 @@ void CG_CalcCompassPointerRadius(float *param_1,float param_2)
 
 // 822ADEE0  CG_CompassUpdateActors  (cgame_mp/cg_compassfriendlies_mp.cpp:1040)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1772,56 +1704,51 @@ void CG_CompassUpdateActors(LocalClientNum_t param_1)
   uint uVar2;
   int iVar3;
   team_t tVar4;
-  CompassActor *pCVar5;
+  float fVar5;
   float fVar6;
   float fVar7;
-  float fVar8;
-  ulonglong uVar9;
-  cg_s *pcVar10;
-  centity_s *pcVar12;
-  bool bVar13;
-  snapshot_s *psVar14;
-  uint uVar15;
-  int iVar16;
-  int iVar17;
-  double dVar18;
+  cg_s *pcVar8;
+  centity_s *pcVar9;
+  bool bVar10;
+  snapshot_s *psVar11;
+  uint uVar12;
+  int iVar13;
+  int iVar14;
+  CompassActor *pCVar15;
+  double dVar16;
   float local_b0;
   float local_ac;
   float local_a8;
-  LocalClientNum_t LVar11;
   
-  uVar9 = (ulonglong)(int)param_1;
-  __savegprlr();
-  LVar11 = (LocalClientNum_t)uVar9;
-  pcVar10 = CG_GetLocalClientGlobals(LVar11);
-  if (pcVar10->nextSnap == (snapshot_s *)0x0) {
+  pcVar8 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar8->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x41f,0,"%s");
   }
-  if (0x11 < (uint)(pcVar10->predictedPlayerState).clientNum) {
+  if (0x11 < (uint)(pcVar8->predictedPlayerState).clientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x421,0,
                     "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar16 = (pcVar10->predictedPlayerState).clientNum;
-  if (((pcVar10->inKillCam == 0) && ((pcVar10->bgs).clientinfo[iVar16].infoValid != 0)) &&
-     (tVar1 = (pcVar10->bgs).clientinfo[iVar16].team, tVar1 != TEAM_SPECTATOR)) {
-    psVar14 = pcVar10->nextSnap;
-    iVar16 = 0;
-    if (0 < psVar14->numEntities) {
-      dVar18 = 1000.0;
-      iVar17 = 0;
+  iVar13 = (pcVar8->predictedPlayerState).clientNum;
+  if (((pcVar8->inKillCam == 0) && ((pcVar8->bgs).clientinfo[iVar13].infoValid != 0)) &&
+     (tVar1 = (pcVar8->bgs).clientinfo[iVar13].team, tVar1 != TEAM_SPECTATOR)) {
+    psVar11 = pcVar8->nextSnap;
+    iVar13 = 0;
+    if (0 < psVar11->numEntities) {
+      dVar16 = 1000.0;
+      iVar14 = 0;
       do {
-        uVar2 = psVar14->entities[0].number;
+        uVar2 = psVar11->entities[0].number;
         if ((int)uVar2 < 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                           ,0x435,0,"%s\n\t(index) = %i");
         }
-        pcVar12 = CG_GetEntity(LVar11,uVar2);
-        if (((int)uVar2 < 0x12) && ((pcVar10->bgs).clientinfo[uVar2].infoValid != 0)) {
-          tVar4 = (pcVar10->bgs).clientinfo[uVar2].team;
-          if (3 < (uVar9 & 0xffffffff)) {
+        pcVar9 = CG_GetEntity(param_1,uVar2);
+        if (((int)uVar2 < 0x12) && ((pcVar8->bgs).clientinfo[uVar2].infoValid != 0)) {
+          tVar4 = (pcVar8->bgs).clientinfo[uVar2].team;
+          if (LOCAL_CLIENT_3 < param_1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                             ,0x43f,0,
                             "clientIndex doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
@@ -1833,92 +1760,95 @@ void CG_CompassUpdateActors(LocalClientNum_t param_1)
                             "index doesn\'t index ARRAY_COUNT( s_compassActors[clientIndex] )\n\t%i not in [0, %i)"
                            );
           }
-          pCVar5 = s_compassActors[LVar11] + uVar2;
+          pCVar15 = s_compassActors[param_1] + uVar2;
           if ((tVar1 == TEAM_FREE) || (tVar4 != tVar1)) {
-            uVar15 = s_compassActors[LVar11][uVar2].flags | 1;
+            uVar12 = s_compassActors[param_1][uVar2].flags | 1;
           }
           else {
-            uVar15 = s_compassActors[LVar11][uVar2].flags & 0xfffffffe;
+            uVar12 = s_compassActors[param_1][uVar2].flags & 0xfffffffe;
           }
-          s_compassActors[LVar11][uVar2].flags = uVar15;
-          s_compassActors[LVar11][uVar2].flags = uVar15 | 2;
-          BG_CopyPerks((pcVar10->bgs).clientinfo[uVar2].perks,s_compassActors[LVar11][uVar2].perks);
-          if (((pcVar12->nextState).eType == 1) &&
-             (((pcVar12->nextState).lerp.eFlags & 0x40000U) == 0)) {
-            if ((pcVar12->nextState).clientNum != uVar2) {
+          s_compassActors[param_1][uVar2].flags = uVar12;
+          s_compassActors[param_1][uVar2].flags = uVar12 | 2;
+          BG_CopyPerks((pcVar8->bgs).clientinfo[uVar2].perks,s_compassActors[param_1][uVar2].perks);
+          if (((pcVar9->nextState).eType == 1) &&
+             (((pcVar9->nextState).lerp.eFlags & 0x40000U) == 0)) {
+            if ((pcVar9->nextState).clientNum != uVar2) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                               ,0x451,0,"%s");
             }
-            if (((pcVar12->nextState).lerp.eFlags & 0x20U) == 0) {
-              iVar3 = pCVar5->lastUpdate;
-              s_compassActors[LVar11][uVar2].flags =
-                   s_compassActors[LVar11][uVar2].flags & 0xfffffffd;
-              if ((iVar3 != 0) && (iVar3 != pcVar10->time)) {
-                fVar6 = s_compassActors[LVar11][uVar2].lastPos[1] - (pcVar12->pose).origin[1];
-                fVar7 = s_compassActors[LVar11][uVar2].lastPos[2] - (pcVar12->pose).origin[2];
-                fVar8 = s_compassActors[LVar11][uVar2].lastPos[0] - (pcVar12->pose).origin[0];
-                s_compassActors[LVar11][uVar2].lastVel =
-                     (float)((double)(SQRT(fVar8 * fVar8 + fVar7 * fVar7 + fVar6 * fVar6) /
-                                     (float)(longlong)(pcVar10->time - iVar3)) * dVar18);
+            if (((pcVar9->nextState).lerp.eFlags & 0x20U) == 0) {
+              iVar3 = pCVar15->lastUpdate;
+              s_compassActors[param_1][uVar2].flags =
+                   s_compassActors[param_1][uVar2].flags & 0xfffffffd;
+              if ((iVar3 != 0) && (iVar3 != pcVar8->time)) {
+                fVar5 = s_compassActors[param_1][uVar2].lastPos[1] - (pcVar9->pose).origin[1];
+                fVar6 = s_compassActors[param_1][uVar2].lastPos[2] - (pcVar9->pose).origin[2];
+                fVar7 = s_compassActors[param_1][uVar2].lastPos[0] - (pcVar9->pose).origin[0];
+                s_compassActors[param_1][uVar2].lastVel =
+                     (float)((double)(SQRT(fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5) /
+                                     (float)(longlong)(pcVar8->time - iVar3)) * dVar16);
               }
-              ActorUpdatePos(LVar11,pCVar5,(pcVar12->pose).origin,uVar2);
-              pCVar5->lastUpdate = pcVar10->time;
-              s_compassActors[LVar11][uVar2].lastYaw = (pcVar12->pose).angles[1];
-              bVar13 = CL_IsPlayerTalking(&g_serverSession,uVar2);
-              if (bVar13) {
-                s_compassActors[LVar11][uVar2].beginVoiceFadeTime = pcVar10->time + 0x32;
+              ActorUpdatePos(param_1,pCVar15,(pcVar9->pose).origin,uVar2);
+              pCVar15->lastUpdate = pcVar8->time;
+              s_compassActors[param_1][uVar2].lastYaw = (pcVar9->pose).angles[1];
+              bVar10 = CL_IsPlayerTalking(&g_serverSession,uVar2);
+              if (bVar10) {
+                s_compassActors[param_1][uVar2].beginVoiceFadeTime = pcVar8->time + 0x32;
               }
-              if ((((pcVar12->nextState).lerp.eFlags & 0x200U) != 0) &&
-                 (iVar3 = pcVar10->time, s_compassActors[LVar11][uVar2].pingTime <= iVar3)) {
-                s_compassActors[LVar11][uVar2].pingTime = iVar3 + 3000;
+              if ((((pcVar9->nextState).lerp.eFlags & 0x200U) != 0) &&
+                 (iVar3 = pcVar8->time, s_compassActors[param_1][uVar2].pingTime <= iVar3)) {
+                s_compassActors[param_1][uVar2].pingTime = iVar3 + 3000;
               }
             }
           }
         }
-        iVar16 = iVar16 + 1;
-        psVar14 = (snapshot_s *)((int)(pcVar10->nextSnap->ps).pe.events + iVar17);
-        iVar17 = iVar17 + 0x100;
-      } while (iVar16 < pcVar10->nextSnap->numEntities);
+        iVar13 = iVar13 + 1;
+        psVar11 = (snapshot_s *)((int)(pcVar8->nextSnap->ps).pe.events + iVar14);
+        iVar14 = iVar14 + 0x100;
+      } while (iVar13 < pcVar8->nextSnap->numEntities);
     }
-    uVar2 = (pcVar10->predictedPlayerState).iCompassPlayerInfo;
+    uVar2 = (pcVar8->predictedPlayerState).iCompassPlayerInfo;
     if (uVar2 != 0) {
       uVar2 = uVar2 & 0x3f;
       if (0x11 < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x474,0,"index doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if ((tVar1 == TEAM_FREE) || ((pcVar10->bgs).clientinfo[uVar2].team != tVar1)) {
-        uVar15 = s_compassActors[LVar11][uVar2].flags | 1;
+      if ((tVar1 == TEAM_FREE) || ((pcVar8->bgs).clientinfo[uVar2].team != tVar1)) {
+        uVar12 = s_compassActors[param_1][uVar2].flags | 1;
       }
       else {
-        uVar15 = s_compassActors[LVar11][uVar2].flags & 0xfffffffe;
+        uVar12 = s_compassActors[param_1][uVar2].flags & 0xfffffffe;
       }
-      s_compassActors[LVar11][uVar2].flags = uVar15;
-      s_compassActors[LVar11][uVar2].flags = uVar15 & 0xfffffffd;
-      BG_CopyPerks((pcVar10->bgs).clientinfo[uVar2].perks,s_compassActors[LVar11][uVar2].perks);
-      iVar16 = (pcVar10->predictedPlayerState).iCompassPlayerInfo;
-      local_a8 = (pcVar10->refdef).view.org[2];
-      local_b0 = (pcVar10->refdef).view.org[0] +
-                 (float)(longlong)(int)(((iVar16 >> 6 & 0x1ffU) - 0xff) * 4);
-      local_ac = (pcVar10->refdef).view.org[1] +
-                 (float)(longlong)(int)(((iVar16 >> 0xf & 0x1ffU) - 0xff) * 4);
-      ActorUpdatePos(LVar11,s_compassActors[LVar11] + uVar2,&local_b0,uVar2);
-      s_compassActors[LVar11][uVar2].lastYaw =
-           (float)(longlong)*(char *)&(pcVar10->predictedPlayerState).iCompassPlayerInfo * 1.40625;
-      s_compassActors[LVar11][uVar2].lastUpdate = pcVar10->time;
-      if ((((pcVar10->predictedPlayerState).otherFlags & 0x10000U) != 0) &&
-         (s_compassActors[LVar11][uVar2].pingTime <= pcVar10->time)) {
-        s_compassActors[LVar11][uVar2].pingTime = pcVar10->time + 3000;
+      s_compassActors[param_1][uVar2].flags = uVar12;
+      s_compassActors[param_1][uVar2].flags = uVar12 & 0xfffffffd;
+      BG_CopyPerks((pcVar8->bgs).clientinfo[uVar2].perks,s_compassActors[param_1][uVar2].perks);
+      iVar13 = (pcVar8->predictedPlayerState).iCompassPlayerInfo;
+      local_a8 = (pcVar8->refdef).view.org[2];
+      local_b0 = (pcVar8->refdef).view.org[0] +
+                 (float)(longlong)(int)(((iVar13 >> 6 & 0x1ffU) - 0xff) * 4);
+      local_ac = (pcVar8->refdef).view.org[1] +
+                 (float)(longlong)(int)(((iVar13 >> 0xf & 0x1ffU) - 0xff) * 4);
+      ActorUpdatePos(param_1,s_compassActors[param_1] + uVar2,&local_b0,uVar2);
+      s_compassActors[param_1][uVar2].lastYaw =
+           (float)(longlong)*(char *)&(pcVar8->predictedPlayerState).iCompassPlayerInfo * 1.40625;
+      s_compassActors[param_1][uVar2].lastUpdate = pcVar8->time;
+      if ((((pcVar8->predictedPlayerState).otherFlags & 0x10000U) != 0) &&
+         (s_compassActors[param_1][uVar2].pingTime <= pcVar8->time)) {
+        s_compassActors[param_1][uVar2].pingTime = pcVar8->time + 3000;
       }
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 822AE408  CG_CompassDrawFriendlies  (cgame_mp/cg_compassfriendlies_mp.cpp:1172)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1930,25 +1860,26 @@ void CG_CompassDrawFriendlies
 {
   team_t tVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
+  cg_s *pcVar3;
+  int iVar4;
+  bool bVar6;
+  ScreenPlacement *pSVar5;
+  bool bVar7;
   bool bVar8;
-  ScreenPlacement *pSVar6;
-  CompassType CVar7;
-  bool bVar10;
-  float *pfVar11;
-  float *pfVar12;
-  longlong lVar13;
-  Material *pMVar14;
-  int iVar15;
-  int iVar16;
-  uint uVar17;
-  int *piVar18;
-  CompassActor *pCVar19;
-  ulonglong uVar20;
-  Material *pMVar21;
-  Material *pMVar22;
+  float *pfVar9;
+  float *pfVar10;
+  longlong lVar11;
+  Material *pMVar12;
+  int iVar13;
+  int iVar14;
+  uint uVar15;
+  int *piVar16;
+  CompassActor *pCVar17;
+  Material *pMVar18;
+  Material *pMVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -1957,10 +1888,7 @@ void CG_CompassDrawFriendlies
   double dVar28;
   double dVar29;
   double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  float fVar34;
+  float fVar31;
   LocalClientNum_t LStack00000014;
   CompassType CStack0000001c;
   float *pfStack00000034;
@@ -1988,280 +1916,274 @@ void CG_CompassDrawFriendlies
   longlong local_100;
   longlong local_f8;
   longlong local_f0;
-  bool bVar9;
   
-  uVar20 = (ulonglong)(int)param_2;
-  __savegprlr();
-  LVar3 = __savefpr_22();
-  CVar7 = (CompassType)uVar20;
-  LStack00000014 = LVar3;
-  CStack0000001c = CVar7;
+  LStack00000014 = param_1;
+  CStack0000001c = param_2;
   pfStack00000034 = param_5;
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
   local_160 = 
   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp";
   local_158 = (float *)0x82000f98;
-  if (pcVar4->nextSnap == (snapshot_s *)0x0) {
+  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x4b2,0,"%s");
   }
-  if (pcVar4 == (cg_s *)0xfffffb14) {
+  if (pcVar3 == (cg_s *)0xfffffb14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  if ((((pcVar4->predictedPlayerState).perks[1] & 0x2000) != 0) ||
+  if ((((pcVar3->predictedPlayerState).perks[1] & 0x2000) != 0) ||
      ((bg_counterUAVStrengthLevelShowMapOnly->current).integer <
-      (pcVar4->predictedPlayerState).radarStrength)) {
-    iVar5 = CL_ControllerIndexFromClientNum(LVar3);
-    bVar8 = GamerProfile_IsColorBlind(iVar5);
-    if (0x11 < (uint)(pcVar4->predictedPlayerState).clientNum) {
+      (pcVar3->predictedPlayerState).radarStrength)) {
+    iVar4 = CL_ControllerIndexFromClientNum(param_1);
+    bVar6 = GamerProfile_IsColorBlind(iVar4);
+    if (0x11 < (uint)(pcVar3->predictedPlayerState).clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x4bf,0,
                       "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                      );
     }
-    iVar5 = (pcVar4->predictedPlayerState).clientNum;
-    CG_CompassUpYawVector(pcVar4,afStack_120);
-    fVar34 = Compass_GetIconFadeAlpha(LVar3,pcVar4->compassFadeTime,CVar7);
-    dVar23 = (double)fVar34;
-    dVar29 = 0.0;
-    if ((((dVar23 != 0.0) && ((pcVar4->bgs).clientinfo[iVar5].infoValid != 0)) &&
-        (tVar1 = (pcVar4->bgs).clientinfo[iVar5].team, tVar1 != TEAM_SPECTATOR)) &&
+    iVar4 = (pcVar3->predictedPlayerState).clientNum;
+    CG_CompassUpYawVector(pcVar3,afStack_120);
+    fVar31 = Compass_GetIconFadeAlpha(param_1,pcVar3->compassFadeTime,param_2);
+    dVar20 = (double)fVar31;
+    dVar26 = 0.0;
+    if ((((dVar20 != 0.0) && ((pcVar3->bgs).clientinfo[iVar4].infoValid != 0)) &&
+        (tVar1 = (pcVar3->bgs).clientinfo[iVar4].team, tVar1 != TEAM_SPECTATOR)) &&
        (tVar1 != TEAM_FREE)) {
       CG_CompassCalcDimensions
-                (CVar7,pcVar4,param_3,param_4,&local_150.x,&local_150.y,&local_150.w,&local_150.h);
+                (param_2,pcVar3,param_3,param_4,&local_150.x,&local_150.y,&local_150.w,&local_150.h)
+      ;
       local_170 = *param_5;
       local_16c = param_5[1];
       local_168 = param_5[2];
       local_164 = param_5[3];
-      dVar30 = 0.5;
-      dVar27 = (double)(local_150.w * 0.5 + local_150.x);
-      dVar26 = (double)(local_150.h * 0.5 + local_150.y);
-      pSVar6 = ScrPlace_GetActivePlacement(LVar3);
-      if (dVar23 < (double)param_5[3]) {
-        param_5[3] = (float)dVar23;
+      dVar27 = 0.5;
+      dVar24 = (double)(local_150.w * 0.5 + local_150.x);
+      dVar23 = (double)(local_150.h * 0.5 + local_150.y);
+      pSVar5 = ScrPlace_GetActivePlacement(param_1);
+      if (dVar20 < (double)param_5[3]) {
+        param_5[3] = (float)dVar20;
       }
-      if (dVar23 < (double)local_164) {
-        local_164 = (float)dVar23;
-      }
-      pCVar19 = s_compassActors[LVar3];
-      dVar31 = 1.0;
-      dVar28 = 1000.0;
-      uVar17 = 0;
+      pCVar17 = s_compassActors[param_1];
+      dVar28 = 1.0;
+      dVar25 = 1000.0;
+      uVar15 = 0;
       local_15c = "compassSoundPingFadeTime->current.value > 0.0f";
-      piVar18 = &pcVar4->time;
+      piVar16 = &pcVar3->time;
       local_154 = (float *)0x82012890;
       do {
-        if (*piVar18 < ((CompassActor *)&pCVar19->lastUpdate)->lastUpdate) {
-          ((CompassActor *)&pCVar19->lastUpdate)->lastUpdate = 0;
+        if (*piVar16 < ((CompassActor *)&pCVar17->lastUpdate)->lastUpdate) {
+          ((CompassActor *)&pCVar17->lastUpdate)->lastUpdate = 0;
         }
-        if (((*piVar18 + -500 <= ((CompassActor *)&pCVar19->lastUpdate)->lastUpdate) &&
-            ((pCVar19->flags & 1U) == 0)) && ((pcVar4->predictedPlayerState).clientNum != uVar17)) {
-          if ((dVar31 < ABS((double)pCVar19->lastPos[0])) ||
-             (dVar31 < ABS((double)pCVar19->lastPos[1]))) {
-            fVar34 = pCVar19->lastPos[0] - (pcVar4->refdef).view.org[0];
-            fVar2 = pCVar19->lastPos[1] - (pcVar4->refdef).view.org[1];
-            fVar34 = SQRT(fVar2 * fVar2 + fVar34 * fVar34);
+        if (((*piVar16 + -500 <= ((CompassActor *)&pCVar17->lastUpdate)->lastUpdate) &&
+            ((pCVar17->flags & 1U) == 0)) && ((pcVar3->predictedPlayerState).clientNum != uVar15)) {
+          if ((dVar28 < ABS((double)pCVar17->lastPos[0])) ||
+             (dVar28 < ABS((double)pCVar17->lastPos[1]))) {
+            fVar31 = pCVar17->lastPos[0] - (pcVar3->refdef).view.org[0];
+            fVar2 = pCVar17->lastPos[1] - (pcVar3->refdef).view.org[1];
+            fVar31 = SQRT(fVar2 * fVar2 + fVar31 * fVar31);
             fVar2 = (compassObjectiveMaxRange->current).value;
-            if (((compassObjectiveMaxRange->current).value < fVar34) ||
-               (fVar2 = (compassMaxRange->current).value, fVar34 < (compassMaxRange->current).value)
+            if (((compassObjectiveMaxRange->current).value < fVar31) ||
+               (fVar2 = (compassMaxRange->current).value, fVar31 < (compassMaxRange->current).value)
                ) {
-              fVar34 = fVar2;
+              fVar31 = fVar2;
             }
-            dVar24 = (double)(float)((double)(compassObjectiveMinAlpha->current).value - dVar31) *
-                     (double)((fVar34 - (compassMaxRange->current).value) /
+            dVar21 = (double)(float)((double)(compassObjectiveMinAlpha->current).value - dVar28) *
+                     (double)((fVar31 - (compassMaxRange->current).value) /
                              ((compassObjectiveMaxRange->current).value -
-                             (compassMaxRange->current).value)) + dVar31;
+                             (compassMaxRange->current).value)) + dVar28;
           }
           else {
-            dVar24 = (double)(float)(dVar31 - (double)(compassObjectiveMinAlpha->current).value) *
-                     dVar30 + (double)(compassObjectiveMinAlpha->current).value;
+            dVar21 = (double)(float)(dVar28 - (double)(compassObjectiveMinAlpha->current).value) *
+                     dVar27 + (double)(compassObjectiveMinAlpha->current).value;
           }
-          local_164 = (float)dVar24;
-          pfVar12 = afStack_120;
-          CVar7 = (CompassType)uVar20;
-          bVar9 = CG_WorldPosToCompass
-                            (CVar7,pcVar4,&local_150,pfVar12,(pcVar4->refdef).view.org,
-                             pCVar19->lastPos,(float *)0x0,&local_188);
-          if ((!bVar9) || ((compassClampIcons->current).enabled != false)) {
-            if (0x11 < uVar17) {
-              pfVar12 = local_154;
+          local_164 = (float)dVar21;
+          pfVar10 = afStack_120;
+          bVar7 = CG_WorldPosToCompass
+                            (param_2,pcVar3,&local_150,pfVar10,(pcVar3->refdef).view.org,
+                             pCVar17->lastPos,(float *)0x0,&local_188);
+          if ((!bVar7) || ((compassClampIcons->current).enabled != false)) {
+            if (0x11 < uVar15) {
+              pfVar10 = local_154;
               MyAssertHandler(local_160,0x50b,0,(char *)local_154);
             }
-            if ((pcVar4->bgs).clientinfo[uVar17].infoValid == 0) {
-              iVar5 = 0;
+            if ((pcVar3->bgs).clientinfo[uVar15].infoValid == 0) {
+              iVar4 = 0;
             }
             else {
-              iVar5 = CL_ClientIsInMyParty(LVar3,uVar17);
+              iVar4 = CL_ClientIsInMyParty(param_1,uVar15);
             }
-            pfVar11 = local_17c;
-            CalcCompassFriendlySize(CVar7,&local_180,pfVar11);
-            local_188 = -(float)((double)local_180 * dVar30 - dVar27) + local_188;
-            local_184 = -(float)((double)local_17c[0] * dVar30 - dVar26) + local_184;
-            if ((CVar7 == COMPASS_TYPE_PARTIAL) && ((compassRotation->current).enabled != false)) {
-              iVar16 = 460000;
+            pfVar9 = local_17c;
+            CalcCompassFriendlySize(param_2,&local_180,pfVar9);
+            local_188 = -(float)((double)local_180 * dVar27 - dVar24) + local_188;
+            local_184 = -(float)((double)local_17c[0] * dVar27 - dVar23) + local_184;
+            if ((param_2 == COMPASS_TYPE_PARTIAL) && ((compassRotation->current).enabled != false))
+            {
+              iVar14 = 460000;
             }
             else {
-              iVar16 = 0x797e8;
+              iVar14 = 0x797e8;
             }
-            fVar34 = AngleNormalize360(*(float *)((int)(pcVar4->predictedPlayerState).origin +
-                                                 iVar16 + -0x1c) - pCVar19->lastYaw);
-            dVar24 = (double)fVar34;
-            if (*piVar18 < pCVar19->pingTime) {
-              iVar15 = pCVar19->pingTime - *piVar18;
-              iVar16 = iVar15 / 500 + (iVar15 >> 0x1f);
-              iVar16 = iVar16 - (iVar16 >> 0x1f);
-              pfVar12 = (float *)(iVar16 * 500);
-              pfVar11 = (float *)(iVar15 + iVar16 * -500);
-              if ((int)pfVar11 < 0xfa) goto LAB_822ae918;
-              bVar9 = true;
-              dVar24 = dVar29;
-              if (iVar5 == 0) {
-                if ((bVar8) && (cgMedia.compass[1].friendly_chatting != (Material *)0x0)) {
+            fVar31 = AngleNormalize360(*(float *)((int)(pcVar3->predictedPlayerState).origin +
+                                                 iVar14 + -0x1c) - pCVar17->lastYaw);
+            dVar21 = (double)fVar31;
+            if (*piVar16 < pCVar17->pingTime) {
+              iVar13 = pCVar17->pingTime - *piVar16;
+              iVar14 = iVar13 / 500 + (iVar13 >> 0x1f);
+              iVar14 = iVar14 - (iVar14 >> 0x1f);
+              pfVar10 = (float *)(iVar14 * 500);
+              pfVar9 = (float *)(iVar13 + iVar14 * -500);
+              if ((int)pfVar9 < 0xfa) goto LAB_822ae918;
+              bVar7 = true;
+              dVar21 = dVar26;
+              if (iVar4 == 0) {
+                if ((bVar6) && (cgMedia.compass[1].friendly_chatting != (Material *)0x0)) {
                   Material_IsDefault(cgMedia.compass[1].friendly_chatting);
                 }
               }
-              else if ((bVar8) && (cgMedia.compass[1].party_chatting != (Material *)0x0)) {
+              else if ((bVar6) && (cgMedia.compass[1].party_chatting != (Material *)0x0)) {
                 Material_IsDefault(cgMedia.compass[1].party_chatting);
               }
             }
             else {
 LAB_822ae918:
-              bVar9 = false;
-              if (iVar5 == 0) {
-                if ((bVar8) && (cgMedia.compass[1].friendly_arrow != (Material *)0x0)) {
+              bVar7 = false;
+              if (iVar4 == 0) {
+                if ((bVar6) && (cgMedia.compass[1].friendly_arrow != (Material *)0x0)) {
                   Material_IsDefault(cgMedia.compass[1].friendly_arrow);
                 }
               }
-              else if ((bVar8) && (cgMedia.compass[1].party_arrow != (Material *)0x0)) {
+              else if ((bVar6) && (cgMedia.compass[1].party_arrow != (Material *)0x0)) {
                 Material_IsDefault(cgMedia.compass[1].party_arrow);
               }
             }
-            dVar32 = dVar29;
-            if ((double)(compassSoundPingFadeTime->current).value <= dVar29) {
-              pfVar11 = (float *)0x0;
-              pfVar12 = local_158;
+            dVar29 = dVar26;
+            if ((double)(compassSoundPingFadeTime->current).value <= dVar26) {
+              pfVar9 = (float *)0x0;
+              pfVar10 = local_158;
               MyAssertHandler(local_160,0x530,0,(char *)local_158);
             }
-            iVar16 = *piVar18;
-            iVar15 = pCVar19->beginFadeTime;
-            local_110 = (longlong)iVar16;
-            local_100 = (longlong)iVar15;
-            fVar34 = (float)((double)(compassSoundPingFadeTime->current).value * dVar28);
-            pMVar21 = (Material *)0x0;
-            if ((float)local_110 <= (float)local_100 + fVar34) {
-              dVar32 = dVar31;
-              if (iVar15 < iVar16) {
-                local_f0 = (longlong)(iVar16 - iVar15);
-                dVar32 = (double)(float)(dVar31 - (double)((float)local_f0 / fVar34));
+            iVar14 = *piVar16;
+            iVar13 = pCVar17->beginFadeTime;
+            local_110 = (longlong)iVar14;
+            local_100 = (longlong)iVar13;
+            fVar31 = (float)((double)(compassSoundPingFadeTime->current).value * dVar25);
+            pMVar18 = (Material *)0x0;
+            if ((float)local_110 <= (float)local_100 + fVar31) {
+              dVar29 = dVar28;
+              if (iVar13 < iVar14) {
+                local_f0 = (longlong)(iVar14 - iVar13);
+                dVar29 = (double)(float)(dVar28 - (double)((float)local_f0 / fVar31));
               }
-              if (iVar5 == 0) {
-                pMVar21 = cgMedia.compass[0].friendly_firing;
-                if (((bVar8) && (cgMedia.compass[1].friendly_firing != (Material *)0x0)) &&
-                   (bVar10 = Material_IsDefault(cgMedia.compass[1].friendly_firing),
-                   pMVar21 = cgMedia.compass[0].friendly_firing, !bVar10)) {
-                  pMVar21 = cgMedia.compass[1].friendly_firing;
+              if (iVar4 == 0) {
+                pMVar18 = cgMedia.compass[0].friendly_firing;
+                if (((bVar6) && (cgMedia.compass[1].friendly_firing != (Material *)0x0)) &&
+                   (bVar8 = Material_IsDefault(cgMedia.compass[1].friendly_firing),
+                   pMVar18 = cgMedia.compass[0].friendly_firing, !bVar8)) {
+                  pMVar18 = cgMedia.compass[1].friendly_firing;
                 }
               }
               else {
-                pMVar21 = cgMedia.compass[0].party_firing;
-                if (((bVar8) && (cgMedia.compass[1].party_firing != (Material *)0x0)) &&
-                   (bVar10 = Material_IsDefault(cgMedia.compass[1].party_firing),
-                   pMVar21 = cgMedia.compass[0].party_firing, !bVar10)) {
-                  pMVar21 = cgMedia.compass[1].party_firing;
+                pMVar18 = cgMedia.compass[0].party_firing;
+                if (((bVar6) && (cgMedia.compass[1].party_firing != (Material *)0x0)) &&
+                   (bVar8 = Material_IsDefault(cgMedia.compass[1].party_firing),
+                   pMVar18 = cgMedia.compass[0].party_firing, !bVar8)) {
+                  pMVar18 = cgMedia.compass[1].party_firing;
                 }
               }
             }
-            pMVar14 = (Material *)*piVar18;
-            iVar16 = pCVar19->beginVoiceFadeTime;
-            lVar13 = (longlong)(int)pMVar14;
-            local_108 = (longlong)iVar16;
-            fVar34 = (float)((double)(compassSoundPingFadeTime->current).value * dVar28);
-            dVar33 = dVar29;
-            pMVar22 = (Material *)0x0;
-            local_f8 = lVar13;
-            if ((float)lVar13 <= (float)local_108 + fVar34) {
-              dVar33 = dVar31;
-              if (iVar16 < (int)pMVar14) {
-                local_118 = (longlong)((int)pMVar14 - iVar16);
-                dVar33 = (double)(float)(dVar31 - (double)((float)local_118 / fVar34));
+            pMVar12 = (Material *)*piVar16;
+            iVar14 = pCVar17->beginVoiceFadeTime;
+            lVar11 = (longlong)(int)pMVar12;
+            local_108 = (longlong)iVar14;
+            fVar31 = (float)((double)(compassSoundPingFadeTime->current).value * dVar25);
+            dVar30 = dVar26;
+            pMVar19 = (Material *)0x0;
+            local_f8 = lVar11;
+            if ((float)lVar11 <= (float)local_108 + fVar31) {
+              dVar30 = dVar28;
+              if (iVar14 < (int)pMVar12) {
+                local_118 = (longlong)((int)pMVar12 - iVar14);
+                dVar30 = (double)(float)(dVar28 - (double)((float)local_118 / fVar31));
               }
-              if (iVar5 == 0) {
-                if ((bVar8) && (cgMedia.compass[1].friendly_yelling != (Material *)0x0)) {
-                  bVar10 = Material_IsDefault(cgMedia.compass[1].friendly_yelling);
-                  pMVar14 = (Material *)lVar13;
-                  pMVar22 = cgMedia.compass[1].friendly_yelling;
-                  if (!bVar10) goto LAB_822aebcc;
+              if (iVar4 == 0) {
+                if ((bVar6) && (cgMedia.compass[1].friendly_yelling != (Material *)0x0)) {
+                  bVar8 = Material_IsDefault(cgMedia.compass[1].friendly_yelling);
+                  pMVar12 = (Material *)lVar11;
+                  pMVar19 = cgMedia.compass[1].friendly_yelling;
+                  if (!bVar8) goto LAB_822aebcc;
                 }
-                pMVar22 = cgMedia.compass[0].friendly_yelling;
+                pMVar19 = cgMedia.compass[0].friendly_yelling;
               }
               else {
-                if ((bVar8) && (cgMedia.compass[1].party_yelling != (Material *)0x0)) {
-                  bVar10 = Material_IsDefault(cgMedia.compass[1].party_yelling);
-                  pMVar14 = (Material *)lVar13;
-                  pMVar22 = cgMedia.compass[1].party_yelling;
-                  if (!bVar10) goto LAB_822aebcc;
+                if ((bVar6) && (cgMedia.compass[1].party_yelling != (Material *)0x0)) {
+                  bVar8 = Material_IsDefault(cgMedia.compass[1].party_yelling);
+                  pMVar12 = (Material *)lVar11;
+                  pMVar19 = cgMedia.compass[1].party_yelling;
+                  if (!bVar8) goto LAB_822aebcc;
                 }
-                pMVar22 = cgMedia.compass[0].party_yelling;
+                pMVar19 = cgMedia.compass[0].party_yelling;
               }
             }
 LAB_822aebcc:
-            iVar5 = 0x31;
+            iVar4 = 0x31;
             local_130 = *pfStack00000034;
             local_12c = pfStack00000034[1];
             local_128 = pfStack00000034[2];
-            if ((float)(dVar23 - dVar32) < 0.0) {
-              dVar32 = dVar23;
+            if ((float)(dVar20 - dVar29) < 0.0) {
+              dVar29 = dVar20;
             }
-            if ((float)(dVar23 - dVar33) < 0.0) {
-              dVar33 = dVar23;
+            if ((float)(dVar20 - dVar30) < 0.0) {
+              dVar30 = dVar20;
             }
-            dVar25 = (double)pfStack00000034[3];
-            if ((float)(dVar23 - (double)pfStack00000034[3]) < 0.0) {
-              dVar25 = dVar23;
+            dVar22 = (double)pfStack00000034[3];
+            if ((float)(dVar20 - (double)pfStack00000034[3]) < 0.0) {
+              dVar22 = dVar20;
             }
-            local_124 = (float)dVar25;
-            bVar10 = BG_HasPerk(pCVar19->perks,0x31);
-            if (bVar10) {
-              if ((bVar8) && (cgMedia.compass[1].friendly_juggernaut != (Material *)0x0)) {
+            local_124 = (float)dVar22;
+            bVar8 = BG_HasPerk(pCVar17->perks,0x31);
+            if (bVar8) {
+              if ((bVar6) && (cgMedia.compass[1].friendly_juggernaut != (Material *)0x0)) {
                 Material_IsDefault(cgMedia.compass[1].friendly_juggernaut);
               }
-              CG_DrawRotatedPic(pSVar6,local_188,local_184,local_180,local_17c[0],iVar5,(int)pfVar11
-                                ,(float)dVar29,pfVar12,pMVar14);
+              CG_DrawRotatedPic(pSVar5,local_188,local_184,local_180,local_17c[0],iVar4,(int)pfVar9,
+                                (float)dVar26,pfVar10,pMVar12);
             }
-            else if (((((pMVar21 != (Material *)0x0) && (dVar32 == dVar31)) ||
-                      ((pMVar22 != (Material *)0x0 && (dVar33 == dVar31)))) && (!bVar9)) ||
-                    (CG_DrawRotatedPic(pSVar6,local_188,local_184,local_180,local_17c[0],iVar5,
-                                       (int)pfVar11,(float)dVar24,pfVar12,pMVar14), !bVar9)) {
-              if (pMVar22 != (Material *)0x0) {
-                local_164 = (float)dVar33;
-                CG_DrawRotatedPic(pSVar6,local_188,local_184,local_180,local_17c[0],iVar5,
-                                  (int)pfVar11,(float)dVar24,pfVar12,pMVar14);
+            else if (((((pMVar18 != (Material *)0x0) && (dVar29 == dVar28)) ||
+                      ((pMVar19 != (Material *)0x0 && (dVar30 == dVar28)))) && (!bVar7)) ||
+                    (CG_DrawRotatedPic(pSVar5,local_188,local_184,local_180,local_17c[0],iVar4,
+                                       (int)pfVar9,(float)dVar21,pfVar10,pMVar12), !bVar7)) {
+              if (pMVar19 != (Material *)0x0) {
+                local_164 = (float)dVar30;
+                CG_DrawRotatedPic(pSVar5,local_188,local_184,local_180,local_17c[0],iVar4,
+                                  (int)pfVar9,(float)dVar21,pfVar10,pMVar12);
               }
-              if (pMVar21 != (Material *)0x0) {
-                local_164 = (float)dVar32;
-                CG_DrawRotatedPic(pSVar6,local_188,local_184,local_180,local_17c[0],iVar5,
-                                  (int)pfVar11,(float)dVar24,pfVar12,pMVar14);
+              if (pMVar18 != (Material *)0x0) {
+                local_164 = (float)dVar29;
+                CG_DrawRotatedPic(pSVar5,local_188,local_184,local_180,local_17c[0],iVar4,
+                                  (int)pfVar9,(float)dVar21,pfVar10,pMVar12);
               }
             }
           }
         }
-        uVar17 = uVar17 + 1;
-        pCVar19 = pCVar19 + 1;
-        if (0x11 < (int)uVar17) break;
-        uVar20 = (ulonglong)CStack0000001c;
-        LVar3 = LStack00000014;
-      } while( true );
+        uVar15 = uVar15 + 1;
+        pCVar17 = pCVar17 + 1;
+        param_2 = CStack0000001c;
+        param_1 = LStack00000014;
+      } while ((int)uVar15 < 0x12);
     }
   }
-  __restfpr_22();
-  __restgprlr();
   return;
 }
 
 
 // 822AED80  CG_CompassDrawEnemies  (cgame_mp/cg_compassfriendlies_mp.cpp:1394)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2275,20 +2197,20 @@ void CG_CompassDrawEnemies
   uint uVar2;
   bool bVar3;
   uint uVar4;
-  LocalClientNum_t LVar5;
-  int iVar6;
+  int iVar5;
+  bool bVar7;
+  cg_s *pcVar6;
   bool bVar8;
-  cg_s *pcVar7;
-  bool bVar9;
+  float *pfVar9;
   float *pfVar10;
-  float *pfVar11;
-  Material *pMVar12;
-  float *pfVar13;
-  ulonglong uVar14;
-  CompassActor *pCVar15;
-  uint uVar16;
-  uint *puVar17;
-  bool bVar18;
+  Material *pMVar11;
+  float *pfVar12;
+  ulonglong uVar13;
+  CompassActor *pCVar14;
+  uint uVar15;
+  uint *puVar16;
+  bool bVar17;
+  double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
@@ -2298,8 +2220,7 @@ void CG_CompassDrawEnemies
   double dVar25;
   double dVar26;
   double dVar27;
-  double dVar28;
-  float fVar29;
+  float fVar28;
   rectDef_s *prStack0000002c;
   float local_178;
   float local_174;
@@ -2324,155 +2245,153 @@ void CG_CompassDrawEnemies
   longlong local_f8;
   longlong local_f0;
   
-  __savegprlr();
-  LVar5 = __savefpr_22();
   prStack0000002c = param_4;
-  iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-  bVar8 = GamerProfile_IsColorBlind(iVar6);
-  local_168 = (uint)bVar8;
-  pcVar7 = CG_GetLocalClientGlobals(LVar5);
+  iVar5 = CL_ControllerIndexFromClientNum(param_1);
+  bVar7 = GamerProfile_IsColorBlind(iVar5);
+  local_168 = (uint)bVar7;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
   local_15c = 
   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp";
-  if (pcVar7->nextSnap == (snapshot_s *)0x0) {
+  if (pcVar6->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x58b,0,"%s");
   }
-  if (0x11 < (uint)(pcVar7->predictedPlayerState).clientNum) {
+  if (0x11 < (uint)(pcVar6->predictedPlayerState).clientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x58d,0,
                     "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar6 = (pcVar7->predictedPlayerState).clientNum;
-  CG_CompassUpYawVector(pcVar7,afStack_118);
-  fVar29 = Compass_GetIconFadeAlpha(LVar5,pcVar7->compassFadeTime,param_2);
-  dVar19 = (double)fVar29;
-  dVar24 = 0.0;
-  if (((dVar19 != 0.0) && ((pcVar7->bgs).clientinfo[iVar6].infoValid != 0)) &&
-     ((pcVar7->bgs).clientinfo[iVar6].team != TEAM_SPECTATOR)) {
+  iVar5 = (pcVar6->predictedPlayerState).clientNum;
+  CG_CompassUpYawVector(pcVar6,afStack_118);
+  fVar28 = Compass_GetIconFadeAlpha(param_1,pcVar6->compassFadeTime,param_2);
+  dVar18 = (double)fVar28;
+  dVar23 = 0.0;
+  if (((dVar18 != 0.0) && ((pcVar6->bgs).clientinfo[iVar5].infoValid != 0)) &&
+     ((pcVar6->bgs).clientinfo[iVar5].team != TEAM_SPECTATOR)) {
     CG_CompassCalcDimensions
-              (param_2,pcVar7,param_3,param_4,&local_150.x,&local_150.y,&local_150.w,&local_150.h);
+              (param_2,pcVar6,param_3,param_4,&local_150.x,&local_150.y,&local_150.w,&local_150.h);
     local_130 = *param_5;
     local_12c = param_5[1];
     local_128 = param_5[2];
     local_124 = param_5[3];
-    dVar25 = 0.5;
-    dVar21 = (double)(local_150.w * 0.5 + local_150.x);
-    dVar20 = (double)(local_150.h * 0.5 + local_150.y);
-    local_164 = ScrPlace_GetActivePlacement(LVar5);
-    bVar8 = (g_compassShowEnemies->current).enabled;
-    pCVar15 = s_compassActors[LVar5];
+    dVar24 = 0.5;
+    dVar20 = (double)(local_150.w * 0.5 + local_150.x);
+    dVar19 = (double)(local_150.h * 0.5 + local_150.y);
+    local_164 = ScrPlace_GetActivePlacement(param_1);
+    bVar7 = (g_compassShowEnemies->current).enabled;
+    pCVar14 = s_compassActors[param_1];
     local_160 = 0x12;
-    dVar22 = 1.0;
-    dVar23 = 1000.0;
+    dVar21 = 1.0;
+    dVar22 = 1000.0;
     local_120 = -0x7d5f0000;
     local_158 = -0x7d5f0000;
-    puVar17 = (uint *)(LVar5 * 0xe38 + -0x7d5e5568);
+    puVar16 = s_compassActors[param_1][0].perks + 1;
     local_154 = "compassSoundPingFadeTime->current.value > 0.0f";
     do {
-      if ((puVar17[-2] & 1) != 0) {
-        if (puVar17 == (uint *)0x4) {
+      if ((puVar16[-2] & 1) != 0) {
+        if (puVar16 == (uint *)&DAT_00000004) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                           ,0x4f,0,"%s");
         }
-        uVar2 = *puVar17;
-        if (puVar17 == (uint *)0x4) {
+        uVar2 = *puVar16;
+        if (puVar16 == (uint *)&DAT_00000004) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                           ,0x4f,0,"%s");
         }
-        uVar4 = *puVar17;
-        if (puVar17 == (uint *)0x4) {
+        uVar4 = *puVar16;
+        if (puVar16 == (uint *)&DAT_00000004) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                           ,0x4f,0,"%s");
         }
-        uVar16 = *puVar17 >> 0x11 & 1;
-        if (((bVar8 != false) || (uVar16 != 0)) ||
-           (((uVar4 & 0x10000) != 0 || (bVar18 = false, (uVar2 >> 0xf & 1) != 0)))) {
-          bVar18 = true;
-          if (pcVar7->time < ((CompassActor *)&pCVar15->lastUpdate)->lastUpdate) {
-            ((CompassActor *)&pCVar15->lastUpdate)->lastUpdate = 0;
+        uVar15 = *puVar16 >> 0x11 & 1;
+        if (((bVar7 != false) || (uVar15 != 0)) ||
+           (((uVar4 & 0x10000) != 0 || (bVar17 = false, (uVar2 >> 0xf & 1) != 0)))) {
+          bVar17 = true;
+          if (pcVar6->time < ((CompassActor *)&pCVar14->lastUpdate)->lastUpdate) {
+            ((CompassActor *)&pCVar14->lastUpdate)->lastUpdate = 0;
           }
-          if (((CompassActor *)&pCVar15->lastUpdate)->lastUpdate < pcVar7->time + -500)
+          if (((CompassActor *)&pCVar14->lastUpdate)->lastUpdate < pcVar6->time + -500)
           goto LAB_822af468;
         }
-        if ((double)(compassSoundPingFadeTime->current).value <= dVar24) {
+        if ((double)(compassSoundPingFadeTime->current).value <= dVar23) {
           MyAssertHandler(local_15c,0x5c4,0,"%s");
         }
-        if ((double)(compassRadarPingFadeTime->current).value <= dVar24) {
+        if ((double)(compassRadarPingFadeTime->current).value <= dVar23) {
           MyAssertHandler(local_15c,0x5c5,0,"%s");
         }
-        local_100 = (longlong)pcVar7->time;
-        local_110 = (longlong)(int)puVar17[-5];
-        if (((float)((double)(compassSoundPingFadeTime->current).value * dVar23 + (double)local_110)
-             <= (float)local_100) || (bVar9 = true, puVar17[-5] == 0)) {
-          bVar9 = false;
+        local_100 = (longlong)pcVar6->time;
+        local_110 = (longlong)(int)puVar16[-5];
+        if (((float)((double)(compassSoundPingFadeTime->current).value * dVar22 + (double)local_110)
+             <= (float)local_100) || (bVar8 = true, puVar16[-5] == 0)) {
+          bVar8 = false;
         }
-        if (bVar18) {
+        if (bVar17) {
           bVar3 = true;
         }
         else {
-          local_f0 = (longlong)(int)puVar17[-4];
-          if (((float)((double)(compassRadarPingFadeTime->current).value * dVar23 + (double)local_f0
-                      ) <= (float)local_100) || (bVar3 = true, puVar17[-4] == 0)) {
+          local_f0 = (longlong)(int)puVar16[-4];
+          if (((float)((double)(compassRadarPingFadeTime->current).value * dVar22 + (double)local_f0
+                      ) <= (float)local_100) || (bVar3 = true, puVar16[-4] == 0)) {
             bVar3 = false;
           }
         }
-        if ((bVar9) || (bVar3)) {
-          pMVar12 = (Material *)(pcVar7->refdef).view.org;
-          pfVar11 = afStack_118;
-          pfVar13 = (float *)(puVar17 + -0xf);
-          if (!bVar18) {
-            pfVar13 = (float *)(puVar17 + -0xc);
+        if ((bVar8) || (bVar3)) {
+          pMVar11 = (Material *)(pcVar6->refdef).view.org;
+          pfVar10 = afStack_118;
+          pfVar12 = (float *)(puVar16 + -0xf);
+          if (!bVar17) {
+            pfVar12 = (float *)(puVar16 + -0xc);
           }
-          bVar9 = CG_WorldPosToCompass
-                            (param_2,pcVar7,&local_150,pfVar11,(float *)pMVar12,pfVar13,(float *)0x0
+          bVar8 = CG_WorldPosToCompass
+                            (param_2,pcVar6,&local_150,pfVar10,(float *)pMVar11,pfVar12,(float *)0x0
                              ,&local_178);
-          if ((!bVar9) || (*(char *)(*(int *)(local_158 + 0x5e5c) + 0xc) != '\0')) {
-            pfVar10 = &local_16c;
-            pfVar13 = &local_170;
-            CalcCompassFriendlySize(param_2,pfVar13,pfVar10);
-            local_178 = -(float)((double)local_170 * dVar25 - dVar21) + local_178;
-            local_174 = -(float)((double)local_16c * dVar25 - dVar20) + local_174;
-            iVar6 = pcVar7->time;
-            dVar27 = dVar22;
-            if (((int)puVar17[-4] < iVar6) && (!bVar18)) {
-              local_f8 = (longlong)(int)(iVar6 - puVar17[-4]);
-              dVar27 = (double)(float)(dVar22 - (double)((float)local_f8 /
+          if ((!bVar8) || (*(char *)(*(int *)(local_158 + 0x5e5c) + 0xc) != '\0')) {
+            pfVar9 = &local_16c;
+            pfVar12 = &local_170;
+            CalcCompassFriendlySize(param_2,pfVar12,pfVar9);
+            local_178 = -(float)((double)local_170 * dVar24 - dVar20) + local_178;
+            local_174 = -(float)((double)local_16c * dVar24 - dVar19) + local_174;
+            iVar5 = pcVar6->time;
+            dVar26 = dVar21;
+            if (((int)puVar16[-4] < iVar5) && (!bVar17)) {
+              local_f8 = (longlong)(int)(iVar5 - puVar16[-4]);
+              dVar26 = (double)(float)(dVar21 - (double)((float)local_f8 /
                                                         (float)((double)(compassRadarPingFadeTime->
-                                                                        current).value * dVar23)));
+                                                                        current).value * dVar22)));
             }
-            dVar26 = dVar22;
-            if ((int)puVar17[-5] < iVar6) {
-              local_108 = (longlong)(int)(iVar6 - puVar17[-5]);
-              dVar26 = (double)(float)(dVar22 - (double)((float)local_108 /
+            dVar25 = dVar21;
+            if ((int)puVar16[-5] < iVar5) {
+              local_108 = (longlong)(int)(iVar5 - puVar16[-5]);
+              dVar25 = (double)(float)(dVar21 - (double)((float)local_108 /
                                                         (float)((double)(compassSoundPingFadeTime->
-                                                                        current).value * dVar23)));
+                                                                        current).value * dVar22)));
             }
-            if (((pcVar7->predictedPlayerState).radarShowEnemyDirection != 0) ||
-               (dVar28 = dVar24, (uVar4 & 0x10000) != 0)) {
+            if (((pcVar6->predictedPlayerState).radarShowEnemyDirection != 0) ||
+               (dVar27 = dVar23, (uVar4 & 0x10000) != 0)) {
               if ((param_2 == COMPASS_TYPE_PARTIAL) &&
                  (*(char *)(*(int *)(local_120 + 0x5e6c) + 0xc) != '\0')) {
-                fVar29 = pcVar7->refdefViewAngles[1];
-                if (bVar18) {
-                  fVar1 = (float)puVar17[-7];
+                fVar28 = pcVar6->refdefViewAngles[1];
+                if (bVar17) {
+                  fVar1 = (float)puVar16[-7];
                 }
                 else {
 LAB_822af308:
-                  fVar1 = (float)puVar17[-9];
+                  fVar1 = (float)puVar16[-9];
                 }
               }
               else {
-                fVar29 = pcVar7->compassNorthYaw;
-                if (!bVar18) goto LAB_822af308;
-                fVar1 = (float)puVar17[-7];
+                fVar28 = pcVar6->compassNorthYaw;
+                if (!bVar17) goto LAB_822af308;
+                fVar1 = (float)puVar16[-7];
               }
-              fVar29 = AngleNormalize360(fVar29 - fVar1);
-              dVar28 = (double)fVar29;
+              fVar28 = AngleNormalize360(fVar28 - fVar1);
+              dVar27 = (double)fVar28;
             }
-            if (uVar16 == 0) {
-              if (((pcVar7->predictedPlayerState).radarShowEnemyDirection == 0) &&
+            if (uVar15 == 0) {
+              if (((pcVar6->predictedPlayerState).radarShowEnemyDirection == 0) &&
                  ((uVar4 & 0x10000) == 0)) {
-                dVar28 = dVar24;
+                dVar27 = dVar23;
                 if ((local_168 != 0) && (cgMedia.compass[1].enemy_blip != (Material *)0x0)) {
                   Material_IsDefault(cgMedia.compass[1].enemy_blip);
                 }
@@ -2482,39 +2401,41 @@ LAB_822af308:
               }
             }
             else {
-              dVar28 = dVar24;
+              dVar27 = dVar23;
               if ((local_168 != 0) && (cgMedia.compass[1].enemy_juggernaut != (Material *)0x0)) {
                 Material_IsDefault(cgMedia.compass[1].enemy_juggernaut);
               }
             }
-            if (dVar24 <= dVar27) {
-              local_124 = (float)(dVar27 * dVar19);
-              CG_DrawRotatedPic(local_164,local_178,local_174,local_170,local_16c,(int)pfVar13,
-                                (int)pfVar10,(float)dVar28,pfVar11,pMVar12);
+            if (dVar23 <= dVar26) {
+              local_124 = (float)(dVar26 * dVar18);
+              CG_DrawRotatedPic(local_164,local_178,local_174,local_170,local_16c,(int)pfVar12,
+                                (int)pfVar9,(float)dVar27,pfVar10,pMVar11);
             }
-            if (dVar24 <= dVar26) {
-              local_124 = (float)(dVar26 * dVar19);
-              CG_DrawRotatedPic(local_164,local_178,local_174,local_170,local_16c,(int)pfVar13,
-                                (int)pfVar10,(float)dVar28,pfVar11,pMVar12);
+            if (dVar23 <= dVar25) {
+              local_124 = (float)(dVar25 * dVar18);
+              CG_DrawRotatedPic(local_164,local_178,local_174,local_170,local_16c,(int)pfVar12,
+                                (int)pfVar9,(float)dVar27,pfVar10,pMVar11);
             }
           }
         }
       }
 LAB_822af468:
-      uVar14 = (ulonglong)local_160;
-      pCVar15 = pCVar15 + 1;
-      puVar17 = puVar17 + 0x23;
-      local_160 = (uint)(uVar14 - 1);
-    } while (uVar14 - 1 != 0);
+      uVar13 = (ulonglong)local_160;
+      pCVar14 = pCVar14 + 1;
+      puVar16 = puVar16 + 0x23;
+      local_160 = (uint)(uVar13 - 1);
+    } while (uVar13 - 1 != 0);
   }
-  __restfpr_22();
-  __restgprlr();
   return;
 }
 
 
 // 822AF490  Compass_TurretDraw  (cgame_mp/cg_compassfriendlies_mp.cpp:1560)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2527,23 +2448,23 @@ void Compass_TurretDraw(LocalClientNum_t param_1,CompassType param_2,rectDef_s *
   Material *pMVar2;
   bool bVar3;
   bool bVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  int iVar7;
+  cg_s *pcVar5;
+  int iVar6;
+  bool bVar9;
+  ScreenPlacement *pSVar7;
+  centity_s *pcVar8;
   bool bVar10;
-  ScreenPlacement *pSVar8;
-  centity_s *pcVar9;
-  bool bVar11;
+  float *pfVar11;
   float *pfVar12;
-  ulonglong uVar13;
-  float *pfVar14;
-  float *pfVar15;
-  Material *pMVar16;
-  ulonglong uVar17;
-  CompassTurret *pCVar18;
-  longlong lVar19;
-  char *pcVar20;
-  float *pfVar21;
+  float *pfVar13;
+  Material *pMVar14;
+  ulonglong uVar15;
+  CompassTurret *pCVar16;
+  longlong lVar17;
+  char *pcVar18;
+  float *pfVar19;
+  double dVar20;
+  double dVar21;
   double dVar22;
   double dVar23;
   double dVar24;
@@ -2552,9 +2473,7 @@ void Compass_TurretDraw(LocalClientNum_t param_1,CompassType param_2,rectDef_s *
   double dVar27;
   double dVar28;
   double dVar29;
-  double dVar30;
-  double dVar31;
-  float fVar32;
+  float fVar30;
   CompassType CStack0000001c;
   float local_170;
   float local_16c;
@@ -2579,262 +2498,259 @@ void Compass_TurretDraw(LocalClientNum_t param_1,CompassType param_2,rectDef_s *
   longlong local_f0;
   longlong local_e8;
   
-  uVar13 = (ulonglong)(int)param_4;
-  uVar17 = (ulonglong)(int)param_3;
-  __savegprlr();
-  LVar5 = __savefpr_23();
-  pcVar20 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp";
+  pcVar18 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp";
   local_160 = 
   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp";
   local_140 = "%s";
   CStack0000001c = param_2;
-  if ((uVar17 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x631,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_4 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x632,0,"%s");
   }
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  if (pcVar6 == (cg_s *)0x0) {
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar5 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x635,0,"%s");
   }
-  if (pcVar6->nextSnap == (snapshot_s *)0x0) {
+  if (pcVar5->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x636,0,"%s");
   }
-  if (0x11 < (uint)(pcVar6->predictedPlayerState).clientNum) {
+  if (0x11 < (uint)(pcVar5->predictedPlayerState).clientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x638,0,
                     "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar7 = (pcVar6->predictedPlayerState).clientNum;
-  if (((pcVar6->bgs).clientinfo[iVar7].infoValid != 0) &&
-     ((pcVar6->bgs).clientinfo[iVar7].team != TEAM_SPECTATOR)) {
-    fVar32 = Compass_GetIconFadeAlpha(LVar5,pcVar6->compassFadeTime,param_2);
-    dVar23 = (double)fVar32;
-    dVar30 = 0.0;
-    if (0.0 < dVar23) {
-      iVar7 = CL_ControllerIndexFromClientNum(LVar5);
-      bVar10 = GamerProfile_IsColorBlind(iVar7);
-      local_15c = (uint)bVar10;
-      CG_CompassUpYawVector(pcVar6,afStack_100);
+  iVar6 = (pcVar5->predictedPlayerState).clientNum;
+  if (((pcVar5->bgs).clientinfo[iVar6].infoValid != 0) &&
+     ((pcVar5->bgs).clientinfo[iVar6].team != TEAM_SPECTATOR)) {
+    fVar30 = Compass_GetIconFadeAlpha(param_1,pcVar5->compassFadeTime,param_2);
+    dVar21 = (double)fVar30;
+    dVar28 = 0.0;
+    if (0.0 < dVar21) {
+      iVar6 = CL_ControllerIndexFromClientNum(param_1);
+      bVar9 = GamerProfile_IsColorBlind(iVar6);
+      local_15c = (uint)bVar9;
+      CG_CompassUpYawVector(pcVar5,afStack_100);
       CG_CompassCalcDimensions
-                (param_2,pcVar6,(rectDef_s *)uVar17,(rectDef_s *)uVar13,&local_130.x,&local_130.y,
-                 &local_130.w,&local_130.h);
+                (param_2,pcVar5,param_3,param_4,&local_130.x,&local_130.y,&local_130.w,&local_130.h)
+      ;
       local_150 = *param_5;
       local_14c = param_5[1];
       local_148 = param_5[2];
       local_144 = param_5[3];
-      dVar29 = 0.5;
-      dVar27 = (double)(local_130.w * 0.5 + local_130.x);
-      dVar26 = (double)(local_130.h * 0.5 + local_130.y);
-      pSVar8 = ScrPlace_GetActivePlacement(LVar5);
-      pCVar18 = s_compassTurrets[LVar5];
-      dVar28 = 1000.0;
+      dVar27 = 0.5;
+      dVar25 = (double)(local_130.w * 0.5 + local_130.x);
+      dVar24 = (double)(local_130.h * 0.5 + local_130.y);
+      pSVar7 = ScrPlace_GetActivePlacement(param_1);
+      pCVar16 = s_compassTurrets[param_1];
+      dVar26 = 1000.0;
       local_158 = 0x20;
-      dVar31 = 1.0;
+      dVar29 = 1.0;
       local_138 = -0x7d5f0000;
       local_13c = -0x7d5f0000;
       do {
-        iVar7 = Compass_TurretIsAlwaysVisibleAndValid(pCVar18);
-        if (iVar7 == 0) {
+        iVar6 = Compass_TurretIsAlwaysVisibleAndValid(pCVar16);
+        if (iVar6 == 0) {
 LAB_822af728:
-          bVar10 = false;
+          bVar9 = false;
         }
         else {
-          iVar7 = pcVar6->time;
-          if (iVar7 < pCVar18->lastUpdateTime) {
-            pCVar18->lastUpdateTime = 0;
+          iVar6 = pcVar5->time;
+          if (iVar6 < pCVar16->lastUpdateTime) {
+            pCVar16->lastUpdateTime = 0;
           }
-          if ((pCVar18->lastUpdateTime == 0) ||
-             (bVar10 = true, pCVar18->lastUpdateTime < iVar7 + -500)) goto LAB_822af728;
+          if ((pCVar16->lastUpdateTime == 0) ||
+             (bVar9 = true, pCVar16->lastUpdateTime < iVar6 + -500)) goto LAB_822af728;
         }
-        lVar19 = 0;
-        pcVar9 = CG_GetEntity(LVar5,pCVar18->entityNum);
-        if ((pcVar9->flags & 1U) != 0) {
-          uVar1 = (pcVar9->nextState).lerp.eFlags;
+        lVar17 = 0;
+        pcVar8 = CG_GetEntity(param_1,pCVar16->entityNum);
+        if ((pcVar8->flags & 1U) != 0) {
+          uVar1 = (pcVar8->nextState).lerp.eFlags;
           if ((uVar1 & 0x4000000) == 0) {
             if ((uVar1 & 0x10000000) != 0) {
-              lVar19 = 1;
+              lVar17 = 1;
             }
           }
           else {
-            lVar19 = 2;
+            lVar17 = 2;
           }
-          if ((double)(compassSoundPingFadeTime->current).value <= dVar30) {
-            MyAssertHandler(pcVar20,0x65e,0,local_140);
+          if ((double)(compassSoundPingFadeTime->current).value <= dVar28) {
+            MyAssertHandler(pcVar18,0x65e,0,local_140);
           }
-          if ((double)(compassRadarPingFadeTime->current).value <= dVar30) {
-            MyAssertHandler(pcVar20,0x65f,0,local_140);
+          if ((double)(compassRadarPingFadeTime->current).value <= dVar28) {
+            MyAssertHandler(pcVar18,0x65f,0,local_140);
           }
-          iVar7 = pCVar18->firePingTime;
-          if ((iVar7 < 1) || (pcVar6->time < iVar7)) {
+          iVar6 = pCVar16->firePingTime;
+          if ((iVar6 < 1) || (pcVar5->time < iVar6)) {
 LAB_822af820:
             bVar3 = false;
           }
           else {
-            local_118 = (longlong)pcVar6->time;
-            local_f8 = (longlong)iVar7;
+            local_118 = (longlong)pcVar5->time;
+            local_f8 = (longlong)iVar6;
             bVar3 = true;
-            if ((float)((double)(compassSoundPingFadeTime->current).value * dVar28 +
+            if ((float)((double)(compassSoundPingFadeTime->current).value * dVar26 +
                        (double)local_f8) < (float)local_118) goto LAB_822af820;
           }
-          iVar7 = pCVar18->radarPingTime;
-          if ((iVar7 < 1) || (pcVar6->time < iVar7)) {
+          iVar6 = pCVar16->radarPingTime;
+          if ((iVar6 < 1) || (pcVar5->time < iVar6)) {
 LAB_822af878:
             bVar4 = false;
           }
           else {
-            local_f0 = (longlong)iVar7;
-            local_e8 = (longlong)pcVar6->time;
+            local_f0 = (longlong)iVar6;
+            local_e8 = (longlong)pcVar5->time;
             bVar4 = true;
-            if ((float)((double)(compassRadarPingFadeTime->current).value * dVar28 +
+            if ((float)((double)(compassRadarPingFadeTime->current).value * dVar26 +
                        (double)local_f0) < (float)local_e8) goto LAB_822af878;
           }
           if ((bVar3) || (bVar4)) {
-            if (bVar10) {
-              pfVar15 = pCVar18->positionCurrent;
-              pfVar21 = &pCVar18->yawCurrent;
+            if (bVar9) {
+              pfVar13 = pCVar16->positionCurrent;
+              pfVar19 = &pCVar16->yawCurrent;
             }
             else {
-              pfVar15 = pCVar18->positionLastKnown;
-              pfVar21 = &pCVar18->yawLastKnown;
+              pfVar13 = pCVar16->positionLastKnown;
+              pfVar19 = &pCVar16->yawLastKnown;
             }
           }
           else {
-            pcVar20 = local_160;
-            if (!bVar10) goto LAB_822afc5c;
-            pfVar15 = pCVar18->positionCurrent;
-            pfVar21 = &pCVar18->yawCurrent;
+            pcVar18 = local_160;
+            if (!bVar9) goto LAB_822afc5c;
+            pfVar13 = pCVar16->positionCurrent;
+            pfVar19 = &pCVar16->yawCurrent;
           }
-          pMVar16 = (Material *)(pcVar6->refdef).view.org;
-          pfVar14 = afStack_100;
-          bVar11 = CG_WorldPosToCompass
-                             (CStack0000001c,pcVar6,&local_130,pfVar14,(float *)pMVar16,pfVar15,
+          pMVar14 = (Material *)(pcVar5->refdef).view.org;
+          pfVar12 = afStack_100;
+          bVar10 = CG_WorldPosToCompass
+                             (CStack0000001c,pcVar5,&local_130,pfVar12,(float *)pMVar14,pfVar13,
                               (float *)0x0,&local_170);
-          if ((!bVar11) ||
-             (pcVar20 = local_160, *(char *)(*(int *)(local_13c + 0x5e5c) + 0xc) != '\0')) {
-            pfVar12 = &local_164;
-            pfVar15 = &local_168;
-            CalcCompassFriendlySize(CStack0000001c,pfVar15,pfVar12);
-            local_170 = -(float)((double)local_168 * dVar29 -
-                                (double)(float)((double)local_170 + dVar27));
-            local_16c = -(float)((double)local_164 * dVar29 -
-                                (double)(float)((double)local_16c + dVar26));
+          if ((!bVar10) ||
+             (pcVar18 = local_160, *(char *)(*(int *)(local_13c + 0x5e5c) + 0xc) != '\0')) {
+            pfVar11 = &local_164;
+            pfVar13 = &local_168;
+            CalcCompassFriendlySize(CStack0000001c,pfVar13,pfVar11);
+            local_170 = -(float)((double)local_168 * dVar27 -
+                                (double)(float)((double)local_170 + dVar25));
+            local_16c = -(float)((double)local_164 * dVar27 -
+                                (double)(float)((double)local_16c + dVar24));
             if ((CStack0000001c == COMPASS_TYPE_PARTIAL) &&
                (*(char *)(*(int *)(local_138 + 0x5e6c) + 0xc) != '\0')) {
-              iVar7 = 460000;
+              iVar6 = 460000;
             }
             else {
-              iVar7 = 0x797e8;
+              iVar6 = 0x797e8;
             }
-            fVar32 = AngleNormalize360(*(float *)((int)(pcVar6->predictedPlayerState).origin +
-                                                 iVar7 + -0x1c) - *pfVar21);
-            dVar24 = (double)fVar32;
-            dVar25 = dVar30;
+            fVar30 = AngleNormalize360(*(float *)((int)(pcVar5->predictedPlayerState).origin +
+                                                 iVar6 + -0x1c) - *pfVar19);
+            dVar22 = (double)fVar30;
+            dVar23 = dVar28;
             if (bVar3) {
-              pMVar16 = (Material *)(pcVar6->time - pCVar18->firePingTime);
-              local_110 = (longlong)(int)pMVar16;
-              dVar25 = (double)(float)(dVar31 - (double)((float)local_110 /
+              pMVar14 = (Material *)(pcVar5->time - pCVar16->firePingTime);
+              local_110 = (longlong)(int)pMVar14;
+              dVar23 = (double)(float)(dVar29 - (double)((float)local_110 /
                                                         (float)((double)(compassSoundPingFadeTime->
-                                                                        current).value * dVar28)));
+                                                                        current).value * dVar26)));
             }
-            dVar22 = dVar30;
+            dVar20 = dVar28;
             if (bVar4) {
-              pMVar16 = (Material *)(pcVar6->time - pCVar18->radarPingTime);
-              local_108 = (longlong)(int)pMVar16;
-              dVar22 = (double)(float)(dVar31 - (double)((float)local_108 /
+              pMVar14 = (Material *)(pcVar5->time - pCVar16->radarPingTime);
+              local_108 = (longlong)(int)pMVar14;
+              dVar20 = (double)(float)(dVar29 - (double)((float)local_108 /
                                                         (float)((double)(compassRadarPingFadeTime->
-                                                                        current).value * dVar28)));
+                                                                        current).value * dVar26)));
             }
-            if (pCVar18->isFriendly == false) {
-              if (((bVar10) || (bVar4)) && (dVar25 < dVar31)) {
-                if (bVar10) {
-                  dVar22 = dVar23;
+            if (pCVar16->isFriendly == false) {
+              if (((bVar9) || (bVar4)) && (dVar23 < dVar29)) {
+                if (bVar9) {
+                  dVar20 = dVar21;
                 }
-                if ((float)(dVar23 - dVar22) < 0.0) {
-                  dVar22 = dVar23;
+                if ((float)(dVar21 - dVar20) < 0.0) {
+                  dVar20 = dVar21;
                 }
-                local_144 = (float)dVar22;
+                local_144 = (float)dVar20;
                 if ((local_15c != 0) &&
                    (pMVar2 = *(Material **)
-                              ((int)&cgMedia.compass[1].turretMedia[0].enemy + (int)(lVar19 << 4)),
+                              ((int)&cgMedia.compass[1].turretMedia[0].enemy + (int)(lVar17 << 4)),
                    pMVar2 != (Material *)0x0)) {
                   Material_IsDefault(pMVar2);
                 }
-                CG_DrawRotatedPic(pSVar8,local_170,local_16c,local_168,local_164,(int)pfVar15,
-                                  (int)pfVar12,(float)dVar24,pfVar14,pMVar16);
+                CG_DrawRotatedPic(pSVar7,local_170,local_16c,local_168,local_164,(int)pfVar13,
+                                  (int)pfVar11,(float)dVar22,pfVar12,pMVar14);
               }
-              pcVar20 = local_160;
-              if (dVar30 < dVar25) {
-                if ((float)(dVar23 - dVar25) < 0.0) {
-                  dVar25 = dVar23;
+              pcVar18 = local_160;
+              if (dVar28 < dVar23) {
+                if ((float)(dVar21 - dVar23) < 0.0) {
+                  dVar23 = dVar21;
                 }
-                local_144 = (float)dVar25;
+                local_144 = (float)dVar23;
                 if ((local_15c != 0) &&
                    (pMVar2 = *(Material **)
                               ((int)&cgMedia.compass[1].turretMedia[0].enemy_firing +
-                              (int)(lVar19 << 4)), pMVar2 != (Material *)0x0)) {
+                              (int)(lVar17 << 4)), pMVar2 != (Material *)0x0)) {
                   Material_IsDefault(pMVar2);
                 }
-                CG_DrawRotatedPic(pSVar8,local_170,local_16c,local_168,local_164,(int)pfVar15,
-                                  (int)pfVar12,(float)dVar24,pfVar14,pMVar16);
-                pcVar20 = local_160;
+                CG_DrawRotatedPic(pSVar7,local_170,local_16c,local_168,local_164,(int)pfVar13,
+                                  (int)pfVar11,(float)dVar22,pfVar12,pMVar14);
+                pcVar18 = local_160;
               }
             }
             else {
-              if (dVar25 < dVar31) {
-                dVar22 = (double)param_5[3];
-                if ((float)(dVar23 - (double)param_5[3]) < 0.0) {
-                  dVar22 = dVar23;
+              if (dVar23 < dVar29) {
+                dVar20 = (double)param_5[3];
+                if ((float)(dVar21 - (double)param_5[3]) < 0.0) {
+                  dVar20 = dVar21;
                 }
-                local_144 = (float)dVar22;
+                local_144 = (float)dVar20;
                 if ((local_15c != 0) &&
                    (pMVar2 = *(Material **)
-                              ((int)&cgMedia.compass[1].turretMedia[0].friendly + (int)(lVar19 << 4)
+                              ((int)&cgMedia.compass[1].turretMedia[0].friendly + (int)(lVar17 << 4)
                               ), pMVar2 != (Material *)0x0)) {
                   Material_IsDefault(pMVar2);
                 }
-                CG_DrawRotatedPic(pSVar8,local_170,local_16c,local_168,local_164,(int)pfVar15,
-                                  (int)pfVar12,(float)dVar24,pfVar14,pMVar16);
+                CG_DrawRotatedPic(pSVar7,local_170,local_16c,local_168,local_164,(int)pfVar13,
+                                  (int)pfVar11,(float)dVar22,pfVar12,pMVar14);
               }
-              pcVar20 = local_160;
-              if (dVar30 < dVar25) {
-                if ((float)(dVar23 - dVar25) < 0.0) {
-                  dVar25 = dVar23;
+              pcVar18 = local_160;
+              if (dVar28 < dVar23) {
+                if ((float)(dVar21 - dVar23) < 0.0) {
+                  dVar23 = dVar21;
                 }
-                local_144 = (float)dVar25;
+                local_144 = (float)dVar23;
                 if ((local_15c != 0) &&
                    (pMVar2 = *(Material **)
                               ((int)&cgMedia.compass[1].turretMedia[0].friendly_firing +
-                              (int)(lVar19 << 4)), pMVar2 != (Material *)0x0)) {
+                              (int)(lVar17 << 4)), pMVar2 != (Material *)0x0)) {
                   Material_IsDefault(pMVar2);
                 }
-                CG_DrawRotatedPic(pSVar8,local_170,local_16c,local_168,local_164,(int)pfVar15,
-                                  (int)pfVar12,(float)dVar24,pfVar14,pMVar16);
-                pcVar20 = local_160;
+                CG_DrawRotatedPic(pSVar7,local_170,local_16c,local_168,local_164,(int)pfVar13,
+                                  (int)pfVar11,(float)dVar22,pfVar12,pMVar14);
+                pcVar18 = local_160;
               }
             }
           }
         }
 LAB_822afc5c:
-        uVar17 = (ulonglong)local_158;
-        pCVar18 = pCVar18 + 1;
-        local_158 = (uint)(uVar17 - 1);
-      } while (uVar17 - 1 != 0);
+        uVar15 = (ulonglong)local_158;
+        pCVar16 = pCVar16 + 1;
+        local_158 = (uint)(uVar15 - 1);
+      } while (uVar15 - 1 != 0);
     }
   }
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
 
 // 822AFC80  CG_ClipUVToViewRect  (cgame_mp/cg_compassfriendlies_mp.cpp:1716)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void CG_ClipUVToViewRect(rectDef_s *param_1,float *param_2,float *param_3,float *param_4,
                         float *param_5,float *param_6)
@@ -2844,104 +2760,85 @@ void CG_ClipUVToViewRect(rectDef_s *param_1,float *param_2,float *param_3,float 
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  float *pfVar13;
-  ulonglong uVar14;
-  float *pfVar15;
   
-  uVar14 = (ulonglong)(int)param_6;
-  uVar12 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_24(param_1);
-  if (pfVar5 == (float *)0x0) {
+  if (param_1 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6b9,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6ba,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6bb,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6bc,0,"%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6bd,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x6be,0,"%s");
   }
-  pfVar13 = (float *)uVar12;
-  *pfVar13 = 0.0;
-  pfVar13[1] = 0.0;
-  pfVar15 = (float *)uVar14;
-  *pfVar15 = 1.0;
-  pfVar15[1] = 1.0;
-  pfVar9 = (float *)uVar8;
-  fVar1 = *pfVar9;
-  pfVar7 = (float *)uVar6;
-  pfVar11 = (float *)uVar10;
-  fVar2 = *pfVar11;
-  fVar3 = pfVar7[1];
-  if (pfVar5[2] + *pfVar5 < *pfVar7 + fVar1) {
-    fVar4 = (*pfVar7 + fVar1) - (pfVar5[2] + *pfVar5);
+  *param_5 = 0.0;
+  param_5[1] = 0.0;
+  *param_6 = 1.0;
+  param_6[1] = 1.0;
+  fVar1 = *param_3;
+  fVar2 = *param_4;
+  fVar3 = param_2[1];
+  if (param_1->w + param_1->x < *param_2 + fVar1) {
+    fVar4 = (*param_2 + fVar1) - (param_1->w + param_1->x);
     if (fVar1 != 0.0) {
-      *pfVar15 = (fVar1 - fVar4) / fVar1;
+      *param_6 = (fVar1 - fVar4) / fVar1;
     }
-    *pfVar9 = *pfVar9 - fVar4;
+    *param_3 = *param_3 - fVar4;
   }
-  if (pfVar5[1] + pfVar5[3] < fVar2 + fVar3) {
-    fVar1 = *pfVar11;
-    fVar2 = (fVar2 + fVar3) - (pfVar5[1] + pfVar5[3]);
+  if (param_1->y + param_1->h < fVar2 + fVar3) {
+    fVar1 = *param_4;
+    fVar2 = (fVar2 + fVar3) - (param_1->y + param_1->h);
     if (fVar1 != 0.0) {
-      pfVar15[1] = (fVar1 - fVar2) / fVar1;
+      param_6[1] = (fVar1 - fVar2) / fVar1;
     }
-    *pfVar11 = *pfVar11 - fVar2;
+    *param_4 = *param_4 - fVar2;
   }
-  fVar1 = *pfVar7;
-  fVar2 = *pfVar5;
+  fVar1 = *param_2;
+  fVar2 = param_1->x;
   if (fVar1 < fVar2) {
-    *pfVar7 = fVar2;
+    *param_2 = fVar2;
     fVar2 = fVar2 - fVar1;
-    fVar1 = *pfVar9;
+    fVar1 = *param_3;
     if (fVar1 != 0.0) {
-      *pfVar13 = 1.0 - (fVar1 - fVar2) / fVar1;
+      *param_5 = 1.0 - (fVar1 - fVar2) / fVar1;
     }
-    *pfVar9 = *pfVar9 - fVar2;
+    *param_3 = *param_3 - fVar2;
   }
-  fVar1 = pfVar7[1];
-  fVar2 = pfVar5[1];
+  fVar1 = param_2[1];
+  fVar2 = param_1->y;
   if (fVar1 < fVar2) {
-    pfVar7[1] = fVar2;
+    param_2[1] = fVar2;
     fVar2 = fVar2 - fVar1;
-    fVar1 = *pfVar11;
+    fVar1 = *param_4;
     if (fVar1 != 0.0) {
-      pfVar13[1] = 1.0 - (fVar1 - fVar2) / fVar1;
+      param_5[1] = 1.0 - (fVar1 - fVar2) / fVar1;
     }
-    *pfVar11 = *pfVar11 - fVar2;
+    *param_4 = *param_4 - fVar2;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822AFED8  Compass_PortableRadarDraw  (cgame_mp/cg_compassfriendlies_mp.cpp:1789)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2952,18 +2849,18 @@ void Compass_PortableRadarDraw
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  bool bVar5;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  bool bVar4;
+  float *pfVar5;
   float *pfVar6;
   float *pfVar7;
-  float *pfVar8;
-  Material *pMVar9;
-  char *pcVar10;
-  int iVar11;
-  CompassPortableRadar *pCVar12;
-  longlong lVar13;
+  Material *pMVar8;
+  bool *pbVar9;
+  int iVar10;
+  CompassPortableRadar *pCVar11;
+  longlong lVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -2975,8 +2872,7 @@ void Compass_PortableRadarDraw
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
-  float fVar26;
+  float fVar25;
   float local_140;
   float local_13c;
   rectDef_s local_130;
@@ -3003,133 +2899,133 @@ void Compass_PortableRadarDraw
   longlong local_a8;
   float afStack_a0 [40];
   
-  __savegprlr_22(param_1);
-  LVar2 = __savefpr_25();
   if ((compassPortableRadarSweepTime->current).integer == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x71d,0,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  uVar1 = pcVar3->clientNum;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  uVar1 = pcVar2->clientNum;
   if (0x11 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x720,0,"clientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  pCVar12 = s_compassPortableRadarList[LVar2];
-  pcVar10 = (char *)(LVar2 * 0x168 + -0x7d5e1ca4);
-  iVar11 = 0;
-  lVar13 = 3;
+  pCVar11 = s_compassPortableRadarList[param_1];
+  pbVar9 = &s_compassPortableRadarList[param_1][1].isActive;
+  iVar10 = 0;
+  lVar12 = 3;
   do {
-    if (pcVar10[-0x14] != '\0') {
-      iVar11 = iVar11 + 1;
+    if (pbVar9[-0x14] != false) {
+      iVar10 = iVar10 + 1;
     }
-    if (*pcVar10 != '\0') {
-      iVar11 = iVar11 + 1;
+    if (*pbVar9 != false) {
+      iVar10 = iVar10 + 1;
     }
-    if (pcVar10[0x14] != '\0') {
-      iVar11 = iVar11 + 1;
+    if (pbVar9[0x14] != false) {
+      iVar10 = iVar10 + 1;
     }
-    if (pcVar10[0x28] != '\0') {
-      iVar11 = iVar11 + 1;
+    if (pbVar9[0x28] != false) {
+      iVar10 = iVar10 + 1;
     }
-    if (pcVar10[0x3c] != '\0') {
-      iVar11 = iVar11 + 1;
+    if (pbVar9[0x3c] != false) {
+      iVar10 = iVar10 + 1;
     }
-    if (pcVar10[0x50] != '\0') {
-      iVar11 = iVar11 + 1;
+    if (pbVar9[0x50] != false) {
+      iVar10 = iVar10 + 1;
     }
-    pcVar10 = pcVar10 + 0x78;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  if (((iVar11 != 0) && ((pcVar3->bgs).clientinfo[uVar1].infoValid != 0)) &&
-     ((pcVar3->bgs).clientinfo[uVar1].team != TEAM_SPECTATOR)) {
-    CG_CompassUpYawVector(pcVar3,afStack_110);
-    fVar26 = Compass_GetIconFadeAlpha(LVar2,pcVar3->compassFadeTime,param_2);
-    dVar15 = (double)fVar26;
-    dVar24 = 0.0;
-    if (dVar15 != 0.0) {
+    pbVar9 = pbVar9 + 0x78;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  if (((iVar10 != 0) && ((pcVar2->bgs).clientinfo[uVar1].infoValid != 0)) &&
+     ((pcVar2->bgs).clientinfo[uVar1].team != TEAM_SPECTATOR)) {
+    CG_CompassUpYawVector(pcVar2,afStack_110);
+    fVar25 = Compass_GetIconFadeAlpha(param_1,pcVar2->compassFadeTime,param_2);
+    dVar14 = (double)fVar25;
+    dVar23 = 0.0;
+    if (dVar14 != 0.0) {
       CG_CompassCalcDimensions
-                (param_2,pcVar3,param_3,param_4,&local_130.x,&local_130.y,&local_130.w,&local_130.h)
+                (param_2,pcVar2,param_3,param_4,&local_130.x,&local_130.y,&local_130.w,&local_130.h)
       ;
       local_c0 = *param_5;
       local_bc = param_5[1];
       local_b8 = param_5[2];
       local_b4 = param_5[3];
-      dVar23 = 0.5;
-      dVar22 = (double)(local_130.w * 0.5 + local_130.x);
-      dVar21 = (double)(local_130.h * 0.5 + local_130.y);
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-      local_108 = (float)dVar24;
-      local_104 = (float)dVar24;
-      local_100 = (float)dVar24;
-      local_f4 = (float)dVar24;
-      local_f0 = (float)dVar24;
+      dVar22 = 0.5;
+      dVar21 = (double)(local_130.w * 0.5 + local_130.x);
+      dVar20 = (double)(local_130.h * 0.5 + local_130.y);
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      local_108 = (float)dVar23;
+      local_104 = (float)dVar23;
+      local_100 = (float)dVar23;
+      local_f4 = (float)dVar23;
+      local_f0 = (float)dVar23;
       local_f8 = (float)(compassPortableRadarRadius->current).integer;
       CG_WorldPosToCompass
-                (param_2,pcVar3,&local_130,afStack_110,&local_108,&local_108,&local_d0,(float *)0x0)
+                (param_2,pcVar2,&local_130,afStack_110,&local_108,&local_108,&local_d0,(float *)0x0)
       ;
       CG_WorldPosToCompass
-                (param_2,pcVar3,&local_130,afStack_110,&local_108,&local_f8,(float *)&local_e0,
+                (param_2,pcVar2,&local_130,afStack_110,&local_108,&local_f8,(float *)&local_e0,
                  (float *)0x0);
-      lVar13 = 0x12;
-      dVar24 = 1.0;
-      dVar20 = (double)(SQRT(((float)local_e0.packed._4_4_ - local_cc) *
+      lVar12 = 0x12;
+      dVar23 = 1.0;
+      dVar19 = (double)(SQRT(((float)local_e0.packed._4_4_ - local_cc) *
                              ((float)local_e0.packed._4_4_ - local_cc) +
                              ((float)local_e0.packed._0_4_ - local_d0) *
                              ((float)local_e0.packed._0_4_ - local_d0)) * 2.0);
       do {
-        if (pCVar12->isActive == false) {
-          pCVar12->sweepTimer = 0;
+        if (pCVar11->isActive == false) {
+          pCVar11->sweepTimer = 0;
         }
         else {
-          pCVar12->isActive = false;
-          bVar5 = CG_WorldPosToCompass
-                            (param_2,pcVar3,&local_130,afStack_110,(pcVar3->refdef).view.org,
-                             pCVar12->pos,&local_140,afStack_a0);
-          local_b0 = (longlong)pCVar12->sweepTimer;
+          pCVar11->isActive = false;
+          bVar4 = CG_WorldPosToCompass
+                            (param_2,pcVar2,&local_130,afStack_110,(pcVar2->refdef).view.org,
+                             pCVar11->pos,&local_140,afStack_a0);
+          local_b0 = (longlong)pCVar11->sweepTimer;
           local_a8 = (longlong)(compassPortableRadarSweepTime->current).integer;
-          dVar25 = (double)((float)local_b0 / (float)local_a8);
-          local_11c = (float)(dVar25 * dVar20);
-          dVar16 = (double)local_11c;
-          local_140 = -(float)(dVar16 * dVar23 - dVar22) + local_140;
-          dVar14 = (double)local_140;
-          local_13c = -(float)(dVar16 * dVar23 - dVar21) + local_13c;
-          dVar18 = (double)local_13c;
+          dVar24 = (double)((float)local_b0 / (float)local_a8);
+          local_11c = (float)(dVar24 * dVar19);
+          dVar15 = (double)local_11c;
+          local_140 = -(float)(dVar15 * dVar22 - dVar21) + local_140;
+          dVar13 = (double)local_140;
+          local_13c = -(float)(dVar15 * dVar22 - dVar20) + local_13c;
+          dVar17 = (double)local_13c;
           local_118[0] = local_11c;
-          if (bVar5) {
-            dVar19 = (double)local_130.x;
-            dVar17 = (double)local_130.y;
-            if ((((((double)(float)(dVar14 + dVar16) < dVar19) && (dVar14 < dVar19)) ||
-                 (((double)(float)((double)local_130.w + dVar19) < (double)(float)(dVar14 + dVar16)
-                  && ((double)(float)((double)local_130.w + dVar19) < dVar14)))) ||
-                (((double)(float)(dVar18 + dVar16) < dVar17 && (dVar18 < dVar17)))) ||
-               (((double)(float)((double)local_130.h + dVar17) < (double)(float)(dVar18 + dVar16) &&
-                ((double)(float)((double)local_130.h + dVar17) < dVar18)))) goto LAB_822b0308;
+          if (bVar4) {
+            dVar18 = (double)local_130.x;
+            dVar16 = (double)local_130.y;
+            if ((((((double)(float)(dVar13 + dVar15) < dVar18) && (dVar13 < dVar18)) ||
+                 (((double)(float)((double)local_130.w + dVar18) < (double)(float)(dVar13 + dVar15)
+                  && ((double)(float)((double)local_130.w + dVar18) < dVar13)))) ||
+                (((double)(float)(dVar17 + dVar15) < dVar16 && (dVar17 < dVar16)))) ||
+               (((double)(float)((double)local_130.h + dVar16) < (double)(float)(dVar17 + dVar15) &&
+                ((double)(float)((double)local_130.h + dVar16) < dVar17)))) goto LAB_822b0308;
           }
-          pMVar9 = (Material *)local_e8;
-          pfVar8 = local_118;
-          pfVar7 = &local_11c;
-          pfVar6 = &local_140;
-          CG_ClipUVToViewRect(&local_130,pfVar6,pfVar7,pfVar8,(float *)pMVar9,&local_d8);
-          local_b4 = (float)((double)(float)(dVar24 - dVar25) * dVar15);
-          CL_DrawStretchPic(pSVar4,local_140,local_13c,local_11c,local_118[0],(int)pfVar6,
-                            (int)pfVar7,(float)local_e8._0_4_,(float)local_e8._4_4_,local_d8,
-                            local_d4,pfVar8,pMVar9);
+          pMVar8 = (Material *)local_e8;
+          pfVar7 = local_118;
+          pfVar6 = &local_11c;
+          pfVar5 = &local_140;
+          CG_ClipUVToViewRect(&local_130,pfVar5,pfVar6,pfVar7,(float *)pMVar8,&local_d8);
+          local_b4 = (float)((double)(float)(dVar23 - dVar24) * dVar14);
+          CL_DrawStretchPic(pSVar3,local_140,local_13c,local_11c,local_118[0],(int)pfVar5,
+                            (int)pfVar6,(float)local_e8._0_4_,(float)local_e8._4_4_,local_d8,
+                            local_d4,pfVar7,pMVar8);
         }
 LAB_822b0308:
-        lVar13 = lVar13 + -1;
-        pCVar12 = pCVar12 + 1;
-      } while (lVar13 != 0);
+        lVar12 = lVar12 + -1;
+        pCVar11 = pCVar11 + 1;
+      } while (lVar12 != 0);
     }
   }
-  __restfpr_25();
-  __restgprlr_22();
   return;
 }
 
 
 // 822B0328  Compass_ScramblerDraw  (cgame_mp/cg_compassfriendlies_mp.cpp:1936)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3140,23 +3036,22 @@ void Compass_ScramblerDraw
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  cg_s *pcVar5;
-  rectDef_s *prVar6;
-  float *pfVar7;
-  Material *pMVar8;
-  char *pcVar9;
-  int iVar10;
-  CompassScrambler *pCVar11;
-  longlong lVar12;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  cg_s *pcVar4;
+  rectDef_s *prVar5;
+  float *pfVar6;
+  Material *pMVar7;
+  bool *pbVar8;
+  int iVar9;
+  CompassScrambler *pCVar10;
+  longlong lVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float local_c0;
   float local_bc;
   float afStack_b8 [2];
@@ -3166,91 +3061,91 @@ void Compass_ScramblerDraw
   float local_a4;
   rectDef_s local_a0 [8];
   
-  __savegprlr_22(param_1);
-  LVar2 = __savefpr_27();
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  uVar1 = pcVar3->clientNum;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  uVar1 = pcVar2->clientNum;
   if (0x11 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x7a4,0,"clientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  pCVar11 = s_compassScramblers[LVar2];
-  pcVar9 = (char *)(LVar2 * 0x120 + -0x7d5e5a0c);
-  iVar10 = 0;
-  lVar12 = 3;
+  pCVar10 = s_compassScramblers[param_1];
+  pbVar8 = &s_compassScramblers[param_1][1].isActive;
+  iVar9 = 0;
+  lVar11 = 3;
   do {
-    if (pcVar9[-0x10] != '\0') {
-      iVar10 = iVar10 + 1;
+    if (pbVar8[-0x10] != false) {
+      iVar9 = iVar9 + 1;
     }
-    if (*pcVar9 != '\0') {
-      iVar10 = iVar10 + 1;
+    if (*pbVar8 != false) {
+      iVar9 = iVar9 + 1;
     }
-    if (pcVar9[0x10] != '\0') {
-      iVar10 = iVar10 + 1;
+    if (pbVar8[0x10] != false) {
+      iVar9 = iVar9 + 1;
     }
-    if (pcVar9[0x20] != '\0') {
-      iVar10 = iVar10 + 1;
+    if (pbVar8[0x20] != false) {
+      iVar9 = iVar9 + 1;
     }
-    if (pcVar9[0x30] != '\0') {
-      iVar10 = iVar10 + 1;
+    if (pbVar8[0x30] != false) {
+      iVar9 = iVar9 + 1;
     }
-    if (pcVar9[0x40] != '\0') {
-      iVar10 = iVar10 + 1;
+    if (pbVar8[0x40] != false) {
+      iVar9 = iVar9 + 1;
     }
-    pcVar9 = pcVar9 + 0x60;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  if (((iVar10 != 0) && ((pcVar3->bgs).clientinfo[uVar1].infoValid != 0)) &&
-     ((pcVar3->bgs).clientinfo[uVar1].team != TEAM_SPECTATOR)) {
-    CG_CompassUpYawVector(pcVar3,afStack_b8);
-    fVar18 = Compass_GetIconFadeAlpha(LVar2,pcVar3->compassFadeTime,param_2);
-    dVar13 = (double)fVar18;
-    if (dVar13 != 0.0) {
+    pbVar8 = pbVar8 + 0x60;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  if (((iVar9 != 0) && ((pcVar2->bgs).clientinfo[uVar1].infoValid != 0)) &&
+     ((pcVar2->bgs).clientinfo[uVar1].team != TEAM_SPECTATOR)) {
+    CG_CompassUpYawVector(pcVar2,afStack_b8);
+    fVar17 = Compass_GetIconFadeAlpha(param_1,pcVar2->compassFadeTime,param_2);
+    dVar12 = (double)fVar17;
+    if (dVar12 != 0.0) {
       CG_CompassCalcDimensions
-                (param_2,pcVar3,param_3,param_4,&local_a0[0].x,&local_a0[0].y,&local_a0[0].w,
+                (param_2,pcVar2,param_3,param_4,&local_a0[0].x,&local_a0[0].y,&local_a0[0].w,
                  &local_a0[0].h);
       local_b0 = *param_5;
       local_ac = param_5[1];
       local_a8 = param_5[2];
       local_a4 = param_5[3];
-      dVar17 = 0.5;
-      dVar16 = (double)(local_a0[0].w * 0.5 + local_a0[0].x);
-      dVar15 = (double)(local_a0[0].h * 0.5 + local_a0[0].y);
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-      lVar12 = 0x12;
-      dVar14 = 40.0;
+      dVar16 = 0.5;
+      dVar15 = (double)(local_a0[0].w * 0.5 + local_a0[0].x);
+      dVar14 = (double)(local_a0[0].h * 0.5 + local_a0[0].y);
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      lVar11 = 0x12;
+      dVar13 = 40.0;
       do {
-        if (pCVar11->isActive != false) {
-          pCVar11->isActive = false;
-          pMVar8 = (Material *)(pcVar3->refdef).view.org;
-          pfVar7 = afStack_b8;
-          prVar6 = local_a0;
-          pcVar5 = pcVar3;
+        if (pCVar10->isActive != false) {
+          pCVar10->isActive = false;
+          pMVar7 = (Material *)(pcVar2->refdef).view.org;
+          pfVar6 = afStack_b8;
+          prVar5 = local_a0;
+          pcVar4 = pcVar2;
           CG_WorldPosToCompass
-                    (param_2,pcVar3,prVar6,pfVar7,(float *)pMVar8,pCVar11->pos,(float *)0x0,
+                    (param_2,pcVar2,prVar5,pfVar6,(float *)pMVar7,pCVar10->pos,(float *)0x0,
                      &local_c0);
-          fVar18 = (float)((double)(compassSize->current).value * dVar14);
-          local_c0 = -(float)((double)fVar18 * dVar17 - dVar16) + local_c0;
-          local_bc = -(float)((double)fVar18 * dVar17 - dVar15) + local_bc;
-          if (dVar13 < (double)local_a4) {
-            local_a4 = (float)dVar13;
+          fVar17 = (float)((double)(compassSize->current).value * dVar13);
+          local_c0 = -(float)((double)fVar17 * dVar16 - dVar15) + local_c0;
+          local_bc = -(float)((double)fVar17 * dVar16 - dVar14) + local_bc;
+          if (dVar12 < (double)local_a4) {
+            local_a4 = (float)dVar12;
           }
-          UI_DrawHandlePic(pSVar4,local_c0,local_bc,fVar18,fVar18,(int)pcVar5,(int)prVar6,pfVar7,
-                           pMVar8);
+          UI_DrawHandlePic(pSVar3,local_c0,local_bc,fVar17,fVar17,(int)pcVar4,(int)prVar5,pfVar6,
+                           pMVar7);
         }
-        lVar12 = lVar12 + -1;
-        pCVar11 = pCVar11 + 1;
-      } while (lVar12 != 0);
+        lVar11 = lVar11 + -1;
+        pCVar10 = pCVar10 + 1;
+      } while (lVar11 != 0);
     }
   }
-  __restfpr_27();
-  __restgprlr_22();
   return;
 }
 
 
 // 822B05C0  CG_CompassDrawRadarEffects  (cgame_mp/cg_compassfriendlies_mp.cpp:2022)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3261,25 +3156,20 @@ void CG_CompassDrawRadarEffects
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  cg_s *pcVar5;
-  ulonglong uVar6;
-  rectDef_s *prVar7;
-  ulonglong uVar8;
-  rectDef_s *prVar9;
-  char *pcVar10;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  cg_s *pcVar4;
+  char *pcVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  float fVar20;
+  float fVar15;
   float local_b0;
   float local_ac;
   undefined1 local_a8 [4];
@@ -3287,110 +3177,104 @@ void CG_CompassDrawRadarEffects
   GfxDrawSurf local_a0;
   float local_98;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  __savegprlr_23(param_1);
-  LVar2 = __savefpr_24();
-  prVar9 = (rectDef_s *)uVar8;
-  prVar7 = (rectDef_s *)uVar6;
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x7ed,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x7ee,0,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3 == (cg_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x7f1,0,"%s");
   }
-  if ((pcVar3->predictedPlayerState).radarEnabled != 0) {
-    pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-    pcVar10 = local_a8;
-    pcVar5 = pcVar3;
+  if ((pcVar2->predictedPlayerState).radarEnabled != 0) {
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    pcVar5 = local_a8;
+    pcVar4 = pcVar2;
     CG_CompassCalcDimensions
-              (param_2,pcVar3,prVar7,prVar9,(float *)pcVar10,&local_a4,&local_ac,&local_b0);
-    dVar19 = 0.0;
+              (param_2,pcVar2,param_3,param_4,(float *)pcVar5,&local_a4,&local_ac,&local_b0);
+    dVar14 = 0.0;
     if (local_ac <= 0.0) {
-      pcVar10 = "w > 0.0f";
-      prVar7 = (rectDef_s *)0x1;
-      pcVar5 = (cg_s *)0x800;
-      prVar9 = (rectDef_s *)"%s";
+      pcVar5 = "w > 0.0f";
+      param_3 = (rectDef_s *)0x1;
+      pcVar4 = (cg_s *)0x800;
+      param_4 = (rectDef_s *)"%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x800,1,"%s");
     }
-    if ((double)local_b0 <= dVar19) {
-      pcVar10 = "h > 0.0f";
-      prVar7 = (rectDef_s *)0x1;
-      pcVar5 = (cg_s *)0x801;
-      prVar9 = (rectDef_s *)"%s";
+    if ((double)local_b0 <= dVar14) {
+      pcVar5 = "h > 0.0f";
+      param_3 = (rectDef_s *)0x1;
+      pcVar4 = (cg_s *)0x801;
+      param_4 = (rectDef_s *)"%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x801,1,"%s");
     }
     if (param_2 == COMPASS_TYPE_PARTIAL) {
-      GetRadarLine(pcVar3,pcVar3->radarProgress,(float *)pcVar5);
-      fVar20 = 1.0 / (compassRadarLineThickness->current).value;
-      dVar16 = dVar19;
+      GetRadarLine(pcVar2,pcVar2->radarProgress,(float *)pcVar4);
+      fVar15 = 1.0 / (compassRadarLineThickness->current).value;
+      dVar11 = dVar14;
       if ((compassRotation->current).enabled != false) {
-        dVar16 = (double)(pcVar3->compassNorthYaw - pcVar3->refdefViewAngles[1]);
+        dVar11 = (double)(pcVar2->compassNorthYaw - pcVar2->refdefViewAngles[1]);
       }
-      fVar1 = fVar20 * 0.5;
+      fVar1 = fVar15 * 0.5;
       CL_DrawStretchPicRotatedST
-                (pSVar4,(float)local_a8,local_a4,local_ac,local_b0,-0x7d5f0000,-0x7e000000,
-                 ((((pcVar3->refdef).view.org[1] * (float)local_a0.packed._4_4_ +
-                   (pcVar3->refdef).view.org[0] * (float)local_a0.packed._0_4_) - local_98) /
-                 (compassMaxRange->current).value) * fVar20 + 0.5,(float)dVar19,fVar1,fVar1,
-                 (float)dVar19,1.0,(float)dVar19,1.0,(float)dVar16,
+                (pSVar3,(float)local_a8,local_a4,local_ac,local_b0,-0x7d5f0000,-0x7e000000,
+                 ((((pcVar2->refdef).view.org[1] * (float)local_a0.packed._4_4_ +
+                   (pcVar2->refdef).view.org[0] * (float)local_a0.packed._0_4_) - local_98) /
+                 (compassMaxRange->current).value) * fVar15 + 0.5,(float)dVar14,fVar1,fVar1,
+                 (float)dVar14,1.0,(float)dVar14,1.0,(float)dVar11,
                  (float *)&cgEntCollWorld[2].sectors[0x222].entListHead,
                  (Material *)&cgEntCollWorld[2].sectors[0x222].entListHead);
-      __restfpr_24();
-      __restgprlr_23();
       return;
     }
     if (param_2 != COMPASS_TYPE_FULL) {
-      pcVar10 = "compassType == COMPASS_TYPE_FULL";
-      prVar7 = (rectDef_s *)0x0;
-      pcVar5 = (cg_s *)0x81d;
-      prVar9 = (rectDef_s *)"%s";
+      pcVar5 = "compassType == COMPASS_TYPE_FULL";
+      param_3 = (rectDef_s *)0x0;
+      pcVar4 = (cg_s *)0x81d;
+      param_4 = (rectDef_s *)"%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                       ,0x81d,0,"%s");
     }
-    fVar20 = GetRadarLineEastWestPercentage(pcVar3,pcVar3->radarProgress);
-    dVar16 = (double)(cg_hudMapRadarLineThickness->current).value;
-    if (dVar19 < dVar16) {
-      dVar12 = (double)local_b0;
-      dVar18 = 1.0;
-      dVar15 = -(double)((float)(1.0 / dVar16) * fVar20 - 0.5);
-      dVar14 = (double)((1.0 - fVar20) * (float)(1.0 / dVar16) + 0.5);
-      if (dVar12 == dVar19) {
-        pcVar10 = "h";
-        prVar7 = (rectDef_s *)0x0;
-        pcVar5 = (cg_s *)0x828;
-        prVar9 = (rectDef_s *)"%s";
+    fVar15 = GetRadarLineEastWestPercentage(pcVar2,pcVar2->radarProgress);
+    dVar11 = (double)(cg_hudMapRadarLineThickness->current).value;
+    if (dVar14 < dVar11) {
+      dVar7 = (double)local_b0;
+      dVar13 = 1.0;
+      dVar10 = -(double)((float)(1.0 / dVar11) * fVar15 - 0.5);
+      dVar9 = (double)((1.0 - fVar15) * (float)(1.0 / dVar11) + 0.5);
+      if (dVar7 == dVar14) {
+        pcVar5 = "h";
+        param_3 = (rectDef_s *)0x0;
+        pcVar4 = (cg_s *)0x828;
+        param_4 = (rectDef_s *)"%s";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                         ,0x828,0,"%s");
-        dVar12 = (double)local_b0;
+        dVar7 = (double)local_b0;
       }
-      dVar11 = (double)local_ac;
-      dVar17 = (double)local_a4;
-      dVar13 = (double)(float)local_a8;
-      dVar16 = (double)(float)(dVar18 / (double)(float)((double)(float)(dVar16 / dVar12) * dVar11));
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-      CL_DrawStretchPic(pSVar4,(float)dVar13,(float)dVar17,(float)dVar11,(float)dVar12,(int)pcVar5,
-                        (int)prVar7,(float)dVar15,(float)dVar19,(float)dVar14,(float)dVar16,
-                        &prVar9->x,(Material *)pcVar10);
+      dVar6 = (double)local_ac;
+      dVar12 = (double)local_a4;
+      dVar8 = (double)(float)local_a8;
+      dVar11 = (double)(float)(dVar13 / (double)(float)((double)(float)(dVar11 / dVar7) * dVar6));
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar3,(float)dVar8,(float)dVar12,(float)dVar6,(float)dVar7,(int)pcVar4,
+                        (int)param_3,(float)dVar10,(float)dVar14,(float)dVar9,(float)dVar11,
+                        &param_4->x,(Material *)pcVar5);
     }
   }
-  __restfpr_24();
-  __restgprlr_23();
   return;
 }
 
 
 // 822B0930  CG_CompassDrawMissiles  (cgame_mp/cg_compassfriendlies_mp.cpp:2098)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3401,20 +3285,20 @@ void CG_CompassDrawMissiles
 
 {
   team_t tVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
+  cg_s *pcVar2;
+  int iVar3;
+  bool bVar6;
+  centity_s *pcVar4;
   bool bVar7;
-  centity_s *pcVar5;
-  bool bVar8;
-  ScreenPlacement *pSVar6;
-  cg_s *pcVar9;
-  rectDef_s *prVar10;
-  float *pfVar11;
-  Material *pMVar12;
-  ulonglong uVar13;
-  CompassMissile *pCVar14;
-  Material *pMVar15;
+  ScreenPlacement *pSVar5;
+  cg_s *pcVar8;
+  rectDef_s *prVar9;
+  float *pfVar10;
+  Material *pMVar11;
+  ulonglong uVar12;
+  CompassMissile *pCVar13;
+  Material *pMVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -3423,8 +3307,7 @@ void CG_CompassDrawMissiles
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
-  float fVar25;
+  float fVar24;
   rectDef_s *prStack0000002c;
   uint local_128;
   float local_120;
@@ -3436,130 +3319,130 @@ void CG_CompassDrawMissiles
   float local_104;
   rectDef_s local_100 [12];
   
-  __savegprlr();
-  LVar2 = __savefpr_23();
   prStack0000002c = param_4;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x849,0,"%s");
   }
-  fVar25 = Compass_GetIconFadeAlpha(LVar2,pcVar3->compassFadeTime,param_2);
-  dVar16 = (double)fVar25;
-  if (dVar16 != 0.0) {
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    bVar7 = GamerProfile_IsColorBlind(iVar4);
+  fVar24 = Compass_GetIconFadeAlpha(param_1,pcVar2->compassFadeTime,param_2);
+  dVar15 = (double)fVar24;
+  if (dVar15 != 0.0) {
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
+    bVar6 = GamerProfile_IsColorBlind(iVar3);
     CG_CompassCalcDimensions
-              (param_2,pcVar3,param_3,param_4,&local_100[0].x,&local_100[0].y,&local_100[0].w,
+              (param_2,pcVar2,param_3,param_4,&local_100[0].x,&local_100[0].y,&local_100[0].w,
                &local_100[0].h);
     local_110 = *param_5;
     local_10c = param_5[1];
     local_108 = param_5[2];
     local_104 = param_5[3];
-    dVar22 = 0.5;
-    dVar21 = (double)(local_100[0].w * 0.5 + local_100[0].x);
-    dVar20 = (double)(local_100[0].h * 0.5 + local_100[0].y);
-    CG_CompassUpYawVector(pcVar3,afStack_118);
-    uVar13 = 8;
-    pCVar14 = s_compassMissiles[LVar2];
+    dVar21 = 0.5;
+    dVar20 = (double)(local_100[0].w * 0.5 + local_100[0].x);
+    dVar19 = (double)(local_100[0].h * 0.5 + local_100[0].y);
+    CG_CompassUpYawVector(pcVar2,afStack_118);
+    uVar12 = 8;
+    pCVar13 = s_compassMissiles[param_1];
     local_128 = 8;
     do {
-      pcVar5 = CG_GetEntity(LVar2,((CompassMissile *)&pCVar14->entityNum)->entityNum);
-      if ((pcVar5->nextState).eType == 4) {
-        if (pcVar3->time < pCVar14->lastUpdateTime) {
-          pCVar14->lastUpdateTime = 0;
+      pcVar4 = CG_GetEntity(param_1,((CompassMissile *)&pCVar13->entityNum)->entityNum);
+      if ((pcVar4->nextState).eType == 4) {
+        if (pcVar2->time < pCVar13->lastUpdateTime) {
+          pCVar13->lastUpdateTime = 0;
         }
-        if (pcVar3->time + -500 <= pCVar14->lastUpdateTime) {
-          pfVar11 = afStack_118;
-          prVar10 = local_100;
-          pcVar9 = pcVar3;
-          bVar8 = CG_WorldPosToCompass
-                            (param_2,pcVar3,prVar10,pfVar11,(pcVar3->refdef).view.org,pCVar14->pos,
+        if (pcVar2->time + -500 <= pCVar13->lastUpdateTime) {
+          pfVar10 = afStack_118;
+          prVar9 = local_100;
+          pcVar8 = pcVar2;
+          bVar7 = CG_WorldPosToCompass
+                            (param_2,pcVar2,prVar9,pfVar10,(pcVar2->refdef).view.org,pCVar13->pos,
                              (float *)0x0,&local_120);
           if ((compassHellfireTargetSpot->current).enabled == false) {
-            if ((!bVar8) || ((compassClampIcons->current).enabled != false)) goto LAB_822b0b4c;
+            if ((!bVar7) || ((compassClampIcons->current).enabled != false)) goto LAB_822b0b4c;
           }
-          else if (!bVar8) {
+          else if (!bVar7) {
 LAB_822b0b4c:
-            if (0x11 < (uint)pcVar3->clientNum) {
-              prVar10 = (rectDef_s *)0x0;
-              pcVar9 = (cg_s *)0x872;
-              pfVar11 = (float *)
+            if (0x11 < (uint)pcVar2->clientNum) {
+              prVar9 = (rectDef_s *)0x0;
+              pcVar8 = (cg_s *)0x872;
+              pfVar10 = (float *)
                         "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)";
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                               ,0x872,0,
                               "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                              );
             }
-            pMVar12 = (Material *)pCVar14->ownerNum;
-            if ((Material *)0x11 < pMVar12) {
-              prVar10 = (rectDef_s *)0x0;
-              pcVar9 = (cg_s *)0x873;
-              pfVar11 = (float *)"missile->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
+            pMVar11 = (Material *)pCVar13->ownerNum;
+            if ((Material *)0x11 < pMVar11) {
+              prVar9 = (rectDef_s *)0x0;
+              pcVar8 = (cg_s *)0x873;
+              pfVar10 = (float *)"missile->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
               ;
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                               ,0x873,0,
                               "missile->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
             }
-            tVar1 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
-            if (((tVar1 == TEAM_FREE) && (pcVar3->clientNum != pCVar14->ownerNum)) ||
-               (tVar1 != (pcVar3->bgs).clientinfo[pCVar14->ownerNum].team)) {
-              pMVar15 = cgMedia.compass[0].enemy_predatormissile;
-              if (((bVar7) && (cgMedia.compass[1].enemy_predatormissile != (Material *)0x0)) &&
-                 (bVar8 = Material_IsDefault(cgMedia.compass[1].enemy_predatormissile),
-                 pMVar15 = cgMedia.compass[0].enemy_predatormissile, !bVar8)) {
-                pMVar15 = cgMedia.compass[1].enemy_predatormissile;
+            tVar1 = (pcVar2->bgs).clientinfo[pcVar2->clientNum].team;
+            if (((tVar1 == TEAM_FREE) && (pcVar2->clientNum != pCVar13->ownerNum)) ||
+               (tVar1 != (pcVar2->bgs).clientinfo[pCVar13->ownerNum].team)) {
+              pMVar14 = cgMedia.compass[0].enemy_predatormissile;
+              if (((bVar6) && (cgMedia.compass[1].enemy_predatormissile != (Material *)0x0)) &&
+                 (bVar7 = Material_IsDefault(cgMedia.compass[1].enemy_predatormissile),
+                 pMVar14 = cgMedia.compass[0].enemy_predatormissile, !bVar7)) {
+                pMVar14 = cgMedia.compass[1].enemy_predatormissile;
               }
             }
             else {
-              pMVar15 = cgMedia.compass[0].friendly_predatormissile;
-              if (((bVar7) && (cgMedia.compass[1].friendly_predatormissile != (Material *)0x0)) &&
-                 (bVar8 = Material_IsDefault(cgMedia.compass[1].friendly_predatormissile),
-                 pMVar15 = cgMedia.compass[0].friendly_predatormissile, !bVar8)) {
-                pMVar15 = cgMedia.compass[1].friendly_predatormissile;
+              pMVar14 = cgMedia.compass[0].friendly_predatormissile;
+              if (((bVar6) && (cgMedia.compass[1].friendly_predatormissile != (Material *)0x0)) &&
+                 (bVar7 = Material_IsDefault(cgMedia.compass[1].friendly_predatormissile),
+                 pMVar14 = cgMedia.compass[0].friendly_predatormissile, !bVar7)) {
+                pMVar14 = cgMedia.compass[1].friendly_predatormissile;
               }
             }
-            if (pMVar15 != (Material *)0x0) {
-              dVar24 = (double)((compassSize->current).value * MY_ICON_WIDTH);
-              dVar23 = (double)((compassSize->current).value * MY_ICON_HEIGHT);
-              local_120 = -(float)(dVar24 * dVar22 - dVar21) + local_120;
-              local_11c = -(float)(dVar23 * dVar22 - dVar20) + local_11c;
+            if (pMVar14 != (Material *)0x0) {
+              dVar23 = (double)((compassSize->current).value * MY_ICON_WIDTH);
+              dVar22 = (double)((compassSize->current).value * MY_ICON_HEIGHT);
+              local_120 = -(float)(dVar23 * dVar21 - dVar20) + local_120;
+              local_11c = -(float)(dVar22 * dVar21 - dVar19) + local_11c;
               if ((param_2 == COMPASS_TYPE_PARTIAL) && ((compassRotation->current).enabled != false)
                  ) {
-                iVar4 = 460000;
+                iVar3 = 460000;
               }
               else {
-                iVar4 = 0x797e8;
+                iVar3 = 0x797e8;
               }
-              fVar25 = AngleNormalize360(*(float *)((int)(pcVar3->predictedPlayerState).origin +
-                                                   iVar4 + -0x1c) - pCVar14->yaw);
-              dVar17 = (double)fVar25;
-              if (dVar16 < (double)local_104) {
-                local_104 = (float)dVar16;
+              fVar24 = AngleNormalize360(*(float *)((int)(pcVar2->predictedPlayerState).origin +
+                                                   iVar3 + -0x1c) - pCVar13->yaw);
+              dVar16 = (double)fVar24;
+              if (dVar15 < (double)local_104) {
+                local_104 = (float)dVar15;
               }
-              dVar19 = (double)local_11c;
-              dVar18 = (double)local_120;
-              pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-              CG_DrawRotatedPic(pSVar6,(float)dVar18,(float)dVar19,(float)dVar24,(float)dVar23,
-                                (int)pcVar9,(int)prVar10,(float)dVar17,pfVar11,pMVar12);
-              uVar13 = (ulonglong)local_128;
+              dVar18 = (double)local_11c;
+              dVar17 = (double)local_120;
+              pSVar5 = ScrPlace_GetActivePlacement(param_1);
+              CG_DrawRotatedPic(pSVar5,(float)dVar17,(float)dVar18,(float)dVar23,(float)dVar22,
+                                (int)pcVar8,(int)prVar9,(float)dVar16,pfVar10,pMVar11);
+              uVar12 = (ulonglong)local_128;
             }
           }
         }
       }
-      uVar13 = uVar13 - 1;
-      pCVar14 = pCVar14 + 1;
-      local_128 = (uint)uVar13;
-    } while (uVar13 != 0);
+      uVar12 = uVar12 - 1;
+      pCVar13 = pCVar13 + 1;
+      local_128 = (uint)uVar12;
+    } while (uVar12 != 0);
   }
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
 
 // 822B0D38  CG_CompassDrawPlanes  (cgame_mp/cg_compassfriendlies_mp.cpp:2195)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3570,20 +3453,20 @@ void CG_CompassDrawPlanes
 
 {
   team_t tVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
+  cg_s *pcVar2;
+  int iVar3;
+  bool bVar6;
+  centity_s *pcVar4;
   bool bVar7;
-  centity_s *pcVar5;
-  bool bVar8;
-  ScreenPlacement *pSVar6;
-  cg_s *pcVar9;
-  rectDef_s *prVar10;
-  float *pfVar11;
-  Material *pMVar12;
-  ulonglong uVar13;
-  Material *pMVar14;
-  CompassPlane *pCVar15;
+  ScreenPlacement *pSVar5;
+  cg_s *pcVar8;
+  rectDef_s *prVar9;
+  float *pfVar10;
+  Material *pMVar11;
+  ulonglong uVar12;
+  Material *pMVar13;
+  CompassPlane *pCVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -3592,8 +3475,7 @@ void CG_CompassDrawPlanes
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
-  float fVar25;
+  float fVar24;
   rectDef_s *prStack00000024;
   uint local_12c;
   float local_120;
@@ -3605,126 +3487,124 @@ void CG_CompassDrawPlanes
   float local_104;
   rectDef_s local_100 [12];
   
-  __savegprlr();
-  LVar2 = __savefpr_23();
   prStack00000024 = param_3;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x8a8,0,"%s");
   }
-  fVar25 = Compass_GetIconFadeAlpha(LVar2,pcVar3->compassFadeTime,param_2);
-  dVar16 = (double)fVar25;
-  if (dVar16 != 0.0) {
+  fVar24 = Compass_GetIconFadeAlpha(param_1,pcVar2->compassFadeTime,param_2);
+  dVar15 = (double)fVar24;
+  if (dVar15 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar3,param_3,param_4,&local_100[0].x,&local_100[0].y,&local_100[0].w,
+              (param_2,pcVar2,param_3,param_4,&local_100[0].x,&local_100[0].y,&local_100[0].w,
                &local_100[0].h);
     local_110 = *param_5;
     local_10c = param_5[1];
     local_108 = param_5[2];
     local_104 = param_5[3];
-    dVar23 = 0.5;
-    dVar22 = (double)(local_100[0].w * 0.5 + local_100[0].x);
-    dVar21 = (double)(local_100[0].h * 0.5 + local_100[0].y);
-    CG_CompassUpYawVector(pcVar3,afStack_118);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    bVar7 = GamerProfile_IsColorBlind(iVar4);
-    pCVar15 = s_compassPlanes[LVar2];
-    uVar13 = 8;
+    dVar22 = 0.5;
+    dVar21 = (double)(local_100[0].w * 0.5 + local_100[0].x);
+    dVar20 = (double)(local_100[0].h * 0.5 + local_100[0].y);
+    CG_CompassUpYawVector(pcVar2,afStack_118);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
+    bVar6 = GamerProfile_IsColorBlind(iVar3);
+    pCVar14 = s_compassPlanes[param_1];
+    uVar12 = 8;
     local_12c = 8;
-    dVar20 = 20.0;
+    dVar19 = 20.0;
     do {
-      pcVar5 = CG_GetEntity(LVar2,((CompassPlane *)&pCVar15->entityNum)->entityNum);
-      if ((pcVar5->nextState).eType == 0xd) {
-        if (pcVar3->time < pCVar15->lastUpdateTime) {
-          pCVar15->lastUpdateTime = 0;
+      pcVar4 = CG_GetEntity(param_1,((CompassPlane *)&pCVar14->entityNum)->entityNum);
+      if ((pcVar4->nextState).eType == 0xd) {
+        if (pcVar2->time < pCVar14->lastUpdateTime) {
+          pCVar14->lastUpdateTime = 0;
         }
-        if (pcVar3->time + -500 <= pCVar15->lastUpdateTime) {
-          pfVar11 = afStack_118;
-          prVar10 = local_100;
-          pcVar9 = pcVar3;
-          bVar8 = CG_WorldPosToCompass
-                            (param_2,pcVar3,prVar10,pfVar11,(pcVar3->refdef).view.org,
-                             pCVar15->lastPos,(float *)0x0,&local_120);
-          if ((!bVar8) || ((compassClampIcons->current).enabled != false)) {
-            if (0x11 < (uint)pcVar3->clientNum) {
-              prVar10 = (rectDef_s *)0x0;
-              pcVar9 = (cg_s *)0x8c9;
-              pfVar11 = (float *)
+        if (pcVar2->time + -500 <= pCVar14->lastUpdateTime) {
+          pfVar10 = afStack_118;
+          prVar9 = local_100;
+          pcVar8 = pcVar2;
+          bVar7 = CG_WorldPosToCompass
+                            (param_2,pcVar2,prVar9,pfVar10,(pcVar2->refdef).view.org,
+                             pCVar14->lastPos,(float *)0x0,&local_120);
+          if ((!bVar7) || ((compassClampIcons->current).enabled != false)) {
+            if (0x11 < (uint)pcVar2->clientNum) {
+              prVar9 = (rectDef_s *)0x0;
+              pcVar8 = (cg_s *)0x8c9;
+              pfVar10 = (float *)
                         "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)";
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                               ,0x8c9,0,
                               "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                              );
             }
-            pMVar12 = (Material *)pCVar15->ownerNum;
-            if ((Material *)0x11 < pMVar12) {
-              prVar10 = (rectDef_s *)0x0;
-              pcVar9 = (cg_s *)0x8ca;
-              pfVar11 = (float *)"plane->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)";
+            pMVar11 = (Material *)pCVar14->ownerNum;
+            if ((Material *)0x11 < pMVar11) {
+              prVar9 = (rectDef_s *)0x0;
+              pcVar8 = (cg_s *)0x8ca;
+              pfVar10 = (float *)"plane->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)";
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                               ,0x8ca,0,
                               "plane->ownerNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
             }
-            tVar1 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
-            if (((tVar1 == TEAM_FREE) && (pcVar3->clientNum != pCVar15->ownerNum)) ||
-               (tVar1 != (pcVar3->bgs).clientinfo[pCVar15->ownerNum].team)) {
-              if (((!bVar7) || (pMVar14 = pCVar15->planeMedia[1].enemy, pMVar14 == (Material *)0x0))
-                 || (bVar8 = Material_IsDefault(pMVar14), bVar8)) {
-                pMVar14 = pCVar15->planeMedia[0].enemy;
+            tVar1 = (pcVar2->bgs).clientinfo[pcVar2->clientNum].team;
+            if (((tVar1 == TEAM_FREE) && (pcVar2->clientNum != pCVar14->ownerNum)) ||
+               (tVar1 != (pcVar2->bgs).clientinfo[pCVar14->ownerNum].team)) {
+              if (((!bVar6) || (pMVar13 = pCVar14->planeMedia[1].enemy, pMVar13 == (Material *)0x0))
+                 || (bVar7 = Material_IsDefault(pMVar13), bVar7)) {
+                pMVar13 = pCVar14->planeMedia[0].enemy;
               }
               else {
-                pMVar14 = pCVar15->planeMedia[1].enemy;
+                pMVar13 = pCVar14->planeMedia[1].enemy;
               }
             }
-            else if (((!bVar7) ||
-                     (pMVar14 = pCVar15->planeMedia[1].friendly, pMVar14 == (Material *)0x0)) ||
-                    (bVar8 = Material_IsDefault(pMVar14), bVar8)) {
-              pMVar14 = pCVar15->planeMedia[0].friendly;
+            else if (((!bVar6) ||
+                     (pMVar13 = pCVar14->planeMedia[1].friendly, pMVar13 == (Material *)0x0)) ||
+                    (bVar7 = Material_IsDefault(pMVar13), bVar7)) {
+              pMVar13 = pCVar14->planeMedia[0].friendly;
             }
             else {
-              pMVar14 = pCVar15->planeMedia[1].friendly;
+              pMVar13 = pCVar14->planeMedia[1].friendly;
             }
-            if (pMVar14 != (Material *)0x0) {
-              dVar24 = (double)(float)((double)(compassSize->current).value * dVar20);
-              local_120 = -(float)(dVar24 * dVar23 - dVar22) + local_120;
-              local_11c = -(float)(dVar24 * dVar23 - dVar21) + local_11c;
+            if (pMVar13 != (Material *)0x0) {
+              dVar23 = (double)(float)((double)(compassSize->current).value * dVar19);
+              local_120 = -(float)(dVar23 * dVar22 - dVar21) + local_120;
+              local_11c = -(float)(dVar23 * dVar22 - dVar20) + local_11c;
               if ((param_2 == COMPASS_TYPE_PARTIAL) && ((compassRotation->current).enabled != false)
                  ) {
-                fVar25 = pcVar3->refdefViewAngles[1];
+                fVar24 = pcVar2->refdefViewAngles[1];
               }
               else {
-                fVar25 = pcVar3->compassNorthYaw;
+                fVar24 = pcVar2->compassNorthYaw;
               }
-              fVar25 = AngleNormalize360(fVar25 - pCVar15->lastYaw);
-              dVar17 = (double)fVar25;
-              if (dVar16 < (double)local_104) {
-                local_104 = (float)dVar16;
+              fVar24 = AngleNormalize360(fVar24 - pCVar14->lastYaw);
+              dVar16 = (double)fVar24;
+              if (dVar15 < (double)local_104) {
+                local_104 = (float)dVar15;
               }
-              dVar19 = (double)local_11c;
-              dVar18 = (double)local_120;
-              pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-              CG_DrawRotatedPic(pSVar6,(float)dVar18,(float)dVar19,(float)dVar24,(float)dVar24,
-                                (int)pcVar9,(int)prVar10,(float)dVar17,pfVar11,pMVar12);
-              uVar13 = (ulonglong)local_12c;
+              dVar18 = (double)local_11c;
+              dVar17 = (double)local_120;
+              pSVar5 = ScrPlace_GetActivePlacement(param_1);
+              CG_DrawRotatedPic(pSVar5,(float)dVar17,(float)dVar18,(float)dVar23,(float)dVar23,
+                                (int)pcVar8,(int)prVar9,(float)dVar16,pfVar10,pMVar11);
+              uVar12 = (ulonglong)local_12c;
             }
           }
         }
       }
-      uVar13 = uVar13 - 1;
-      pCVar15 = pCVar15 + 1;
-      local_12c = (uint)uVar13;
-    } while (uVar13 != 0);
-    CG_CompassDrawMissiles(LVar2,param_2,prStack00000024,param_4,param_5);
+      uVar12 = uVar12 - 1;
+      pCVar14 = pCVar14 + 1;
+      local_12c = (uint)uVar12;
+    } while (uVar12 != 0);
+    CG_CompassDrawMissiles(param_1,param_2,prStack00000024,param_4,param_5);
   }
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
 
 // 822B1128  CG_CompassActorsFriendlyCallback  (cgame_mp/cg_compassfriendlies_mp.cpp:2286)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3734,34 +3614,33 @@ void CG_CompassActorsFriendlyCallback
                _func___cdecl_void_LocalClientNum_t_float_ptr_float *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   float in_r5;
-  CompassActor *pCVar3;
-  int iVar4;
+  CompassActor *pCVar2;
+  int iVar3;
   
-  LVar1 = __savegprlr_24(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  iVar4 = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  iVar3 = 0;
   do {
-    pCVar3 = s_compassActors[LVar1] + iVar4;
-    if (pcVar2->time < pCVar3->lastUpdate) {
-      pCVar3->lastUpdate = 0;
+    pCVar2 = s_compassActors[param_1] + iVar3;
+    if (pcVar1->time < pCVar2->lastUpdate) {
+      pCVar2->lastUpdate = 0;
     }
-    if (((pcVar2->time + -500 <= pCVar3->lastUpdate) &&
-        ((s_compassActors[LVar1][iVar4].flags & 1U) == 0)) &&
-       ((pcVar2->predictedPlayerState).clientNum != iVar4)) {
-      (*param_2)(LVar1,s_compassActors[LVar1][iVar4].lastPos,in_r5);
+    if (((pcVar1->time + -500 <= pCVar2->lastUpdate) &&
+        ((s_compassActors[param_1][iVar3].flags & 1U) == 0)) &&
+       ((pcVar1->predictedPlayerState).clientNum != iVar3)) {
+      (*param_2)(param_1,s_compassActors[param_1][iVar3].lastPos,in_r5);
     }
-    iVar4 = iVar4 + 1;
-  } while (iVar4 < 0x12);
-  __restgprlr_24();
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 0x12);
   return;
 }
 
 
 // 822B11E8  EnemyIsShowable  (cgame_mp/cg_compassfriendlies_mp.cpp:2314)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3770,63 +3649,55 @@ bool EnemyIsShowable(cg_s *param_1,CompassActor *param_2,bool param_3)
 
 {
   bool bVar1;
-  int iVar3;
-  undefined1 uVar4;
-  undefined8 uVar2;
-  uint *puVar5;
-  ulonglong uVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  double dVar9;
+  bool bVar2;
+  ulonglong uVar3;
+  double dVar4;
   
-  uVar6 = (ulonglong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x90e,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (CompassActor *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x90f,0,"%s");
   }
-  puVar5 = (uint *)uVar8;
-  if ((uVar6 & 0xff) != 0) {
-    if ((int)*(uint *)(iVar3 + 0x6b98c) < (int)*puVar5) {
-      *puVar5 = 0;
+  if (param_3) {
+    if (param_1->time < param_2->lastUpdate) {
+      param_2->lastUpdate = 0;
     }
-    uVar8 = (ulonglong)*(uint *)(iVar3 + 0x6b98c) - 500;
-    uVar4 = __restgprlr_26(((uVar8 & 0xffffffff) >> 0x1f) + (longlong)((int)*puVar5 >> 0x1f) +
-                           (ulonglong)(uVar8 <= *puVar5));
-    return (bool)uVar4;
+    uVar3 = (ulonglong)(uint)param_1->time - 500;
+    return (bool)(((char)(param_2->lastUpdate >> 0x1f) - ((char)(uVar3 >> 0x18) >> 7)) +
+                 (uVar3 <= (uint)param_2->lastUpdate));
   }
-  dVar9 = 0.0;
+  dVar4 = 0.0;
   if ((compassSoundPingFadeTime->current).value <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x91a,0,"%s");
   }
-  if ((double)(compassRadarPingFadeTime->current).value <= dVar9) {
+  if ((double)(compassRadarPingFadeTime->current).value <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_compassfriendlies_mp.cpp"
                     ,0x91b,0,"%s");
   }
-  if (((compassSoundPingFadeTime->current).value * 1000.0 + (float)(longlong)(int)puVar5[0xb] <=
-       (float)(longlong)*(int *)(iVar3 + 0x6b98c)) || (bVar7 = true, puVar5[0xb] == 0)) {
-    bVar7 = false;
+  if (((compassSoundPingFadeTime->current).value * 1000.0 + (float)(longlong)param_2->beginFadeTime
+       <= (float)(longlong)param_1->time) || (bVar2 = true, param_2->beginFadeTime == 0)) {
+    bVar2 = false;
   }
-  if (((compassRadarPingFadeTime->current).value * 1000.0 + (float)(longlong)(int)puVar5[0xc] <=
-       (float)(longlong)*(int *)(iVar3 + 0x6b98c)) || (bVar1 = true, puVar5[0xc] == 0)) {
+  if (((compassRadarPingFadeTime->current).value * 1000.0 +
+       (float)(longlong)param_2->beginRadarFadeTime <= (float)(longlong)param_1->time) ||
+     (bVar1 = true, param_2->beginRadarFadeTime == 0)) {
     bVar1 = false;
   }
-  if ((bVar7) || (uVar2 = 0, bVar1)) {
-    uVar2 = 1;
+  if ((bVar2) || (bVar2 = false, bVar1)) {
+    bVar2 = true;
   }
-  uVar4 = __restgprlr_26(uVar2);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 
 // 822B13E8  CG_CompassActorsEnemyCallback  (cgame_mp/cg_compassfriendlies_mp.cpp:2342)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3837,28 +3708,23 @@ void CG_CompassActorsEnemyCallback
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar4;
-  float fVar5;
-  int iVar6;
+  cg_s *pcVar2;
+  bool bVar3;
+  float fVar4;
+  int iVar5;
   
-  LVar2 = __savegprlr_24(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  iVar6 = 0;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar5 = 0;
   bVar1 = (g_compassShowEnemies->current).enabled;
   do {
-    if (((s_compassActors[LVar2][iVar6].flags & 1U) != 0) &&
-       ((pcVar3->predictedPlayerState).clientNum != iVar6)) {
-      fVar5 = (float)(uint)bVar1;
-      bVar4 = EnemyIsShowable(pcVar3,s_compassActors[LVar2] + iVar6,bVar1);
-      if (bVar4) {
-        (*param_2)(LVar2,s_compassActors[LVar2][iVar6].lastPos,fVar5);
-      }
+    if ((((s_compassActors[param_1][iVar5].flags & 1U) != 0) &&
+        ((pcVar2->predictedPlayerState).clientNum != iVar5)) &&
+       (fVar4 = (float)(uint)bVar1,
+       bVar3 = EnemyIsShowable(pcVar2,s_compassActors[param_1] + iVar5,bVar1), bVar3)) {
+      (*param_2)(param_1,s_compassActors[param_1][iVar5].lastPos,fVar4);
     }
-    iVar6 = iVar6 + 1;
-  } while (iVar6 < 0x12);
-  __restgprlr_24();
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 0x12);
   return;
 }
 

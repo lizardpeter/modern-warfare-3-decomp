@@ -2,78 +2,67 @@
 
 // 828CD168  SetAmpAndPhase  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/setamps.c:152)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SetAmpAndPhase(float param_1,float param_2,float param_3,int param_4,int param_5,float *param_6
                    ,float *param_7,float *param_8,float *param_9,float *param_10,float param_11)
 
 {
   int iVar1;
-  float fVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  float *pfVar7;
   int in_r10;
-  longlong lVar5;
-  int iVar7;
-  longlong lVar6;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  float *pfVar8;
+  longlong lVar9;
   float *in_stack_00000054;
   int in_stack_0000005c;
   
-  dVar12 = (double)param_11;
-  dVar11 = (double)param_2;
-  lVar6 = (longlong)(int)param_10;
-  uVar4 = (ulonglong)(int)param_8;
-  lVar5 = (longlong)(int)param_7;
-  dVar10 = (double)__savegprlr_26((double)param_1,dVar11,(double)param_3,param_4,param_5,param_6);
   param_9[0x242] = param_9[0x241];
   param_9[0x283] = param_9[0x282];
-  if (0 < (int)lVar5) {
-    iVar3 = (int)lVar6 - (int)in_stack_00000054;
-    lVar8 = lVar5;
-    dVar9 = dVar11;
+  if (0 < (int)param_7) {
+    iVar6 = (int)param_10 - (int)in_stack_00000054;
+    lVar9 = (longlong)(int)param_7;
+    fVar3 = param_2;
     do {
-      if (dVar9 <= 97.0) {
-        dVar13 = dVar9 * 1.26953125;
+      if (fVar3 <= 97.0) {
+        fVar4 = fVar3 * 1.2695312;
       }
       else {
-        dVar13 = -(double)(float)(dVar9 * 0.0016021728515625 - 1.40234375) * dVar9 + 1.7890625;
+        fVar4 = -(fVar3 * 0.0016021729 - 1.4023438) * fVar3 + 1.7890625;
       }
-      dVar9 = (double)(float)(dVar9 + dVar11);
-      iVar1 = (int)((float)dVar13 * 0.25);
-      iVar7 = iVar1 * 4;
-      fVar2 = (float)dVar13 * 0.25 - (float)(longlong)iVar1;
-      dVar13 = (double)((*(float *)(iVar7 + in_r10 + 4) - *(float *)(iVar7 + in_r10)) * fVar2 +
-                       *(float *)(iVar7 + in_r10));
-      *(float *)(iVar3 + (int)in_stack_00000054) =
-           (float)((double)(float)((double)((param_9[iVar1 + 0x203] - param_9[iVar1 + 0x202]) *
-                                            fVar2 + param_9[iVar1 + 0x202]) - dVar13) * dVar12 +
-                  dVar13);
-      dVar13 = (double)((*(float *)(iVar7 + in_stack_0000005c + 4) -
-                        *(float *)(iVar7 + in_stack_0000005c)) * fVar2 +
-                       *(float *)(iVar7 + in_stack_0000005c));
+      fVar3 = fVar3 + param_2;
+      iVar1 = (int)(fVar4 * 0.25);
+      iVar2 = iVar1 * 4;
+      fVar4 = fVar4 * 0.25 - (float)(longlong)iVar1;
+      fVar5 = (*(float *)(iVar2 + in_r10 + 4) - *(float *)(iVar2 + in_r10)) * fVar4 +
+              *(float *)(iVar2 + in_r10);
+      *(float *)(iVar6 + (int)in_stack_00000054) =
+           (((param_9[iVar1 + 0x203] - param_9[iVar1 + 0x202]) * fVar4 + param_9[iVar1 + 0x202]) -
+           fVar5) * param_11 + fVar5;
+      fVar5 = (*(float *)(iVar2 + in_stack_0000005c + 4) - *(float *)(iVar2 + in_stack_0000005c)) *
+              fVar4 + *(float *)(iVar2 + in_stack_0000005c);
       *in_stack_00000054 =
-           (float)((double)(float)((double)((param_9[iVar1 + 0x244] - param_9[iVar1 + 0x243]) *
-                                            fVar2 + param_9[iVar1 + 0x243]) - dVar13) * dVar12 +
-                  dVar13);
+           (((param_9[iVar1 + 0x244] - param_9[iVar1 + 0x243]) * fVar4 + param_9[iVar1 + 0x243]) -
+           fVar5) * param_11 + fVar5;
       in_stack_00000054 = in_stack_00000054 + 1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
-  if ((int)uVar4 < (int)lVar5) {
-    lVar5 = lVar5 - uVar4;
-    lVar6 = (uVar4 & 0x3fffffff) * 4 + lVar6 + -4;
+  if ((int)param_8 < (int)param_7) {
+    lVar9 = (longlong)(int)param_7 - (longlong)(int)param_8;
+    pfVar8 = param_10 + (int)param_8 + -1;
     do {
-      iVar3 = (int)lVar6;
-      lVar6 = lVar6 + 4;
-      *(float *)lVar6 = (float)((double)*(float *)(iVar3 + 4) + dVar10);
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      pfVar7 = pfVar8 + 1;
+      pfVar8 = pfVar8 + 1;
+      *pfVar8 = *pfVar7 + param_1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
-  __restgprlr_26();
   return;
 }
 

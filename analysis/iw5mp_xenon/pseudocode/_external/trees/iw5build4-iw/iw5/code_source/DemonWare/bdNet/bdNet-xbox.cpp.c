@@ -17,62 +17,62 @@ void bdCommonAddr::operator_delete(void *param_1)
 
 // 8292C238  stop  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:89)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdNetImpl::stop(bdNetImpl *this)
 
 {
   bdSocketRouter *pbVar1;
   bdSocket *pbVar2;
-  bdNetImpl *this_00;
-  bdConnectionStore *this_01;
+  bdConnectionStore *this_00;
   bdConnectionStoreStatus bVar3;
   bool bVar4;
   double dVar5;
   float fVar6;
   bdStopwatch abStack_40 [8];
   
-  this_00 = (bdNetImpl *)__savegprlr_28(this);
-  this_01 = &this_00->m_connectionStore;
-  bdConnectionStore::startShutdown(this_01,BD_CONNECTION_STORE_SHUTDOWN_ELEGANT);
+  this_00 = &this->m_connectionStore;
+  bdConnectionStore::startShutdown(this_00,BD_CONNECTION_STORE_SHUTDOWN_ELEGANT);
   bdStopwatch::bdStopwatch(abStack_40);
   bdStopwatch::start(abStack_40);
   dVar5 = 1.0;
   do {
-    bVar3 = bdConnectionStore::getStatus(this_01);
+    bVar3 = bdConnectionStore::getStatus(this_00);
     if (bVar3 != BD_CONNECTION_STORE_UNINITIALIZED) {
-      receiveAll(this_00);
-      bdConnectionStore::dispatchAll(this_01);
-      sendAll(this_00);
+      receiveAll(this);
+      bdConnectionStore::dispatchAll(this_00);
+      sendAll(this);
     }
     fVar6 = bdStopwatch::getElapsedTimeInSeconds(abStack_40);
     bVar4 = dVar5 < (double)fVar6;
     if (bVar4) {
-      bdConnectionStore::startShutdown(this_01,BD_CONNECTION_STORE_SHUTDOWN_IMMEDIATE);
+      bdConnectionStore::startShutdown(this_00,BD_CONNECTION_STORE_SHUTDOWN_IMMEDIATE);
     }
     _sleep_bdPlatformTiming__SAXI_Z(0x14);
   } while (!bVar4 && bVar3 != BD_CONNECTION_STORE_UNINITIALIZED);
-  if (this_00->m_socketRouter != (bdSocketRouter *)0x0) {
-    (**(code **)(this_00->m_socketRouter->_padding_ + 8))();
-    pbVar1 = this_00->m_socketRouter;
+  if (this->m_socketRouter != (bdSocketRouter *)0x0) {
+    (**(code **)(this->m_socketRouter->_padding_ + 8))();
+    pbVar1 = this->m_socketRouter;
     if (pbVar1 != (bdSocketRouter *)0x0) {
       (**(code **)pbVar1->_padding_)(pbVar1,1);
     }
-    this_00->m_socketRouter = (bdSocketRouter *)0x0;
+    this->m_socketRouter = (bdSocketRouter *)0x0;
   }
-  pbVar2 = (this_00->m_params).m_socket;
+  pbVar2 = (this->m_params).m_socket;
   if (pbVar2 != (bdSocket *)0x0) {
     (**(code **)(pbVar2->_padding_ + 0x18))();
-    pbVar2 = (this_00->m_params).m_socket;
+    pbVar2 = (this->m_params).m_socket;
     if (pbVar2 != (bdSocket *)0x0) {
       (**(code **)pbVar2->_padding_)(pbVar2,1);
     }
-    (this_00->m_params).m_socket = (bdSocket *)0x0;
+    (this->m_params).m_socket = (bdSocket *)0x0;
   }
-  bdPlatformMutex::_lock_bdMutex__QAAXXZ(&(this_00->m_addrTableMutex).m_handle);
+  bdPlatformMutex::_lock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
   memset();
-  this_00->m_numRegisteredAddr = 0;
-  bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&(this_00->m_addrTableMutex).m_handle);
-  this_00->m_status = BD_NET_STOPPED;
-  __restgprlr_28();
+  this->m_numRegisteredAddr = 0;
+  bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
+  this->m_status = BD_NET_STOPPED;
   return;
 }
 
@@ -115,132 +115,136 @@ bool __thiscall bdNetImpl::receiveAll(bdNetImpl *this)
 
 // 8292BFC8  registerSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:199)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdNetImpl::registerSecureAddr(bdNetImpl *this,in_addr *param_1,bool param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar3;
-  ulonglong uVar4;
-  <unnamed_type_S_un> *p<Var5;
-  uint uVar6;
+  bool bVar1;
+  bdRegisteredAddr *pbVar2;
+  uint uVar3;
   
-  uVar4 = (ulonglong)param_2;
-  iVar3 = __savegprlr_28(this);
-  bdPlatformMutex::_lock_bdMutex__QAAXXZ((void **)(iVar3 + 0x184));
-  bVar2 = false;
-  uVar6 = 0;
-  if (*(int *)(iVar3 + 0x180) != 0) {
-    p<Var5 = (<unnamed_type_S_un> *)(iVar3 + 0x80);
+  bdPlatformMutex::_lock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
+  bVar1 = false;
+  uVar3 = 0;
+  if (this->m_numRegisteredAddr != 0) {
+    pbVar2 = this->m_addrTable;
     do {
-      if (p<Var5->S_addr == param_1->S_un) {
-        iVar1 = uVar6 * 8 + iVar3;
-        bVar2 = true;
-        *(short *)(iVar1 + 0x84) = *(short *)(iVar1 + 0x84) + 1;
-        if ((uVar4 & 0xff) != 0) {
-          *(undefined1 *)(iVar1 + 0x86) = 1;
+      if (pbVar2->m_addr == (param_1->S_un).S_addr) {
+        bVar1 = true;
+        this->m_addrTable[uVar3].m_count = this->m_addrTable[uVar3].m_count + 1;
+        if (param_2) {
+          this->m_addrTable[uVar3].m_permanent = true;
         }
         break;
       }
-      uVar6 = uVar6 + 1;
-      p<Var5 = p<Var5 + 2;
-    } while (uVar6 < *(uint *)(iVar3 + 0x180));
+      uVar3 = uVar3 + 1;
+      pbVar2 = pbVar2 + 1;
+    } while (uVar3 < this->m_numRegisteredAddr);
   }
-  if ((!bVar2) && (*(uint *)(iVar3 + 0x180) < 0x20)) {
-    ((<unnamed_type_S_un> *)((*(uint *)(iVar3 + 0x180) + 0x10) * 8 + iVar3))->S_un_b =
-         *(<unnamed_type_S_un_b> *)param_1;
-    *(undefined2 *)(*(int *)(iVar3 + 0x180) * 8 + iVar3 + 0x84) = 1;
-    *(char *)(*(int *)(iVar3 + 0x180) * 8 + iVar3 + 0x86) = (char)uVar4;
-    *(int *)(iVar3 + 0x180) = *(int *)(iVar3 + 0x180) + 1;
+  if ((!bVar1) && (this->m_numRegisteredAddr < 0x20)) {
+    ((<unnamed_type_S_un> *)(this->m_addrTable + this->m_numRegisteredAddr))->S_un_b =
+         (<unnamed_type_S_un_b>)param_1->S_un;
+    this->m_addrTable[this->m_numRegisteredAddr].m_count = 1;
+    this->m_addrTable[this->m_numRegisteredAddr].m_permanent = param_2;
+    this->m_numRegisteredAddr = this->m_numRegisteredAddr + 1;
   }
-  bdPlatformMutex::_unlock_bdMutex__QAAXXZ((void **)(iVar3 + 0x184));
-  __restgprlr_28();
+  bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
   return;
 }
 
 
 // 8292C390  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdArray<bdInetAddr>::clear(bdArray<bdInetAddr> *this)
 
 {
-  undefined4 *puVar1;
   bdInetAddr *this_00;
-  ulonglong uVar2;
+  ulonglong uVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  this_00 = (bdInetAddr *)*puVar1;
-  for (uVar2 = (ulonglong)(uint)puVar1[2]; uVar2 != 0; uVar2 = uVar2 - 1) {
+  this_00 = this->m_data;
+  for (uVar1 = (ulonglong)this->m_size; uVar1 != 0; uVar1 = uVar1 - 1) {
     bdInetAddr::~bdInetAddr(this_00);
     this_00 = this_00 + 1;
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = 0;
-  puVar1[2] = 0;
-  puVar1[1] = 0;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = (bdInetAddr *)0x0;
+  this->m_size = 0;
+  this->m_capacity = 0;
   return;
 }
 
 
 // 8292C0B8  unregisterSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:229)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall bdNetImpl::unregisterSecureAddr(bdNetImpl *this,in_addr *param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   bool bVar2;
-  int iVar3;
-  int iVar4;
-  short sVar5;
-  ulong *puVar6;
-  uint uVar7;
-  undefined4 *puVar8;
+  bdRegisteredAddr *pbVar3;
+  bool bVar4;
+  undefined1 uVar5;
+  int iVar6;
+  short sVar7;
+  bdRegisteredAddr *pbVar8;
+  uint uVar9;
   
-  iVar3 = __savegprlr_27(this);
-  bdPlatformMutex::_lock_bdMutex__QAAXXZ((void **)(iVar3 + 0x184));
+  bdPlatformMutex::_lock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
   bVar2 = false;
-  uVar7 = 0;
-  if (*(int *)(iVar3 + 0x180) != 0) {
-    puVar6 = (ulong *)(iVar3 + 0x80);
+  uVar9 = 0;
+  if (this->m_numRegisteredAddr != 0) {
+    pbVar8 = this->m_addrTable;
     do {
-      if (*puVar6 == *(ulong *)param_1) {
-        iVar4 = uVar7 * 8 + iVar3;
-        sVar5 = *(short *)(iVar4 + 0x84) + -1;
-        *(short *)(iVar4 + 0x84) = sVar5;
-        if ((sVar5 < 1) && (*(char *)(iVar4 + 0x86) == '\0')) {
+      if (pbVar8->m_addr == (param_1->S_un).S_addr) {
+        sVar7 = this->m_addrTable[uVar9].m_count + -1;
+        this->m_addrTable[uVar9].m_count = sVar7;
+        if ((sVar7 < 1) && (this->m_addrTable[uVar9].m_permanent == false)) {
+          uVar1 = this->m_numRegisteredAddr;
           bVar2 = true;
-          if (uVar7 != *(int *)(iVar3 + 0x180) - 1U) {
-            iVar4 = (*(int *)(iVar3 + 0x180) + 0xf) * 8;
-            iVar1 = (uVar7 + 0x10) * 8;
-            *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar4 + iVar3);
-            *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar4 + iVar3 + 4);
+          if (uVar9 != uVar1 - 1) {
+            this->m_addrTable[uVar9].m_addr = this->m_addrTable[uVar1 - 1].m_addr;
+            pbVar8 = this->m_addrTable + (uVar1 - 1);
+            bVar4 = pbVar8->m_permanent;
+            uVar5 = pbVar8->field_0x7;
+            pbVar3 = this->m_addrTable + uVar9;
+            pbVar3->m_count = pbVar8->m_count;
+            pbVar3->m_permanent = bVar4;
+            pbVar3->field_0x7 = uVar5;
           }
-          puVar8 = (undefined4 *)((*(int *)(iVar3 + 0x180) + 0xf) * 8 + iVar3);
-          *puVar8 = 0;
-          puVar8[1] = 0;
-          *(int *)(iVar3 + 0x180) = *(int *)(iVar3 + 0x180) + -1;
+          pbVar8 = this->m_addrTable + (this->m_numRegisteredAddr - 1);
+          pbVar8->m_addr = 0;
+          pbVar8->m_count = 0;
+          pbVar8->m_permanent = false;
+          pbVar8->field_0x7 = 0;
+          this->m_numRegisteredAddr = this->m_numRegisteredAddr - 1;
         }
         break;
       }
-      uVar7 = uVar7 + 1;
-      puVar6 = puVar6 + 2;
-    } while (uVar7 < *(uint *)(iVar3 + 0x180));
+      uVar9 = uVar9 + 1;
+      pbVar8 = pbVar8 + 1;
+    } while (uVar9 < this->m_numRegisteredAddr);
   }
   if (bVar2) {
     bdLogMessage(BD_LOG_INFO,"info/","bdNet/net",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdNet\\bdNet-xbox.cpp",
                  "bdNetImpl::unregisterSecureAddr",0x101,"Unregistering = %u");
-    iVar4 = XNetUnregisterInAddr((in_addr)*(<unnamed_type_S_un_b> *)param_1);
-    if (iVar4 != 0) {
+    iVar6 = XNetUnregisterInAddr((in_addr)(param_1->S_un).S_un_b);
+    if (iVar6 != 0) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdNet/net",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdNet\\bdNet-xbox.cpp",
                    "bdNetImpl::unregisterSecureAddr",0x105,
                    "Failed to unregister secure address. Error code %d.");
     }
   }
-  bdPlatformMutex::_unlock_bdMutex__QAAXXZ((void **)(iVar3 + 0x184));
-  __restgprlr_27();
+  bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&(this->m_addrTableMutex).m_handle);
   return;
 }
 

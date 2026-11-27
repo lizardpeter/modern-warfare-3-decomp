@@ -59,13 +59,15 @@ undefined4 XAudPixAudioBeginFrame(void)
 
 // 828D7EB8  XAudPixAudioEndFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:140)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 undefined4 XAudPixAudioEndFrame(void)
 
 {
-  ulonglong uVar1;
-  undefined4 uVar2;
+  undefined4 uVar1;
+  ulonglong uVar2;
   int iVar3;
   longlong lVar4;
   ulonglong local_60;
@@ -77,10 +79,9 @@ undefined4 XAudPixAudioEndFrame(void)
   long local_40;
   long lStack_3c;
   
-  __savegprlr_26();
-  uVar1 = TBLr;
-  local_60 = uVar1 >> 0x20;
-  local_58 = CONCAT44((int)uVar1,g_pixCountersCurrent[0]);
+  uVar2 = TBLr;
+  local_60 = uVar2 >> 0x20;
+  local_58 = CONCAT44((int)uVar2,g_pixCountersCurrent[0]);
   _local_50 = CONCAT44(g_pixCountersCurrent[1],g_pixCountersCurrent[2]);
   _local_48 = CONCAT44(g_pixCountersCurrent[3],g_pixCountersCurrent[4]);
   _local_40 = CONCAT44(g_pixCountersCurrent[5],g_pixCountersCurrent[6]);
@@ -88,14 +89,13 @@ undefined4 XAudPixAudioEndFrame(void)
   iVar3 = 0;
   lVar4 = 7;
   do {
-    uVar2 = *(undefined4 *)((int)g_pixCountersCurrent + iVar3);
+    uVar1 = *(undefined4 *)((int)g_pixCountersCurrent + iVar3);
     *(undefined4 *)((int)g_pixCountersCurrent + iVar3) = 0;
-    *(undefined4 *)((int)g_pixCountersLastAudioFrame + iVar3) = uVar2;
+    *(undefined4 *)((int)g_pixCountersLastAudioFrame + iVar3) = uVar1;
     iVar3 = iVar3 + 4;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  uVar2 = __restgprlr_26(0);
-  return uVar2;
+  return 0;
 }
 
 

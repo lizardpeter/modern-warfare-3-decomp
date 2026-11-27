@@ -105,200 +105,189 @@ int _d_inttype(double param_1)
 
 // 829191B0  pow  (<external>/bt/278379/vctools/crt/src/fpw32/tran/pow.c:203)
 
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+
 double pow(double param_1,double param_2)
 
 {
-  double *pdVar1;
+  double *in_r3;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  _dbl extraout_f1;
+  uint uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  _dbl _Var7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  _dbl _Var12;
-  _dbl _Var13;
-  _dbl _Var14;
-  _dbl _Var15;
-  _dbl _Var16;
-  double dVar17;
-  _dbl _Stack00000010;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dStack00000010;
   double dStack00000018;
   int local_60;
-  _dbl local_58;
+  double local_58;
   
-  pdVar1 = (double *)__savefpr_25();
-  _Var13.dbl = 0.0;
-  _Stack00000010 = extraout_f1;
-  dStack00000018 = param_2;
+  dVar14 = 0.0;
   if (param_2 == 0.0) {
-    _Var13.dbl = 1.0;
-    goto LAB_82919678;
+    return 1.0;
   }
-  _Var14.dbl = _Var13.dbl;
-  _Var15 = extraout_f1;
-  if (extraout_f1.dbl == 0.0) {
-    pdVar1 = (double *)_d_inttype(param_2);
-    if (param_2 < _Var13.dbl) {
-      _Var13 = _d_inf;
-      if (pdVar1 == (double *)0x1) {
-        _Var13.dbl = _copysign(_d_inf.dbl,_Var15.dbl);
+  dStack00000010 = param_1;
+  dStack00000018 = param_2;
+  if (param_1 == 0.0) {
+    in_r3 = (double *)_d_inttype(param_2);
+    if (param_2 < dVar14) {
+      if (in_r3 != (double *)0x1) {
+        return _d_inf.dbl;
       }
-      goto LAB_82919678;
+      dVar14 = _copysign(_d_inf.dbl,param_1);
+      return dVar14;
     }
-    _Var14 = _Var13;
-    if (_Var13.dbl < param_2) {
-      if (pdVar1 == (double *)0x1) {
-        _Var13 = _Var15;
+    if (dVar14 < param_2) {
+      if (in_r3 != (double *)0x1) {
+        return dVar14;
       }
-      goto LAB_82919678;
+      return param_1;
     }
   }
-  if ((((ulonglong)_Stack00000010 >> 0x30 & 0x7ff0) == 0x7ff0) ||
+  if ((((ulonglong)dStack00000010 >> 0x30 & 0x7ff0) == 0x7ff0) ||
      (((ulonglong)dStack00000018 >> 0x30 & 0x7ff0) == 0x7ff0)) {
-    uVar5 = (ulonglong)_Stack00000010 >> 0x30 & 0x7ff8;
-    if ((((uVar5 == 0x7ff0) &&
-         ((((ulonglong)_Stack00000010 & 0x7ffff00000000) != 0 || (_Stack00000010.lng[1] != 0)))) ||
-        ((uVar7 = (ulonglong)dStack00000018 >> 0x30 & 0x7ff8, uVar7 == 0x7ff0 &&
-         ((((ulonglong)dStack00000018 & 0x7ffff00000000) != 0 || (dStack00000018._4_4_ != 0)))))) ||
-       ((uVar5 == 0x7ff8 || (uVar7 == 0x7ff8)))) {
-      _Var13.dbl = _Var15.dbl + param_2;
+    uVar4 = (ulonglong)dStack00000010 >> 0x30 & 0x7ff8;
+    if ((((uVar4 != 0x7ff0) ||
+         ((((ulonglong)dStack00000010 & 0x7ffff00000000) == 0 && (dStack00000010._4_4_ == 0)))) &&
+        ((uVar6 = (ulonglong)dStack00000018 >> 0x30 & 0x7ff8, uVar6 != 0x7ff0 ||
+         ((((ulonglong)dStack00000018 & 0x7ffff00000000) == 0 && (dStack00000018._4_4_ == 0)))))) &&
+       ((uVar4 != 0x7ff8 && (uVar6 != 0x7ff8)))) {
+      _powhlp(param_1,param_2,in_r3);
+      return local_58;
     }
-    else {
-      _powhlp(_Var15.dbl,param_2,pdVar1);
-      _Var13 = local_58;
-    }
-    goto LAB_82919678;
+    return param_1 + param_2;
   }
-  _Var12.dbl = 1.0;
-  _Var13.dbl = _Var12.dbl;
-  _Var16.dbl = _Var12.dbl;
-  if (_Var15.dbl < _Var14.dbl) {
-    pdVar1 = (double *)_d_inttype(param_2);
-    if (pdVar1 == (double *)0x1) {
-      _Var12.dbl = -1.0;
+  dVar13 = 1.0;
+  dVar15 = dVar13;
+  if (param_1 < dVar14) {
+    in_r3 = (double *)_d_inttype(param_2);
+    if (in_r3 == (double *)0x1) {
+      dVar13 = -1.0;
     }
-    else {
-      _Var13 = _d_ind;
-      if (pdVar1 != (double *)0x2) goto LAB_82919678;
+    else if (in_r3 != (double *)0x2) {
+      return _d_ind.dbl;
     }
-    _Var15.dbl = -_Var15.dbl;
-    _Var13 = _Var12;
+    param_1 = -param_1;
   }
   if (ABS(param_2) <= ymax) {
-    dVar9 = _decomp(_Var15.dbl,(int *)pdVar1);
-    if ((((128.0 < param_2) || (iVar2 = _d_inttype(_Var15.dbl), iVar2 == 0)) ||
-        (iVar2 = _d_inttype(param_2), iVar2 == 0)) || (param_2 <= _Var14.dbl)) {
-      lVar6 = 1;
-      if (dVar9 <= 0.7071067811865476) {
-        lVar6 = 9;
+    dVar8 = _decomp(param_1,(int *)in_r3);
+    if ((((128.0 < param_2) || (iVar1 = _d_inttype(param_1), iVar1 == 0)) ||
+        (iVar1 = _d_inttype(param_2), iVar1 == 0)) || (param_2 <= dVar14)) {
+      lVar5 = 1;
+      if (dVar8 <= 0.7071067811865476) {
+        lVar5 = 9;
       }
-      if (dVar9 <= *(double *)((int)a1 + (int)(lVar6 << 3) + 0x20)) {
-        lVar6 = lVar6 + 4;
+      if (dVar8 <= *(double *)((int)a1 + (int)(lVar5 << 3) + 0x20)) {
+        lVar5 = lVar5 + 4;
       }
-      if (dVar9 <= *(double *)((int)a1 + (int)(lVar6 << 3) + 0x10)) {
-        lVar6 = lVar6 + 2;
+      if (dVar8 <= *(double *)((int)a1 + (int)(lVar5 << 3) + 0x10)) {
+        lVar5 = lVar5 + 2;
       }
-      uVar4 = local_60 * 0x10 - (int)lVar6;
-      dVar17 = 0.0625;
-      if ((uVar4 ^ (int)uVar4 >> 0x1f) - ((int)uVar4 >> 0x1f) == 1) {
-        _Var12 = _Var14;
-        dVar8 = log(_Var15.dbl);
-        dVar8 = dVar8 * 1.4426950408889634;
-        _Var14 = _Var12;
+      uVar3 = local_60 * 0x10 - (int)lVar5;
+      dVar16 = 0.0625;
+      if ((uVar3 ^ (int)uVar3 >> 0x1f) - ((int)uVar3 >> 0x1f) == 1) {
+        dVar8 = dVar14;
+        dVar9 = log(param_1);
+        dVar9 = dVar9 * 1.4426950408889634;
+        dVar14 = dVar8;
       }
       else {
-        dVar10 = *(double *)((int)a1 + (int)(lVar6 << 3) + 8);
-        dVar8 = (double)(longlong)(int)uVar4 * 0.0625;
-        dVar10 = (((dVar9 - dVar10) - a2[(int)lVar6 + 1 >> 1]) / (dVar10 + dVar9)) * 2.0;
-        dVar9 = dVar10 * dVar10;
-        _Var12.dbl = (((dVar9 * 0.0004344577567216312 + 0.002232142128592426) * dVar9 +
-                      0.012500000000503799) * dVar9 + 0.08333333333333322) * dVar9 * dVar10 *
-                     1.4426950408889634 + dVar10 * 0.4426950408889634 + dVar10;
+        dVar10 = *(double *)((int)a1 + (int)(lVar5 << 3) + 8);
+        dVar9 = (double)(longlong)(int)uVar3 * 0.0625;
+        dVar8 = (((dVar8 - dVar10) - a2[(int)lVar5 + 1 >> 1]) / (dVar10 + dVar8)) * 2.0;
+        dVar10 = dVar8 * dVar8;
+        dVar8 = (((dVar10 * 0.0004344577567216312 + 0.002232142128592426) * dVar10 +
+                 0.012500000000503799) * dVar10 + 0.08333333333333322) * dVar10 * dVar8 *
+                1.4426950408889634 + dVar8 * 0.4426950408889634 + dVar8;
       }
-      dVar9 = (double)(longlong)(param_2 * 16.0) * dVar17;
-      dVar11 = (param_2 - dVar9) * dVar8 + _Var12.dbl * param_2;
-      dVar10 = (double)(longlong)(dVar11 * 16.0) * dVar17;
-      dVar9 = dVar9 * dVar8 + dVar10;
-      dVar8 = (double)(longlong)(dVar9 * 16.0) * dVar17;
-      dVar9 = (dVar9 - dVar8) + (dVar11 - dVar10);
-      dVar10 = (double)(longlong)(dVar9 * 16.0) * dVar17;
-      dVar9 = dVar9 - dVar10;
-      dVar10 = (dVar8 + dVar10) * 16.0;
-      _Var12 = _d_inf;
+      dVar11 = (double)(longlong)(param_2 * 16.0) * dVar16;
+      dVar12 = (param_2 - dVar11) * dVar9 + dVar8 * param_2;
+      dVar10 = (double)(longlong)(dVar12 * 16.0) * dVar16;
+      dVar8 = dVar11 * dVar9 + dVar10;
+      dVar9 = (double)(longlong)(dVar8 * 16.0) * dVar16;
+      dVar8 = (dVar8 - dVar9) + (dVar12 - dVar10);
+      dVar10 = (double)(longlong)(dVar8 * 16.0) * dVar16;
+      dVar8 = dVar8 - dVar10;
+      dVar10 = (dVar9 + dVar10) * 16.0;
+      _Var7 = _d_inf;
       if (dVar10 <= 40960.0) {
         if (dVar10 < -40928.0) goto LAB_829192ec;
-        uVar5 = (ulonglong)(uint)(int)dVar10;
-        if (_Var14.dbl < dVar9) {
-          uVar5 = uVar5 + 1;
-          dVar9 = dVar9 - dVar17;
+        uVar4 = (ulonglong)(uint)(int)dVar10;
+        if (dVar14 < dVar8) {
+          uVar4 = uVar4 + 1;
+          dVar8 = dVar8 - dVar16;
         }
-        uVar7 = ((uVar5 & 0xffffffff) >> 0x1f ^ 1) +
-                (longlong)((int)uVar5 >> 4) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 0xf) != 0);
-        _Var16.dbl = (((((((dVar9 * 1.4928852680595609e-05 + 0.00015400290440989765) * dVar9 +
-                          0.0013333541313585784) * dVar9 + 0.009618129059517241) * dVar9 +
-                        0.055504108664085595) * dVar9 + 0.24022650695909537) * dVar9 +
-                      0.6931471805599453) * dVar9 + _Var16.dbl) *
-                     *(double *)
-                      ((int)a1 + (int)(((uVar7 & 0xfffffff) * 0x10 - uVar5 & 0xffffffff) << 3) + 8);
-        iVar2 = _get_exp(_Var16.dbl);
-        iVar3 = iVar2 + (int)uVar7;
+        uVar6 = ((uVar4 & 0xffffffff) >> 0x1f ^ 1) +
+                (longlong)((int)uVar4 >> 4) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xf) != 0);
+        dVar15 = (((((((dVar8 * 1.4928852680595609e-05 + 0.00015400290440989765) * dVar8 +
+                      0.0013333541313585784) * dVar8 + 0.009618129059517241) * dVar8 +
+                    0.055504108664085595) * dVar8 + 0.24022650695909537) * dVar8 +
+                  0.6931471805599453) * dVar8 + dVar15) *
+                 *(double *)
+                  ((int)a1 + (int)(((uVar6 & 0xfffffff) * 0x10 - uVar4 & 0xffffffff) << 3) + 8);
+        iVar1 = _get_exp(dVar15);
+        iVar2 = iVar1 + (int)uVar6;
         goto LAB_829195e4;
       }
     }
     else {
-      uVar4 = (uint)param_2;
-      uVar5 = (ulonglong)uVar4;
-      if (uVar4 != 0) {
+      uVar3 = (uint)param_2;
+      uVar4 = (ulonglong)uVar3;
+      if (uVar3 != 0) {
         do {
-          if ((uVar5 & 1) != 0) {
-            _Var16.dbl = _Var16.dbl * dVar9;
+          if ((uVar4 & 1) != 0) {
+            dVar15 = dVar15 * dVar8;
           }
-          uVar5 = (ulonglong)((int)uVar5 >> 1);
-          dVar9 = dVar9 * dVar9;
-        } while (uVar5 != 0);
+          uVar4 = (ulonglong)((int)uVar4 >> 1);
+          dVar8 = dVar8 * dVar8;
+        } while (uVar4 != 0);
       }
-      iVar2 = _get_exp(_Var16.dbl);
-      iVar3 = iVar2 + uVar4 * local_60;
-      if (iVar3 < 0xa01) {
-        if (iVar3 < -0x9fd) {
-          _Var13.dbl = _Var16.dbl * _Var13.dbl * _Var14.dbl;
-          goto LAB_82919678;
+      iVar1 = _get_exp(dVar15);
+      iVar2 = iVar1 + uVar3 * local_60;
+      if (iVar2 < 0xa01) {
+        if (iVar2 < -0x9fd) {
+          return dVar15 * dVar13 * dVar14;
         }
 LAB_829195e4:
-        _Var12 = _d_inf;
-        if (iVar3 < 0x401) {
-          if (-0x3fe < iVar3) {
-            dVar9 = _set_exp(_Var16.dbl,iVar2);
-            _Var13.dbl = dVar9 * _Var13.dbl;
-            goto LAB_82919678;
+        _Var7 = _d_inf;
+        if (iVar2 < 0x401) {
+          if (-0x3fe < iVar2) {
+            dVar14 = _set_exp(dVar15,iVar1);
+            return dVar14 * dVar13;
           }
           goto LAB_829192ec;
         }
       }
       else {
-        _Var12.dbl = _d_inf.dbl * _Var16.dbl;
+        _Var7.dbl = _d_inf.dbl * dVar15;
       }
     }
 LAB_829192dc:
-    _Var13.dbl = _Var12.dbl * _Var13.dbl;
+    dVar13 = _Var7.dbl * dVar13;
   }
   else {
-    if (param_2 < _Var14.dbl) {
-      _Var15.dbl = _Var16.dbl / _Var15.dbl;
+    if (param_2 < dVar14) {
+      param_1 = dVar15 / param_1;
     }
-    _Var12 = _d_inf;
-    if (_Var16.dbl < _Var15.dbl) goto LAB_829192dc;
-    if (_Var16.dbl <= _Var15.dbl) goto LAB_82919678;
+    _Var7 = _d_inf;
+    if (dVar15 < param_1) goto LAB_829192dc;
+    if (dVar15 <= param_1) {
+      return dVar13;
+    }
 LAB_829192ec:
-    _Var13.dbl = _Var13.dbl * _Var14.dbl;
+    dVar13 = dVar13 * dVar14;
   }
-LAB_82919678:
-  dVar9 = (double)__restfpr_25(_Var13.dbl);
-  return dVar9;
+  return dVar13;
 }
 

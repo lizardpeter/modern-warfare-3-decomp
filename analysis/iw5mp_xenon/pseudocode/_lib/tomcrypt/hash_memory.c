@@ -2,38 +2,35 @@
 
 // 8225F5B8  hash_memory  (line unknown)
 
-void hash_memory(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                uint *param_5)
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
+undefined8
+hash_memory(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,uint *param_5)
 
 {
-  int iVar2;
-  void *pvVar3;
+  void *pvVar2;
   undefined8 uVar1;
   
-  iVar2 = __savegprlr_23();
-  if (((iVar2 < 0) || (0x1f < iVar2)) ||
-     (iVar2 = iVar2 * 0x68, *(int *)(&hash_descriptor + iVar2) == 0)) {
-    __restgprlr_23(0xb);
-    return;
+  if (((param_1 < 0) || (0x1f < param_1)) ||
+     (param_1 = param_1 * 0x68, *(int *)(&hash_descriptor + param_1) == 0)) {
+    return 0xb;
   }
-  if (*param_5 < *(uint *)(&DAT_84896150 + iVar2)) {
-    *param_5 = *(uint *)(&DAT_84896150 + iVar2);
-    __restgprlr_23(6);
-    return;
+  if (*param_5 < *(uint *)(&DAT_84896150 + param_1)) {
+    *param_5 = *(uint *)(&DAT_84896150 + param_1);
+    return 6;
   }
-  pvVar3 = tom_game_malloc(0x70);
-  if (pvVar3 == (void *)0x0) {
-    __restgprlr_23(0xd);
-    return;
+  pvVar2 = tom_game_malloc(0x70);
+  if (pvVar2 == (void *)0x0) {
+    return 0xd;
   }
-  uVar1 = (**(code **)(&DAT_8489619c + iVar2))(pvVar3);
+  uVar1 = (**(code **)(&DAT_8489619c + param_1))(pvVar2);
   if (((int)uVar1 == 0) &&
-     (uVar1 = (**(code **)(&DAT_848961a0 + iVar2))(pvVar3,param_2,param_3), (int)uVar1 == 0)) {
-    uVar1 = (**(code **)(&DAT_848961a4 + iVar2))(pvVar3,param_4);
-    *param_5 = *(uint *)(&DAT_84896150 + iVar2);
+     (uVar1 = (**(code **)(&DAT_848961a0 + param_1))(pvVar2,param_2,param_3), (int)uVar1 == 0)) {
+    uVar1 = (**(code **)(&DAT_848961a4 + param_1))(pvVar2,param_4);
+    *param_5 = *(uint *)(&DAT_84896150 + param_1);
   }
-  tom_game_free(pvVar3);
-  __restgprlr_23(uVar1);
-  return;
+  tom_game_free(pvVar2);
+  return uVar1;
 }
 

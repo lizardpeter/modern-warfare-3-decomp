@@ -17,159 +17,144 @@ dcacheTOC_t * DCache_TOC_GetTOC(void)
 
 // 824D8D30  DCache_TOC_IsCached  (qcommon/com_dcache_toc.cpp:50)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_IsCached(ulong64 param_1,dcacheLocation_t param_2)
 
 {
-  longlong lVar1;
-  undefined1 uVar2;
-  dcacheTOC_t *pdVar3;
-  int iVar4;
-  int iVar5;
+  dcacheTOC_t *pdVar1;
+  int iVar2;
+  int iVar3;
   
-  lVar1 = __savegprlr_23();
-  iVar4 = 0;
-  iVar5 = 0;
-  pdVar3 = s_dcacheTOC;
+  iVar2 = 0;
+  iVar3 = 0;
+  pdVar1 = s_dcacheTOC;
   while( true ) {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
+    if (pdVar1 == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
+      pdVar1 = s_dcacheTOC;
     }
-    if (pdVar3->m_numFiles <= iVar4) break;
-    if ((*(longlong *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -0x10) == lVar1) &&
-       (*(dcacheLocation_t *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -8) == param_2)) {
-      uVar2 = __restgprlr_23(1);
-      return (bool)uVar2;
+    if (pdVar1->m_numFiles <= iVar2) break;
+    if ((*(ulong64 *)(pdVar1->m_fileInfo[0].m_bitfield + iVar3 + -0x10) == param_1) &&
+       (*(dcacheLocation_t *)(pdVar1->m_fileInfo[0].m_bitfield + iVar3 + -8) == param_2)) {
+      return true;
     }
-    iVar4 = iVar4 + 1;
-    iVar5 = iVar5 + 0x118;
+    iVar2 = iVar2 + 1;
+    iVar3 = iVar3 + 0x118;
   }
-  uVar2 = __restgprlr_23(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 824D8DE8  DCache_TOC_GetIndex  (qcommon/com_dcache_toc.cpp:63)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_GetIndex(ulong64 param_1,dcacheLocation_t param_2,int *param_3)
 
 {
-  longlong lVar1;
-  undefined1 uVar2;
-  dcacheTOC_t *pdVar3;
-  int iVar4;
-  int iVar5;
+  dcacheTOC_t *pdVar1;
+  int iVar2;
+  int iVar3;
   
-  lVar1 = __savegprlr_22();
-  iVar4 = 0;
-  iVar5 = 0;
-  pdVar3 = s_dcacheTOC;
+  iVar2 = 0;
+  iVar3 = 0;
+  pdVar1 = s_dcacheTOC;
   while( true ) {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
+    if (pdVar1 == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
+      pdVar1 = s_dcacheTOC;
     }
-    if (pdVar3->m_numFiles <= iVar4) break;
-    if ((*(longlong *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -0x10) == lVar1) &&
-       (*(dcacheLocation_t *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -8) == param_2)) {
-      *param_3 = iVar4;
-      uVar2 = __restgprlr_22(1);
-      return (bool)uVar2;
+    if (pdVar1->m_numFiles <= iVar2) break;
+    if ((*(ulong64 *)(pdVar1->m_fileInfo[0].m_bitfield + iVar3 + -0x10) == param_1) &&
+       (*(dcacheLocation_t *)(pdVar1->m_fileInfo[0].m_bitfield + iVar3 + -8) == param_2)) {
+      *param_3 = iVar2;
+      return true;
     }
-    iVar4 = iVar4 + 1;
-    iVar5 = iVar5 + 0x118;
+    iVar2 = iVar2 + 1;
+    iVar3 = iVar3 + 0x118;
   }
-  uVar2 = __restgprlr_22(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 824D8EA8  DCache_TOC_AssertFileIndex  (qcommon/com_dcache_toc.cpp:77)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_AssertFileIndex(int param_1)
 
 {
-  int iVar1;
-  undefined1 uVar3;
-  dcacheTOC_t *pdVar2;
+  dcacheTOC_t *pdVar1;
   
-  iVar1 = __savegprlr_28(param_1);
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
   }
-  if (s_dcacheTOC->m_numFiles <= iVar1) {
+  if (s_dcacheTOC->m_numFiles <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x4e,0,"%s");
   }
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x4f,0,"%s");
   }
   else {
-    pdVar2 = DCache_TOC_GetTOC();
-    if (iVar1 < pdVar2->m_numFiles) {
-      uVar3 = __restgprlr_28(1);
-      return (bool)uVar3;
+    pdVar1 = DCache_TOC_GetTOC();
+    if (param_1 < pdVar1->m_numFiles) {
+      return true;
     }
   }
   Com_PrintError(0x10,"dcache: file index error.\n");
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 824D8F88  DCache_TOC_AssertBlockIndex  (qcommon/com_dcache_toc.cpp:91)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_AssertBlockIndex(int param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (0x7ff < iVar1) {
+  if (0x7ff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x5c,0,"%s");
   }
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x5d,0,"%s");
   }
-  else if (iVar1 < 0x800) {
-    uVar2 = __restgprlr_29(1);
-    return (bool)uVar2;
+  else if (param_1 < 0x800) {
+    return true;
   }
   Com_PrintError(0x10,"dcache: block index error.\n");
-  uVar2 = __restgprlr_29(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 824D9020  DCache_TOC_IsBitSet  (qcommon/com_dcache_toc.cpp:105)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_IsBitSet(int param_1,int param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
   }
-  iVar4 = (int)uVar3;
-  uVar2 = __restgprlr_29(s_dcacheTOC->m_fileInfo[iVar1].m_bitfield
-                         [(iVar4 >> 3) + (uint)(iVar4 < 0 && (uVar3 & 7) != 0)] >>
-                         (iVar4 + ((iVar4 >> 3) + (uint)(iVar4 < 0 && (uVar3 & 7) != 0)) * -8 & 0x3f
-                         ) & 1);
-  return (bool)uVar2;
+  return (bool)(s_dcacheTOC->m_fileInfo[param_1].m_bitfield
+                [(param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0)] >>
+                (param_2 + ((param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0)) * -8 & 0x3f
+                ) & 1);
 }
 
 
@@ -224,94 +209,59 @@ bool DCache_TOC_IsBlockReserved(int param_1)
 
 // 824D91C0  DCache_TOC_GetBlocksNeeded  (qcommon/com_dcache_toc.cpp:138)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int DCache_TOC_GetBlocksNeeded(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  iVar2 = (int)uVar1;
-  if ((0 < iVar2) && (iVar2 < 0x10000001)) {
-    lVar3 = (longlong)(iVar2 >> 0x11) + (ulonglong)(iVar2 < 0 && (uVar1 & 0x1ffff) != 0);
-    if (uVar1 != ((longlong)(iVar2 >> 0x11) + (ulonglong)(iVar2 < 0 && (uVar1 & 0x1ffff) != 0) &
-                 0x7fff) << 0x11) {
-      lVar3 = lVar3 + 1;
+  if ((0 < param_1) && (param_1 < 0x10000001)) {
+    iVar1 = (param_1 >> 0x11) + (uint)(param_1 < 0 && (param_1 & 0x1ffffU) != 0);
+    if ((longlong)param_1 !=
+        ((longlong)(param_1 >> 0x11) + (ulonglong)(param_1 < 0 && (param_1 & 0x1ffffU) != 0) &
+        0x7fff) << 0x11) {
+      iVar1 = iVar1 + 1;
     }
-    iVar2 = (int)lVar3;
-    if (0x800 < iVar2) {
+    if (0x800 < iVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x97,0,"%s");
     }
-    if (iVar2 < 1) {
+    if (iVar1 < 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x98,0,"%s");
     }
-    if ((0x800 < iVar2) || (iVar2 < 1)) {
-      lVar3 = 0;
+    if ((0x800 < iVar1) || (iVar1 < 1)) {
+      iVar1 = 0;
     }
-    iVar2 = __restgprlr_29(lVar3);
-    return iVar2;
+    return iVar1;
   }
   Com_PrintError(0x10,"dcache: Invalid file size of %d bytes. Should be between 0 and %d bytes.\n");
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824D92A0  DCache_TOC_GetBlocksUsed  (qcommon/com_dcache_toc.cpp:164)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int DCache_TOC_GetBlocksUsed(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  dcacheTOC_t *pdVar3;
-  longlong lVar4;
-  uint uVar5;
-  
-  iVar1 = __savegprlr_25(param_1);
-  bVar2 = DCache_TOC_AssertFileIndex(iVar1);
-  if (!bVar2) {
-    Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_GetBlocksUsed\'\n");
-    iVar1 = __restgprlr_25(0);
-    return iVar1;
-  }
-  lVar4 = 0;
-  uVar5 = 0;
-  pdVar3 = s_dcacheTOC;
-  do {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
-    }
-    if ((pdVar3->m_fileInfo[iVar1].m_bitfield[uVar5 >> 3] >> (uVar5 & 7) & 1) != 0) {
-      lVar4 = lVar4 + 1;
-    }
-    uVar5 = uVar5 + 1;
-  } while ((int)uVar5 < 0x800);
-  iVar1 = __restgprlr_25(lVar4);
-  return iVar1;
-}
-
-
-// 824D9370  DCache_TOC_GetBlocksRemaining  (qcommon/com_dcache_toc.cpp:184)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int DCache_TOC_GetBlocksRemaining(void)
-
-{
-  int iVar1;
+  bool bVar1;
   dcacheTOC_t *pdVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  int iVar3;
+  uint uVar4;
   
-  __savegprlr_25();
-  lVar4 = 0x800;
-  iVar1 = 0;
+  bVar1 = DCache_TOC_AssertFileIndex(param_1);
+  if (!bVar1) {
+    Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_GetBlocksUsed\'\n");
+    return 0;
+  }
+  iVar3 = 0;
+  uVar4 = 0;
   pdVar2 = s_dcacheTOC;
   do {
     if (pdVar2 == (dcacheTOC_t *)0x0) {
@@ -319,45 +269,76 @@ int DCache_TOC_GetBlocksRemaining(void)
                       0x2c,0,"%s");
       pdVar2 = s_dcacheTOC;
     }
-    for (uVar3 = (ulonglong)pdVar2->m_usedBlocks[iVar1]; uVar3 != 0; uVar3 = uVar3 >> 1) {
-      if ((uVar3 & 1) != 0) {
-        lVar4 = lVar4 + -1;
+    if ((pdVar2->m_fileInfo[param_1].m_bitfield[uVar4 >> 3] >> (uVar4 & 7) & 1) != 0) {
+      iVar3 = iVar3 + 1;
+    }
+    uVar4 = uVar4 + 1;
+  } while ((int)uVar4 < 0x800);
+  return iVar3;
+}
+
+
+// 824D9370  DCache_TOC_GetBlocksRemaining  (qcommon/com_dcache_toc.cpp:184)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DCache_TOC_GetBlocksRemaining(void)
+
+{
+  dcacheTOC_t *pdVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = 0x800;
+  iVar4 = 0;
+  pdVar1 = s_dcacheTOC;
+  do {
+    if (pdVar1 == (dcacheTOC_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
+                      0x2c,0,"%s");
+      pdVar1 = s_dcacheTOC;
+    }
+    for (uVar2 = (ulonglong)pdVar1->m_usedBlocks[iVar4]; uVar2 != 0; uVar2 = uVar2 >> 1) {
+      if ((uVar2 & 1) != 0) {
+        iVar3 = iVar3 + -1;
       }
     }
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x100);
-  if ((int)lVar4 < 0) {
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 0x100);
+  if (iVar3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0xc9,0,"%s");
   }
-  iVar1 = __restgprlr_25(lVar4);
-  return iVar1;
+  return iVar3;
 }
 
 
 // 824D9440  DCache_TOC_TouchByIndex  (qcommon/com_dcache_toc.cpp:207)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DCache_TOC_TouchByIndex(int param_1)
 
 {
+  bool bVar3;
   int iVar1;
-  bool bVar4;
-  int iVar2;
-  dcacheTOC_t *pdVar3;
+  dcacheTOC_t *pdVar2;
   LargeLocal aLStack_30 [6];
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar4 = DCache_TOC_AssertFileIndex(iVar1);
-  if (!bVar4) {
+  bVar3 = DCache_TOC_AssertFileIndex(param_1);
+  if (!bVar3) {
     Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_TouchByIndex\'\n");
-    __restgprlr_28();
     return;
   }
-  iVar2 = Sys_Milliseconds();
-  pdVar3 = DCache_TOC_GetTOC();
-  pdVar3->m_fileInfo[iVar1].m_timestamp = iVar2;
-  pdVar3 = DCache_TOC_GetTOC();
-  if (iVar1 != pdVar3->m_numFiles + -1) {
+  iVar1 = Sys_Milliseconds();
+  pdVar2 = DCache_TOC_GetTOC();
+  pdVar2->m_fileInfo[param_1].m_timestamp = iVar1;
+  pdVar2 = DCache_TOC_GetTOC();
+  if (param_1 != pdVar2->m_numFiles + -1) {
     LargeLocal::LargeLocal(aLStack_30,0x118);
     LargeLocal::GetBuf(aLStack_30);
     DCache_TOC_GetTOC();
@@ -371,7 +352,6 @@ void DCache_TOC_TouchByIndex(int param_1)
     memcpy();
     LargeLocal::~LargeLocal(aLStack_30);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -400,36 +380,36 @@ bool DCache_TOC_AssertFit(int param_1)
 
 // 824DA0D0  AllocContentServerMemory<dcacheTOC_t>  (qcommon/com_storage_contentserver.h:233)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool AllocContentServerMemory<dcacheTOC_t>(dcacheTOC_t **param_1,char *param_2)
 
 {
-  int *piVar1;
-  undefined1 uVar3;
-  undefined4 *puVar2;
+  dcacheTOC_t *pdVar1;
   
-  piVar1 = (int *)__savegprlr_29(param_1,param_2);
-  if (*piVar1 != 0) {
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+  if (*param_1 != (dcacheTOC_t *)0x0) {
+    return true;
   }
-  puVar2 = PMem_AllocFromSource_NoDebug(0xad10,8,4,PMEM_SOURCE_DATABASE);
-  if (puVar2 != (undefined4 *)0x0) {
-    *puVar2 = 0;
-    *(undefined1 *)(puVar2 + 1) = 0;
-    puVar2[0x2b42] = 0;
+  pdVar1 = PMem_AllocFromSource_NoDebug(0xad10,8,4,PMEM_SOURCE_DATABASE);
+  if (pdVar1 != (dcacheTOC_t *)0x0) {
+    pdVar1->m_tocChecksum = 0;
+    pdVar1->m_version = '\0';
+    pdVar1->m_numFiles = 0;
     memset();
     memset();
-    *piVar1 = (int)puVar2;
+    *param_1 = pdVar1;
     s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + 0xad10;
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    return true;
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 824D9540  DCache_TOC_FreeFileBlocks  (qcommon/com_dcache_toc.cpp:244)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 int DCache_TOC_FreeFileBlocks(int param_1)
 
@@ -438,39 +418,36 @@ int DCache_TOC_FreeFileBlocks(int param_1)
   byte bVar2;
   uint uVar3;
   byte bVar4;
-  int iVar5;
-  bool bVar6;
-  dcacheTOC_t *pdVar7;
-  longlong lVar8;
-  int iVar9;
-  uint uVar10;
+  bool bVar5;
+  dcacheTOC_t *pdVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
   
-  iVar5 = __savegprlr_19(param_1);
-  bVar6 = DCache_TOC_AssertFileIndex(iVar5);
-  if (!bVar6) {
+  bVar5 = DCache_TOC_AssertFileIndex(param_1);
+  if (!bVar5) {
     Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_FreeFileBlocks\'\n");
-    iVar5 = __restgprlr_19(0);
-    return iVar5;
+    return 0;
   }
-  lVar8 = 0;
-  uVar10 = 0;
-  iVar9 = 0x8c08;
-  pdVar7 = s_dcacheTOC;
+  iVar7 = 0;
+  uVar9 = 0;
+  iVar8 = 0x8c08;
+  pdVar6 = s_dcacheTOC;
   do {
-    if (pdVar7 == (dcacheTOC_t *)0x0) {
+    if (pdVar6 == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
-      pdVar7 = s_dcacheTOC;
+      pdVar6 = s_dcacheTOC;
     }
-    uVar3 = uVar10 >> 3;
-    if ((pdVar7->m_fileInfo[iVar5].m_bitfield[uVar3] >> (uVar10 & 7) & 1) != 0) {
-      lVar8 = lVar8 + 1;
-      if (pdVar7 == (dcacheTOC_t *)0x0) {
+    uVar3 = uVar9 >> 3;
+    if ((pdVar6->m_fileInfo[param_1].m_bitfield[uVar3] >> (uVar9 & 7) & 1) != 0) {
+      iVar7 = iVar7 + 1;
+      if (pdVar6 == (dcacheTOC_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp"
                         ,0x2c,0,"%s");
-        pdVar7 = s_dcacheTOC;
+        pdVar6 = s_dcacheTOC;
       }
-      puVar1 = pdVar7->m_fileInfo[0].m_bitfield + iVar9 + -0x18;
+      puVar1 = pdVar6->m_fileInfo[0].m_bitfield + iVar8 + -0x18;
       puVar1[0] = '\0';
       puVar1[1] = '\0';
       puVar1[2] = '\0';
@@ -479,32 +456,32 @@ int DCache_TOC_FreeFileBlocks(int param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp"
                         ,0x2c,0,"%s");
       }
-      pdVar7 = s_dcacheTOC;
-      bVar4 = (byte)(1 << (uVar10 & 7));
+      pdVar6 = s_dcacheTOC;
+      bVar4 = (byte)(1 << (uVar9 & 7));
       bVar2 = s_dcacheTOC->m_usedBlocks[uVar3] | bVar4;
       s_dcacheTOC->m_usedBlocks[uVar3] = bVar2;
-      pdVar7->m_usedBlocks[uVar3] = bVar2 & ~bVar4;
-      pdVar7 = s_dcacheTOC;
+      pdVar6->m_usedBlocks[uVar3] = bVar2 & ~bVar4;
+      pdVar6 = s_dcacheTOC;
     }
-    iVar9 = iVar9 + 4;
-    uVar10 = uVar10 + 1;
-  } while (iVar9 < 0xac08);
-  iVar5 = __restgprlr_19(lVar8);
-  return iVar5;
+    iVar8 = iVar8 + 4;
+    uVar9 = uVar9 + 1;
+  } while (iVar8 < 0xac08);
+  return iVar7;
 }
 
 
 // 824D96A0  DCache_TOC_RemoveFile  (qcommon/com_dcache_toc.cpp:266)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DCache_TOC_RemoveFile(int param_1)
 
 {
-  int iVar1;
-  bool bVar4;
-  dcacheTOC_t *pdVar2;
-  int iVar3;
+  bool bVar3;
+  dcacheTOC_t *pdVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
@@ -513,66 +490,65 @@ int DCache_TOC_RemoveFile(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x10b,0,"%s");
   }
-  bVar4 = DCache_TOC_AssertFileIndex(iVar1);
-  if ((bVar4) && (pdVar2 = DCache_TOC_GetTOC(), pdVar2->m_numFiles != 0)) {
-    iVar3 = DCache_TOC_FreeFileBlocks(iVar1);
-    pdVar2 = DCache_TOC_GetTOC();
+  bVar3 = DCache_TOC_AssertFileIndex(param_1);
+  if ((bVar3) && (pdVar1 = DCache_TOC_GetTOC(), pdVar1->m_numFiles != 0)) {
+    iVar2 = DCache_TOC_FreeFileBlocks(param_1);
+    pdVar1 = DCache_TOC_GetTOC();
     memset();
-    pdVar2->m_fileInfo[iVar1].m_fileID = 0;
-    pdVar2->m_fileInfo[iVar1].m_location = DCACHE_LOCATION_INVALID;
-    pdVar2->m_fileInfo[iVar1].m_size = 0;
-    pdVar2->m_fileInfo[iVar1].m_timestamp = 0;
-    iVar1 = __restgprlr_28(iVar3);
-    return iVar1;
+    pdVar1->m_fileInfo[param_1].m_fileID = 0;
+    pdVar1->m_fileInfo[param_1].m_location = DCACHE_LOCATION_INVALID;
+    pdVar1->m_fileInfo[param_1].m_size = 0;
+    pdVar1->m_fileInfo[param_1].m_timestamp = 0;
+    return iVar2;
   }
   Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_RemoveFile\'\n");
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 824D97B0  DCache_TOC_FreeBlocks  (qcommon/com_dcache_toc.cpp:290)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int DCache_TOC_FreeBlocks(int param_1)
 
 {
   int iVar1;
   int iVar2;
-  longlong lVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  iVar1 = __savegprlr_23(param_1);
-  lVar3 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   iVar4 = 0;
-  iVar5 = 0;
   while( true ) {
     if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
     }
-    if (s_dcacheTOC->m_numFiles <= iVar5) break;
-    iVar2 = DCache_TOC_RemoveFile(iVar5);
-    lVar3 = iVar2 + lVar3;
+    if (s_dcacheTOC->m_numFiles <= iVar4) break;
+    iVar1 = DCache_TOC_RemoveFile(iVar4);
+    iVar2 = iVar1 + iVar2;
+    iVar3 = iVar3 + 1;
+    if (param_1 <= iVar2) break;
     iVar4 = iVar4 + 1;
-    if (iVar1 <= (int)lVar3) break;
-    iVar5 = iVar5 + 1;
   }
-  if (iVar4 < 1) {
+  if (iVar3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x13d,0,"%s");
   }
-  iVar1 = 0;
+  iVar4 = 0;
   while( true ) {
     if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
     }
-    if (s_dcacheTOC->m_numFiles <= iVar1) break;
-    DCache_TOC_GetBlocksUsed(iVar1);
-    iVar1 = iVar1 + 1;
+    if (s_dcacheTOC->m_numFiles <= iVar4) break;
+    DCache_TOC_GetBlocksUsed(iVar4);
+    iVar4 = iVar4 + 1;
   }
-  if (s_dcacheTOC->m_numFiles < iVar4) {
+  if (s_dcacheTOC->m_numFiles < iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x14f,0,"%s");
   }
@@ -580,44 +556,42 @@ int DCache_TOC_FreeBlocks(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
   }
-  if (s_dcacheTOC->m_numFiles < iVar4) {
-    iVar1 = __restgprlr_23(0);
-    return iVar1;
+  if (s_dcacheTOC->m_numFiles < iVar3) {
+    return 0;
   }
   memmove();
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
   }
-  iVar1 = s_dcacheTOC->m_numFiles - iVar4;
+  iVar4 = s_dcacheTOC->m_numFiles - iVar3;
   while( true ) {
     if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x2c,0,"%s");
     }
-    if (s_dcacheTOC->m_numFiles <= iVar1) break;
+    if (s_dcacheTOC->m_numFiles <= iVar4) break;
     memset();
-    iVar1 = iVar1 + 1;
+    iVar4 = iVar4 + 1;
   }
-  s_dcacheTOC->m_numFiles = s_dcacheTOC->m_numFiles - iVar4;
-  iVar1 = __restgprlr_23(lVar3);
-  return iVar1;
+  s_dcacheTOC->m_numFiles = s_dcacheTOC->m_numFiles - iVar3;
+  return iVar2;
 }
 
 
 // 824D99E0  DCache_TOC_AllocateSingleBlock  (qcommon/com_dcache_toc.cpp:358)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool DCache_TOC_AllocateSingleBlock(int param_1,int param_2)
 
 {
   byte bVar1;
-  uint uVar2;
-  bool bVar4;
-  dcacheTOC_t *pdVar3;
-  undefined1 uVar5;
-  int iVar6;
+  bool bVar3;
+  dcacheTOC_t *pdVar2;
+  int iVar4;
   
-  uVar2 = __savegprlr_28(param_1);
   if (0x7f < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x168,0,"%s");
@@ -626,46 +600,44 @@ bool DCache_TOC_AllocateSingleBlock(int param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x169,0,"%s");
   }
-  bVar4 = DCache_TOC_AssertBlockIndex(uVar2);
-  if (((bVar4) && (param_2 < 0x80)) && (-1 < param_2)) {
-    pdVar3 = DCache_TOC_GetTOC();
-    iVar6 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0);
-    bVar1 = (byte)(1 << (uVar2 + (((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0)) *
-                                 -8 & 0x3f));
-    pdVar3->m_usedBlocks[iVar6] = pdVar3->m_usedBlocks[iVar6] | bVar1;
-    pdVar3 = DCache_TOC_GetTOC();
-    pdVar3->m_fileInfo[param_2].m_bitfield[iVar6] =
-         pdVar3->m_fileInfo[param_2].m_bitfield[iVar6] | bVar1;
-    uVar5 = __restgprlr_28(1);
-    return (bool)uVar5;
+  bVar3 = DCache_TOC_AssertBlockIndex(param_1);
+  if (((bVar3) && (param_2 < 0x80)) && (-1 < param_2)) {
+    pdVar2 = DCache_TOC_GetTOC();
+    iVar4 = (param_1 >> 3) + (uint)(param_1 < 0 && (param_1 & 7U) != 0);
+    bVar1 = (byte)(1 << (param_1 + ((param_1 >> 3) + (uint)(param_1 < 0 && (param_1 & 7U) != 0)) *
+                                   -8 & 0x3f));
+    pdVar2->m_usedBlocks[iVar4] = pdVar2->m_usedBlocks[iVar4] | bVar1;
+    pdVar2 = DCache_TOC_GetTOC();
+    pdVar2->m_fileInfo[param_2].m_bitfield[iVar4] =
+         pdVar2->m_fileInfo[param_2].m_bitfield[iVar4] | bVar1;
+    return true;
   }
-  uVar5 = __restgprlr_28(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 824D9DF8  DCache_TOC_Allocate  (qcommon/com_dcache_toc.cpp:375)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 dcacheResult_t DCache_TOC_Allocate(ulong64 param_1,int param_2,dcacheLocation_t param_3)
 
 {
-  ulong64 uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  dcacheTOC_t *pdVar4;
-  dcacheResult_t dVar5;
-  bool bVar7;
-  int iVar6;
+  dcacheTOC_t *pdVar3;
+  bool bVar5;
+  int iVar4;
   
-  uVar1 = __savegprlr_23();
-  iVar2 = DCache_TOC_GetBlocksNeeded(param_2);
+  iVar1 = DCache_TOC_GetBlocksNeeded(param_2);
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
   }
   if ((s_dcacheTOC->m_numFiles == 0x80) &&
-     ((iVar3 = DCache_TOC_RemoveFile(0), iVar3 == 0 ||
-      (pdVar4 = DCache_TOC_GetTOC(), pdVar4->m_numFiles == 0x80)))) {
+     ((iVar2 = DCache_TOC_RemoveFile(0), iVar2 == 0 ||
+      (pdVar3 = DCache_TOC_GetTOC(), pdVar3->m_numFiles == 0x80)))) {
     Com_PrintError(0x10,"Could not fit file into the TOC, stale file not deleted.\n. ");
   }
   else {
@@ -677,77 +649,74 @@ dcacheResult_t DCache_TOC_Allocate(ulong64 param_1,int param_2,dcacheLocation_t 
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                       0x184,0,"%s");
     }
-    if (iVar2 != 0) {
-      bVar7 = DCache_TOC_IsCached(uVar1,param_3);
-      if (bVar7) {
-        dVar5 = __restgprlr_23(2);
-        return dVar5;
+    if (iVar1 != 0) {
+      bVar5 = DCache_TOC_IsCached(param_1,param_3);
+      if (bVar5) {
+        return DCACHE_RESULT_FOUND;
       }
-      iVar3 = DCache_TOC_GetBlocksRemaining();
-      if (iVar3 < iVar2) {
-        iVar6 = DCache_TOC_FreeBlocks(iVar2 - iVar3);
-        if ((iVar6 == 0) || (iVar6 < iVar2 - iVar3)) {
+      iVar2 = DCache_TOC_GetBlocksRemaining();
+      if (iVar2 < iVar1) {
+        iVar4 = DCache_TOC_FreeBlocks(iVar1 - iVar2);
+        if ((iVar4 == 0) || (iVar4 < iVar1 - iVar2)) {
           Com_PrintError(0x10,
                          "dcache: Failed freeing enough blocks for file %llu, location %d, size %d in need of %d blocks.\n"
                         );
-          dVar5 = __restgprlr_23(0);
-          return dVar5;
+          return DCACHE_RESULT_ERROR;
         }
       }
-      DCache_TOC_AssertFit(iVar2);
-      iVar3 = 0;
+      DCache_TOC_AssertFit(iVar1);
+      iVar2 = 0;
       do {
-        if (iVar2 < 1) break;
-        bVar7 = DCache_TOC_IsBlockReserved(iVar3);
-        if (!bVar7) {
-          pdVar4 = DCache_TOC_GetTOC();
-          bVar7 = DCache_TOC_AllocateSingleBlock(iVar3,pdVar4->m_numFiles);
-          if (!bVar7) goto LAB_824d9ea4;
-          iVar2 = iVar2 + -1;
+        if (iVar1 < 1) break;
+        bVar5 = DCache_TOC_IsBlockReserved(iVar2);
+        if (!bVar5) {
+          pdVar3 = DCache_TOC_GetTOC();
+          bVar5 = DCache_TOC_AllocateSingleBlock(iVar2,pdVar3->m_numFiles);
+          if (!bVar5) {
+            return DCACHE_RESULT_ERROR;
+          }
+          iVar1 = iVar1 + -1;
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < 0x800);
-      if (iVar2 == 0) {
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_fileID = uVar1;
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_location = param_3;
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_size = param_2;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_numFiles = pdVar4->m_numFiles + 1;
-        pdVar4 = DCache_TOC_GetTOC();
-        DCache_TOC_TouchByIndex(pdVar4->m_numFiles + -1);
-        dVar5 = __restgprlr_23(4);
-        return dVar5;
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < 0x800);
+      if (iVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp"
+                        ,0x1b8,0,"%s");
+        Com_PrintError(0x10,"dcache: Couldn\'t allocate enough blocks. This is probably a bug.\n");
+        return DCACHE_RESULT_ERROR;
       }
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x1b8,0,"%s");
-      Com_PrintError(0x10,"dcache: Couldn\'t allocate enough blocks. This is probably a bug.\n");
-      dVar5 = __restgprlr_23(0);
-      return dVar5;
+      pdVar3 = DCache_TOC_GetTOC();
+      iVar1 = pdVar3->m_numFiles;
+      pdVar3 = DCache_TOC_GetTOC();
+      pdVar3->m_fileInfo[iVar1].m_fileID = param_1;
+      pdVar3 = DCache_TOC_GetTOC();
+      iVar1 = pdVar3->m_numFiles;
+      pdVar3 = DCache_TOC_GetTOC();
+      pdVar3->m_fileInfo[iVar1].m_location = param_3;
+      pdVar3 = DCache_TOC_GetTOC();
+      iVar1 = pdVar3->m_numFiles;
+      pdVar3 = DCache_TOC_GetTOC();
+      pdVar3->m_fileInfo[iVar1].m_size = param_2;
+      pdVar3 = DCache_TOC_GetTOC();
+      pdVar3->m_numFiles = pdVar3->m_numFiles + 1;
+      pdVar3 = DCache_TOC_GetTOC();
+      DCache_TOC_TouchByIndex(pdVar3->m_numFiles + -1);
+      return DCACHE_RESULT_ALLOCATED;
     }
   }
-LAB_824d9ea4:
-  dVar5 = __restgprlr_23(0);
-  return dVar5;
+  return DCACHE_RESULT_ERROR;
 }
 
 
 // 824D9AE0  DCache_TOC_FlushTOC  (qcommon/com_dcache_toc.cpp:464)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DCache_TOC_FlushTOC(void)
 
 {
-  __savegprlr_28();
   if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
                     0x2c,0,"%s");
@@ -758,7 +727,6 @@ void DCache_TOC_FlushTOC(void)
                     0x2c,0,"%s");
   }
   s_dcacheTOC->m_version = '\x02';
-  __restgprlr_28();
   return;
 }
 
@@ -804,6 +772,8 @@ void DCache_TOC_ShowFileInfo(int param_1)
 
 // 824D9C60  DCache_TOC_DumpTOC  (qcommon/com_dcache_toc.cpp:496)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DCache_TOC_DumpTOC(void)
@@ -814,7 +784,6 @@ void DCache_TOC_DumpTOC(void)
   int iVar3;
   int iVar4;
   
-  __savegprlr_24();
   Com_Printf(0x10,"dcache: %20s %20s %20s %20s %20s\n");
   iVar2 = 0;
   iVar4 = 0;
@@ -838,7 +807,6 @@ void DCache_TOC_DumpTOC(void)
                     0x1fd,0,"%s");
   }
   Com_Printf(0x10,"dcache: Total blocks used: %d\n");
-  __restgprlr_24();
   return;
 }
 

@@ -37,93 +37,81 @@ RingAllocChunk * __thiscall D3D::CRingAllocList::GetFirstChunk(CRingAllocList *t
 
 // 8285B560  CommandBufferDeviceAllocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:225)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * D3D::CommandBufferDeviceAllocate(CDevice *param_1,ulong param_2,ulong *param_3,ulong param_4)
 
 {
-  int iVar1;
+  CCommandBuffer *pCVar1;
   int iVar2;
-  void *pvVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  ulong *puVar3;
+  ulong *puVar4;
   
-  lVar4 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  iVar1 = *(int *)(iVar2 + 0x35f4);
-  if ((uVar6 & 1) == 0) {
-    if (*(int *)(iVar2 + 0x38) == 0) {
-      *(undefined4 *)(iVar2 + 0x3b78) = *(undefined4 *)(iVar1 + 0x98);
-      *param_3 = *(uint *)(iVar1 + 0x9c);
-      uVar6 = (ulonglong)*(uint *)(iVar1 + 0x98);
-      goto LAB_8285b634;
+  pCVar1 = param_1->m_pCommandBuffer;
+  if ((param_2 & 1) == 0) {
+    if (*(int *)&param_1->field_0x38 == 0) {
+      param_1->m_pSegmentStart = (ulong *)pCVar1->m_dwPhysical;
+      *param_3 = pCVar1->m_PhysicalSize;
+      return (void *)pCVar1->m_dwPhysical;
     }
   }
   else {
-    uVar5 = (ulonglong)*(uint *)(iVar2 + 0x3b6c);
-    if (uVar5 == 0) {
-      uVar5 = ((ulonglong)*(uint *)(iVar1 + 0x9c) & 0xfffffffc) + (ulonglong)*(uint *)(iVar1 + 0x98)
-      ;
+    puVar3 = param_1->m_pRingAlloc;
+    if (puVar3 == (ulong *)0x0) {
+      puVar3 = (ulong *)((pCVar1->m_PhysicalSize & 0xfffffffc) + pCVar1->m_dwPhysical);
     }
-    uVar6 = uVar5 + (ulonglong)(*param_3 >> 2) * -4 & ~(lVar4 - 1U);
-    if ((ulonglong)(*(int *)(iVar2 + 0x30) + 0xa4) <= (uVar6 & 0xffffffff)) {
-      iVar1 = (int)uVar5 - (int)uVar6 >> 2;
-      *(int *)(iVar2 + 0x3b6c) = (int)uVar6;
-      *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + iVar1 * -4;
-      *(int *)(iVar2 + 0x38) = *(int *)(iVar2 + 0x38) + iVar1 * -4;
-      goto LAB_8285b634;
+    puVar4 = (ulong *)((uint)(puVar3 + -(*param_3 >> 2)) & ~(param_4 - 1));
+    if ((ulong *)(*(int *)&param_1->field_0x30 + 0xa4) <= puVar4) {
+      iVar2 = (int)puVar3 - (int)puVar4 >> 2;
+      param_1->m_pRingAlloc = puVar4;
+      *(int *)&param_1->field_0x34 = *(int *)&param_1->field_0x34 + iVar2 * -4;
+      *(int *)&param_1->field_0x38 = *(int *)&param_1->field_0x38 + iVar2 * -4;
+      return puVar4;
     }
   }
-  uVar6 = 0;
-LAB_8285b634:
-  pvVar3 = (void *)__restgprlr_28(uVar6);
-  return pvVar3;
+  return (void *)0x0;
 }
 
 
 // 8285B640  TimeStampBufferResources  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:289)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void D3D::TimeStampBufferResources(ulong param_1,BufferResourceNode *param_2,ulong param_3)
 
 {
   uint *puVar1;
-  ulonglong uVar2;
-  ulong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint *puVar7;
+  BufferResourceNode *pBVar2;
+  ulonglong uVar3;
+  BufferResourceNode *pBVar4;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    uVar5 = 0xffffffffffffffff;
+  if (param_3 == 0) {
+    param_3 = 0xffffffff;
   }
   do {
-    uVar2 = uVar4;
-    for (uVar6 = (ulonglong)((uint *)uVar4)[1]; uVar6 != 0; uVar6 = uVar6 - 1) {
-      puVar7 = (uint *)(uVar2 + 8);
-      puVar1 = (uint *)(*puVar7 * 4);
+    pBVar2 = param_2;
+    for (uVar3 = (ulonglong)param_2->m_Count; uVar3 != 0; uVar3 = uVar3 - 1) {
+      pBVar4 = pBVar2 + 1;
+      puVar1 = (uint *)(pBVar4->m_dwNext * 4);
       if (puVar1 != (uint *)0x0) {
-        if ((*(uint *)((int)uVar2 + 0xc) & uVar5) != 0) {
-          puVar1[2] = uVar3;
+        if ((pBVar2[1].m_Count & param_3) != 0) {
+          puVar1[2] = param_1;
         }
-        if ((*puVar7 & 0x40000000) != 0) {
-          puVar1[3] = uVar3;
+        if ((pBVar4->m_dwNext & 0x40000000) != 0) {
+          puVar1[3] = param_1;
         }
         if (((*puVar1 & 0xf) == 9) &&
            ((BufferResourceNode *)puVar1[0x1c] != (BufferResourceNode *)0x0)) {
-          TimeStampBufferResources(uVar3,(BufferResourceNode *)puVar1[0x1c],(ulong)uVar5);
+          TimeStampBufferResources(param_1,(BufferResourceNode *)puVar1[0x1c],param_3);
         }
       }
-      uVar2 = uVar2 + 8;
+      pBVar2 = pBVar4;
     }
-    uVar4 = (ulonglong)*(uint *)uVar4;
-  } while (uVar4 != 0);
-  __restgprlr_27();
+    param_2 = (BufferResourceNode *)param_2->m_dwNext;
+  } while (param_2 != (BufferResourceNode *)0x0);
   return;
 }
 
@@ -206,168 +194,157 @@ D3D::D3DFastVector<unsigned_long,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::de
 
 // 8285D388  resize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:881)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 D3D::D3DFastVector<unsigned_long,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::resize
           (void *this,ulong param_1,T_HRESULT *param_2)
 
 {
-  void *this_00;
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)(int)param_1;
-  this_00 = (void *)__savegprlr_29(this);
-  if ((ulonglong)*(uint *)((int)this_00 + 8) < (uVar1 & 0xffffffff)) {
-    ensure2(this_00,(ulong)uVar1,param_2);
+  if (*(uint *)((int)this + 8) < param_1) {
+    ensure2(this,param_1,param_2);
   }
   if (-1 < (int)*param_2) {
-    *(ulong *)((int)this_00 + 4) = (ulong)uVar1;
+    *(ulong *)((int)this + 4) = param_1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8285B418  ensure2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:914)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall
 D3D::D3DFastVector<unsigned_long,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::ensure2
           (void *this,ulong param_1,T_HRESULT *param_2)
 
 {
-  ulong uVar1;
-  int *piVar2;
-  void *pvVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  void *pvVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)(int)param_1;
-  piVar2 = (int *)__savegprlr_27(this);
-  if ((uVar5 & 0xffffffff) <= (ulonglong)(uint)piVar2[2]) goto LAB_8285b4ec;
-  uVar6 = ((ulonglong)(uint)piVar2[2] & 0x7fffffff) << 1;
-  if (uVar6 < (uVar5 & 0xffffffff)) {
-    uVar6 = uVar5;
+  if (param_1 <= *(uint *)((int)this + 8)) {
+    return;
   }
-  uVar1 = (ulong)((uVar6 & 0xffffffff) << 2);
+  uVar3 = *(uint *)((int)this + 8) << 1;
+  if (uVar3 < param_1) {
+    uVar3 = param_1;
+  }
   if (g_AllocDebugHeap == 0) {
-    pvVar3 = XMemAlloc(uVar1,0x64800000);
-    if (pvVar3 != (void *)0x0) goto LAB_8285b4a8;
-    pcVar4 = "Out of Title Memory";
+    pvVar1 = XMemAlloc(uVar3 << 2,0x64800000);
+    if (pvVar1 != (void *)0x0) goto LAB_8285b4a8;
+    pcVar2 = "Out of Title Memory";
   }
   else {
-    pvVar3 = DmDebugAlloc(uVar1);
-    if (pvVar3 != (void *)0x0) {
+    pvVar1 = DmDebugAlloc(uVar3 << 2);
+    if (pvVar1 != (void *)0x0) {
 LAB_8285b4a8:
-      piVar2[2] = (int)uVar6;
-      if (*piVar2 != 0) {
+      *(uint *)((int)this + 8) = uVar3;
+      if (*(int *)this != 0) {
         memcpy();
         if (g_AllocDebugHeap == 0) {
-          XMemFree((void *)*piVar2,0x24800000);
+          XMemFree(*(void **)this,0x24800000);
         }
         else {
-          DmDebugFree((void *)*piVar2);
+          DmDebugFree(*(void **)this);
         }
       }
-      *piVar2 = (int)pvVar3;
-      goto LAB_8285b4ec;
+      *(void **)this = pvVar1;
+      return;
     }
-    pcVar4 = "Out of Debug Memory";
+    pcVar2 = "Out of Debug Memory";
   }
-  DefaultTextureTrackerErrorCallback(pcVar4);
+  DefaultTextureTrackerErrorCallback(pcVar2);
   *param_2 = 0x8007000e;
-LAB_8285b4ec:
-  __restgprlr_27();
   return;
 }
 
 
 // 8285B780  MakeBufferResourceSpace  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:980)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 BufferResource * D3D::MakeBufferResourceSpace(CDevice *param_1)
 
 {
   BufferResourceNode *pBVar1;
-  CDevice *this;
   BufferResourceNode *pBVar2;
   void *pvVar3;
-  BufferResource *pBVar4;
-  int iVar5;
-  ulonglong uVar6;
+  int iVar4;
   
-  this = (CDevice *)__savegprlr_29(param_1);
-  pBVar1 = this->m_pCurrentBufferResourceNode;
-  pBVar2 = (BufferResourceNode *)CDevice::BeginRingAlloc(this,0x1f6,0x80);
-  uVar6 = (ulonglong)(int)pBVar2;
-  if (this->m_OutOfMemory) {
-    uVar6 = ZEXT48(this->m_pRingOutOfMemoryBuffer);
+  pBVar1 = param_1->m_pCurrentBufferResourceNode;
+  pBVar2 = (BufferResourceNode *)CDevice::BeginRingAlloc(param_1,0x1f6,0x80);
+  if (param_1->m_OutOfMemory) {
+    pBVar2 = (BufferResourceNode *)param_1->m_pRingOutOfMemoryBuffer;
   }
   else {
-    this->m_pCurrentBufferResourceNode = pBVar2;
+    param_1->m_pCurrentBufferResourceNode = pBVar2;
     pBVar2->m_dwNext = 0;
-    iVar5 = (((uint)pBVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pBVar2 & 0x1fffffff);
-    pvVar3 = (void *)(iVar5 + -0x40000000);
+    iVar4 = (((uint)pBVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pBVar2 & 0x1fffffff);
+    pvVar3 = (void *)(iVar4 + -0x40000000);
     if (pBVar1 == (BufferResourceNode *)0x0) {
-      this->m_pCommandBuffer->m_dwBufferResources = (ulong)pvVar3;
+      param_1->m_pCommandBuffer->m_dwBufferResources = (ulong)pvVar3;
     }
     else {
       pBVar1->m_dwNext = (ulong)pvVar3;
-      pBVar1->m_Count = (int)this->m_pBufferResource + (-8 - (int)pBVar1) >> 3;
+      pBVar1->m_Count = (int)param_1->m_pBufferResource + (-8 - (int)pBVar1) >> 3;
     }
-    FlushCachedMemory(pvVar3,(void *)(iVar5 + -0x3ffff828),0);
+    FlushCachedMemory(pvVar3,(void *)(iVar4 + -0x3ffff828),0);
   }
-  this->m_pBufferResource = (BufferResource *)(uVar6 + 8);
-  this->m_pBufferResourceEnd = (BufferResource *)((int)uVar6 + 0x7d8);
-  pBVar4 = (BufferResource *)__restgprlr_29(uVar6 + 8);
-  return pBVar4;
+  param_1->m_pBufferResource = (BufferResource *)(pBVar2 + 1);
+  param_1->m_pBufferResourceEnd = (BufferResource *)(pBVar2 + 0xfb);
+  return (BufferResource *)(pBVar2 + 1);
 }
 
 
 // 8285B840  MakeSegmentCallSpace  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1042)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 SegmentCall * D3D::MakeSegmentCallSpace(CDevice *param_1)
 
 {
   SegmentCallNode *pSVar1;
-  CDevice *this;
   SegmentCallNode *pSVar2;
   void *pvVar3;
-  SegmentCall *pSVar4;
-  int iVar5;
-  ulonglong uVar6;
+  int iVar4;
   
-  this = (CDevice *)__savegprlr_29(param_1);
-  pSVar1 = this->m_pCurrentSegmentCallNode;
-  pSVar2 = (SegmentCallNode *)CDevice::BeginRingAlloc(this,0x22,0x80);
-  uVar6 = (ulonglong)(int)pSVar2;
-  if (this->m_OutOfMemory) {
-    uVar6 = ZEXT48(this->m_pRingOutOfMemoryBuffer);
+  pSVar1 = param_1->m_pCurrentSegmentCallNode;
+  pSVar2 = (SegmentCallNode *)CDevice::BeginRingAlloc(param_1,0x22,0x80);
+  if (param_1->m_OutOfMemory) {
+    pSVar2 = (SegmentCallNode *)param_1->m_pRingOutOfMemoryBuffer;
   }
   else {
-    this->m_pCurrentSegmentCallNode = pSVar2;
+    param_1->m_pCurrentSegmentCallNode = pSVar2;
     pSVar2->m_dwNext = 0;
-    iVar5 = (((uint)pSVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pSVar2 & 0x1fffffff);
-    pvVar3 = (void *)(iVar5 + -0x40000000);
+    iVar4 = (((uint)pSVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pSVar2 & 0x1fffffff);
+    pvVar3 = (void *)(iVar4 + -0x40000000);
     if (pSVar1 == (SegmentCallNode *)0x0) {
-      this->m_pCommandBuffer->m_dwSegments = (ulong)pvVar3;
+      param_1->m_pCommandBuffer->m_dwSegments = (ulong)pvVar3;
     }
     else {
       pSVar1->m_dwNext = (ulong)pvVar3;
-      pSVar1->m_Count = (int)this->m_pSegmentCall + (-8 - (int)pSVar1) >> 3;
+      pSVar1->m_Count = (int)param_1->m_pSegmentCall + (-8 - (int)pSVar1) >> 3;
     }
-    FlushCachedMemory(pvVar3,(void *)(iVar5 + -0x3fffff78),0);
+    FlushCachedMemory(pvVar3,(void *)(iVar4 + -0x3fffff78),0);
   }
-  this->m_pSegmentCall = (SegmentCall *)(uVar6 + 8);
-  this->m_pSegmentCallEnd = (SegmentCall *)((int)uVar6 + 0x88);
-  pSVar4 = (SegmentCall *)__restgprlr_29(uVar6 + 8);
-  return pSVar4;
+  param_1->m_pSegmentCall = (SegmentCall *)(pSVar2 + 1);
+  param_1->m_pSegmentCallEnd = (SegmentCall *)(pSVar2 + 0x11);
+  return (SegmentCall *)(pSVar2 + 1);
 }
 
 
 // 8285D3E0  GrowableAllocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1577)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 ulong * __thiscall
 D3D::CCommandBuffer::GrowableAllocate
@@ -376,20 +353,11 @@ D3D::CCommandBuffer::GrowableAllocate
 {
   uint *puVar1;
   uint uVar2;
-  CCommandBuffer *this_00;
-  int iVar4;
-  undefined8 uVar3;
-  ulong *puVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar3;
+  ulong *puVar4;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  lVar6 = (longlong)(int)param_1;
-  this_00 = (CCommandBuffer *)__savegprlr_27(this,lVar6,lVar7,lVar8);
-  iVar4 = KeGetCurrentProcessType();
-  if (iVar4 == 2) {
+  iVar3 = KeGetCurrentProcessType();
+  if (iVar3 == 2) {
     puVar1 = (uint *)&DAT_000001bf;
   }
   else {
@@ -397,16 +365,16 @@ D3D::CCommandBuffer::GrowableAllocate
   }
   uVar2 = *puVar1;
   RtlEnterCriticalSection((ulonglong)uVar2 + 0x3ba4);
-  uVar3 = (*(code *)this_00->m_dwGrowableAllocateCallback)(this_00->m_Context,lVar6,lVar7,lVar8);
-  iVar4 = DebugAddAllocation(this_00,(void *)uVar3,*(ulong *)lVar7);
-  if (iVar4 == 0) {
-    uVar3 = 0;
+  puVar4 = (ulong *)(*(code *)this->m_dwGrowableAllocateCallback)
+                              (this->m_Context,param_1,param_2,param_3);
+  iVar3 = DebugAddAllocation(this,puVar4,*param_2);
+  if (iVar3 == 0) {
+    puVar4 = (ulong *)0x0;
   }
   else {
     RtlLeaveCriticalSection((ulonglong)uVar2 + 0x3ba4);
   }
-  puVar5 = (ulong *)__restgprlr_27(uVar3);
-  return puVar5;
+  return puVar4;
 }
 
 
@@ -470,86 +438,93 @@ void __thiscall D3D::CCommandBuffer::DebugReset(CCommandBuffer *this)
 
 // 8285AE20  DebugCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1711)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall D3D::CCommandBuffer::DebugCreate(CCommandBuffer *this,int param_1)
 
 {
   int *piVar1;
   int iVar2;
-  int iVar3;
   
-  iVar2 = __savegprlr_29(this);
-  *(uint *)(iVar2 + 0xb8) = *(uint *)(iVar2 + 0xb8) & 0xfffffffe | param_1 & 1U;
+  this->m_DebugAllocator = param_1;
   if (param_1 != 0) {
-    iVar3 = KeGetCurrentProcessType();
-    if (iVar3 == 2) {
+    iVar2 = KeGetCurrentProcessType();
+    if (iVar2 == 2) {
       piVar1 = (int *)&DAT_000001bf;
     }
     else {
       piVar1 = (int *)&DAT_000001be;
     }
-    iVar3 = *piVar1;
-    RtlEnterCriticalSection(iVar3 + 0x3ba4);
-    *(undefined4 *)(iVar2 + 0xa0) = *(undefined4 *)(iVar3 + 0x3bc0);
-    *(int *)(iVar3 + 0x3bc0) = iVar2;
-    RtlLeaveCriticalSection(iVar3 + 0x3ba4);
+    iVar2 = *piVar1;
+    RtlEnterCriticalSection(iVar2 + 0x3ba4);
+    this->m_dwNextGrowable = *(ulong *)(iVar2 + 0x3bc0);
+    *(CCommandBuffer **)(iVar2 + 0x3bc0) = this;
+    RtlLeaveCriticalSection(iVar2 + 0x3ba4);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8285B988  DebugDestroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1733)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall D3D::CCommandBuffer::DebugDestroy(CCommandBuffer *this)
 
 {
   int *piVar1;
   int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  int iVar5;
+  ulong *puVar3;
+  CCommandBuffer *pCVar4;
   
-  iVar2 = __savegprlr_29(this);
-  if ((*(uint *)(iVar2 + 0xb8) & 1) != 0) {
-    iVar3 = KeGetCurrentProcessType();
-    if (iVar3 == 2) {
+  if (this->m_DebugAllocator != 0) {
+    iVar2 = KeGetCurrentProcessType();
+    if (iVar2 == 2) {
       piVar1 = (int *)&DAT_000001bf;
     }
     else {
       piVar1 = (int *)&DAT_000001be;
     }
-    iVar3 = *piVar1;
-    RtlEnterCriticalSection(iVar3 + 0x3ba4);
-    iVar5 = *(int *)(iVar3 + 0x3bc0);
-    if (iVar5 == iVar2) {
-      *(undefined4 *)(iVar3 + 0x3bc0) = *(undefined4 *)(iVar2 + 0xa0);
+    iVar2 = *piVar1;
+    RtlEnterCriticalSection(iVar2 + 0x3ba4);
+    pCVar4 = *(CCommandBuffer **)(iVar2 + 0x3bc0);
+    if (pCVar4 == this) {
+      *(ulong *)(iVar2 + 0x3bc0) = this->m_dwNextGrowable;
     }
     else {
       do {
-        puVar4 = (undefined4 *)(iVar5 + 0xa0);
-        iVar5 = *(int *)(iVar5 + 0xa0);
-      } while (iVar5 != iVar2);
-      *puVar4 = *(undefined4 *)(iVar5 + 0xa0);
+        puVar3 = &pCVar4->m_dwNextGrowable;
+        pCVar4 = (CCommandBuffer *)pCVar4->m_dwNextGrowable;
+      } while (pCVar4 != this);
+      *puVar3 = pCVar4->m_dwNextGrowable;
     }
-    RtlLeaveCriticalSection(iVar3 + 0x3ba4);
+    RtlLeaveCriticalSection(iVar2 + 0x3ba4);
   }
-  if (*(void **)(iVar2 + 0xd0) != (void *)0x0) {
+  if (this->m_pResolveAndIgnoreList !=
+      (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+       *)0x0) {
     D3DFastVector<unsigned_long,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::destroy
-              (*(void **)(iVar2 + 0xd0));
+              (this->m_pResolveAndIgnoreList);
     if (g_AllocDebugHeap == 0) {
-      XMemFree(*(void **)(iVar2 + 0xd0),0x24800000);
+      XMemFree(this->m_pResolveAndIgnoreList,0x24800000);
     }
     else {
-      DmDebugFree(*(void **)(iVar2 + 0xd0));
+      DmDebugFree(this->m_pResolveAndIgnoreList);
     }
-    *(undefined4 *)(iVar2 + 0xd0) = 0;
+    this->m_pResolveAndIgnoreList =
+         (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+          *)0x0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8285CD90  DebugAddAllocation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1780)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int __thiscall
 D3D::CCommandBuffer::DebugAddAllocation(CCommandBuffer *this,void *param_1,ulong param_2)
@@ -557,78 +532,71 @@ D3D::CCommandBuffer::DebugAddAllocation(CCommandBuffer *this,void *param_1,ulong
 {
   uint uVar1;
   uint uVar2;
-  CCommandBuffer *pCVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  undefined4 *puVar6;
-  int iVar7;
-  ulong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  int iVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  ulong uVar6;
+  longlong lVar7;
   ulong local_40 [16];
   
-  uVar10 = (ulonglong)(int)param_1;
-  pCVar5 = (CCommandBuffer *)__savegprlr_27(this);
   KeGetCurrentProcessType();
-  if (((uVar10 & 0xffffffff) != 0) && (pCVar5->m_DebugAllocator != 0)) {
-    if (0xf < pCVar5->m_CurrentDebugAllocationIndex) {
+  if ((param_1 != (void *)0x0) && (this->m_DebugAllocator != 0)) {
+    if (0xf < this->m_CurrentDebugAllocationIndex) {
       local_40[0] = 0x88;
-      uVar3 = (*(code *)pCVar5->m_dwGrowableAllocateCallback)(pCVar5->m_Context,1,local_40,0x10);
-      if (uVar3 == 0) {
-        uVar4 = 0;
-        goto LAB_8285cf64;
+      uVar4 = (*(code *)this->m_dwGrowableAllocateCallback)(this->m_Context,1,local_40,0x10);
+      if (uVar4 == 0) {
+        return 0;
       }
-      puVar6 = (undefined4 *)uVar3;
-      DebugReclaim(puVar6,local_40[0],pCVar5,pCVar5->m_Context);
-      iVar7 = ((int)((uVar3 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)puVar6 & 0x1fffffff);
-      uVar8 = iVar7 + 0xc0000000;
-      if ((ulong *)pCVar5->m_dwCurrentDebugAllocationNode == (ulong *)0x0) {
-        pCVar5->m_dwDebugAllocationList = uVar8;
+      puVar5 = (undefined4 *)uVar4;
+      DebugReclaim(puVar5,local_40[0],this,this->m_Context);
+      iVar3 = ((int)((uVar4 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)puVar5 & 0x1fffffff);
+      uVar6 = iVar3 + 0xc0000000;
+      if ((ulong *)this->m_dwCurrentDebugAllocationNode == (ulong *)0x0) {
+        this->m_dwDebugAllocationList = uVar6;
       }
       else {
-        *(ulong *)pCVar5->m_dwCurrentDebugAllocationNode = uVar8;
-        dataCacheBlockFlush(((ulonglong)(pCVar5->m_dwCurrentDebugAllocationNode >> 0x14) + 0x200 &
-                            0x1000) + ((ulonglong)pCVar5->m_dwCurrentDebugAllocationNode &
-                                      0x1fffffff) + -0x40000000);
+        *(ulong *)this->m_dwCurrentDebugAllocationNode = uVar6;
+        dataCacheBlockFlush(((ulonglong)(this->m_dwCurrentDebugAllocationNode >> 0x14) + 0x200 &
+                            0x1000) + ((ulonglong)this->m_dwCurrentDebugAllocationNode & 0x1fffffff)
+                            + -0x40000000);
       }
-      puVar6[2] = puVar6;
-      puVar6[1] = 1;
-      *puVar6 = 0;
-      puVar6[3] = local_40[0];
-      pCVar5->m_dwCurrentDebugAllocationNode = (ulong)puVar6;
-      pCVar5->m_CurrentDebugAllocationIndex = 1;
-      FlushCachedMemory((void *)(iVar7 + -0x40000000),
-                        (void *)(((int)((uVar3 + 0x88 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-                                 ((uint)(uVar3 + 0x88) & 0x1fffffff) + -0x40000000),0);
+      puVar5[2] = puVar5;
+      puVar5[1] = 1;
+      *puVar5 = 0;
+      puVar5[3] = local_40[0];
+      this->m_dwCurrentDebugAllocationNode = (ulong)puVar5;
+      this->m_CurrentDebugAllocationIndex = 1;
+      FlushCachedMemory((void *)(iVar3 + -0x40000000),
+                        (void *)(((int)((uVar4 + 0x88 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
+                                 ((uint)(uVar4 + 0x88) & 0x1fffffff) + -0x40000000),0);
       sync(0);
     }
-    DebugReclaim((void *)uVar10,param_2,pCVar5,pCVar5->m_Context);
-    uVar1 = pCVar5->m_CurrentDebugAllocationIndex;
-    uVar2 = pCVar5->m_dwCurrentDebugAllocationNode;
-    lVar9 = ((ulonglong)uVar1 & 0x1fffffff) * 8 + (ulonglong)uVar2;
-    *(void **)((int)lVar9 + 8) = (void *)uVar10;
-    *(ulong *)((int)lVar9 + 0xc) = param_2;
-    dataCacheBlockFlush((((lVar9 + 8U & 0xffffffff) >> 0x14) + 0x200 & 0x1000) +
-                        (lVar9 + 8U & 0x1fffffff) + -0x40000000);
-    dataCacheBlockFlush((((lVar9 + 0xcU & 0xffffffff) >> 0x14) + 0x200 & 0x1000) +
-                        (lVar9 + 0xcU & 0x1fffffff) + -0x40000000);
-    uVar10 = (ulonglong)uVar2 + 4;
-    uVar8 = uVar1 + 1;
-    *(ulong *)(uVar2 + 4) = uVar8;
-    dataCacheBlockFlush((((uVar10 & 0xffffffff) >> 0x14) + 0x200 & 0x1000) + (uVar10 & 0x1fffffff) +
+    DebugReclaim(param_1,param_2,this,this->m_Context);
+    uVar1 = this->m_CurrentDebugAllocationIndex;
+    uVar2 = this->m_dwCurrentDebugAllocationNode;
+    lVar7 = ((ulonglong)uVar1 & 0x1fffffff) * 8 + (ulonglong)uVar2;
+    *(void **)((int)lVar7 + 8) = param_1;
+    *(ulong *)((int)lVar7 + 0xc) = param_2;
+    dataCacheBlockFlush((((lVar7 + 8U & 0xffffffff) >> 0x14) + 0x200 & 0x1000) +
+                        (lVar7 + 8U & 0x1fffffff) + -0x40000000);
+    dataCacheBlockFlush((((lVar7 + 0xcU & 0xffffffff) >> 0x14) + 0x200 & 0x1000) +
+                        (lVar7 + 0xcU & 0x1fffffff) + -0x40000000);
+    uVar4 = (ulonglong)uVar2 + 4;
+    uVar6 = uVar1 + 1;
+    *(ulong *)(uVar2 + 4) = uVar6;
+    dataCacheBlockFlush((((uVar4 & 0xffffffff) >> 0x14) + 0x200 & 0x1000) + (uVar4 & 0x1fffffff) +
                         -0x40000000);
-    pCVar5->m_CurrentDebugAllocationIndex = uVar8;
+    this->m_CurrentDebugAllocationIndex = uVar6;
     sync(0);
   }
-  uVar4 = 1;
-LAB_8285cf64:
-  iVar7 = __restgprlr_27(uVar4);
-  return iVar7;
+  return 1;
 }
 
 
 // 8285BA58  DebugReclaim  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:1897)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int D3D::CCommandBuffer::DebugReclaim
@@ -637,93 +605,83 @@ int D3D::CCommandBuffer::DebugReclaim
 {
   int *piVar1;
   uint uVar2;
-  int iVar3;
   undefined8 in_r0;
-  ulonglong uVar4;
-  int iVar6;
-  undefined8 uVar5;
-  ulonglong uVar7;
-  int iVar8;
-  uint uVar9;
-  uint uVar10;
-  uint uVar11;
-  uint *puVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  int *piVar8;
+  CCommandBuffer *pCVar9;
   ulong uStack0000002c;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uVar10 = 0;
+  uVar6 = 0;
   uStack0000002c = param_4;
-  iVar6 = KeGetCurrentProcessType();
-  iVar8 = _DAT_000001be;
-  if (iVar6 == 2) {
-    iVar8 = CONCAT31(_DAT_000001bf,uRam000001c2);
+  iVar4 = KeGetCurrentProcessType();
+  iVar5 = _DAT_000001be;
+  if (iVar4 == 2) {
+    iVar5 = CONCAT31(_DAT_000001bf,uRam000001c2);
   }
-  uVar14 = (ulonglong)*(uint *)(iVar8 + 0x3bc0);
-  uVar9 = (int)uVar4 + param_2;
-  if (uVar14 != 0) {
+  pCVar9 = *(CCommandBuffer **)(iVar5 + 0x3bc0);
+  if (pCVar9 != (CCommandBuffer *)0x0) {
     do {
-      iVar6 = (int)uVar14;
-      if ((*(uint *)(iVar6 + 0xb8) & 2) == 0) {
-        iVar3 = (int)uVar7;
-        uVar10 = (uint)LZCOUNT(iVar3 - iVar6) >> 5 | uVar10;
-        for (piVar1 = *(int **)(iVar6 + 0xc4); piVar1 != (int *)0x0; piVar1 = (int *)*piVar1) {
-          uVar11 = 0;
+      if (pCVar9->m_DebugIsInvalid == 0) {
+        uVar6 = (uint)LZCOUNT((int)param_3 - (int)pCVar9) >> 5 | uVar6;
+        for (piVar1 = (int *)pCVar9->m_dwDebugAllocationList; piVar1 != (int *)0x0;
+            piVar1 = (int *)*piVar1) {
+          uVar7 = 0;
           if (piVar1[1] != 0) {
-            puVar12 = (uint *)(piVar1 + 3);
+            piVar8 = piVar1 + 3;
             do {
-              uVar13 = (ulonglong)puVar12[-1];
-              uVar2 = *puVar12;
-              if (((uVar4 & 0xffffffff) < (uVar2 + uVar13 & 0xffffffff)) && (uVar13 < uVar9)) {
-                if ((*(int *)(iVar6 + 8) != 0) &&
-                   ((uint)(*(int *)(iVar8 + 0x2b1c) - **(int **)(iVar8 + 0x2b10)) <=
-                    (uint)(*(int *)(iVar8 + 0x2b1c) - *(int *)(iVar6 + 8)))) {
-                  *(int *)(iVar6 + 0xc0) = iVar3;
-                  *(undefined4 *)(iVar6 + 0x70) = 0xffffffff;
-                  *(uint *)(iVar6 + 0xb8) = *(uint *)(iVar6 + 0xb8) | 2;
-                  *(undefined4 *)(iVar6 + 0x74) = 0xffffffff;
-                  *(ulong *)(iVar6 + 0xbc) = uStack0000002c;
-                  *(undefined4 *)(iVar6 + 0x78) = 0xffffffff;
-                  *(undefined4 *)(iVar6 + 0x90) = 0xffffffff;
-                  *(undefined4 *)(iVar6 + 0xc4) = 0xffffffff;
+              uVar2 = piVar8[-1];
+              iVar4 = *piVar8;
+              if ((param_1 < (void *)(iVar4 + uVar2)) && (uVar2 < (int)param_1 + param_2)) {
+                if ((*(int *)&pCVar9->field_0x8 != 0) &&
+                   ((uint)(*(int *)(iVar5 + 0x2b1c) - **(int **)(iVar5 + 0x2b10)) <=
+                    (uint)(*(int *)(iVar5 + 0x2b1c) - *(int *)&pCVar9->field_0x8))) {
+                  pCVar9->m_DebugOverwriteCommandBuffer = (ulong)param_3;
+                  pCVar9->m_dwBufferResources = 0xffffffff;
+                  pCVar9->m_DebugIsInvalid = -1;
+                  pCVar9->m_dwSegments = 0xffffffff;
+                  pCVar9->m_DebugOverwriteContext = uStack0000002c;
+                  pCVar9->m_dwPatches = 0xffffffff;
+                  pCVar9->m_dwFixupRead = 0xffffffff;
+                  pCVar9->m_dwDebugAllocationList = 0xffffffff;
                   break;
                 }
-                if ((uVar7 & 0xffffffff) == 0) {
+                if (param_3 == (CCommandBuffer *)0x0) {
                   DbgPrint(0xffffffff821f3210);
                 }
                 else {
                   DbgPrint(0xffffffff821f3278);
-                  uVar5 = 0xffffffff821f32dc;
-                  if (uVar14 != (uVar7 & 0xffffffff)) {
-                    uVar5 = 0xffffffff821f3314;
+                  uVar3 = 0xffffffff821f32dc;
+                  if (pCVar9 != param_3) {
+                    uVar3 = 0xffffffff821f3314;
                   }
-                  DbgPrint(uVar5);
-                  DbgPrint(0xffffffff821f3350,uVar7,*(undefined4 *)(iVar3 + 0xac),
-                           *(undefined4 *)(iVar3 + 0xa4));
+                  DbgPrint(uVar3);
+                  DbgPrint(0xffffffff821f3350,param_3,param_3->m_dwGrowableAllocateCallback,
+                           param_3->m_Context);
                 }
-                if (uVar14 != (uVar7 & 0xffffffff)) {
-                  DbgPrint(0xffffffff821f33e0,uVar14,*(undefined4 *)(iVar6 + 0xac),
-                           *(undefined4 *)(iVar6 + 0xa4));
+                if (pCVar9 != param_3) {
+                  DbgPrint(0xffffffff821f33e0,pCVar9,pCVar9->m_dwGrowableAllocateCallback,
+                           pCVar9->m_Context);
                 }
-                DbgPrint(0xffffffff821f3470,uVar4,uVar9 - uVar4);
-                DbgPrint(0xffffffff821f34a4,uVar13,(uVar2 + uVar13) - uVar13);
+                DbgPrint(0xffffffff821f3470,(longlong)(int)param_1,
+                         (ulonglong)((int)param_1 + param_2) - (longlong)(int)param_1);
+                DbgPrint(0xffffffff821f34a4,uVar2,(int)(iVar4 + uVar2) - uVar2);
                 DbgPrint(0xffffffff821f34d8);
                 trapWord(0x1f,in_r0,0x16);
               }
-              uVar11 = uVar11 + 1;
-              puVar12 = puVar12 + 2;
-            } while (uVar11 < (uint)piVar1[1]);
+              uVar7 = uVar7 + 1;
+              piVar8 = piVar8 + 2;
+            } while (uVar7 < (uint)piVar1[1]);
           }
         }
       }
-      uVar14 = (ulonglong)*(uint *)(iVar6 + 0xa0);
-    } while (uVar14 != 0);
+      pCVar9 = (CCommandBuffer *)pCVar9->m_dwNextGrowable;
+    } while (pCVar9 != (CCommandBuffer *)0x0);
   }
-  __restgprlr();
-  return uVar10;
+  return uVar6;
 }
 
 
@@ -769,60 +727,67 @@ void __thiscall D3D::CCommandBuffer::DebugEndRun(CCommandBuffer *this,CDevice *p
 
 // 8285D490  AddRTListData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:2067)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
+int __thiscall
 D3D::CCommandBuffer::AddRTListData(CCommandBuffer *this,ulong param_1,void *param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar3;
-  void *this_00;
-  char *pcVar4;
-  ulonglong uVar2;
-  undefined4 uVar5;
-  longlong lVar6;
-  uint local_40 [16];
+  ulong uVar1;
+  int iVar2;
+  D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+  *this_00;
+  char *pcVar3;
+  int local_40 [16];
   
-  lVar6 = (longlong)(int)param_1;
-  iVar3 = __savegprlr_26(this,lVar6,param_2);
-  this_00 = *(void **)(iVar3 + 0xd0);
+  this_00 = this->m_pResolveAndIgnoreList;
   local_40[0] = 0;
-  if (this_00 == (void *)0x0) {
-    if (g_AllocDebugHeap == 0) {
-      this_00 = XMemAlloc(0xc,0x64800000);
-      if (this_00 == (void *)0x0) {
-        pcVar4 = "Out of Title Memory";
-        goto LAB_8285d508;
-      }
-    }
-    else {
-      this_00 = DmDebugAlloc(0xc);
-      if (this_00 == (void *)0x0) {
-        pcVar4 = "Out of Debug Memory";
-LAB_8285d508:
-        DefaultTextureTrackerErrorCallback(pcVar4);
-      }
-    }
-    *(void **)(iVar3 + 0xd0) = this_00;
-    if (this_00 == (void *)0x0) {
-      uVar2 = 0xffffffff8007000e;
-      goto LAB_8285d57c;
+  if (this_00 !=
+      (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+       *)0x0) goto LAB_8285d52c;
+  if (g_AllocDebugHeap == 0) {
+    this_00 = XMemAlloc(0xc,0x64800000);
+    if (this_00 ==
+        (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+         *)0x0) {
+      pcVar3 = "Out of Title Memory";
+      goto LAB_8285d508;
     }
   }
-  iVar1 = *(int *)((int)this_00 + 4);
+  else {
+    this_00 = DmDebugAlloc(0xc);
+    if (this_00 ==
+        (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+         *)0x0) {
+      pcVar3 = "Out of Debug Memory";
+LAB_8285d508:
+      DefaultTextureTrackerErrorCallback(pcVar3);
+    }
+  }
+  this->m_pResolveAndIgnoreList = this_00;
+  if (this_00 ==
+      (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+       *)0x0) {
+    return 0x8007000e;
+  }
+LAB_8285d52c:
+  uVar1 = this_00->m_Size;
   D3DFastVector<unsigned_long,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::resize
-            (this_00,(param_3 >> 2) + iVar1 + 1,local_40);
-  uVar2 = (ulonglong)local_40[0];
-  if (-1 < (int)local_40[0]) {
-    *(int *)(iVar1 * 4 + **(int **)(iVar3 + 0xd0)) = (int)lVar6;
+            (this_00,(param_3 >> 2) + uVar1 + 1,local_40);
+  iVar2 = local_40[0];
+  if (-1 < local_40[0]) {
+    this->m_pResolveAndIgnoreList->m_pData[uVar1] = param_1;
     memcpy();
   }
-LAB_8285d57c:
-  uVar5 = __restgprlr_26(uVar2);
-  return uVar5;
+  return iVar2;
 }
 
 
 // 8285AF68  D3DDevice_CreateGrowableCommandBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:2251)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 D3DCommandBuffer *
 D3DDevice_CreateGrowableCommandBuffer
@@ -831,17 +796,10 @@ D3DDevice_CreateGrowableCommandBuffer
           ulong param_5,ulong param_6)
 
 {
-  uint uVar1;
   CCommandBuffer *this;
-  D3DCommandBuffer *pDVar2;
-  ulonglong uVar3;
-  ulong uVar4;
   
-  uVar3 = (ulonglong)(int)param_6;
-  uVar1 = __savegprlr_25(param_1);
-  uVar4 = (ulong)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar4 = 0x8000;
+  if (param_6 == 0) {
+    param_6 = 0x8000;
   }
   this = XMemAlloc(0xd8,0x64800000);
   if (this == (CCommandBuffer *)0x0) {
@@ -855,16 +813,17 @@ D3DDevice_CreateGrowableCommandBuffer
     *(undefined4 *)this = 0x500009;
     *(undefined4 *)&this->field_0x14 = 0xffff0000;
     this->m_dwGrowableQueryCallback = (ulong)param_4;
-    this->m_SegmentSize = uVar4;
-    D3D::CCommandBuffer::DebugCreate(this,uVar1 & 1);
+    this->m_SegmentSize = param_6;
+    D3D::CCommandBuffer::DebugCreate(this,param_1 & 1);
   }
-  pDVar2 = (D3DCommandBuffer *)__restgprlr_25(this);
-  return pDVar2;
+  return (D3DCommandBuffer *)this;
 }
 
 
 // 8285BC98  D3DDevice_BeginCommandBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:2554)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_BeginCommandBuffer
@@ -874,434 +833,445 @@ void D3DDevice_BeginCommandBuffer
 
 {
   bool bVar1;
-  undefined4 *puVar2;
-  CCommandBuffer *this;
-  undefined1 *puVar3;
-  undefined1 *puVar4;
-  CDevice *this_00;
-  int iVar5;
-  ulong *puVar6;
-  ulonglong uVar7;
+  byte bVar2;
+  undefined4 *puVar3;
+  undefined4 uVar4;
+  ulong uVar5;
+  int iVar6;
+  ulong *puVar7;
   uint uVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  long *plVar11;
-  longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  longlong lVar15;
+  uint uVar9;
+  uint *puVar10;
+  _D3DTAGCOLLECTION *p_Var11;
+  ulong64 *puVar12;
+  ulong64 *puVar13;
+  uint *puVar14;
+  long *plVar16;
   byte bVar17;
-  ulonglong uVar16;
-  ulong uVar18;
+  ulonglong uVar15;
   char in_RESERVE;
-  byte bVar19;
+  byte bVar18;
+  longlong lVar19;
   longlong lVar20;
-  ulonglong uVar21;
   
-  uVar21 = (ulonglong)(int)param_7;
-  lVar15 = (longlong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar16 = (ulonglong)(int)param_3;
-  lVar14 = (longlong)(int)param_2;
-  this_00 = (CDevice *)__savegprlr_23(param_1);
-  this = (CCommandBuffer *)lVar14;
-  this->m_State = BufferState_CommandBufferBracket;
-  if (*(int *)&this->field_0x8 != 0) {
-    iVar5 = KeGetCurrentProcessType();
-    if (iVar5 == 2) {
-      puVar2 = (undefined4 *)&DAT_000001bf;
+  lVar20 = (longlong)(int)param_7;
+  iVar6 = param_2->_padding_;
+  param_2[1]._padding_ = param_2[1]._padding_ & 0xfffffff0U | 2;
+  if (iVar6 != 0) {
+    iVar6 = KeGetCurrentProcessType();
+    if (iVar6 == 2) {
+      puVar3 = (undefined4 *)&DAT_000001bf;
     }
     else {
-      puVar2 = (undefined4 *)&DAT_000001be;
+      puVar3 = (undefined4 *)&DAT_000001be;
     }
     D3D::CDevice::BlockOnFence
-              ((CDevice *)*puVar2,*(ulong *)&this->field_0x8,D3DBLOCKTYPE_COMMAND_BUFFER_LOCK,
+              ((CDevice *)*puVar3,param_2->_padding_,D3DBLOCKTYPE_COMMAND_BUFFER_LOCK,
                (D3DResource *)0x0,false);
-    *(undefined4 *)&this->field_0x8 = 0;
+    param_2->_padding_ = 0;
   }
-  if (this->m_dwPhysical == 0) {
-    D3D::CCommandBuffer::GrowableFree(this);
+  if (*(int *)(param_2[1].m_Inherited.m_Mask + 3) == 0) {
+    D3D::CCommandBuffer::GrowableFree((CCommandBuffer *)param_2);
   }
-  this_00->m_pCommandBuffer = this;
-  puVar4 = &this->field_0x6c;
-  this->m_SetShaderGPRAllocation = 0;
-  this->m_ContainsPredication = 0;
-  this->m_ContainsCalls = 0;
-  this->m_DynamicFixupIndex = 0;
-  this->m_StaticFixupIndex = 0;
-  this->m_TimestampedFixups = 0;
-  this->m_dwBufferResources = 0;
-  this->m_dwFixupRead = 0;
-  this->m_dwSegments = 0;
-  this->m_dwPatches = 0;
-  *(undefined4 *)&this_00->field_0x30 = 4;
-  *(undefined4 *)&this_00->field_0x34 = 4;
-  this_00->m_pSegmentStart = (ulong *)&DAT_00000008;
-  this_00->m_pRingAlloc = (ulong *)0x0;
-  *(undefined4 *)&this_00->field_0x38 = 0;
-  uVar18 = this->m_SegmentSize;
-  this_00->m_pCurrentBufferResourceNode = (BufferResourceNode *)0x0;
-  this_00->m_pBufferResource = (BufferResource *)0x0;
-  this_00->m_pBufferResourceEnd = (BufferResource *)0x0;
-  this_00->m_SegmentSize = uVar18;
-  this_00->m_pCurrentSegmentCallNode = (SegmentCallNode *)0x0;
-  this_00->m_pSegmentCall = (SegmentCall *)0x0;
-  this_00->m_pSegmentCallEnd = (SegmentCall *)0x0;
-  this_00->m_OutOfMemory = false;
-  D3D::CDevice::KickOff(this_00);
-  if ((uVar7 & 0xffffffff) == 0) {
-    *(undefined8 *)&this->field_0x18 = 0;
-    *(undefined8 *)&this->field_0x20 = 0;
-    *(undefined8 *)&this->field_0x28 = 0;
-    *(undefined8 *)&this->field_0x30 = 0;
-    *(undefined8 *)&this->field_0x38 = 0;
+  *(D3DCommandBuffer **)((int)&param_1[1].m_Constants.field1_0x300 + 0x374) = param_2;
+  param_2[1]._padding_ = param_2[1]._padding_ & 0xffffff8f;
+  *(undefined4 *)&param_2[1].field_0x14 = 0;
+  *(undefined4 *)param_2[1].m_Inherited.m_Mask = 0;
+  *(undefined4 *)((int)param_2[1].m_Inherited.m_Mask + 4) = 0;
+  param_2[1]._padding_ = 0;
+  *(undefined4 *)(param_2[1].m_Inherited.m_Mask + 2) = 0;
+  param_2[1]._padding_ = 0;
+  param_2[1]._padding_ = 0;
+  param_1->m_pRing = (ulong *)&DAT_00000004;
+  param_1->m_pRingLimit = (ulong *)&DAT_00000004;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f8) = 8;
+  bVar18 = *(byte *)((int)&param_1[1].m_ReferenceCount + 1);
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8ec) = 0;
+  param_1->m_pRingGuarantee = (ulong *)0x0;
+  uVar4 = *(undefined4 *)param_2[1].m_Persisted.m_Mask;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x378) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e8) = uVar4;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 900) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x388) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38c) = 0;
+  *(byte *)((int)&param_1[1].m_ReferenceCount + 1) = bVar18 & 0xdf;
+  D3D::CDevice::KickOff((CDevice *)param_1);
+  if (param_4 == (_D3DTAGCOLLECTION *)0x0) {
+    (param_2->m_Inherited).m_Mask[0] = 0;
+    (param_2->m_Inherited).m_Mask[1] = 0;
+    (param_2->m_Inherited).m_Mask[2] = 0;
+    (param_2->m_Inherited).m_Mask[3] = 0;
+    (param_2->m_Inherited).m_Mask[4] = 0;
   }
   else {
-    lVar13 = uVar7 - 8;
-    lVar12 = lVar14 + 0x10;
-    lVar20 = 5;
+    puVar12 = param_4[-1].m_Mask + 4;
+    p_Var11 = (_D3DTAGCOLLECTION *)&param_2->_padding_;
+    lVar19 = 5;
     do {
-      lVar13 = lVar13 + 8;
-      lVar12 = lVar12 + 8;
-      *(undefined8 *)lVar12 = *(undefined8 *)lVar13;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      puVar12 = puVar12 + 1;
+      p_Var11 = (_D3DTAGCOLLECTION *)(p_Var11->m_Mask + 1);
+      p_Var11->m_Mask[0] = *puVar12;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
-  lVar13 = lVar14 + 0x38;
-  lVar12 = 5;
-  if ((uVar9 & 0xffffffff) == 0) {
-    lVar14 = lVar14 + 0x10;
+  puVar12 = (param_2->m_Inherited).m_Mask + 4;
+  lVar19 = 5;
+  if (param_5 == (_D3DTAGCOLLECTION *)0x0) {
+    p_Var11 = (_D3DTAGCOLLECTION *)&param_2->_padding_;
     do {
-      lVar14 = lVar14 + 8;
-      lVar13 = lVar13 + 8;
-      *(undefined8 *)lVar13 = *(undefined8 *)lVar14;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
+      p_Var11 = (_D3DTAGCOLLECTION *)(p_Var11->m_Mask + 1);
+      puVar12 = puVar12 + 1;
+      *puVar12 = p_Var11->m_Mask[0];
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
   else {
-    lVar14 = uVar9 - 8;
+    puVar13 = param_5[-1].m_Mask + 4;
     do {
-      lVar14 = lVar14 + 8;
-      lVar13 = lVar13 + 8;
-      *(undefined8 *)lVar13 = *(undefined8 *)lVar14;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
+      puVar13 = puVar13 + 1;
+      puVar12 = puVar12 + 1;
+      *puVar12 = *puVar13;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
-  this->m_OverwriteInheritedState = (uVar16 & 0xffffffff) >> 4;
-  this->m_RecordAllSetState = uVar16 >> 5;
-  if ((uVar16 & 8) == 0) {
-    this_00->m_CommandBufferTimeStampMask = 0x400000;
-    uVar8 = *(uint *)&this->field_0x6c & 0xfffffbff;
+  param_2[1]._padding_ =
+       ((param_3 & 0x20) << 3 | param_3 >> 4 & 1) << 7 | param_2[1]._padding_ & 0xffff7f7fU;
+  if ((param_3 & 8) == 0) {
+    *(undefined4 *)(param_1[1].m_Pending.m_Mask + 4) = 0x400000;
+    uVar8 = param_2[1]._padding_ & 0xfffffbff;
   }
   else {
-    this_00->m_CommandBufferTimeStampMask = 0xffffffff;
-    uVar8 = *(uint *)&this->field_0x6c | 0x400;
+    *(undefined4 *)(param_1[1].m_Pending.m_Mask + 4) = 0xffffffff;
+    uVar8 = param_2[1]._padding_ | 0x400;
   }
-  *(uint *)&this->field_0x6c = uVar8;
-  this->m_dwPatches = 0;
-  *(uint *)&this->field_0x6c = uVar8 & 0xfffde7ff;
-  *(undefined8 *)&this_00->field_0x28 = 0;
-  this_00->m_FirstTileInheritsDepthBuffer = false;
-  this_00->m_OnePassZPass = false;
-  puVar4 = &this_00->field_0x2b3c;
-  this_00->m_TilingPredicateWhole = false;
-  this_00->m_ZPassBracket = false;
-  this_00->m_TilingBracket = false;
-  this_00->m_TilingSurfaceOverride = false;
-  if ((uVar16 & 3) != 0) {
-    if ((uVar16 & 2) == 0) {
-      *(uint *)&this->field_0x6c = *(uint *)&this->field_0x6c | 0x1000;
-      D3D::CRingAllocList::Initialize(&this_00->m_Patches,this_00,0x1080);
+  param_2[1]._padding_ = uVar8;
+  param_2[1]._padding_ = 0;
+  param_2[1]._padding_ = uVar8 & 0xfffde7ff;
+  bVar18 = *(byte *)&param_1[1].m_ReferenceCount;
+  uVar5 = param_1[1].m_ReferenceCount;
+  param_1->m_Predicated_PendingMask2 = 0;
+  *(byte *)((int)&param_1[1].m_ReferenceCount + 3) = (byte)uVar5 & 0xcf;
+  *(byte *)&param_1[1].m_ReferenceCount = bVar18 & 0x87;
+  if ((param_3 & 3) != 0) {
+    if ((param_3 & 2) == 0) {
+      param_2[1]._padding_ = param_2[1]._padding_ | 0x1000;
+      D3D::CRingAllocList::Initialize
+                ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23),
+                 (CDevice *)param_1,0x1080);
     }
     else {
-      *(uint *)&this->field_0x6c = *(uint *)&this->field_0x6c | 0x800;
-      this_00->m_TilingPredicateWhole = true;
+      param_2[1]._padding_ = param_2[1]._padding_ | 0x800;
+      *(byte *)&param_1[1].m_ReferenceCount = *(byte *)&param_1[1].m_ReferenceCount | 8;
     }
+    bVar18 = *(byte *)&param_1[1].m_ReferenceCount;
     uVar8 = 0;
-    uVar10 = 0;
-    uVar18 = (ulong)uVar21;
-    this_00->m_Tiles = uVar18;
-    this_00->m_TilingSurfaceOverride = true;
-    this_00->m_TilingBracket = true;
-    if ((uVar21 & 0xffffffff) != 0) {
-      plVar11 = &this_00->m_TileRects[0xe].y2;
-      lVar15 = lVar15 + -0xc;
-      puVar6 = &this_00->m_Tiles;
+    uVar9 = 0;
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x44) = param_7;
+    *(byte *)&param_1[1].m_ReferenceCount = bVar18 | 0x30;
+    if (param_7 != 0) {
+      puVar10 = (uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x134);
+      plVar16 = &param_6[-1].y1;
+      puVar14 = (uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x44);
       do {
-        iVar5 = (int)lVar15;
-        if (uVar8 <= *(uint *)(iVar5 + 0x14)) {
-          uVar8 = *(uint *)(iVar5 + 0x14);
+        if (uVar8 <= (uint)plVar16[5]) {
+          uVar8 = plVar16[5];
         }
-        if (uVar10 <= *(uint *)(iVar5 + 0x18)) {
-          uVar10 = *(uint *)(iVar5 + 0x18);
+        if (uVar9 <= (uint)plVar16[6]) {
+          uVar9 = plVar16[6];
         }
-        ((_D3DRECT *)(puVar6 + 1))->x1 = *(long *)(iVar5 + 0xc);
-        puVar6[2] = *(long *)(iVar5 + 0x10);
-        puVar6[3] = *(long *)(iVar5 + 0x14);
-        puVar6 = puVar6 + 4;
-        *puVar6 = *(ulong *)(iVar5 + 0x18);
-        plVar11[1] = *(uint *)(iVar5 + 0xc) & 0xffffffe0;
-        lVar15 = lVar15 + 0x10;
-        plVar11 = plVar11 + 2;
-        *plVar11 = *(uint *)lVar15 & 0xffffffe0;
-        uVar21 = uVar21 - 1;
-      } while (uVar21 != 0);
+        puVar14[1] = plVar16[3];
+        puVar14[2] = plVar16[4];
+        puVar14[3] = plVar16[5];
+        puVar14 = puVar14 + 4;
+        *puVar14 = plVar16[6];
+        puVar10[1] = plVar16[3] & 0xffffffe0;
+        plVar16 = plVar16 + 4;
+        puVar10 = puVar10 + 2;
+        *puVar10 = *plVar16 & 0xffffffe0;
+        lVar20 = lVar20 + -1;
+      } while (lVar20 != 0);
     }
-    this_00->m_TilingWidth = uVar8;
-    this_00->m_TilingHeight = uVar10;
-    this_00->m_TilingFlags = 0;
-    this_00->m_FirstPassSelect = 2;
-    if ((uVar16 & 0x40) != 0) {
-      D3D::ConfigureForOnePassZPass(this_00,(uint)uVar16 >> 7 & 1,uVar18,uVar8,uVar10);
-      this->m_OnePassZPass = -1;
+    *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 500) = uVar8;
+    *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1f8) = uVar9;
+    *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1fc) = 0;
+    *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x28) = 2;
+    if ((param_3 & 0x40) != 0) {
+      D3D::ConfigureForOnePassZPass((CDevice *)param_1,param_3 >> 7 & 1,param_7,uVar8,uVar9);
+      param_2[1]._padding_ = param_2[1]._padding_ | 0x20000;
     }
   }
-  if ((uVar16 & 4) != 0) {
-    D3D::ConfigureForZPass(this_00);
+  if ((param_3 & 4) != 0) {
+    D3D::ConfigureForZPass((CDevice *)param_1);
   }
-  this_00->m_GpuPacket3Predication = 0;
-  bVar1 = !this_00->m_TilingPredicateWhole;
-  bVar19 = bVar1 << 1;
+  uVar5 = param_1[1].m_ReferenceCount;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24) = 0;
+  bVar1 = (uVar5 & 0x8000000) == 0;
+  bVar18 = bVar1 << 1;
   if (((bVar1) &&
-      (bVar1 = !this_00->m_CullGeometryVisibilitySurveyBracket, bVar19 = bVar1 << 1, bVar1)) &&
-     (bVar1 = this_00->m_ConditionalRenderStackIndex == '\0', bVar19 = bVar1 << 1, bVar1)) {
-    if (this_00->m_TilingSurfaceOverride) {
-      bVar1 = true;
-    }
-    else if ((((this_00->m_TilingBracket) &&
-              ((this_00->m_pTileSurfaces[0] == this_00->m_pRenderTarget[0] ||
-               (this_00->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-             ((this_00->m_pTileSurfaces[1] == this_00->m_pRenderTarget[1] ||
-              (this_00->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-            ((((this_00->m_pTileSurfaces[2] == this_00->m_pRenderTarget[2] ||
-               (this_00->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-              ((this_00->m_pTileSurfaces[3] == this_00->m_pRenderTarget[3] ||
-               (this_00->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-             ((this_00->m_pTileDepthSurface == this_00->m_pDepthStencilSurface ||
-              (this_00->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-      bVar1 = true;
+      (bVar1 = (param_1[1].m_ReferenceCount & 0x4000000) == 0, bVar18 = bVar1 << 1, bVar1)) &&
+     (bVar1 = *(char *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113) == '\0',
+     bVar18 = bVar1 << 1, bVar1)) {
+    if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+      if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+           ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+            *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar6 && (iVar6 != 0))))
+          || ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar6 && (iVar6 != 0))))
+         || ((((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+               *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar6 && (iVar6 != 0))
+              || ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                  *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar6 &&
+                  (iVar6 != 0)))) ||
+             ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar6 && (iVar6 != 0))))
+            )) {
+        bVar1 = false;
+      }
+      else {
+        bVar1 = true;
+      }
     }
     else {
-      bVar1 = false;
+      bVar1 = true;
     }
-    bVar19 = !bVar1 << 1;
+    bVar18 = !bVar1 << 1;
     bVar17 = 1;
     if (bVar1) goto LAB_8285c0ac;
   }
   bVar17 = 0;
 LAB_8285c0ac:
-  this_00->m_PredicationMaskLo = 0xffffffff;
-  this_00->m_PredicationMaskHi = 0;
-  this_00->m_TilePredication = 0;
-  this_00->m_RunPredication = 0;
-  this_00->m_PredicateDrawPrims = bVar17;
+  bVar2 = *(byte *)&param_1[1].m_ReferenceCount;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1c) = 0xffffffff;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x20) = 0;
+  param_1[1].m_pRingLimit = (ulong *)0x0;
+  param_1[1].m_pRingGuarantee = (ulong *)0x0;
+  *(byte *)&param_1[1].m_ReferenceCount = bVar17 | bVar2 & 0xfe;
   memset();
-  if ((*(ulonglong *)&this->field_0x38 & 0x1c00000000000) != 0x1c00000000000) {
-    uVar8 = *(uint *)&this_00->field_0x28c8;
-    uVar10 = *(uint *)&this_00->field_0x28c4;
-    D3D::SetSurfaceClip(this_00,(int)(uVar10 << 0x11 | uVar10 >> 0xf) >> 0x11,
-                        (int)(uVar10 << 1 | uVar10 >> 0x1f) >> 0x11,
+  if (((param_2->m_Inherited).m_Mask[4] & 0x1c00000000000) != 0x1c00000000000) {
+    uVar8 = (param_1->m_WindowPacket).WindowScissorBR.dword;
+    uVar9 = (param_1->m_WindowPacket).WindowScissorTL.dword;
+    D3D::SetSurfaceClip((CDevice *)param_1,(int)(uVar9 << 0x11 | uVar9 >> 0xf) >> 0x11,
+                        (int)(uVar9 << 1 | uVar9 >> 0x1f) >> 0x11,
                         (int)(uVar8 << 0x11 | uVar8 >> 0xf) >> 0x11,
                         (int)(uVar8 << 1 | uVar8 >> 0x1f) >> 0x11);
   }
-  *(ulonglong *)this_00 = ~*(ulonglong *)&this->field_0x18;
-  *(ulonglong *)&this_00->field_0x8 = ~*(ulonglong *)&this->field_0x20;
-  *(ulonglong *)&this_00->field_0x10 = ~*(ulonglong *)&this->field_0x28;
-  *(ulonglong *)&this_00->field_0x18 = ~*(ulonglong *)&this->field_0x30;
-  *(ulonglong *)&this_00->field_0x20 = ~*(ulonglong *)&this->field_0x38;
-  iVar5 = KeGetCurrentProcessType();
-  if (iVar5 == 2) {
-    puVar6 = *(ulong **)&this_00->field_0x30;
-    if (*(ulong **)&this_00->field_0x38 < puVar6) {
-      puVar6 = D3D::CDevice::KickOff(this_00);
+  (param_1->m_Pending).m_Mask[0] = ~(param_2->m_Inherited).m_Mask[0];
+  (param_1->m_Pending).m_Mask[1] = ~(param_2->m_Inherited).m_Mask[1];
+  (param_1->m_Pending).m_Mask[2] = ~(param_2->m_Inherited).m_Mask[2];
+  (param_1->m_Pending).m_Mask[3] = ~(param_2->m_Inherited).m_Mask[3];
+  (param_1->m_Pending).m_Mask[4] = ~(param_2->m_Inherited).m_Mask[4];
+  iVar6 = KeGetCurrentProcessType();
+  if (iVar6 == 2) {
+    puVar7 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar7) {
+      puVar7 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar6[1] = 0xa31;
-    puVar6[2] = 0x3000000;
-    puVar6[3] = 0x10a2f;
-    puVar6[4] = 0x20000000;
-    puVar6[5] = 0;
-    puVar6[6] = 0xc0043c00;
-    puVar6[7] = 3;
-    puVar6[8] = 0xa31;
-    puVar6[9] = 0;
-    puVar6[10] = 0x80000000;
-    puVar6[0xb] = 8;
-    *(ulong **)&this_00->field_0x30 = puVar6 + 0xb;
+    puVar7[1] = 0xa31;
+    puVar7[2] = 0x3000000;
+    puVar7[3] = 0x10a2f;
+    puVar7[4] = 0x20000000;
+    puVar7[5] = 0;
+    puVar7[6] = 0xc0043c00;
+    puVar7[7] = 3;
+    puVar7[8] = 0xa31;
+    puVar7[9] = 0;
+    puVar7[10] = 0x80000000;
+    puVar7[0xb] = 8;
+    param_1->m_pRing = puVar7 + 0xb;
   }
   do {
-    uVar16 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
-    lVar15 = uVar16 + 1;
+    uVar15 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
+    lVar20 = uVar15 + 1;
     if (in_RESERVE != '\0') {
       `unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness =
-           storeWordConditionalIndexed(lVar15,0,0xffffffff8488fed4);
-      bVar19 = 2;
+           storeWordConditionalIndexed(lVar20,0,0xffffffff8488fed4);
+      bVar18 = 2;
     }
-  } while ((!(bool)(bVar19 >> 1 & 1)) || ((uVar16 + 2 & 0xffffffff) < 2));
-  this_00->m_Uniqueness = (ulong)lVar15;
-  __restgprlr_23();
+  } while ((!(bool)(bVar18 >> 1 & 1)) || ((uVar15 + 2 & 0xffffffff) < 2));
+  *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x35c) = (int)lVar20;
   return;
 }
 
 
 // 8285CF70  D3DDevice_EndCommandBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:2942)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4 D3DDevice_EndCommandBuffer(D3DDevice *param_1)
 
 {
-  CCommandBuffer *pCVar1;
-  undefined2 uVar5;
+  int iVar1;
   uint uVar2;
-  BufferResourceNode *pBVar3;
-  SegmentCallNode *pSVar4;
-  CDevice *this;
-  SegmentCall *pSVar6;
-  RingAllocChunk *pRVar7;
-  undefined4 uVar8;
-  ulong64 uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulong64 uVar13;
-  ulong64 uVar14;
-  undefined8 uVar15;
+  int iVar3;
+  SegmentCall *pSVar4;
+  CRingAllocList *this;
+  RingAllocChunk *pRVar5;
+  ulong64 uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulong64 uVar10;
+  ulong64 uVar11;
+  undefined4 uVar12;
   
-  this = (CDevice *)__savegprlr_25(param_1);
-  pCVar1 = this->m_pCommandBuffer;
-  if (pCVar1->m_RecordAllSetState == 0) {
-    if ((this->m_WaitUntilIdleRequired) || (this->m_FlushAllCaches)) {
-      D3D::WaitUntilIdleOrFlushCaches(this);
+  iVar1 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x374);
+  if ((*(uint *)(iVar1 + 0x6c) & 0x8000) == 0) {
+    if ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0) ||
+       (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)) {
+      D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
     }
   }
   else {
-    uVar5 = (this->m_CpuDrPix).DrawApiCalls;
-    uVar9 = *(ulong64 *)this;
-    uVar11 = *(ulonglong *)&this->field_0x20;
-    uVar12 = *(ulonglong *)&this->field_0x18;
-    uVar14 = *(ulong64 *)&this->field_0x10;
-    uVar13 = *(ulong64 *)&this->field_0x8;
-    (this->m_CpuDrPix).DrawApiCalls = uVar5 + 1;
-    if (uVar9 != 0) {
-      D3D::SetPending_AluConstants(this,uVar9,0x4000,&this->field_0x780);
-      *(undefined8 *)this = 0;
+    uVar6 = (param_1->m_Pending).m_Mask[0];
+    uVar8 = (param_1->m_Pending).m_Mask[4];
+    uVar9 = (param_1->m_Pending).m_Mask[3];
+    uVar11 = (param_1->m_Pending).m_Mask[2];
+    uVar10 = (param_1->m_Pending).m_Mask[1];
+    *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+    if (uVar6 != 0) {
+      D3D::SetPending_AluConstants
+                ((CDevice *)param_1,uVar6,0x4000,&(param_1->m_Constants).field1_0x300);
+      (param_1->m_Pending).m_Mask[0] = 0;
     }
-    if (uVar13 != 0) {
-      D3D::SetPending_AluConstants(this,uVar13,0x4400,&this->field_0x1780);
-      *(undefined8 *)&this->field_0x8 = 0;
-    }
-    if (uVar14 != 0) {
-      if ((uVar14 & 0x1e0000) != 0) {
-        uVar14 = D3D::SetPending_Shaders(this,uVar14);
-      }
-      if ((*(ulonglong *)&this->field_0x28 & uVar14) != 0) {
-        uVar14 = D3D::SetPending_Predicated(this,uVar14,*(ulong *)&this->field_0x2940);
-      }
-      if ((uVar14 & 0xfff) != 0) {
-        D3D::SetPending_RenderStates(this,uVar14 << 0x34,0x2200,&this->field_0x2934);
-      }
-      if ((uVar14 & 0x1f000) != 0) {
-        D3D::SetPending_RenderStates(this,(uVar14 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920);
-      }
-      if ((uVar14 & 0x3fffc0000000000) != 0) {
-        D3D::SetPending_RenderStates
-                  (this,(uVar14 & 0x3fffc0000000000) << 6,0x2000,&this->field_0x2880);
-      }
-      if ((uVar14 & 0x3ffffe00000) != 0) {
-        D3D::SetPending_RenderStates
-                  (this,(uVar14 & 0x3ffffe00000) << 0x16,0x2100,&this->field_0x28cc);
-      }
-      *(undefined8 *)&this->field_0x10 = 0;
-    }
-    if (uVar12 != 0) {
-      if ((uVar12 & 0xffffffff) != 0) {
-        D3D::SetPending_FetchConstants(this,uVar12 << 0x20);
-      }
-      if ((uVar12 & 0x7ffffc00000000) != 0) {
-        D3D::SetPending_RenderStates
-                  (this,(uVar12 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964);
-      }
-      *(undefined8 *)&this->field_0x18 = 0;
+    if (uVar10 != 0) {
+      D3D::SetPending_AluConstants
+                ((CDevice *)param_1,uVar10,0x4400,
+                 (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+      (param_1->m_Pending).m_Mask[1] = 0;
     }
     if (uVar11 != 0) {
-      if ((uVar11 & 0x3fc000000000) != 0) {
+      if ((uVar11 & 0x1e0000) != 0) {
+        uVar11 = D3D::SetPending_Shaders((CDevice *)param_1,uVar11);
+      }
+      if ((param_1->m_Predicated_PendingMask2 & uVar11) != 0) {
+        uVar11 = D3D::SetPending_Predicated
+                           ((CDevice *)param_1,uVar11,(param_1->m_ControlPacket).HiControl.dword);
+      }
+      if ((uVar11 & 0xfff) != 0) {
         D3D::SetPending_RenderStates
-                  (this,(uVar11 & 0x3fc000000000) << 0x12,0x2380,&this->field_0x2a50);
+                  ((CDevice *)param_1,uVar11 << 0x34,0x2200,&param_1->m_ControlPacket);
       }
-      if ((uVar11 & 0x7e000000000000) != 0) {
-        D3D::SetPending_ClipPlanes(this,(uVar11 & 0x7e000000000000) << 9);
+      if ((uVar11 & 0x1f000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,(uVar11 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
       }
-      if ((uVar11 & 0x100000000000000) != 0) {
-        D3D::SetPending_RenderStates(this,0xffffffffff000000,0x4900,&this->field_0x2780);
+      if ((uVar11 & 0x3fffc0000000000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,(uVar11 & 0x3fffc0000000000) << 6,0x2000,
+                   &param_1->m_DestinationPacket);
       }
-      if ((uVar11 & 0x3fffffffff) != 0) {
-        D3D::SetPending_RenderStates(this,uVar11 << 0x1a,0x2300,&this->field_0x29b8);
+      if ((uVar11 & 0x3ffffe00000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,(uVar11 & 0x3ffffe00000) << 0x16,0x2100,
+                   &param_1->m_ValuesPacket);
       }
-      if ((uVar11 & 0xc000000000000000) != 0) {
-        if ((this->m_WaitUntilIdleRequired) || (this->m_FlushAllCaches)) {
-          D3D::WaitUntilIdleOrFlushCaches(this);
+      (param_1->m_Pending).m_Mask[2] = 0;
+    }
+    if (uVar9 != 0) {
+      if ((uVar9 & 0xffffffff) != 0) {
+        D3D::SetPending_FetchConstants((CDevice *)param_1,uVar9 << 0x20);
+      }
+      if ((uVar9 & 0x7ffffc00000000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,(uVar9 & 0x7ffffc00000000) << 9,0x2280,
+                   &param_1->m_TessellatorPacket);
+      }
+      (param_1->m_Pending).m_Mask[3] = 0;
+    }
+    if (uVar8 != 0) {
+      if ((uVar8 & 0x3fc000000000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,(uVar8 & 0x3fc000000000) << 0x12,0x2380,
+                   &param_1->m_PointPacket);
+      }
+      if ((uVar8 & 0x7e000000000000) != 0) {
+        D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar8 & 0x7e000000000000) << 9);
+      }
+      if ((uVar8 & 0x100000000000000) != 0) {
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,0xffffffffff000000,0x4900,
+                   &(param_1->m_Constants).field2_0x2300);
+      }
+      if ((uVar8 & 0x3fffffffff) != 0) {
+        D3D::SetPending_RenderStates((CDevice *)param_1,uVar8 << 0x1a,0x2300,&param_1->m_MiscPacket)
+        ;
+      }
+      if ((uVar8 & 0xc000000000000000) != 0) {
+        if ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0) ||
+           (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)) {
+          D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
         }
       }
-      *(undefined8 *)&this->field_0x20 = 0;
+      (param_1->m_Pending).m_Mask[4] = 0;
     }
   }
-  D3DDevice_UnsetAll((D3DDevice *)this);
-  if (pCVar1->m_dwPhysical == 0) {
-    D3D::CDevice::KickOffSegment(this);
+  D3DDevice_UnsetAll(param_1);
+  if (*(int *)(iVar1 + 0x98) == 0) {
+    D3D::CDevice::KickOffSegment((CDevice *)param_1);
   }
   else {
-    uVar10 = (*(int *)&this->field_0x30 - (int)this->m_pSegmentStart) + 4 >> 2;
-    if (0x100000 < uVar10) {
-      this->m_OutOfMemory = true;
+    uVar7 = (int)param_1->m_pRing +
+            (4 - *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f8)) >> 2;
+    if (0x100000 < uVar7) {
+      *(byte *)((int)&param_1[1].m_ReferenceCount + 1) =
+           *(byte *)((int)&param_1[1].m_ReferenceCount + 1) | 0x20;
     }
-    pSVar6 = this->m_pSegmentCall;
-    uVar2 = pCVar1->m_dwPhysical;
-    if (this->m_pSegmentCallEnd <= pSVar6) {
-      pSVar6 = D3D::MakeSegmentCallSpace(this);
+    pSVar4 = *(SegmentCall **)((int)&param_1[1].m_Constants.field1_0x300 + 0x388);
+    uVar2 = *(uint *)(iVar1 + 0x98);
+    if (*(SegmentCall **)((int)&param_1[1].m_Constants.field1_0x300 + 0x38c) <= pSVar4) {
+      pSVar4 = D3D::MakeSegmentCallSpace((CDevice *)param_1);
     }
-    uVar10 = uVar10 | 0x81000000;
-    pSVar6->m_QueueCommand = (char)(uVar10 >> 0x18);
-    pSVar6->m_Count = (int3)uVar10;
-    pSVar6->m_Address = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff);
-    this->m_pSegmentCall = pSVar6 + 1;
+    uVar7 = uVar7 | 0x81000000;
+    pSVar4->m_QueueCommand = (char)(uVar7 >> 0x18);
+    pSVar4->m_Count = (int3)uVar7;
+    pSVar4->m_Address = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff);
+    *(SegmentCall **)((int)&param_1[1].m_Constants.field1_0x300 + 0x388) = pSVar4 + 1;
   }
-  pBVar3 = this->m_pCurrentBufferResourceNode;
-  if (pBVar3 != (BufferResourceNode *)0x0) {
-    pBVar3->m_Count = (int)this->m_pBufferResource + (-8 - (int)pBVar3) >> 3;
+  iVar3 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x378);
+  if (iVar3 != 0) {
+    *(int *)(iVar3 + 4) =
+         (*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) - iVar3) + -8 >> 3;
   }
-  pSVar4 = this->m_pCurrentSegmentCallNode;
-  if (pSVar4 != (SegmentCallNode *)0x0) {
-    pSVar4->m_Count = (int)this->m_pSegmentCall + (-8 - (int)pSVar4) >> 3;
+  iVar3 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 900);
+  if (iVar3 != 0) {
+    *(int *)(iVar3 + 4) =
+         (*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x388) - iVar3) + -8 >> 3;
   }
-  if (pCVar1->m_TilingPredicateComponents != 0) {
-    D3D::CRingAllocList::Finalize(&this->m_Patches);
-    pRVar7 = D3D::CRingAllocList::GetFirstChunk(&this->m_Patches);
-    pCVar1->m_dwPatches = (ulong)pRVar7;
+  if ((*(uint *)(iVar1 + 0x6c) & 0x1000) != 0) {
+    this = (CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23);
+    D3D::CRingAllocList::Finalize(this);
+    pRVar5 = D3D::CRingAllocList::GetFirstChunk(this);
+    *(RingAllocChunk **)(iVar1 + 0x78) = pRVar5;
   }
-  this->m_pCommandBuffer = (CCommandBuffer *)0x0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x374) = 0;
   sync(0);
-  pCVar1->m_dwFixupWrite = *(int *)&this->field_0x30 + 4;
-  pCVar1->m_dwFixupWriteLimit = *(ulong *)&this->field_0x34;
-  uVar10 = *(int *)&this->field_0x30 + 4;
-  pCVar1->m_dwFixupRead = ((uVar10 >> 0x14) + 0x200 & 0x1000) + (uVar10 & 0x1fffffff) + 0xc0000000;
-  if (this->m_OutOfMemory) {
-    uVar10 = 7;
-    uVar15 = 0xffffffff8007000e;
+  *(ulong **)(iVar1 + 0x88) = param_1->m_pRing + 1;
+  *(ulong **)(iVar1 + 0x8c) = param_1->m_pRingLimit;
+  *(uint *)(iVar1 + 0x90) =
+       (((uint)(param_1->m_pRing + 1) >> 0x14) + 0x200 & 0x1000) +
+       ((uint)(param_1->m_pRing + 1) & 0x1fffffff) + -0x40000000;
+  if ((param_1[1].m_ReferenceCount & 0x200000) == 0) {
+    uVar7 = 1;
+    uVar12 = 0;
   }
   else {
-    uVar10 = 1;
-    uVar15 = 0;
+    uVar7 = 7;
+    uVar12 = 0x8007000e;
   }
-  *(uint *)&pCVar1->field_0x6c = uVar10 | *(uint *)&pCVar1->field_0x6c & 0xfffffff0;
-  D3D::CDevice::MarkAsOutOfMemory(this);
-  uVar8 = __restgprlr_25(uVar15);
-  return uVar8;
+  *(uint *)(iVar1 + 0x6c) = uVar7 | *(uint *)(iVar1 + 0x6c) & 0xfffffff0;
+  D3D::CDevice::MarkAsOutOfMemory((CDevice *)param_1);
+  return uVar12;
 }
 
 
 // 8285D588  D3DDevice_RunCommandBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:3327)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
@@ -1309,200 +1279,215 @@ void D3DDevice_RunCommandBuffer(D3DDevice *param_1,D3DCommandBuffer *param_2,ulo
 
 {
   CCommandBuffer *this;
-  undefined2 uVar5;
   D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
   *pDVar1;
-  undefined4 uVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  ulong uVar5;
   uint uVar6;
   BufferResource BVar7;
-  undefined4 uVar8;
+  ulong uVar8;
   undefined8 in_r0;
-  CDevice *this_00;
   ulong *puVar9;
   uint *puVar10;
   BufferResource *pBVar11;
-  CCommandBuffer *this_01;
   ulonglong uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
   uint *puVar15;
   int iVar16;
-  ulong uVar17;
+  uint uVar17;
   int *piVar18;
   ulonglong uVar19;
   int iVar20;
   ulong64 uVar21;
-  ulonglong uVar22;
   uint local_90;
   GPUTimingMarkerFull local_88 [17];
   
-  uVar22 = (ulonglong)(int)param_2;
-  this_00 = (CDevice *)__savegprlr_18(param_1);
-  this_01 = (CCommandBuffer *)uVar22;
-  if (((uVar22 & 0xffffffff) == 0) || ((*(uint *)this_01 & 0xf) != 10)) {
-    this = this_00->m_pCommandBuffer;
+  if ((param_2 == (D3DCommandBuffer *)0x0) || ((param_2->_padding_ & 0xfU) != 10)) {
+    this = *(CCommandBuffer **)((int)&param_1[1].m_Constants.field1_0x300 + 0x374);
     local_88[0].m_EventID = PIXOP_RunCommandBuffer;
-    local_88[0].m_pDevice = this_00;
-    if (this_00->m_TimingCaptureActive != 0) {
+    local_88[0].m_pDevice = (CDevice *)param_1;
+    if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
       PIXAddPixOpWithData(0x900083,0,(void *)0x0);
     }
-    if (this_01->m_DebugIsInvalid != 0) {
+    if ((param_2[1].m_Persisted.m_Mask[2] & 0x200000000) != 0) {
       DbgPrint(0xffffffff821f35d0);
-      DbgPrint(0xffffffff821f3520,uVar22,this_01->m_Context,this_01->m_DebugOverwriteCommandBuffer,
-               this_01->m_DebugOverwriteContext);
+      DbgPrint(0xffffffff821f3520,param_2,*(undefined4 *)((int)param_2[1].m_Inherited.m_Mask + 0x24)
+               ,*(undefined4 *)(param_2[1].m_Persisted.m_Mask + 3),
+               *(undefined4 *)((int)param_2[1].m_Persisted.m_Mask + 0x14));
       DbgPrint(0xffffffff821f34d8);
       trapWord(0x1f,in_r0,0x16);
     }
-    D3D::CCommandBuffer::DebugBeginRun(this_01,this_00);
-    uVar5 = (this_00->m_CpuDrPix).DrawApiCalls;
-    uVar14 = *(ulonglong *)&this_01->field_0x18;
-    uVar13 = *(ulonglong *)&this_01->field_0x38;
-    uVar12 = *(ulonglong *)&this_01->field_0x30;
-    (this_00->m_CpuDrPix).DrawApiCalls = uVar5 + 1;
-    uVar13 = uVar13 & *(ulonglong *)&this_00->field_0x20;
-    uVar12 = uVar12 & *(ulonglong *)&this_00->field_0x18;
-    uVar14 = uVar14 & *(ulonglong *)this_00;
-    uVar21 = *(ulonglong *)&this_01->field_0x28 & *(ulonglong *)&this_00->field_0x10;
-    uVar19 = *(ulonglong *)&this_01->field_0x20 & *(ulonglong *)&this_00->field_0x8;
+    D3D::CCommandBuffer::DebugBeginRun((CCommandBuffer *)param_2,(CDevice *)param_1);
+    uVar14 = (param_2->m_Inherited).m_Mask[0];
+    uVar13 = (param_2->m_Inherited).m_Mask[4];
+    uVar12 = (param_2->m_Inherited).m_Mask[3];
+    *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+    uVar13 = uVar13 & (param_1->m_Pending).m_Mask[4];
+    uVar12 = uVar12 & (param_1->m_Pending).m_Mask[3];
+    uVar14 = uVar14 & (param_1->m_Pending).m_Mask[0];
+    uVar21 = (param_2->m_Inherited).m_Mask[2] & (param_1->m_Pending).m_Mask[2];
+    uVar19 = (param_2->m_Inherited).m_Mask[1] & (param_1->m_Pending).m_Mask[1];
     if (uVar14 != 0) {
-      D3D::SetPending_AluConstants(this_00,uVar14,0x4000,&this_00->field_0x780);
-      *(undefined8 *)this_00 = 0;
+      D3D::SetPending_AluConstants
+                ((CDevice *)param_1,uVar14,0x4000,&(param_1->m_Constants).field1_0x300);
+      (param_1->m_Pending).m_Mask[0] = 0;
     }
     if (uVar19 != 0) {
-      D3D::SetPending_AluConstants(this_00,uVar19,0x4400,&this_00->field_0x1780);
-      *(undefined8 *)&this_00->field_0x8 = 0;
+      D3D::SetPending_AluConstants
+                ((CDevice *)param_1,uVar19,0x4400,
+                 (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+      (param_1->m_Pending).m_Mask[1] = 0;
     }
     if (uVar21 != 0) {
       if ((uVar21 & 0x1e0000) != 0) {
-        uVar21 = D3D::SetPending_Shaders(this_00,uVar21);
+        uVar21 = D3D::SetPending_Shaders((CDevice *)param_1,uVar21);
       }
-      if ((*(ulonglong *)&this_00->field_0x28 & uVar21) != 0) {
-        uVar21 = D3D::SetPending_Predicated(this_00,uVar21,*(ulong *)&this_00->field_0x2940);
+      if ((param_1->m_Predicated_PendingMask2 & uVar21) != 0) {
+        uVar21 = D3D::SetPending_Predicated
+                           ((CDevice *)param_1,uVar21,(param_1->m_ControlPacket).HiControl.dword);
       }
       if ((uVar21 & 0xfff) != 0) {
-        D3D::SetPending_RenderStates(this_00,uVar21 << 0x34,0x2200,&this_00->field_0x2934);
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,uVar21 << 0x34,0x2200,&param_1->m_ControlPacket);
       }
       if ((uVar21 & 0x1f000) != 0) {
         D3D::SetPending_RenderStates
-                  (this_00,(uVar21 & 0x1f000) << 0x2f,0x2180,&this_00->field_0x2920);
+                  ((CDevice *)param_1,(uVar21 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
       }
       if ((uVar21 & 0x3fffc0000000000) != 0) {
         D3D::SetPending_RenderStates
-                  (this_00,(uVar21 & 0x3fffc0000000000) << 6,0x2000,&this_00->field_0x2880);
+                  ((CDevice *)param_1,(uVar21 & 0x3fffc0000000000) << 6,0x2000,
+                   &param_1->m_DestinationPacket);
       }
       if ((uVar21 & 0x3ffffe00000) != 0) {
         D3D::SetPending_RenderStates
-                  (this_00,(uVar21 & 0x3ffffe00000) << 0x16,0x2100,&this_00->field_0x28cc);
+                  ((CDevice *)param_1,(uVar21 & 0x3ffffe00000) << 0x16,0x2100,
+                   &param_1->m_ValuesPacket);
       }
-      *(undefined8 *)&this_00->field_0x10 = 0;
+      (param_1->m_Pending).m_Mask[2] = 0;
     }
     if (uVar12 != 0) {
       if ((uVar12 & 0xffffffff) != 0) {
-        D3D::SetPending_FetchConstants(this_00,uVar12 << 0x20);
+        D3D::SetPending_FetchConstants((CDevice *)param_1,uVar12 << 0x20);
       }
       if ((uVar12 & 0x7ffffc00000000) != 0) {
         D3D::SetPending_RenderStates
-                  (this_00,(uVar12 & 0x7ffffc00000000) << 9,0x2280,&this_00->field_0x2964);
+                  ((CDevice *)param_1,(uVar12 & 0x7ffffc00000000) << 9,0x2280,
+                   &param_1->m_TessellatorPacket);
       }
-      *(undefined8 *)&this_00->field_0x18 = 0;
+      (param_1->m_Pending).m_Mask[3] = 0;
     }
     if (uVar13 != 0) {
       if ((uVar13 & 0x3fc000000000) != 0) {
         D3D::SetPending_RenderStates
-                  (this_00,(uVar13 & 0x3fc000000000) << 0x12,0x2380,&this_00->field_0x2a50);
+                  ((CDevice *)param_1,(uVar13 & 0x3fc000000000) << 0x12,0x2380,
+                   &param_1->m_PointPacket);
       }
       if ((uVar13 & 0x7e000000000000) != 0) {
-        D3D::SetPending_ClipPlanes(this_00,(uVar13 & 0x7e000000000000) << 9);
+        D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar13 & 0x7e000000000000) << 9);
       }
       if ((uVar13 & 0x100000000000000) != 0) {
-        D3D::SetPending_RenderStates(this_00,0xffffffffff000000,0x4900,&this_00->field_0x2780);
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,0xffffffffff000000,0x4900,
+                   &(param_1->m_Constants).field2_0x2300);
       }
       if ((uVar13 & 0x3fffffffff) != 0) {
-        D3D::SetPending_RenderStates(this_00,uVar13 << 0x1a,0x2300,&this_00->field_0x29b8);
+        D3D::SetPending_RenderStates
+                  ((CDevice *)param_1,uVar13 << 0x1a,0x2300,&param_1->m_MiscPacket);
       }
       if (((uVar13 & 0xc000000000000000) != 0) &&
-         ((this_00->m_WaitUntilIdleRequired || (this_00->m_FlushAllCaches)))) {
-        D3D::WaitUntilIdleOrFlushCaches(this_00);
+         ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0 ||
+          (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)))) {
+        D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
       }
-      *(undefined8 *)&this_00->field_0x20 = 0;
+      (param_1->m_Pending).m_Mask[4] = 0;
     }
-    pDVar1 = this_01->m_pResolveAndIgnoreList;
+    pDVar1 = (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
+              *)param_2[2]._padding_;
     if ((pDVar1 != (D3DFastVector<unsigned_long,&void_*___cdecl_D3D::RTDebugMemAlloc(unsigned_long),&void___cdecl_D3D::RTDebugMemFree(void_*)>
-                    *)0x0) && (this_01->m_Reconstructed == 0)) {
-      this_00->m_RTHasTrackedTexturesSinceLastSwap = true;
-      if (this_00->m_CommandBufferDevice) {
+                    *)0x0) && ((param_2[1]._padding_ & 0x100U) == 0)) {
+      uVar8 = param_1[1].m_ReferenceCount;
+      *(undefined1 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x363) = 1;
+      if ((uVar8 & 0x80000000) == 0) {
+        if ((*(char *)((int)&param_1[1].m_Constants.field1_0x300 + 0x361) == '\0') &&
+           (*(char *)((int)&param_1[1].m_Constants.field1_0x300 + 0x360) != '\0')) {
+          D3D::CRTTextureTracker::HandleCommandBufferResolveAndIgnoreList
+                    (g_RTGlobal.m_pTextureTracker,pDVar1);
+        }
+      }
+      else {
         D3D::CCommandBuffer::AddRTListData(this,0x1000c,pDVar1->m_pData,pDVar1->m_Size << 2);
       }
-      else if ((this_00->m_RTTrackMipUsage == false) && (this_00->m_RTTrackTextures != false)) {
-        D3D::CRTTextureTracker::HandleCommandBufferResolveAndIgnoreList
-                  (g_RTGlobal.m_pTextureTracker,pDVar1);
-      }
     }
-    puVar9 = *(ulong **)&this_00->field_0x30;
-    if (*(ulong **)&this_00->field_0x38 < puVar9) {
-      puVar9 = D3D::CDevice::KickOff(this_00);
+    puVar9 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar9) {
+      puVar9 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    uVar2 = *(undefined4 *)&this_01->field_0x6c;
+    uVar2 = param_2[1]._padding_;
     puVar9[1] = 0x57e;
-    uVar6 = uVar2 << 0x19 | (uint)uVar2 >> 7;
+    uVar6 = uVar2 << 0x19 | uVar2 >> 7;
     puVar10 = puVar9 + 2;
     *puVar10 = 0x10022;
-    if (((int)uVar6 < 0) && (!this_00->m_CommandBufferDevice)) {
+    if (((int)uVar6 < 0) && ((param_1[1].m_ReferenceCount & 0x80000000) == 0)) {
       puVar9[3] = 0xc0006300;
       puVar10 = puVar9 + 4;
       *puVar10 = param_3;
     }
-    uVar17 = this_00->m_GpuPacket3Predication;
+    uVar17 = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24);
     puVar9 = (ulong *)0x0;
-    if ((this_00->m_PredicateDrawPrims) && (SPULL(uVar2,0xb,1) != 0)) {
-      puVar9 = (this_00->m_Patches).m_pData;
+    if (((param_1[1].m_ReferenceCount & 0x1000000) != 0) && ((uVar2 & 0x800) != 0)) {
+      puVar9 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
       uVar17 = 1;
-      if ((this_00->m_Patches).m_pDataLimit < puVar9 + 4) {
-        puVar9 = D3D::CRingAllocList::MakeSpace(&this_00->m_Patches);
+      if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar9 + 4) {
+        puVar9 = D3D::CRingAllocList::MakeSpace
+                           ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
       }
       *puVar9 = (ulong)puVar10;
-      (this_00->m_Patches).m_pData = puVar9 + 4;
+      *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar9 + 4;
       puVar10[1] = 0xc0006000;
       puVar10 = puVar10 + 2;
       *puVar10 = 0xffffffff;
     }
-    if (this_01->m_ContainsCalls == 0) {
-      piVar18 = (int *)this_01->m_dwSegments;
+    if ((uVar2 & 0x20) == 0) {
+      piVar18 = (int *)param_2[1]._padding_;
       iVar20 = 0;
 LAB_8285dbb0:
       iVar16 = iVar20 + 1;
-      iVar4 = piVar18[1];
+      iVar3 = piVar18[1];
       iVar20 = iVar20 + 1;
       puVar10[1] = uVar17 | 0xc0013f00;
-      uVar3 = piVar18[iVar16 * 2];
+      uVar4 = piVar18[iVar16 * 2];
       puVar10[2] = (piVar18 + iVar16 * 2)[1];
       puVar10 = puVar10 + 3;
-      *puVar10 = uVar3 & 0xffffff;
-      if (iVar20 == iVar4) {
+      *puVar10 = uVar4 & 0xffffff;
+      if (iVar20 == iVar3) {
         piVar18 = (int *)*piVar18;
         iVar20 = 0;
         if (piVar18 == (int *)0x0) goto LAB_8285da7c;
       }
-      *(uint **)&this_00->field_0x30 = puVar10;
-      if (*(uint **)&this_00->field_0x38 < puVar10) {
-        puVar10 = D3D::CDevice::KickOff(this_00);
+      param_1->m_pRing = puVar10;
+      if (param_1->m_pRingGuarantee < puVar10) {
+        puVar10 = D3D::CDevice::KickOff((CDevice *)param_1);
       }
       goto LAB_8285dbb0;
     }
-    *(uint **)&this_00->field_0x30 = puVar10;
-    if (puVar10 != this_00->m_pSegmentStart + -1) {
-      D3D::CDevice::KickOff(this_00);
+    iVar20 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f8);
+    param_1->m_pRing = puVar10;
+    if (puVar10 != (uint *)(iVar20 + -4)) {
+      D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    piVar18 = (int *)this_01->m_dwSegments;
+    piVar18 = (int *)param_2[1]._padding_;
     do {
-      D3D::CDevice::QueueIndirectBuffers(this_00,(SegmentCall *)(piVar18 + 2),piVar18[1]);
+      D3D::CDevice::QueueIndirectBuffers((CDevice *)param_1,(SegmentCall *)(piVar18 + 2),piVar18[1])
+      ;
       piVar18 = (int *)*piVar18;
     } while (piVar18 != (int *)0x0);
-    puVar10 = *(uint **)&this_00->field_0x30;
-    if (*(uint **)&this_00->field_0x38 < puVar10) {
-      puVar10 = D3D::CDevice::KickOff(this_00);
+    puVar10 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar10) {
+      puVar10 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
 LAB_8285da7c:
     if (puVar9 != (ulong *)0x0) {
@@ -1521,70 +1506,71 @@ LAB_8285da7c:
     *puVar15 = 0x10023;
     if ((int)uVar6 < 0) {
       puVar10[3] = 0xc0006000;
-      puVar10[4] = this_00->m_PredicationMaskLo;
+      puVar10[4] = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1c);
       puVar10[5] = 0xc0006100;
       puVar15 = puVar10 + 6;
-      *puVar15 = this_00->m_PredicationMaskHi;
+      *puVar15 = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x20);
     }
-    *(uint **)&this_00->field_0x30 = puVar15;
-    if (this_00->m_CommandBufferDevice) {
-      uVar6 = this_00->m_CommandBufferTimeStampMask;
-      uVar3 = *(uint *)this_01;
-      *(uint *)&this->field_0x6c = uVar2 & 0x40 | *(uint *)&this->field_0x6c | 0x20;
-      if (((uVar6 & uVar3) != 0) || (this_01->m_dwBufferResources != 0)) {
-        pBVar11 = this_00->m_pBufferResource;
-        if (this_00->m_pBufferResourceEnd <= pBVar11) {
-          pBVar11 = D3D::MakeBufferResourceSpace(this_00);
+    uVar8 = param_1[1].m_ReferenceCount;
+    param_1->m_pRing = puVar15;
+    if ((uVar8 & 0x80000000) == 0) {
+      uVar5 = param_2[1]._padding_;
+      if (((uVar5 != 0) && ((uVar8 & 0x20000000) != 0)) &&
+         (param_2->_padding_ != *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c))) {
+        puVar9 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b4);
+        if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b8) < puVar9 + 1) {
+          puVar9 = D3D::CRingAllocList::MakeSpace
+                             ((CRingAllocList *)
+                              ((int)&param_1[1].m_Constants.field1_0x300._s_1.VertexShaderF[0x2a].
+                                     field0_0x0 + 8));
         }
-        BVar7._0_4_ = (uint)((uVar22 & 0xffffffff) >> 2) | local_90 & 0x80000000;
-        BVar7.m_PredicationMask = 0xffffffff;
-        *pBVar11 = BVar7;
-        this_00->m_pBufferResource = pBVar11 + 1;
+        *puVar9 = uVar5;
+        *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b4) = puVar9 + 1;
+      }
+      uVar8 = *(ulong *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+      param_2->_padding_ = uVar8;
+      if ((BufferResourceNode *)param_2[1]._padding_ != (BufferResourceNode *)0x0) {
+        D3D::TimeStampBufferResources(uVar8,(BufferResourceNode *)param_2[1]._padding_,param_3);
       }
     }
     else {
-      uVar17 = this_01->m_dwPatches;
-      if (((uVar17 != 0) && (this_00->m_TilingBracket)) &&
-         (*(ulong *)&this_01->field_0x8 != this_00->m_CpuFence)) {
-        puVar9 = (this_00->m_Runs).m_pData;
-        if ((this_00->m_Runs).m_pDataLimit < puVar9 + 1) {
-          puVar9 = D3D::CRingAllocList::MakeSpace(&this_00->m_Runs);
+      uVar6 = *(uint *)(param_1[1].m_Pending.m_Mask + 4);
+      uVar17 = param_2->_padding_;
+      *(uint *)&this->field_0x6c = uVar2 & 0x40 | *(uint *)&this->field_0x6c | 0x20;
+      if (((uVar6 & uVar17) != 0) || (param_2[1]._padding_ != 0)) {
+        pBVar11 = *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c);
+        if (*(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) <= pBVar11) {
+          pBVar11 = D3D::MakeBufferResourceSpace((CDevice *)param_1);
         }
-        *puVar9 = uVar17;
-        (this_00->m_Runs).m_pData = puVar9 + 1;
-      }
-      uVar17 = this_00->m_CpuFence;
-      *(ulong *)&this_01->field_0x8 = uVar17;
-      if ((BufferResourceNode *)this_01->m_dwBufferResources != (BufferResourceNode *)0x0) {
-        D3D::TimeStampBufferResources
-                  (uVar17,(BufferResourceNode *)this_01->m_dwBufferResources,param_3);
+        BVar7._0_4_ = (uint)param_2 >> 2 | local_90 & 0x80000000;
+        BVar7.m_PredicationMask = 0xffffffff;
+        *pBVar11 = BVar7;
+        *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = pBVar11 + 1;
       }
     }
-    D3D::CCommandBuffer::DebugEndRun(this_01,this_00);
-    uVar22 = *(ulonglong *)&this_01->field_0x60;
-    if ((uVar22 & 0x1c00000000000) != 0x1c00000000000) {
-      uVar6 = *(uint *)&this_00->field_0x28c8;
-      uVar3 = *(uint *)&this_00->field_0x28c4;
-      D3D::SetSurfaceClip(this_00,(int)(uVar3 << 0x11 | uVar3 >> 0xf) >> 0x11,
-                          (int)(uVar3 << 1 | uVar3 >> 0x1f) >> 0x11,
-                          (int)(uVar6 << 0x11 | uVar6 >> 0xf) >> 0x11,
-                          (int)(uVar6 << 1 | uVar6 >> 0x1f) >> 0x11);
+    D3D::CCommandBuffer::DebugEndRun((CCommandBuffer *)param_2,(CDevice *)param_1);
+    uVar14 = (param_2->m_Persisted).m_Mask[4];
+    if ((uVar14 & 0x1c00000000000) != 0x1c00000000000) {
+      uVar2 = (param_1->m_WindowPacket).WindowScissorBR.dword;
+      uVar6 = (param_1->m_WindowPacket).WindowScissorTL.dword;
+      D3D::SetSurfaceClip((CDevice *)param_1,(int)(uVar6 << 0x11 | uVar6 >> 0xf) >> 0x11,
+                          (int)(uVar6 << 1 | uVar6 >> 0x1f) >> 0x11,
+                          (int)(uVar2 << 0x11 | uVar2 >> 0xf) >> 0x11,
+                          (int)(uVar2 << 1 | uVar2 >> 0x1f) >> 0x11);
     }
-    uVar14 = *(ulonglong *)&this_01->field_0x58;
-    uVar13 = *(ulonglong *)&this_01->field_0x48;
-    uVar12 = *(ulonglong *)&this_01->field_0x50;
-    *(ulonglong *)this_00 = ~*(ulonglong *)&this_01->field_0x40;
-    *(ulonglong *)&this_00->field_0x20 = ~uVar22;
-    *(ulonglong *)&this_00->field_0x8 = ~uVar13;
-    *(ulonglong *)&this_00->field_0x10 = ~uVar12;
-    *(ulonglong *)&this_00->field_0x18 = ~uVar14;
+    uVar12 = (param_2->m_Persisted).m_Mask[3];
+    uVar19 = (param_2->m_Persisted).m_Mask[1];
+    uVar13 = (param_2->m_Persisted).m_Mask[2];
+    (param_1->m_Pending).m_Mask[0] = ~(param_2->m_Persisted).m_Mask[0];
+    (param_1->m_Pending).m_Mask[4] = ~uVar14;
+    (param_1->m_Pending).m_Mask[1] = ~uVar19;
+    (param_1->m_Pending).m_Mask[2] = ~uVar13;
+    (param_1->m_Pending).m_Mask[3] = ~uVar12;
     D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_88);
   }
   else {
-    D3DDevice_InsertAsyncCommandBufferCall
-              ((D3DDevice *)this_00,(D3DAsyncCommandBufferCall *)this_01,param_3,0);
+    D3DDevice_InsertAsyncCommandBufferCall(param_1,(D3DAsyncCommandBufferCall *)param_2,param_3,0);
   }
-  __restgprlr_18();
   return;
 }
 
@@ -1619,6 +1605,9 @@ void __thiscall InFuncHelper::~InFuncHelper(InFuncHelper *this)
 
 // 8285C230  AsyncTimeStampBufferResources  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:5941)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AsyncTimeStampBufferResources(ulong param_1,BufferResourceNode *param_2,ulong param_3)
 
 {
@@ -1626,105 +1615,100 @@ void AsyncTimeStampBufferResources(ulong param_1,BufferResourceNode *param_2,ulo
   uint uVar2;
   uint uVar3;
   uint uVar4;
-  uint *puVar5;
+  BufferResourceNode *pBVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  uint *puVar8;
+  BufferResourceNode *pBVar7;
+  longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  uint *puVar11;
+  uint *puVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
   char in_RESERVE;
   
-  uVar15 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar6 = __savegprlr_29(param_1);
-  if ((uVar15 & 0xffffffff) == 0) {
-    uVar15 = 0xffffffffffffffff;
+  uVar6 = (ulonglong)(int)param_1;
+  if (param_3 == 0) {
+    param_3 = 0xffffffff;
   }
   do {
-    puVar5 = (uint *)uVar7;
-    for (uVar13 = (ulonglong)puVar5[1]; uVar13 != 0; uVar13 = uVar13 - 1) {
-      uVar7 = uVar7 + 8;
-      puVar8 = (uint *)uVar7;
-      lVar9 = ((ulonglong)*puVar8 & 0x3fffffff) * 4;
-      if ((*puVar8 & 0x3fffffff) != 0) {
-        bVar1 = (puVar8[1] & uVar15) == 0;
+    pBVar5 = param_2;
+    for (uVar12 = (ulonglong)param_2->m_Count; uVar12 != 0; uVar12 = uVar12 - 1) {
+      pBVar7 = pBVar5 + 1;
+      lVar8 = ((ulonglong)pBVar7->m_dwNext & 0x3fffffff) * 4;
+      if ((pBVar7->m_dwNext & 0x3fffffff) != 0) {
+        bVar1 = (pBVar5[1].m_Count & param_3) == 0;
         if (!bVar1) {
-          lVar10 = lVar9 + 8;
+          lVar9 = lVar8 + 8;
           do {
-            puVar11 = (uint *)lVar10;
-            uVar3 = *puVar11;
-            uVar14 = (ulonglong)uVar3;
-            uVar12 = uVar6;
-            if (uVar14 != 0) {
-              if ((uVar6 & 0xffffffff) == 0) break;
-              bVar1 = uVar6 == uVar14;
-              if ((longlong)(uVar6 - uVar14) < 1) {
-                uVar12 = uVar14;
+            puVar10 = (uint *)lVar9;
+            uVar3 = *puVar10;
+            uVar13 = (ulonglong)uVar3;
+            uVar11 = uVar6;
+            if (uVar13 != 0) {
+              if (param_1 == 0) break;
+              bVar1 = uVar6 == uVar13;
+              if ((longlong)(uVar6 - uVar13) < 1) {
+                uVar11 = uVar13;
               }
             }
-            if ((uVar12 & 0xffffffff) == uVar14) break;
+            if ((uVar11 & 0xffffffff) == uVar13) break;
             do {
-              uVar2 = *puVar11;
+              uVar2 = *puVar10;
               if (uVar2 != uVar3) {
                 if (in_RESERVE != '\0') {
-                  uVar4 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar10);
-                  *puVar11 = uVar4;
+                  uVar4 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar9);
+                  *puVar10 = uVar4;
                   bVar1 = true;
                 }
                 break;
               }
               if (in_RESERVE != '\0') {
-                uVar4 = storeWordConditionalIndexed(uVar12,0,lVar10);
-                *puVar11 = uVar4;
+                uVar4 = storeWordConditionalIndexed(uVar11,0,lVar9);
+                *puVar10 = uVar4;
                 bVar1 = true;
               }
             } while (!bVar1);
           } while (uVar3 != uVar2);
         }
-        bVar1 = (*puVar8 & 0x40000000) == 0;
+        bVar1 = (pBVar7->m_dwNext & 0x40000000) == 0;
         if (!bVar1) {
-          lVar9 = lVar9 + 0xc;
+          lVar8 = lVar8 + 0xc;
           do {
-            puVar8 = (uint *)lVar9;
-            uVar3 = *puVar8;
-            uVar14 = (ulonglong)uVar3;
-            uVar12 = uVar6;
-            if (uVar14 != 0) {
-              if ((uVar6 & 0xffffffff) == 0) break;
-              bVar1 = uVar6 == uVar14;
-              if ((longlong)(uVar6 - uVar14) < 1) {
-                uVar12 = uVar14;
+            puVar10 = (uint *)lVar8;
+            uVar3 = *puVar10;
+            uVar13 = (ulonglong)uVar3;
+            uVar11 = uVar6;
+            if (uVar13 != 0) {
+              if (param_1 == 0) break;
+              bVar1 = uVar6 == uVar13;
+              if ((longlong)(uVar6 - uVar13) < 1) {
+                uVar11 = uVar13;
               }
             }
-            if ((uVar12 & 0xffffffff) == uVar14) break;
+            if ((uVar11 & 0xffffffff) == uVar13) break;
             do {
-              uVar2 = *puVar8;
+              uVar2 = *puVar10;
               if (uVar2 != uVar3) {
                 if (in_RESERVE != '\0') {
-                  uVar4 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar9);
-                  *puVar8 = uVar4;
+                  uVar4 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar8);
+                  *puVar10 = uVar4;
                   bVar1 = true;
                 }
                 break;
               }
               if (in_RESERVE != '\0') {
-                uVar4 = storeWordConditionalIndexed(uVar12,0,lVar9);
-                *puVar8 = uVar4;
+                uVar4 = storeWordConditionalIndexed(uVar11,0,lVar8);
+                *puVar10 = uVar4;
                 bVar1 = true;
               }
             } while (!bVar1);
           } while (uVar3 != uVar2);
         }
       }
+      pBVar5 = pBVar7;
     }
-    uVar7 = (ulonglong)*puVar5;
-    if (uVar7 == 0) {
-      __restgprlr_29();
+    param_2 = (BufferResourceNode *)param_2->m_dwNext;
+    if (param_2 == (BufferResourceNode *)0x0) {
       return;
     }
   } while( true );
@@ -1772,6 +1756,8 @@ long FindNextFreeAsyncCallBlock(CDevice *param_1)
 
 // 8285B0E0  InsertBlockOnAsyncCommandBufferCall  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:6973)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DIBOACBC InsertBlockOnAsyncCommandBufferCall(CDevice *param_1,CAsyncCall *param_2,ulong param_3)
@@ -1779,99 +1765,92 @@ D3DIBOACBC InsertBlockOnAsyncCommandBufferCall(CDevice *param_1,CAsyncCall *para
 {
   undefined4 uVar1;
   ulong *puVar2;
-  CDevice *this;
-  longlong lVar3;
-  int iVar5;
-  undefined8 uVar4;
-  D3DIBOACBC DVar6;
-  ulong *puVar7;
-  ulonglong uVar8;
-  ulonglong *puVar9;
-  uint uVar10;
-  ulong uVar11;
+  ulonglong uVar3;
+  int iVar4;
+  ulong *puVar5;
+  ulonglong *puVar6;
+  uint uVar7;
+  ulong uVar8;
+  D3DIBOACBC DVar9;
   GPUTimingMarkerFull local_50 [2];
   CBlocker aCStack_40 [2];
   
-  uVar8 = (ulonglong)(int)param_3;
-  lVar3 = __savegprlr_28(param_1);
-  this = (CDevice *)lVar3;
   local_50[0].m_EventID = PIXOP_BlockOnAsyncCommandBuffer;
-  local_50[0].m_pDevice = this;
-  if (this->m_TimingCaptureActive != 0) {
+  local_50[0].m_pDevice = param_1;
+  if (param_1->m_TimingCaptureActive != 0) {
     PIXAddPixOpWithData(0x900080,0,(void *)0x0);
   }
-  iVar5 = FindNextFreeAsyncCallBlock(this);
-  if (iVar5 == -1) {
-    if ((uVar8 & 1) != 0) {
+  iVar4 = FindNextFreeAsyncCallBlock(param_1);
+  if (iVar4 == -1) {
+    if ((param_3 & 1) != 0) {
       D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_50);
-      uVar4 = 2;
-      goto LAB_8285b158;
+      return D3DIBOACBC_NO_BLOCKS_AVAILABLE;
     }
-    uVar11 = this->m_pWriteBacks->GpuFence;
-    D3D::CBlocker::CBlocker(aCStack_40,this,D3DBLOCKTYPE_ASYNC_CB_CALL_BLOCK_ALLOC);
-    while ((iVar5 = FindNextFreeAsyncCallBlock(this), iVar5 == -1 &&
+    uVar8 = param_1->m_pWriteBacks->GpuFence;
+    D3D::CBlocker::CBlocker(aCStack_40,param_1,D3DBLOCKTYPE_ASYNC_CB_CALL_BLOCK_ALLOC);
+    while ((iVar4 = FindNextFreeAsyncCallBlock(param_1), iVar4 == -1 &&
            ((param_2->m_Status & Status_Patched) == Status_None))) {
-      while ((uVar11 == this->m_pWriteBacks->GpuFence &&
+      while ((uVar8 == param_1->m_pWriteBacks->GpuFence &&
              (((param_2->m_Status & Status_Patched) == Status_None &&
-              (this->m_AsyncCallBlockMask == 0xffffffffffffffff))))) {
-        iVar5 = D3D::CBlocker::Check(aCStack_40);
-        if (iVar5 == 0) {
+              (param_1->m_AsyncCallBlockMask == 0xffffffffffffffff))))) {
+        iVar4 = D3D::CBlocker::Check(aCStack_40);
+        if (iVar4 == 0) {
           D3D::CBlocker::~CBlocker(aCStack_40);
-          uVar4 = 2;
+          DVar9 = D3DIBOACBC_NO_BLOCKS_AVAILABLE;
           goto LAB_8285b208;
         }
       }
-      uVar11 = this->m_pWriteBacks->GpuFence;
+      uVar8 = param_1->m_pWriteBacks->GpuFence;
     }
     D3D::CBlocker::~CBlocker(aCStack_40);
   }
   if ((param_2->m_Status & Status_Patched) == Status_None) {
-    puVar7 = this->m_pAsyncCallBlockSempahores;
-    param_2->m_pSemaphore = puVar7 + iVar5;
-    puVar7[iVar5] = 0;
+    puVar5 = param_1->m_pAsyncCallBlockSempahores;
+    param_2->m_pSemaphore = puVar5 + iVar4;
+    puVar5[iVar4] = 0;
     sync(1);
-    puVar9 = (ulonglong *)(lVar3 + 0x5f50);
-    uVar8 = storeDoubleWordConditionalIndexed
-                      (1L << ((longlong)iVar5 & 0x7fU) | *puVar9,0,lVar3 + 0x5f50);
-    *puVar9 = uVar8;
-    puVar7 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar7) {
-      puVar7 = D3D::CDevice::KickOff(this);
+    puVar6 = (ulonglong *)((longlong)(int)param_1 + 0x5f50);
+    uVar3 = storeDoubleWordConditionalIndexed
+                      (1L << ((longlong)iVar4 & 0x7fU) | *puVar6,0,(longlong)(int)param_1 + 0x5f50);
+    *puVar6 = uVar3;
+    puVar5 = *(ulong **)&param_1->field_0x30;
+    if (*(ulong **)&param_1->field_0x38 < puVar5) {
+      puVar5 = D3D::CDevice::KickOff(param_1);
     }
-    uVar10 = 0xc0000000;
-    puVar7[1] = 0x57a;
+    uVar7 = 0xc0000000;
+    puVar5[1] = 0x57a;
     if (param_2->m_bHideFromTextureTracker == 0) {
-      uVar10 = 0x80000000;
+      uVar7 = 0x80000000;
     }
-    puVar7[2] = (uint)param_2 >> 2 | uVar10;
+    puVar5[2] = (uint)param_2 >> 2 | uVar7;
     puVar2 = param_2->m_pSemaphore;
-    puVar7[3] = 0xc0043c00;
-    puVar7[4] = 0x13;
-    puVar7[5] = (((uint)puVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar2 & 0x1fffffff) | 2;
-    uVar4 = 1;
-    puVar7[6] = 0xffffffff;
-    puVar7[7] = 0xffffffff;
-    puVar7[8] = 0x100;
-    puVar7[9] = 0x57a;
-    puVar7[10] = 0;
-    puVar7[0xb] = 0x57b;
-    puVar7[0xc] = (uint)param_2 | 2;
-    *(ulong **)&this->field_0x30 = puVar7 + 0xc;
-    this->m_pAsyncCallBlockFences[iVar5] = this->m_CpuFence;
+    puVar5[3] = 0xc0043c00;
+    puVar5[4] = 0x13;
+    puVar5[5] = (((uint)puVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar2 & 0x1fffffff) | 2;
+    DVar9 = D3DIBOACBC_BLOCK_ADDED;
+    puVar5[6] = 0xffffffff;
+    puVar5[7] = 0xffffffff;
+    puVar5[8] = 0x100;
+    puVar5[9] = 0x57a;
+    puVar5[10] = 0;
+    puVar5[0xb] = 0x57b;
+    puVar5[0xc] = (uint)param_2 | 2;
+    *(ulong **)&param_1->field_0x30 = puVar5 + 0xc;
+    param_1->m_pAsyncCallBlockFences[iVar4] = param_1->m_CpuFence;
   }
   else {
-    uVar4 = 0;
+    DVar9 = D3DIBOACBC_BLOCK_NOT_NECESSARY;
   }
 LAB_8285b208:
   D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_50);
-LAB_8285b158:
-  DVar6 = __restgprlr_28(uVar4);
-  return DVar6;
+  return DVar9;
 }
 
 
 // 8285C390  ACBDoSecondCallerWork  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:7133)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void ACBDoSecondCallerWork(CDevice *param_1,CAsyncCall *param_2,int param_3,int param_4)
@@ -1880,400 +1859,407 @@ void ACBDoSecondCallerWork(CDevice *param_1,CAsyncCall *param_2,int param_3,int 
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  undefined4 *puVar4;
+  ulong *puVar4;
   CCommandBuffer *this;
   uint uVar5;
-  int iVar6;
+  bool bVar6;
   bool bVar7;
-  bool bVar8;
   undefined8 in_r0;
+  ulong uVar8;
   int iVar9;
-  ulong uVar10;
-  int iVar11;
-  longlong lVar12;
-  undefined8 uVar13;
-  longlong lVar14;
-  uint *puVar15;
+  undefined8 uVar10;
+  longlong lVar11;
+  uint *puVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  int iVar15;
   ulonglong uVar16;
-  uint uVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
+  ulonglong uVar17;
   char in_RESERVE;
-  byte bVar20;
+  byte bVar18;
   
-  lVar12 = (longlong)(int)param_2;
-  iVar9 = __savegprlr_20(param_1);
-  iVar6 = (int)lVar12;
-  uVar2 = *(uint *)(iVar6 + 8);
-  uVar18 = (ulonglong)uVar2;
-  uVar10 = GetCurrentThreadId();
-  if ((*(ulong *)(iVar9 + 0x2b08) != uVar10) || (bVar8 = false, uVar18 != *(uint *)(iVar9 + 0x2b1c))
-     ) {
-    bVar8 = true;
+  uVar2 = *(uint *)&param_2->field_0x8;
+  uVar16 = (ulonglong)uVar2;
+  uVar8 = GetCurrentThreadId();
+  if ((param_1->m_ThreadId != uVar8) || (bVar7 = false, uVar16 != param_1->m_CpuFence)) {
+    bVar7 = true;
   }
-  uVar17 = 0;
-  if (*(int *)(iVar6 + 0x7c) != 0) {
-    iVar9 = 0;
+  uVar14 = 0;
+  if (param_2->m_NumCommandBuffers != 0) {
+    iVar15 = 0;
     do {
-      this = *(CCommandBuffer **)(*(int *)(iVar6 + 0x84) + iVar9);
-      uVar19 = ZEXT48(this);
-      if (uVar19 != 0) {
-        iVar11 = D3D::CCommandBuffer::VerifyMagicValue(this);
-        bVar20 = (iVar11 == 0) << 1;
-        if (((iVar11 == 0) || (this->m_State != 1)) ||
-           (bVar7 = this->m_DebugIsInvalid == 0, bVar20 = bVar7 << 1, !bVar7)) {
-          uVar13 = 0xffffffff821f3660;
+      this = *(CCommandBuffer **)((int)&param_2->m_pCBList->pCommandBuffer + iVar15);
+      uVar17 = ZEXT48(this);
+      if (uVar17 != 0) {
+        iVar9 = D3D::CCommandBuffer::VerifyMagicValue(this);
+        bVar18 = (iVar9 == 0) << 1;
+        if (((iVar9 == 0) || (this->m_State != 1)) ||
+           (bVar6 = this->m_DebugIsInvalid == 0, bVar18 = bVar6 << 1, !bVar6)) {
+          uVar10 = 0xffffffff821f3660;
           if (param_4 == 0) {
-            uVar13 = 0xffffffff821f3670;
+            uVar10 = 0xffffffff821f3670;
           }
-          DbgPrint(0xffffffff821f3690,uVar13,uVar19,lVar12);
+          DbgPrint(0xffffffff821f3690,uVar10,uVar17,param_2);
           DbgPrint(0xffffffff821f3728);
           trapWord(0x1f,in_r0,0x16);
         }
-        if (bVar8) {
+        if (bVar7) {
           *(uint *)&this->field_0x8 = uVar2;
           if ((BufferResourceNode *)this->m_dwBufferResources != (BufferResourceNode *)0x0) {
             D3D::TimeStampBufferResources
                       (uVar2,(BufferResourceNode *)this->m_dwBufferResources,
-                       *(ulong *)(*(int *)(iVar6 + 0x84) + iVar9 + 4));
+                       *(ulong *)((int)&param_2->m_pCBList->PredicationSelect + iVar15));
           }
         }
         else {
-          lVar14 = uVar19 + 8;
+          lVar11 = uVar17 + 8;
           do {
-            puVar15 = (uint *)lVar14;
-            uVar3 = *puVar15;
-            uVar16 = (ulonglong)uVar3;
-            uVar19 = uVar18;
-            if (uVar16 != 0) {
-              if (uVar18 == 0) break;
-              bVar20 = (uVar18 == uVar16) << 1;
-              if ((longlong)(uVar18 - uVar16) < 1) {
-                uVar19 = uVar16;
+            puVar12 = (uint *)lVar11;
+            uVar3 = *puVar12;
+            uVar13 = (ulonglong)uVar3;
+            uVar17 = uVar16;
+            if (uVar13 != 0) {
+              if (uVar16 == 0) break;
+              bVar18 = (uVar16 == uVar13) << 1;
+              if ((longlong)(uVar16 - uVar13) < 1) {
+                uVar17 = uVar13;
               }
             }
-            if (uVar19 == uVar16) break;
+            if (uVar17 == uVar13) break;
             do {
-              uVar1 = *puVar15;
+              uVar1 = *puVar12;
               if (uVar1 != uVar3) {
                 if (in_RESERVE != '\0') {
-                  uVar5 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar14);
-                  *puVar15 = uVar5;
-                  bVar20 = 2;
+                  uVar5 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar11);
+                  *puVar12 = uVar5;
+                  bVar18 = 2;
                 }
                 break;
               }
               if (in_RESERVE != '\0') {
-                uVar5 = storeWordConditionalIndexed(uVar19,0,lVar14);
-                *puVar15 = uVar5;
-                bVar20 = 2;
+                uVar5 = storeWordConditionalIndexed(uVar17,0,lVar11);
+                *puVar12 = uVar5;
+                bVar18 = 2;
               }
-            } while (!(bool)(bVar20 >> 1 & 1));
+            } while (!(bool)(bVar18 >> 1 & 1));
           } while (uVar3 != uVar1);
           if ((BufferResourceNode *)this->m_dwBufferResources != (BufferResourceNode *)0x0) {
             AsyncTimeStampBufferResources
                       (uVar2,(BufferResourceNode *)this->m_dwBufferResources,
-                       *(ulong *)(*(int *)(iVar6 + 0x84) + iVar9 + 4));
+                       *(ulong *)((int)&param_2->m_pCBList->PredicationSelect + iVar15));
           }
         }
       }
-      uVar17 = uVar17 + 1;
-      iVar9 = iVar9 + 8;
-    } while (uVar17 < *(uint *)(iVar6 + 0x7c));
+      uVar14 = uVar14 + 1;
+      iVar15 = iVar15 + 8;
+    } while (uVar14 < param_2->m_NumCommandBuffers);
   }
   if ((param_3 != 0) || (param_4 != 0)) {
-    puVar4 = *(undefined4 **)(iVar6 + 0x80);
-    *(undefined4 *)(iVar6 + 0x80) = 0;
+    puVar4 = param_2->m_pSemaphore;
+    param_2->m_pSemaphore = (ulong *)0x0;
     sync(0);
-    if (puVar4 != (undefined4 *)0x0) {
+    if (puVar4 != (ulong *)0x0) {
       *puVar4 = 0xffffffff;
       sync(0);
     }
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 8285C588  D3DDevice_InsertAsyncCommandBufferCall  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/commands.cpp:7334)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-undefined4
-D3DDevice_InsertAsyncCommandBufferCall
-          (D3DDevice *param_1,D3DAsyncCommandBufferCall *param_2,ulong param_3,ulong param_4)
+uint D3DDevice_InsertAsyncCommandBufferCall
+               (D3DDevice *param_1,D3DAsyncCommandBufferCall *param_2,ulong param_3,ulong param_4)
 
 {
-  undefined2 uVar2;
   uint uVar1;
-  CAsyncCall *pCVar3;
-  bool bVar4;
-  CDevice *this;
-  ulong *puVar5;
-  D3DIBOACBC DVar6;
-  undefined4 uVar7;
-  uint *puVar8;
-  ulong *puVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  bool bVar2;
+  ulong uVar3;
+  ulong *puVar4;
+  D3DIBOACBC DVar5;
+  uint *puVar6;
+  ulong *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  uint *puVar12;
   ulonglong uVar13;
-  uint uVar14;
-  longlong lVar15;
-  uint *puVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  ulong64 uVar19;
+  ulonglong uVar14;
+  uint uVar15;
+  ulong64 uVar16;
   char in_RESERVE;
-  byte bVar20;
+  byte bVar17;
   GPUTimingMarkerFull local_80 [2];
   InFuncHelper local_70 [7];
   
-  lVar10 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_21(param_1);
-  bVar4 = this->m_TimingCaptureActive == 0;
-  bVar20 = bVar4 << 1;
+  bVar2 = (param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) == 0;
+  bVar17 = bVar2 << 1;
   local_80[0].m_EventID = PIXOP_InsertAsyncCommandBufferCall;
-  local_80[0].m_pDevice = this;
-  if (!bVar4) {
+  local_80[0].m_pDevice = (CDevice *)param_1;
+  if (!bVar2) {
     PIXAddPixOpWithData(0x900081,0,(void *)0x0);
   }
-  lVar15 = lVar10 + 0x68;
+  lVar11 = (longlong)(int)param_2 + 0x68;
   local_70[0].m_NoCleanup = 0;
-  puVar16 = (uint *)lVar15;
+  puVar12 = (uint *)lVar11;
   local_70[0].m_FlagSet = 2;
   do {
-    local_70[0].m_OldValue = *puVar16;
+    local_70[0].m_OldValue = *puVar12;
     if (in_RESERVE != '\0') {
-      uVar14 = storeWordConditionalIndexed((ulonglong)(uint)local_70[0].m_OldValue | 2,0,lVar15);
-      *puVar16 = uVar14;
-      bVar20 = 2;
+      uVar15 = storeWordConditionalIndexed((ulonglong)(uint)local_70[0].m_OldValue | 2,0,lVar11);
+      *puVar12 = uVar15;
+      bVar17 = 2;
     }
-  } while (!(bool)(bVar20 >> 1 & 1));
+  } while (!(bool)(bVar17 >> 1 & 1));
   sync(1);
-  local_70[0].m_pStatus = (long *)puVar16;
+  local_70[0].m_pStatus = (long *)puVar12;
   if ((local_70[0].m_OldValue & 1U) != 0) {
     OutputDebugStringA(
                       "\nInsertAsyncCommandBufferCall must not be called at the same time as D3DAsyncCommandBufferCall_Reset.\n"
                       );
     DebugBreak();
   }
-  pCVar3 = (CAsyncCall *)lVar10;
-  uVar2 = (this->m_CpuDrPix).DrawApiCalls;
-  uVar11 = *(ulonglong *)&pCVar3->field_0x18 & *(ulonglong *)this;
-  uVar17 = *(ulonglong *)&pCVar3->field_0x38 & *(ulonglong *)&this->field_0x20;
-  uVar13 = *(ulonglong *)&pCVar3->field_0x20;
-  uVar12 = *(ulonglong *)&this->field_0x8;
-  uVar18 = *(ulonglong *)&pCVar3->field_0x30 & *(ulonglong *)&this->field_0x18;
-  uVar19 = *(ulonglong *)&pCVar3->field_0x28 & *(ulonglong *)&this->field_0x10;
-  (this->m_CpuDrPix).DrawApiCalls = uVar2 + 1;
-  uVar13 = uVar13 & uVar12;
-  if (uVar11 != 0) {
-    D3D::SetPending_AluConstants(this,uVar11,0x4000,&this->field_0x780);
-    *(undefined8 *)this = 0;
+  uVar8 = (param_2->m_Inherited).m_Mask[0] & (param_1->m_Pending).m_Mask[0];
+  uVar13 = (param_2->m_Inherited).m_Mask[4] & (param_1->m_Pending).m_Mask[4];
+  uVar10 = (param_2->m_Inherited).m_Mask[1];
+  uVar9 = (param_1->m_Pending).m_Mask[1];
+  uVar14 = (param_2->m_Inherited).m_Mask[3] & (param_1->m_Pending).m_Mask[3];
+  uVar16 = (param_2->m_Inherited).m_Mask[2] & (param_1->m_Pending).m_Mask[2];
+  *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+  uVar10 = uVar10 & uVar9;
+  if (uVar8 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar8,0x4000,&(param_1->m_Constants).field1_0x300);
+    (param_1->m_Pending).m_Mask[0] = 0;
+  }
+  if (uVar10 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar10,0x4400,
+               (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+    (param_1->m_Pending).m_Mask[1] = 0;
+  }
+  if (uVar16 != 0) {
+    if ((uVar16 & 0x1e0000) != 0) {
+      uVar16 = D3D::SetPending_Shaders((CDevice *)param_1,uVar16);
+    }
+    if ((param_1->m_Predicated_PendingMask2 & uVar16) != 0) {
+      uVar16 = D3D::SetPending_Predicated
+                         ((CDevice *)param_1,uVar16,(param_1->m_ControlPacket).HiControl.dword);
+    }
+    if ((uVar16 & 0xfff) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,uVar16 << 0x34,0x2200,&param_1->m_ControlPacket);
+    }
+    if ((uVar16 & 0x1f000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
+    }
+    if ((uVar16 & 0x3fffc0000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->m_DestinationPacket);
+    }
+    if ((uVar16 & 0x3ffffe00000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x3ffffe00000) << 0x16,0x2100,&param_1->m_ValuesPacket
+                );
+    }
+    (param_1->m_Pending).m_Mask[2] = 0;
+  }
+  if (uVar14 != 0) {
+    if ((uVar14 & 0xffffffff) != 0) {
+      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar14 << 0x20);
+    }
+    if ((uVar14 & 0x7ffffc00000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar14 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
+    }
+    (param_1->m_Pending).m_Mask[3] = 0;
   }
   if (uVar13 != 0) {
-    D3D::SetPending_AluConstants(this,uVar13,0x4400,&this->field_0x1780);
-    *(undefined8 *)&this->field_0x8 = 0;
-  }
-  if (uVar19 != 0) {
-    if ((uVar19 & 0x1e0000) != 0) {
-      uVar19 = D3D::SetPending_Shaders(this,uVar19);
-    }
-    if ((*(ulonglong *)&this->field_0x28 & uVar19) != 0) {
-      uVar19 = D3D::SetPending_Predicated(this,uVar19,*(ulong *)&this->field_0x2940);
-    }
-    if ((uVar19 & 0xfff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar19 << 0x34,0x2200,&this->field_0x2934);
-    }
-    if ((uVar19 & 0x1f000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar19 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920);
-    }
-    if ((uVar19 & 0x3fffc0000000000) != 0) {
+    if ((uVar13 & 0x3fc000000000) != 0) {
       D3D::SetPending_RenderStates
-                (this,(uVar19 & 0x3fffc0000000000) << 6,0x2000,&this->field_0x2880);
+                ((CDevice *)param_1,(uVar13 & 0x3fc000000000) << 0x12,0x2380,&param_1->m_PointPacket
+                );
     }
-    if ((uVar19 & 0x3ffffe00000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar19 & 0x3ffffe00000) << 0x16,0x2100,&this->field_0x28cc)
+    if ((uVar13 & 0x7e000000000000) != 0) {
+      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar13 & 0x7e000000000000) << 9);
+    }
+    if ((uVar13 & 0x100000000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,0xffffffffff000000,0x4900,&(param_1->m_Constants).field2_0x2300)
       ;
     }
-    *(undefined8 *)&this->field_0x10 = 0;
+    if ((uVar13 & 0x3fffffffff) != 0) {
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar13 << 0x1a,0x2300,&param_1->m_MiscPacket);
+    }
+    if (((uVar13 & 0xc000000000000000) != 0) &&
+       ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0 ||
+        (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)))) {
+      D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
+    }
+    (param_1->m_Pending).m_Mask[4] = 0;
   }
-  if (uVar18 != 0) {
-    if ((uVar18 & 0xffffffff) != 0) {
-      D3D::SetPending_FetchConstants(this,uVar18 << 0x20);
-    }
-    if ((uVar18 & 0x7ffffc00000000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar18 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964)
-      ;
-    }
-    *(undefined8 *)&this->field_0x18 = 0;
+  *(ulong *)(param_2[1].m_Inherited.m_Mask + 1) =
+       param_4 >> 0x1b & 4 | *(uint *)(param_2[1].m_Inherited.m_Mask + 1) & 0xfffffffb;
+  puVar4 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar4) {
+    puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  if (uVar17 != 0) {
-    if ((uVar17 & 0x3fc000000000) != 0) {
-      D3D::SetPending_RenderStates
-                (this,(uVar17 & 0x3fc000000000) << 0x12,0x2380,&this->field_0x2a50);
-    }
-    if ((uVar17 & 0x7e000000000000) != 0) {
-      D3D::SetPending_ClipPlanes(this,(uVar17 & 0x7e000000000000) << 9);
-    }
-    if ((uVar17 & 0x100000000000000) != 0) {
-      D3D::SetPending_RenderStates(this,0xffffffffff000000,0x4900,&this->field_0x2780);
-    }
-    if ((uVar17 & 0x3fffffffff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar17 << 0x1a,0x2300,&this->field_0x29b8);
-    }
-    if (((uVar17 & 0xc000000000000000) != 0) &&
-       ((this->m_WaitUntilIdleRequired || (this->m_FlushAllCaches)))) {
-      D3D::WaitUntilIdleOrFlushCaches(this);
-    }
-    *(undefined8 *)&this->field_0x20 = 0;
-  }
-  pCVar3->m_bHideFromTextureTracker = (param_4 >> 0x1b) >> 2;
-  puVar5 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar5) {
-    puVar5 = D3D::CDevice::KickOff(this);
-  }
-  puVar5[1] = 0x57e;
-  puVar5[2] = 0x10048;
-  *(ulong **)&this->field_0x30 = puVar5 + 2;
-  uVar11 = (~(ulonglong)*puVar16 & 0xffffffff) >> 5 & 1;
-  if ((uVar11 == 0) || ((*puVar16 >> 6 & 1) != 0)) {
+  puVar4[1] = 0x57e;
+  puVar4[2] = 0x10048;
+  param_1->m_pRing = puVar4 + 2;
+  uVar8 = (~(ulonglong)*puVar12 & 0xffffffff) >> 5 & 1;
+  if ((uVar8 == 0) || ((*puVar12 >> 6 & 1) != 0)) {
 LAB_8285c97c:
-    puVar5 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar5) {
-      puVar5 = D3D::CDevice::KickOff(this);
+    puVar4 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar4) {
+      puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar5[1] = 0x57a;
-    uVar14 = 0xc0000000;
-    if (pCVar3->m_bHideFromTextureTracker == 0) {
-      uVar14 = 0x80000000;
+    puVar4[1] = 0x57a;
+    uVar15 = 0xc0000000;
+    if ((param_2[1].m_Inherited.m_Mask[1] & 0x400000000) == 0) {
+      uVar15 = 0x80000000;
     }
-    puVar5[2] = (uint)pCVar3 >> 2 | uVar14;
-    puVar5[3] = 0x57a;
-    puVar5[4] = 0;
-    *(ulong **)&this->field_0x30 = puVar5 + 4;
+    puVar4[2] = (uint)param_2 >> 2 | uVar15;
+    puVar4[3] = 0x57a;
+    puVar4[4] = 0;
+    param_1->m_pRing = puVar4 + 4;
   }
   else {
-    DVar6 = InsertBlockOnAsyncCommandBufferCall(this,pCVar3,param_4);
-    if (DVar6 == D3DIBOACBC_NO_BLOCKS_AVAILABLE) {
-      puVar5 = *(ulong **)&this->field_0x30;
-      if (*(ulong **)&this->field_0x38 < puVar5) {
-        puVar5 = D3D::CDevice::KickOff(this);
+    DVar5 = InsertBlockOnAsyncCommandBufferCall((CDevice *)param_1,(CAsyncCall *)param_2,param_4);
+    if (DVar5 == D3DIBOACBC_NO_BLOCKS_AVAILABLE) {
+      puVar4 = param_1->m_pRing;
+      if (param_1->m_pRingGuarantee < puVar4) {
+        puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
       }
-      puVar5[1] = 0x57e;
-      uVar11 = 0xffffffff8000000a;
-      puVar5[2] = 0x10049;
-      *(ulong **)&this->field_0x30 = puVar5 + 2;
+      puVar4[1] = 0x57e;
+      uVar15 = 0x8000000a;
+      puVar4[2] = 0x10049;
+      param_1->m_pRing = puVar4 + 2;
       goto LAB_8285c954;
     }
-    if (DVar6 == D3DIBOACBC_BLOCK_NOT_NECESSARY) goto LAB_8285c97c;
+    if (DVar5 == D3DIBOACBC_BLOCK_NOT_NECESSARY) goto LAB_8285c97c;
   }
-  puVar5 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar5) {
-    puVar5 = D3D::CDevice::KickOff(this);
+  puVar4 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar4) {
+    puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  puVar5[1] = 0xc0006300;
-  puVar8 = (uint *)0x0;
-  puVar5 = puVar5 + 2;
-  *puVar5 = param_3;
-  *(ulong **)&this->field_0x30 = puVar5;
-  if ((this->m_PredicateDrawPrims) && (pCVar3->m_bPredicateWholeCommandBuffer != 0)) {
-    if (*(ulong **)&this->field_0x38 < puVar5) {
-      puVar5 = D3D::CDevice::KickOff(this);
+  puVar4[1] = 0xc0006300;
+  puVar6 = (uint *)0x0;
+  puVar4 = puVar4 + 2;
+  *puVar4 = param_3;
+  uVar3 = param_1[1].m_ReferenceCount;
+  param_1->m_pRing = puVar4;
+  if (((uVar3 & 0x1000000) != 0) && ((param_2[1].m_Inherited.m_Mask[1] & 0x100000000) != 0)) {
+    if (param_1->m_pRingGuarantee < puVar4) {
+      puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar8 = (this->m_Patches).m_pData;
-    if ((this->m_Patches).m_pDataLimit < puVar8 + 4) {
-      puVar8 = D3D::CRingAllocList::MakeSpace(&this->m_Patches);
+    puVar6 = *(uint **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
+    if (*(uint **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar6 + 4) {
+      puVar6 = D3D::CRingAllocList::MakeSpace
+                         ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
     }
-    *puVar8 = (uint)puVar5;
-    (this->m_Patches).m_pData = puVar8 + 4;
-    puVar5[1] = 0xc0006000;
-    puVar5[2] = 0xffffffff;
-    *(ulong **)&this->field_0x30 = puVar5 + 2;
+    *puVar6 = (uint)puVar4;
+    *(uint **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar6 + 4;
+    puVar4[1] = 0xc0006000;
+    puVar4[2] = 0xffffffff;
+    param_1->m_pRing = puVar4 + 2;
   }
-  if (*(ulong **)&this->field_0x30 != this->m_pSegmentStart + -1) {
-    D3D::CDevice::KickOff(this);
+  if (param_1->m_pRing !=
+      (ulong *)(*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f8) + -4)) {
+    D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  puVar5 = D3D::CDevice::BeginRingAlloc(this,4,4);
-  if (puVar5 != (ulong *)0x0) {
+  puVar4 = D3D::CDevice::BeginRingAlloc((CDevice *)param_1,4,4);
+  if (puVar4 != (ulong *)0x0) {
     D3D::CDevice::QueueIndirectBuffer
-              (this,puVar5,
-               (((uint)pCVar3->m_pPhysical >> 0x14) + 0x200 & 0x1000) +
-               ((uint)pCVar3->m_pPhysical & 0x1fffffff),pCVar3->m_IbSizeDwords,0,&this->m_Queue,1);
+              ((CDevice *)param_1,puVar4,
+               (((uint)param_2[1]._padding_ >> 0x14) + 0x200 & 0x1000) +
+               (param_2[1]._padding_ & 0x1fffffffU),param_2[1]._padding_,0,
+               (CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x2c),1);
   }
-  bVar4 = !this->m_TilingBracket;
-  bVar20 = bVar4 << 1;
-  if (((!bVar4) && (bVar4 = pCVar3->m_bPredicateWholeCommandBuffer == 0, bVar20 = bVar4 << 1, bVar4)
-      ) && (*(ulong *)&pCVar3->field_0x8 != this->m_CpuFence)) {
-    puVar9 = (this->m_Runs).m_pData;
-    if ((this->m_Runs).m_pDataLimit < puVar9 + 1) {
-      puVar9 = D3D::CRingAllocList::MakeSpace(&this->m_Runs);
+  bVar2 = (param_1[1].m_ReferenceCount & 0x20000000) == 0;
+  bVar17 = bVar2 << 1;
+  if (((!bVar2) &&
+      (bVar2 = (param_2[1].m_Inherited.m_Mask[1] & 0x100000000) == 0, bVar17 = bVar2 << 1, bVar2))
+     && (param_2->_padding_ != *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c))) {
+    puVar7 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b4);
+    if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b8) < puVar7 + 1) {
+      puVar7 = D3D::CRingAllocList::MakeSpace
+                         ((CRingAllocList *)
+                          ((int)&param_1[1].m_Constants.field1_0x300._s_1.VertexShaderF[0x2a].
+                                 field0_0x0 + 8));
     }
-    *puVar9 = (uint)pCVar3 | 1;
-    (this->m_Runs).m_pData = puVar9 + 1;
+    *puVar7 = (uint)param_2 | 1;
+    *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x2b4) = puVar7 + 1;
   }
-  *(ulong *)&pCVar3->field_0x8 = this->m_CpuFence;
+  param_2->_padding_ = *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
   sync(1);
-  if (uVar11 == 0) {
-    uVar12 = (ulonglong)*puVar16;
+  if (uVar8 == 0) {
+    uVar9 = (ulonglong)*puVar12;
   }
   else {
     do {
-      uVar12 = (ulonglong)*puVar16;
+      uVar9 = (ulonglong)*puVar12;
       if (in_RESERVE != '\0') {
-        uVar14 = storeWordConditionalIndexed(uVar12 | 0x20,0,lVar15);
-        *puVar16 = uVar14;
-        bVar20 = 2;
+        uVar15 = storeWordConditionalIndexed(uVar9 | 0x20,0,lVar11);
+        *puVar12 = uVar15;
+        bVar17 = 2;
       }
-    } while (!(bool)(bVar20 >> 1 & 1));
+    } while (!(bool)(bVar17 >> 1 & 1));
   }
-  if ((uVar12 & 0x40) != 0) {
-    ACBDoSecondCallerWork(this,pCVar3,(int)uVar11,0);
+  if ((uVar9 & 0x40) != 0) {
+    ACBDoSecondCallerWork((CDevice *)param_1,(CAsyncCall *)param_2,(int)uVar8,0);
   }
-  puVar9 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar9) {
-    puVar9 = D3D::CDevice::KickOff(this);
+  puVar7 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar7) {
+    puVar7 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  if (puVar8 != (uint *)0x0) {
-    puVar9[1] = 0xc0006000;
-    puVar9[2] = 0x80000000;
-    puVar9[3] = 0xc0015a01;
-    puVar9[4] = 0x1a;
-    puVar9[5] = (((uint)(puVar8 + 1) >> 0x14) + 0x200 & 0x1000) + ((uint)(puVar8 + 1) & 0x1ffffffe)
+  if (puVar6 != (uint *)0x0) {
+    puVar7[1] = 0xc0006000;
+    puVar7[2] = 0x80000000;
+    puVar7[3] = 0xc0015a01;
+    puVar7[4] = 0x1a;
+    puVar7[5] = (((uint)(puVar6 + 1) >> 0x14) + 0x200 & 0x1000) + ((uint)(puVar6 + 1) & 0x1ffffffe)
                 | 1;
-    puVar9[6] = 0xc0004601;
-    puVar9 = puVar9 + 7;
-    *puVar9 = 0x19;
+    puVar7[6] = 0xc0004601;
+    puVar7 = puVar7 + 7;
+    *puVar7 = 0x19;
   }
-  puVar9[1] = 0x57e;
-  puVar9[2] = 0x10049;
-  puVar9[3] = 0x57b;
-  puVar9[4] = 0;
-  puVar9[5] = 0xc0006000;
-  puVar9[6] = this->m_PredicationMaskLo;
-  puVar9[7] = 0xc0006100;
-  puVar9[8] = this->m_PredicationMaskHi;
-  *(ulong **)&this->field_0x30 = puVar9 + 8;
-  if ((*(ulonglong *)&pCVar3->field_0x60 & 0x1c00000000000) != 0x1c00000000000) {
-    uVar14 = *(uint *)&this->field_0x28c8;
-    uVar1 = *(uint *)&this->field_0x28c4;
-    D3D::SetSurfaceClip(this,(int)(uVar1 << 0x11 | uVar1 >> 0xf) >> 0x11,
+  puVar7[1] = 0x57e;
+  puVar7[2] = 0x10049;
+  puVar7[3] = 0x57b;
+  puVar7[4] = 0;
+  puVar7[5] = 0xc0006000;
+  puVar7[6] = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1c);
+  puVar7[7] = 0xc0006100;
+  puVar7[8] = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x20);
+  param_1->m_pRing = puVar7 + 8;
+  if (((param_2->m_Persisted).m_Mask[4] & 0x1c00000000000) != 0x1c00000000000) {
+    uVar15 = (param_1->m_WindowPacket).WindowScissorBR.dword;
+    uVar1 = (param_1->m_WindowPacket).WindowScissorTL.dword;
+    D3D::SetSurfaceClip((CDevice *)param_1,(int)(uVar1 << 0x11 | uVar1 >> 0xf) >> 0x11,
                         (int)(uVar1 << 1 | uVar1 >> 0x1f) >> 0x11,
-                        (int)(uVar14 << 0x11 | uVar14 >> 0xf) >> 0x11,
-                        (int)(uVar14 << 1 | uVar14 >> 0x1f) >> 0x11);
+                        (int)(uVar15 << 0x11 | uVar15 >> 0xf) >> 0x11,
+                        (int)(uVar15 << 1 | uVar15 >> 0x1f) >> 0x11);
   }
-  *(ulonglong *)this = ~*(ulonglong *)&pCVar3->field_0x40;
-  uVar11 = -(ulonglong)(puVar5 == (ulong *)0x0) & 0xffffffff8007000e;
-  *(ulonglong *)&this->field_0x8 = ~*(ulonglong *)&pCVar3->field_0x48;
-  *(ulonglong *)&this->field_0x10 = ~*(ulonglong *)&pCVar3->field_0x50;
-  *(ulonglong *)&this->field_0x18 = ~*(ulonglong *)&pCVar3->field_0x58;
-  *(ulonglong *)&this->field_0x20 = ~*(ulonglong *)&pCVar3->field_0x60;
+  (param_1->m_Pending).m_Mask[0] = ~(param_2->m_Persisted).m_Mask[0];
+  uVar15 = -(uint)(puVar4 == (ulong *)0x0) & 0x8007000e;
+  (param_1->m_Pending).m_Mask[1] = ~(param_2->m_Persisted).m_Mask[1];
+  (param_1->m_Pending).m_Mask[2] = ~(param_2->m_Persisted).m_Mask[2];
+  (param_1->m_Pending).m_Mask[3] = ~(param_2->m_Persisted).m_Mask[3];
+  (param_1->m_Pending).m_Mask[4] = ~(param_2->m_Persisted).m_Mask[4];
 LAB_8285c954:
   InFuncHelper::~InFuncHelper(local_70);
   D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_80);
-  uVar7 = __restgprlr_21(uVar11);
-  return uVar7;
+  return uVar15;
 }
 
 

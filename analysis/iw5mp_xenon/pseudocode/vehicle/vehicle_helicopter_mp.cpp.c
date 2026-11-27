@@ -20,58 +20,56 @@ void CMD_Heli_SetDamageStage(scr_entref_t param_1)
 
 // 826BFC10  Helicopter_GetMethod  (vehicle/vehicle_helicopter_mp.cpp:31)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint Helicopter_GetMethod(char **param_1)
 
 {
   char cVar1;
   char cVar2;
   uint *puVar3;
-  undefined4 *puVar4;
-  uint uVar5;
-  int iVar6;
-  BuiltinMethodDef *pBVar7;
+  uint uVar4;
+  int iVar5;
+  BuiltinMethodDef *pBVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  longlong lVar10;
-  uint *puVar11;
+  longlong lVar9;
+  uint *puVar10;
   
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar4 == (undefined4 *)0x0) {
-    lVar10 = 2;
-    puVar11 = (uint *)0x821a0344;
+  if (param_1 == (char **)0x0) {
+    lVar9 = 2;
+    puVar10 = (uint *)0x821a0344;
     do {
-      puVar3 = puVar11 + 4;
-      puVar11 = puVar11 + 3;
-      Scr_RegisterFunction(*puVar3,0,*puVar11);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    uVar5 = __restgprlr_29(0);
-    return uVar5;
+      puVar3 = puVar10 + 4;
+      puVar10 = puVar10 + 3;
+      Scr_RegisterFunction(*puVar3,0,*puVar10);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    return 0;
   }
-  pBVar7 = s_methods;
-  iVar6 = 0;
-  uVar5 = 0;
+  pBVar6 = s_methods;
+  iVar5 = 0;
+  uVar4 = 0;
   do {
-    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
-    pcVar9 = (char *)*puVar4;
+    pcVar7 = *(char **)(&g_scr_meth_names + (pBVar6->name - 0x8000) * 4);
+    pcVar8 = *param_1;
     do {
-      cVar1 = *pcVar9;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar9 = pcVar9 + 1;
       pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (s_methods[iVar6].name - 0x8000) * 4);
-      uVar5 = __restgprlr_29(s_methods[iVar6].name);
-      return uVar5;
+      *param_1 = *(char **)(&g_scr_meth_names + (s_methods[iVar5].name - 0x8000) * 4);
+      return s_methods[iVar5].name;
     }
-    uVar5 = uVar5 + 0xc;
-    iVar6 = iVar6 + 1;
-    pBVar7 = pBVar7 + 1;
-    if (0x17 < uVar5) {
-      uVar5 = __restgprlr_29(0);
-      return uVar5;
+    uVar4 = uVar4 + 0xc;
+    iVar5 = iVar5 + 1;
+    pBVar6 = pBVar6 + 1;
+    if (0x17 < uVar4) {
+      return 0;
     }
   } while( true );
 }
@@ -79,6 +77,8 @@ uint Helicopter_GetMethod(char **param_1)
 
 // 826BFD08  G_SpawnHelicopter  (vehicle/vehicle_helicopter_mp.cpp:70)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -88,55 +88,47 @@ void G_SpawnHelicopter(gentity_s *param_1,gentity_s *param_2,char *param_3,char 
 {
   float fVar1;
   Vehicle *pVVar2;
-  gentity_s *pgVar3;
-  VehicleDef *pVVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int *piVar9;
-  float *pfVar10;
+  VehicleDef *pVVar3;
+  longlong lVar4;
+  int *piVar5;
+  float *pfVar6;
   float afStack_50 [2];
   float local_48;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x4d,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x4e,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x4f,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x50,0,"%s");
   }
-  G_SetModel(pgVar3,(char *)uVar7);
-  Vehicle_Create(pgVar3,(char *)uVar6,(gentity_s *)uVar5,1);
-  pVVar2 = pgVar3->vehicle;
+  G_SetModel(param_1,param_4);
+  Vehicle_Create(param_1,param_3,param_2,1);
+  pVVar2 = param_1->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x56,0,"%s");
   }
-  pVVar4 = Vehicle_GetServerDef(pVVar2->defIndex);
-  if (pVVar4->type != VEH_HELICOPTER) {
+  pVVar3 = Vehicle_GetServerDef(pVVar2->defIndex);
+  if (pVVar3->type != VEH_HELICOPTER) {
     Com_Error(ERR_DROP,"Invalid vehicle type.  Can\'t spawn a helicopter of vehicletype [%s]\n");
   }
-  if ((pgVar3->s).eType != 0xc) {
+  if ((param_1->s).eType != 0xc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter_mp.cpp"
                     ,0x5e,0,"%s");
   }
-  pfVar10 = (pVVar2->phys).wheelZPos;
-  piVar9 = (pVVar2->boneIndex).wheel;
-  lVar8 = 6;
+  pfVar6 = (pVVar2->phys).wheelZPos;
+  piVar5 = (pVVar2->boneIndex).wheel;
+  lVar4 = 6;
   fVar1 = (float)(vehHelicopterBoundsRadius->current).integer;
   (pVVar2->phys).bounds.midPoint[0] = 0.0;
   (pVVar2->phys).bounds.midPoint[1] = 0.0;
@@ -145,23 +137,22 @@ void G_SpawnHelicopter(gentity_s *param_1,gentity_s *param_2,char *param_3,char 
   (pVVar2->phys).bounds.halfSize[1] = fVar1;
   (pVVar2->phys).bounds.halfSize[2] = fVar1;
   do {
-    if (-1 < *piVar9) {
-      G_DObjGetWorldBoneIndexPos(pgVar3,*piVar9,afStack_50);
-      *pfVar10 = local_48;
+    if (-1 < *piVar5) {
+      G_DObjGetWorldBoneIndexPos(param_1,*piVar5,afStack_50);
+      *pfVar6 = local_48;
     }
-    lVar8 = lVar8 + -1;
-    piVar9 = piVar9 + 1;
-    pfVar10 = pfVar10 + 1;
-  } while (lVar8 != 0);
-  VEH_SetPosition(pgVar3,(pVVar2->phys).origin,vec3_origin,(pVVar2->phys).angles);
+    lVar4 = lVar4 + -1;
+    piVar5 = piVar5 + 1;
+    pfVar6 = pfVar6 + 1;
+  } while (lVar4 != 0);
+  VEH_SetPosition(param_1,(pVVar2->phys).origin,vec3_origin,(pVVar2->phys).angles);
   (pVVar2->phys).prevOrigin[0] = (pVVar2->phys).origin[0];
   (pVVar2->phys).prevOrigin[1] = (pVVar2->phys).origin[1];
   (pVVar2->phys).prevOrigin[2] = (pVVar2->phys).origin[2];
   (pVVar2->phys).prevAngles[0] = (pVVar2->phys).angles[0];
   (pVVar2->phys).prevAngles[1] = (pVVar2->phys).angles[1];
   (pVVar2->phys).prevAngles[2] = (pVVar2->phys).angles[2];
-  pgVar3->health = 99999;
-  __restgprlr_26();
+  param_1->health = 99999;
   return;
 }
 

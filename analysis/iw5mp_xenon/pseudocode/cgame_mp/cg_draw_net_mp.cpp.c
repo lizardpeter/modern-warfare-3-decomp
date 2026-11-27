@@ -69,28 +69,31 @@ void CL_TrackKillcamTime(int param_1)
 
 // 822BE1A8  CG_ComparePacketAnalysisSamples  (cgame_mp/cg_draw_net_mp.cpp:144)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int CG_ComparePacketAnalysisSamples(void *param_1,void *param_2)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
+  int iVar2;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  iVar3 = *piVar2;
-  iVar1 = *(int *)param_2;
+  iVar1 = *(int *)param_1;
+  iVar2 = *(int *)param_2;
   if (s_clientAnalysisData == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp",
                     0x94,0,"%s");
   }
-  iVar3 = __restgprlr_29((ulonglong)s_clientAnalysisData[iVar1] -
-                         (ulonglong)s_clientAnalysisData[iVar3]);
-  return iVar3;
+  return (uint)s_clientAnalysisData[iVar2] - (uint)s_clientAnalysisData[iVar1];
 }
 
 
 // 822BE208  CG_DrawSnapshotAnalysis  (cgame_mp/cg_draw_net_mp.cpp:155)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: ram */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -104,134 +107,131 @@ void CG_DrawSnapshotAnalysis(LocalClientNum_t param_1)
   int iVar3;
   int iVar4;
   Font_s *pFVar5;
-  LocalClientNum_t LVar6;
-  int iVar7;
-  cgs_t *pcVar8;
-  cg_s *pcVar9;
-  bool bVar13;
-  centity_s *pcVar10;
-  ScreenPlacement *pSVar11;
-  int iVar12;
+  int iVar6;
+  cgs_t *pcVar7;
+  cg_s *pcVar8;
+  bool bVar12;
+  centity_s *pcVar9;
+  ScreenPlacement *pSVar10;
+  int iVar11;
   int in_r4;
-  longlong lVar14;
-  undefined8 uVar15;
+  longlong lVar13;
+  undefined8 uVar14;
   int in_r5;
-  longlong lVar16;
-  undefined8 uVar17;
-  int iVar18;
-  undefined8 uVar19;
-  float *pfVar20;
-  Material *pMVar21;
-  longlong lVar22;
-  undefined4 *puVar23;
+  longlong lVar15;
+  undefined8 uVar16;
+  int iVar17;
+  undefined8 uVar18;
+  float *pfVar19;
+  Material *pMVar20;
+  longlong lVar21;
+  undefined4 *puVar22;
+  ulonglong uVar23;
   ulonglong uVar24;
-  ulonglong uVar25;
+  int *piVar25;
   int *piVar26;
-  int *piVar27;
-  uchar *puVar28;
-  int iVar29;
+  uchar *puVar27;
+  int iVar28;
+  double dVar29;
   double dVar30;
   double dVar31;
   double dVar32;
   double dVar33;
   double dVar34;
-  double dVar35;
   LocalClientNum_t LStack00000014;
   undefined1 uStack_119;
   undefined4 uStack_104;
   int local_100 [64];
   
-  __savegprlr();
-  LVar6 = __savefpr_26();
-  LStack00000014 = LVar6;
-  iVar7 = CL_IsCgameInitialized(LVar6);
-  if (iVar7 != 0) {
-    CG_GetLocalClientGlobals(LVar6);
-    pcVar8 = CG_GetLocalClientStaticGlobals(LVar6);
-    if (((pcVar8->localServer != 0) && ((net_showprofile->current).integer != 0)) &&
-       (iVar7 = (cg_packetAnalysisClient->current).integer, -1 < iVar7)) {
-      pcVar9 = CG_GetLocalClientGlobals(LVar6);
-      bVar13 = SV_NewPacketAnalysisReady();
-      if (bVar13) {
-        iVar12 = pcVar9->packetAnalysisFrameCount;
-        piVar27 = &pcVar9->packetAnalysisFrameCount;
-        iVar29 = 0;
-        iVar18 = iVar12 / 100 + (iVar12 >> 0x1f);
-        dVar33 = 256.0;
-        dVar35 = 0.1274999976158142;
-        iVar12 = (iVar12 + (iVar18 - (iVar18 >> 0x1f)) * -100) * 0xe + 0x798a0;
+  LStack00000014 = param_1;
+  iVar6 = CL_IsCgameInitialized(param_1);
+  if (iVar6 != 0) {
+    CG_GetLocalClientGlobals(param_1);
+    pcVar7 = CG_GetLocalClientStaticGlobals(param_1);
+    if (((pcVar7->localServer != 0) && ((net_showprofile->current).integer != 0)) &&
+       (iVar6 = (cg_packetAnalysisClient->current).integer, -1 < iVar6)) {
+      pcVar8 = CG_GetLocalClientGlobals(param_1);
+      bVar12 = SV_NewPacketAnalysisReady();
+      if (bVar12) {
+        iVar11 = pcVar8->packetAnalysisFrameCount;
+        piVar26 = &pcVar8->packetAnalysisFrameCount;
+        iVar28 = 0;
+        iVar17 = iVar11 / 100 + (iVar11 >> 0x1f);
+        dVar32 = 256.0;
+        dVar34 = 0.1274999976158142;
+        iVar11 = (iVar11 + (iVar17 - (iVar17 >> 0x1f)) * -100) * 0xe + 0x798a0;
         do {
-          iVar18 = g_bitsSent[iVar7][iVar29];
-          if (iVar18 < 0x7d1) {
-            if (((iVar18 * 0xff) / 2000 < 0) ||
-               (dVar33 <= (double)(float)((double)(longlong)iVar18 * dVar35))) {
+          iVar17 = g_bitsSent[iVar6][iVar28];
+          if (iVar17 < 0x7d1) {
+            if (((iVar17 * 0xff) / 2000 < 0) ||
+               (dVar32 <= (double)(float)((double)(longlong)iVar17 * dVar34))) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
                               ,0xd0,0,"%s\n\t(255 * g_bitsSent[client][field]/2000) = %g");
             }
             uStack_119 = (undefined1)
-                         (longlong)((double)(longlong)g_bitsSent[iVar7][iVar29] * dVar35);
-            *(undefined1 *)((int)pcVar9 + iVar29 + iVar12) = uStack_119;
+                         (longlong)((double)(longlong)g_bitsSent[iVar6][iVar28] * dVar34);
+            *(undefined1 *)((int)pcVar8 + iVar28 + iVar11) = uStack_119;
           }
           else {
-            *(undefined1 *)((int)pcVar9 + iVar29 + iVar12) = 0xff;
+            *(undefined1 *)((int)pcVar8 + iVar28 + iVar11) = 0xff;
           }
-          iVar29 = iVar29 + 1;
-        } while (iVar29 < 0xe);
-        uVar1 = *piVar27;
+          iVar28 = iVar28 + 1;
+        } while (iVar28 < 0xe);
+        uVar1 = *piVar26;
         uVar2 = (int)uVar1 / 10 + ((int)uVar1 >> 0x1f);
-        uVar24 = (longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f);
+        uVar23 = (longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f);
         memset();
         memset();
-        lVar16 = 0x4c;
-        lVar14 = 0;
+        lVar15 = 0x4c;
+        lVar13 = 0;
         memset();
-        iVar12 = 0;
+        iVar11 = 0;
         do {
-          iVar18 = g_currentSnapshotPerEntity[iVar7][iVar12];
-          if (iVar18 != 0) {
-            pcVar10 = CG_GetEntity(LVar6,iVar12);
-            uVar2 = (pcVar10->nextState).eType;
-            uVar25 = (ulonglong)uVar2;
+          iVar17 = g_currentSnapshotPerEntity[iVar6][iVar11];
+          if (iVar17 != 0) {
+            pcVar9 = CG_GetEntity(param_1,iVar11);
+            uVar2 = (pcVar9->nextState).eType;
+            uVar24 = (ulonglong)uVar2;
             if (0x12 < (int)uVar2) {
-              uVar25 = 0x12;
+              uVar24 = 0x12;
             }
-            lVar22 = ((ulonglong)uVar1 + (uVar24 + (uVar24 & 0x3fffffff) * 4 & 0x7fffffff) * -2) *
+            lVar21 = ((ulonglong)uVar1 + (uVar23 + (uVar23 & 0x3fffffff) * 4 & 0x7fffffff) * -2) *
                      0x13;
-            iVar29 = (int)((lVar22 + uVar25 + 0x1e786 & 0xffffffff) << 2);
-            iVar3 = (int)((lVar22 + uVar25 + 0x1e844 & 0xffffffff) << 2);
-            iVar4 = (int)((lVar22 + 0x1e902 + uVar25 & 0xffffffff) << 2);
-            lVar16 = (ulonglong)
-                     *(uint *)((int)(pcVar9->predictedPlayerState).origin + iVar3 + -0x1c) + 1;
-            uVar2 = *(uint *)((int)(pcVar9->predictedPlayerState).origin + iVar4 + -0x1c);
-            *(int *)((int)(pcVar9->predictedPlayerState).origin + iVar29 + -0x1c) =
-                 *(int *)((int)(pcVar9->predictedPlayerState).origin + iVar29 + -0x1c) + iVar18;
-            *(int *)((int)(pcVar9->predictedPlayerState).origin + iVar3 + -0x1c) = (int)lVar16;
-            lVar14 = (ulonglong)g_currentSnapshotFieldsPerEntity[iVar7][iVar12] + (ulonglong)uVar2;
-            *(int *)((int)(pcVar9->predictedPlayerState).origin + iVar4 + -0x1c) = (int)lVar14;
-            if ((int)uVar25 == 1) {
-              iVar18 = (int)((lVar22 + 0x1e903U & 0xffffffff) << 2);
-              *(uint *)((int)(pcVar9->predictedPlayerState).origin + iVar18 + -0x1c) =
-                   (uint)g_currentSnapshotPlayerStateFields[iVar7] +
-                   *(int *)((int)(pcVar9->predictedPlayerState).origin + iVar18 + -0x1c);
+            iVar28 = (int)((lVar21 + uVar24 + 0x1e786 & 0xffffffff) << 2);
+            iVar3 = (int)((lVar21 + uVar24 + 0x1e844 & 0xffffffff) << 2);
+            iVar4 = (int)((lVar21 + 0x1e902 + uVar24 & 0xffffffff) << 2);
+            lVar15 = (ulonglong)
+                     *(uint *)((int)(pcVar8->predictedPlayerState).origin + iVar3 + -0x1c) + 1;
+            uVar2 = *(uint *)((int)(pcVar8->predictedPlayerState).origin + iVar4 + -0x1c);
+            *(int *)((int)(pcVar8->predictedPlayerState).origin + iVar28 + -0x1c) =
+                 *(int *)((int)(pcVar8->predictedPlayerState).origin + iVar28 + -0x1c) + iVar17;
+            *(int *)((int)(pcVar8->predictedPlayerState).origin + iVar3 + -0x1c) = (int)lVar15;
+            lVar13 = (ulonglong)g_currentSnapshotFieldsPerEntity[iVar6][iVar11] + (ulonglong)uVar2;
+            *(int *)((int)(pcVar8->predictedPlayerState).origin + iVar4 + -0x1c) = (int)lVar13;
+            if ((int)uVar24 == 1) {
+              iVar17 = (int)((lVar21 + 0x1e903U & 0xffffffff) << 2);
+              *(uint *)((int)(pcVar8->predictedPlayerState).origin + iVar17 + -0x1c) =
+                   (uint)g_currentSnapshotPlayerStateFields[iVar6] +
+                   *(int *)((int)(pcVar8->predictedPlayerState).origin + iVar17 + -0x1c);
             }
           }
-          in_r5 = (int)lVar16;
-          in_r4 = (int)lVar14;
-          iVar12 = iVar12 + 1;
-        } while (iVar12 < 0x800);
-        piVar26 = &pcVar9->numSnapshots;
-        iVar7 = *piVar26;
-        *piVar26 = iVar7 + 1;
-        if (10 < iVar7 + 1) {
-          *piVar26 = 10;
+          in_r5 = (int)lVar15;
+          in_r4 = (int)lVar13;
+          iVar11 = iVar11 + 1;
+        } while (iVar11 < 0x800);
+        piVar25 = &pcVar8->numSnapshots;
+        iVar6 = *piVar25;
+        *piVar25 = iVar6 + 1;
+        if (10 < iVar6 + 1) {
+          *piVar25 = 10;
         }
         SV_ClearPacketAnalysis();
-        *piVar27 = *piVar27 + 1;
+        *piVar26 = *piVar26 + 1;
       }
-      pSVar11 = ScrPlace_GetActivePlacement(LVar6);
-      dVar33 = 100.0;
-      dVar35 = 0.0;
-      UI_DrawHandlePic(pSVar11,-350.0,0.0,100.0,100.0,in_r4,in_r5,(float *)0x82180000,
+      pSVar10 = ScrPlace_GetActivePlacement(param_1);
+      dVar32 = 100.0;
+      dVar34 = 0.0;
+      UI_DrawHandlePic(pSVar10,-350.0,0.0,100.0,100.0,in_r4,in_r5,(float *)0x82180000,
                        (Material *)&IMAGE_DOS_HEADER_82000000);
       if (0x11 < (cg_packetAnalysisClient->current).unsignedInt) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
@@ -240,48 +240,48 @@ void CG_DrawSnapshotAnalysis(LocalClientNum_t param_1)
                        );
       }
       pFVar5 = cgMedia.smallDevFont;
-      iVar7 = (cg_packetAnalysisClient->current).integer;
-      pSVar11 = ScrPlace_GetActivePlacement(LVar6);
-      UI_DrawText(pSVar11,(pcVar9->bgs).clientinfo[iVar7].name,0x20,pFVar5,-345.0,115.0,-0x7e000000,
+      iVar6 = (cg_packetAnalysisClient->current).integer;
+      pSVar10 = ScrPlace_GetActivePlacement(param_1);
+      UI_DrawText(pSVar10,(pcVar8->bgs).clientinfo[iVar6].name,0x20,pFVar5,-345.0,115.0,-0x7e000000,
                   -0x7dff0000,0.4,(float *)0x3,1);
-      dVar31 = 0.003921568859368563;
-      dVar34 = 1.0;
-      dVar32 = -250.0;
-      iVar7 = 0;
+      dVar30 = 0.003921568859368563;
+      dVar33 = 1.0;
+      dVar31 = -250.0;
+      iVar6 = 0;
       do {
-        iVar18 = pcVar9->packetAnalysisFrameCount + iVar7;
-        lVar16 = 0xe;
-        iVar12 = iVar18 / 100 + (iVar18 >> 0x1f);
-        lVar14 = 0;
-        puVar23 = &uStack_104;
-        puVar28 = (uchar *)((int)pcVar9 +
-                           (iVar18 + (iVar12 - (iVar12 >> 0x1f)) * -100) * 0xe + 0x798a0);
+        iVar17 = pcVar8->packetAnalysisFrameCount + iVar6;
+        lVar15 = 0xe;
+        iVar11 = iVar17 / 100 + (iVar17 >> 0x1f);
+        lVar13 = 0;
+        puVar22 = &uStack_104;
+        puVar27 = (uchar *)((int)pcVar8 +
+                           (iVar17 + (iVar11 - (iVar11 >> 0x1f)) * -100) * 0xe + 0x798a0);
         do {
-          puVar23 = puVar23 + 1;
-          *puVar23 = (int)lVar14;
-          lVar14 = lVar14 + 1;
-          lVar16 = lVar16 + -1;
-        } while (lVar16 != 0);
-        uVar17 = 4;
-        uVar19 = 0xffffffff822be1a8;
-        uVar15 = 0xe;
-        s_clientAnalysisData = puVar28;
+          puVar22 = puVar22 + 1;
+          *puVar22 = (int)lVar13;
+          lVar13 = lVar13 + 1;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        uVar16 = 4;
+        uVar18 = 0xffffffff822be1a8;
+        uVar14 = 0xe;
+        s_clientAnalysisData = puVar27;
         qsort(local_100,0xe,4,CG_ComparePacketAnalysisSamples);
-        piVar27 = local_100;
-        lVar16 = 0xe;
+        piVar26 = local_100;
+        lVar15 = 0xe;
         do {
-          iVar12 = *piVar27;
-          if ((iVar12 < 0) || (0xd < iVar12)) {
-            uVar17 = 0;
-            uVar15 = 0x10b;
-            uVar19 = 0xffffffff8201500c;
-            lVar14 = -0x7dfeb02c;
+          iVar11 = *piVar26;
+          if ((iVar11 < 0) || (0xd < iVar11)) {
+            uVar16 = 0;
+            uVar14 = 0x10b;
+            uVar18 = 0xffffffff8201500c;
+            lVar13 = -0x7dfeb02c;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
                             ,0x10b,0,"%s\n\t(field) = %i");
           }
-          iVar18 = (int)((double)(float)((double)puVar28[iVar12] * dVar33) * dVar31);
-          if (iVar18 != 0) {
-            switch(iVar12) {
+          iVar17 = (int)((double)(float)((double)puVar27[iVar11] * dVar32) * dVar30);
+          if (iVar17 != 0) {
+            switch(iVar11) {
             case 0:
               break;
             case 1:
@@ -307,102 +307,100 @@ void CG_DrawSnapshotAnalysis(LocalClientNum_t param_1)
               break;
             case 0xc:
             }
-            dVar30 = (double)(longlong)iVar18;
-            pSVar11 = ScrPlace_GetActivePlacement(LStack00000014);
-            CL_DrawStretchPic(pSVar11,(float)((double)(float)(dVar32 - (double)(longlong)iVar7) -
-                                             dVar34),(float)(dVar33 - dVar30),(float)dVar34,
-                              (float)dVar30,(int)uVar15,(int)uVar17,(float)dVar35,(float)dVar35,
-                              (float)dVar35,(float)dVar35,(float *)uVar19,(Material *)lVar14);
+            dVar29 = (double)(longlong)iVar17;
+            pSVar10 = ScrPlace_GetActivePlacement(LStack00000014);
+            CL_DrawStretchPic(pSVar10,(float)((double)(float)(dVar31 - (double)(longlong)iVar6) -
+                                             dVar33),(float)(dVar32 - dVar29),(float)dVar33,
+                              (float)dVar29,(int)uVar14,(int)uVar16,(float)dVar34,(float)dVar34,
+                              (float)dVar34,(float)dVar34,(float *)uVar18,(Material *)lVar13);
           }
 switchD_822be7c8_caseD_3:
-          lVar16 = lVar16 + -1;
-          piVar27 = piVar27 + 1;
-        } while (lVar16 != 0);
-        iVar7 = iVar7 + 1;
-      } while (iVar7 < 100);
-      iVar7 = 0;
-      dVar32 = 3.0;
-      uVar19 = 0xffffffff82010000;
-      uVar15 = 0xffffffff82010000;
-      lVar14 = -0x7dff0000;
-      dVar33 = -235.0;
-      uVar24 = 0xffffffff82010000;
-      dVar35 = -240.0;
-      dVar31 = 5.0;
-      dVar34 = (double)(longlong)(cg_packetAnalysisTextY->current).integer;
+          lVar15 = lVar15 + -1;
+          piVar26 = piVar26 + 1;
+        } while (lVar15 != 0);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 < 100);
+      iVar6 = 0;
+      dVar31 = 3.0;
+      uVar18 = 0xffffffff82010000;
+      uVar14 = 0xffffffff82010000;
+      lVar13 = -0x7dff0000;
+      dVar32 = -235.0;
+      uVar23 = 0xffffffff82010000;
+      dVar34 = -240.0;
+      dVar30 = 5.0;
+      dVar33 = (double)(longlong)(cg_packetAnalysisTextY->current).integer;
       do {
-        pMVar21 = (Material *)uVar24;
-        pfVar20 = (float *)lVar14;
-        iVar18 = (int)uVar15;
-        iVar12 = (int)uVar19;
-        switch(iVar7) {
+        pMVar20 = (Material *)uVar23;
+        pfVar19 = (float *)lVar13;
+        iVar17 = (int)uVar14;
+        iVar11 = (int)uVar18;
+        switch(iVar6) {
         case 0:
-          uVar19 = 0xffffffff82014f20;
+          uVar18 = 0xffffffff82014f20;
           break;
         case 1:
-          uVar19 = 0xffffffff82014f08;
+          uVar18 = 0xffffffff82014f08;
           break;
         case 2:
-          uVar19 = 0xffffffff82014ef8;
+          uVar18 = 0xffffffff82014ef8;
           break;
         case 3:
         case 5:
         case 9:
           goto switchD_822be9b4_caseD_3;
         case 4:
-          uVar19 = 0xffffffff82014f14;
+          uVar18 = 0xffffffff82014f14;
           break;
         case 6:
-          uVar19 = 0xffffffff82014f30;
+          uVar18 = 0xffffffff82014f30;
           break;
         case 7:
-          uVar19 = 0xffffffff82014f44;
+          uVar18 = 0xffffffff82014f44;
           break;
         case 8:
-          uVar19 = 0xffffffff82014f54;
+          uVar18 = 0xffffffff82014f54;
           break;
         case 10:
-          uVar19 = 0xffffffff82014f64;
+          uVar18 = 0xffffffff82014f64;
           break;
         case 0xb:
-          uVar19 = 0xffffffff82014f78;
+          uVar18 = 0xffffffff82014f78;
           break;
         case 0xc:
-          uVar19 = 0xffffffff82014f8c;
+          uVar18 = 0xffffffff82014f8c;
           break;
         case 0xd:
-          uVar19 = 0xffffffff82014f9c;
+          uVar18 = 0xffffffff82014f9c;
           break;
         default:
-          uVar19 = 0xffffffff820068af;
+          uVar18 = 0xffffffff820068af;
           if (alwaysfails == 0) {
-            iVar18 = 0;
-            iVar12 = 0x179;
-            pfVar20 = (float *)"Missing handler for snapshot data source type";
+            iVar17 = 0;
+            iVar11 = 0x179;
+            pfVar19 = (float *)"Missing handler for snapshot data source type";
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
                             ,0x179,0,"Missing handler for snapshot data source type");
           }
         }
-        pSVar11 = ScrPlace_GetActivePlacement(LStack00000014);
-        UI_DrawHandlePic(pSVar11,(float)dVar35,(float)(dVar34 - dVar31),(float)dVar32,(float)dVar32,
-                         iVar12,iVar18,pfVar20,pMVar21);
+        pSVar10 = ScrPlace_GetActivePlacement(LStack00000014);
+        UI_DrawHandlePic(pSVar10,(float)dVar34,(float)(dVar33 - dVar30),(float)dVar31,(float)dVar31,
+                         iVar11,iVar17,pfVar19,pMVar20);
         pFVar5 = cgMedia.smallDevFont;
-        dVar30 = (double)(cg_packetAnalysisTextScale->current).value;
-        pSVar11 = ScrPlace_GetActivePlacement(LStack00000014);
-        uVar15 = 0x20;
-        UI_DrawText(pSVar11,(char *)uVar19,0x20,pFVar5,(float)dVar33,(float)dVar34,(int)pMVar21,3,
-                    (float)dVar30,(float *)0x3,1);
-        uVar24 = ZEXT48(&cgMedia);
-        iVar12 = UI_TextHeight(cgMedia.smallDevFont,(cg_packetAnalysisTextScale->current).value);
-        lVar14 = (longlong)iVar12;
-        dVar34 = (double)(float)((double)lVar14 + dVar34);
+        dVar29 = (double)(cg_packetAnalysisTextScale->current).value;
+        pSVar10 = ScrPlace_GetActivePlacement(LStack00000014);
+        uVar14 = 0x20;
+        UI_DrawText(pSVar10,(char *)uVar18,0x20,pFVar5,(float)dVar32,(float)dVar33,(int)pMVar20,3,
+                    (float)dVar29,(float *)0x3,1);
+        uVar23 = ZEXT48(&cgMedia);
+        iVar11 = UI_TextHeight(cgMedia.smallDevFont,(cg_packetAnalysisTextScale->current).value);
+        lVar13 = (longlong)iVar11;
+        dVar33 = (double)(float)((double)lVar13 + dVar33);
 switchD_822be9b4_caseD_3:
-        iVar7 = iVar7 + 1;
-      } while (iVar7 < 0xe);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 < 0xe);
     }
   }
-  __restfpr_26();
-  __restgprlr();
   return;
 }
 
@@ -419,6 +417,10 @@ int CG_CompareEntityAnalysisSamples(void *param_1,void *param_2)
 
 // 822BEBA8  CG_DrawSnapshotEntityAnalysis  (cgame_mp/cg_draw_net_mp.cpp:399)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: ram */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -430,33 +432,33 @@ void CG_DrawSnapshotEntityAnalysis(LocalClientNum_t param_1)
   uint uVar1;
   uint *puVar2;
   Font_s *pFVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  cgs_t *pcVar6;
-  cg_s *pcVar7;
-  ScreenPlacement *pSVar8;
-  char *pcVar9;
+  int iVar4;
+  cgs_t *pcVar5;
+  cg_s *pcVar6;
+  ScreenPlacement *pSVar7;
+  char *pcVar8;
   int in_r4;
   int in_r5;
-  longlong lVar10;
-  undefined8 uVar11;
-  float *pfVar12;
-  longlong lVar13;
-  Material *pMVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  uint uVar17;
-  longlong lVar18;
-  int iVar19;
-  longlong lVar20;
-  ulonglong uVar21;
-  uint uVar22;
-  ulonglong uVar23;
-  int iVar24;
-  longlong lVar25;
-  int *piVar26;
-  uint uVar27;
-  longlong lVar28;
+  longlong lVar9;
+  undefined8 uVar10;
+  float *pfVar11;
+  longlong lVar12;
+  Material *pMVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  uint uVar16;
+  longlong lVar17;
+  int iVar18;
+  longlong lVar19;
+  ulonglong uVar20;
+  uint uVar21;
+  ulonglong uVar22;
+  int iVar23;
+  longlong lVar24;
+  int *piVar25;
+  uint uVar26;
+  longlong lVar27;
+  double dVar28;
   double dVar29;
   double dVar30;
   double dVar31;
@@ -464,23 +466,20 @@ void CG_DrawSnapshotEntityAnalysis(LocalClientNum_t param_1)
   double dVar33;
   double dVar34;
   double dVar35;
-  double dVar36;
   LocalClientNum_t LStack00000014;
   undefined8 local_138;
   int local_130 [76];
   
-  __savegprlr();
-  LVar4 = __savefpr_23();
-  LStack00000014 = LVar4;
-  iVar5 = CL_IsCgameInitialized(LVar4);
-  if ((((iVar5 != 0) && (pcVar6 = CG_GetLocalClientStaticGlobals(LVar4), pcVar6->localServer != 0))
-      && (pcVar7 = CG_GetLocalClientGlobals(LVar4), (net_showprofile->current).integer != 0)) &&
-     (-1 < (cg_packetAnalysisClient->current).integer)) {
-    pSVar8 = ScrPlace_GetActivePlacement(LVar4);
-    dVar30 = 0.0;
-    dVar31 = 10.0;
-    dVar33 = 100.0;
-    UI_DrawHandlePic(pSVar8,10.0,0.0,80.0,100.0,in_r4,in_r5,(float *)0x82180000,
+  LStack00000014 = param_1;
+  iVar4 = CL_IsCgameInitialized(param_1);
+  if ((((iVar4 != 0) && (pcVar5 = CG_GetLocalClientStaticGlobals(param_1), pcVar5->localServer != 0)
+       ) && (pcVar6 = CG_GetLocalClientGlobals(param_1), (net_showprofile->current).integer != 0))
+     && (-1 < (cg_packetAnalysisClient->current).integer)) {
+    pSVar7 = ScrPlace_GetActivePlacement(param_1);
+    dVar29 = 0.0;
+    dVar30 = 10.0;
+    dVar32 = 100.0;
+    UI_DrawHandlePic(pSVar7,10.0,0.0,80.0,100.0,in_r4,in_r5,(float *)0x82180000,
                      (Material *)&IMAGE_DOS_HEADER_82000000);
     if (0x11 < (cg_packetAnalysisClient->current).unsignedInt) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
@@ -489,18 +488,18 @@ void CG_DrawSnapshotEntityAnalysis(LocalClientNum_t param_1)
                      );
     }
     pFVar3 = cgMedia.smallDevFont;
-    iVar5 = (cg_packetAnalysisClient->current).integer;
-    pSVar8 = ScrPlace_GetActivePlacement(LVar4);
-    pfVar12 = (pcVar7->predictedPlayerState).origin + iVar5 * 0x164 + -7;
-    UI_DrawText(pSVar8,(char *)(pfVar12 + 0x402e5),0x20,pFVar3,15.0,115.0,(int)pfVar12,-0x7e000000,
+    iVar4 = (cg_packetAnalysisClient->current).integer;
+    pSVar7 = ScrPlace_GetActivePlacement(param_1);
+    pfVar11 = (pcVar6->predictedPlayerState).origin + iVar4 * 0x164 + -7;
+    UI_DrawText(pSVar7,(char *)(pfVar11 + 0x402e5),0x20,pFVar3,15.0,115.0,(int)pfVar11,-0x7e000000,
                 0.4,(float *)0x1,1);
-    dVar35 = 8.0;
-    dVar36 = (double)(longlong)(cg_packetAnalysisEntTextY->current).integer;
-    lVar20 = 0;
-    dVar34 = 3.0;
-    dVar32 = 105.0;
+    dVar34 = 8.0;
+    dVar35 = (double)(longlong)(cg_packetAnalysisEntTextY->current).integer;
+    lVar19 = 0;
+    dVar33 = 3.0;
+    dVar31 = 105.0;
     do {
-      switch((int)lVar20) {
+      switch((int)lVar19) {
       case 0:
         break;
       case 1:
@@ -541,124 +540,124 @@ void CG_DrawSnapshotEntityAnalysis(LocalClientNum_t param_1)
         break;
       default:
         if (alwaysfails == 0) {
-          pcVar9 = va("Missing handler for snapshot entity type %i");
+          pcVar8 = va("Missing handler for snapshot entity type %i");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
-                          ,0x21c,0,pcVar9);
+                          ,0x21c,0,pcVar8);
         }
       }
-      lVar25 = 0;
-      lVar28 = 5;
-      iVar24 = 0;
-      uVar27 = 0;
-      uVar23 = 0;
-      uVar21 = 0;
+      lVar24 = 0;
+      lVar27 = 5;
+      iVar23 = 0;
+      uVar26 = 0;
       uVar22 = 0;
-      lVar13 = 0;
-      pfVar12 = (float *)0x0;
-      lVar10 = 0;
-      iVar5 = 0;
-      lVar18 = (lVar20 + 0x1e844U & 0x3fffffff) * 4 + ZEXT48(pcVar7);
+      uVar20 = 0;
+      uVar21 = 0;
+      lVar12 = 0;
+      pfVar11 = (float *)0x0;
+      lVar9 = 0;
+      iVar4 = 0;
+      lVar17 = (lVar19 + 0x1e844U & 0x3fffffff) * 4 + ZEXT48(pcVar6);
       do {
-        puVar2 = (uint *)lVar18;
-        lVar16 = ((ulonglong)(uint)pcVar7->packetAnalysisFrameCount - lVar13) + -1;
-        uVar17 = (uint)lVar16;
-        uVar15 = (longlong)((int)uVar17 / 10 + ((int)uVar17 >> 0x1f)) + (ulonglong)(uVar17 >> 0x1f);
+        puVar2 = (uint *)lVar17;
+        lVar15 = ((ulonglong)(uint)pcVar6->packetAnalysisFrameCount - lVar12) + -1;
+        uVar16 = (uint)lVar15;
+        uVar14 = (longlong)((int)uVar16 / 10 + ((int)uVar16 >> 0x1f)) + (ulonglong)(uVar16 >> 0x1f);
         *(uint *)(&DAT_82a21590 +
-                 (int)(((lVar16 + (uVar15 + (uVar15 & 0x3fffffff) * 4 & 0x7fffffff) * -2) * 0x13 +
-                        lVar20 & 0xffffffff) << 2)) = puVar2[-0xbe];
-        uVar15 = (ulonglong)*puVar2;
-        uVar17 = puVar2[0xbe];
-        lVar25 = uVar15 + lVar25;
-        iVar24 = uVar17 + iVar24;
-        if ((int)uVar27 < (int)puVar2[-0xbe]) {
-          uVar23 = uVar15;
-          uVar27 = puVar2[-0xbe];
+                 (int)(((lVar15 + (uVar14 + (uVar14 & 0x3fffffff) * 4 & 0x7fffffff) * -2) * 0x13 +
+                        lVar19 & 0xffffffff) << 2)) = puVar2[-0xbe];
+        uVar14 = (ulonglong)*puVar2;
+        uVar16 = puVar2[0xbe];
+        lVar24 = uVar14 + lVar24;
+        iVar23 = uVar16 + iVar23;
+        if ((int)uVar26 < (int)puVar2[-0xbe]) {
+          uVar22 = uVar14;
+          uVar26 = puVar2[-0xbe];
         }
-        if ((int)uVar21 < (int)*puVar2) {
-          uVar21 = uVar15;
+        if ((int)uVar20 < (int)*puVar2) {
+          uVar20 = uVar14;
         }
-        if ((int)uVar22 < (int)uVar17) {
-          uVar22 = uVar17;
+        if ((int)uVar21 < (int)uVar16) {
+          uVar21 = uVar16;
         }
-        lVar16 = ((ulonglong)(uint)pcVar7->packetAnalysisFrameCount - lVar13) + -2;
-        uVar17 = (uint)lVar16;
-        uVar15 = (longlong)((int)uVar17 / 10 + ((int)uVar17 >> 0x1f)) + (ulonglong)(uVar17 >> 0x1f);
+        lVar15 = ((ulonglong)(uint)pcVar6->packetAnalysisFrameCount - lVar12) + -2;
+        uVar16 = (uint)lVar15;
+        uVar14 = (longlong)((int)uVar16 / 10 + ((int)uVar16 >> 0x1f)) + (ulonglong)(uVar16 >> 0x1f);
         *(uint *)(&DAT_82a21590 +
-                 (int)(((lVar16 + (uVar15 + (uVar15 & 0x3fffffff) * 4 & 0x7fffffff) * -2) * 0x13 +
-                        lVar20 & 0xffffffff) << 2)) = puVar2[-0xab];
-        uVar15 = (ulonglong)puVar2[0x13];
-        uVar17 = puVar2[0xd1];
+                 (int)(((lVar15 + (uVar14 + (uVar14 & 0x3fffffff) * 4 & 0x7fffffff) * -2) * 0x13 +
+                        lVar19 & 0xffffffff) << 2)) = puVar2[-0xab];
+        uVar14 = (ulonglong)puVar2[0x13];
+        uVar16 = puVar2[0xd1];
         uVar1 = puVar2[-0xab];
-        pfVar12 = (float *)(uVar1 + (int)pfVar12);
-        lVar10 = uVar15 + lVar10;
-        iVar5 = uVar17 + iVar5;
-        if ((int)uVar27 < (int)uVar1) {
-          uVar23 = uVar15;
-          uVar27 = uVar1;
+        pfVar11 = (float *)(uVar1 + (int)pfVar11);
+        lVar9 = uVar14 + lVar9;
+        iVar4 = uVar16 + iVar4;
+        if ((int)uVar26 < (int)uVar1) {
+          uVar22 = uVar14;
+          uVar26 = uVar1;
         }
-        if ((int)uVar21 < (int)puVar2[0x13]) {
-          uVar21 = uVar15;
+        if ((int)uVar20 < (int)puVar2[0x13]) {
+          uVar20 = uVar14;
         }
-        if ((int)uVar22 < (int)uVar17) {
-          uVar22 = uVar17;
+        if ((int)uVar21 < (int)uVar16) {
+          uVar21 = uVar16;
         }
-        lVar13 = lVar13 + 2;
-        pMVar14 = (Material *)lVar13;
-        lVar18 = lVar18 + 0x98;
-        lVar28 = lVar28 + -1;
-      } while (lVar28 != 0);
-      iVar24 = iVar5 + iVar24;
-      lVar13 = 1;
-      if (lVar10 + lVar25 != 0) {
-        lVar13 = lVar10 + lVar25;
+        lVar12 = lVar12 + 2;
+        pMVar13 = (Material *)lVar12;
+        lVar17 = lVar17 + 0x98;
+        lVar27 = lVar27 + -1;
+      } while (lVar27 != 0);
+      iVar23 = iVar4 + iVar23;
+      lVar12 = 1;
+      if (lVar9 + lVar24 != 0) {
+        lVar12 = lVar9 + lVar24;
       }
-      if ((int)uVar23 != 0) {
-        pSVar8 = ScrPlace_GetActivePlacement(LStack00000014);
-        UI_DrawHandlePic(pSVar8,(float)dVar33,(float)(dVar36 - dVar35),(float)dVar34,(float)dVar34,
-                         iVar5,(int)lVar10,pfVar12,pMVar14);
+      if ((int)uVar22 != 0) {
+        pSVar7 = ScrPlace_GetActivePlacement(LStack00000014);
+        UI_DrawHandlePic(pSVar7,(float)dVar32,(float)(dVar35 - dVar34),(float)dVar33,(float)dVar33,
+                         iVar4,(int)lVar9,pfVar11,pMVar13);
         pFVar3 = cgMedia.smallDevFont;
-        local_138 = (longlong)iVar24;
-        dVar29 = (double)(cg_packetAnalysisEntTextScale->current).value;
-        iVar5 = SUB84((double)((float)local_138 / (float)(longlong)(int)lVar13),0);
-        pcVar9 = va("%s: %.1fx%.1fb (%.1f fields), max %ix%.1fb (%i f)");
-        pSVar8 = ScrPlace_GetActivePlacement(LStack00000014);
-        UI_DrawText(pSVar8,pcVar9,0x50,pFVar3,(float)dVar32,(float)dVar36,iVar5,3,(float)dVar29,
+        local_138 = (longlong)iVar23;
+        dVar28 = (double)(cg_packetAnalysisEntTextScale->current).value;
+        iVar4 = SUB84((double)((float)local_138 / (float)(longlong)(int)lVar12),0);
+        pcVar8 = va("%s: %.1fx%.1fb (%.1f fields), max %ix%.1fb (%i f)");
+        pSVar7 = ScrPlace_GetActivePlacement(LStack00000014);
+        UI_DrawText(pSVar7,pcVar8,0x50,pFVar3,(float)dVar31,(float)dVar35,iVar4,3,(float)dVar28,
                     (float *)0x1,1);
-        iVar5 = UI_TextHeight(cgMedia.smallDevFont,(cg_packetAnalysisEntTextScale->current).value);
-        dVar36 = (double)(float)((double)(longlong)iVar5 + dVar36);
+        iVar4 = UI_TextHeight(cgMedia.smallDevFont,(cg_packetAnalysisEntTextScale->current).value);
+        dVar35 = (double)(float)((double)(longlong)iVar4 + dVar35);
       }
-      lVar20 = lVar20 + 1;
-    } while ((int)lVar20 < 0x13);
-    iVar24 = 0;
-    iVar5 = 0;
-    dVar34 = 1.0;
-    dVar32 = 0.0006249999860301614;
+      lVar19 = lVar19 + 1;
+    } while ((int)lVar19 < 0x13);
+    iVar23 = 0;
+    iVar4 = 0;
+    dVar33 = 1.0;
+    dVar31 = 0.0006249999860301614;
     do {
-      piVar26 = (int *)((int)&local_138 + 4);
-      iVar19 = 0;
-      lVar20 = 0x13;
+      piVar25 = (int *)((int)&local_138 + 4);
+      iVar18 = 0;
+      lVar19 = 0x13;
       do {
-        piVar26 = piVar26 + 1;
-        *piVar26 = iVar19;
-        iVar19 = iVar19 + 1;
-        lVar20 = lVar20 + -1;
-      } while (lVar20 != 0);
-      uVar11 = 4;
-      lVar20 = -0x7dd41498;
-      s_sampleNum = iVar24;
+        piVar25 = piVar25 + 1;
+        *piVar25 = iVar18;
+        iVar18 = iVar18 + 1;
+        lVar19 = lVar19 + -1;
+      } while (lVar19 != 0);
+      uVar10 = 4;
+      lVar19 = -0x7dd41498;
+      s_sampleNum = iVar23;
       qsort(local_130,0x13,4,CG_CompareEntityAnalysisSamples);
-      piVar26 = local_130;
-      lVar10 = 0x13;
+      piVar25 = local_130;
+      lVar9 = 0x13;
       do {
-        iVar19 = *piVar26;
-        pMVar14 = *(Material **)(&DAT_82a21590 + (iVar5 + iVar19) * 4);
-        lVar13 = (longlong)(int)pMVar14;
-        dVar36 = dVar34;
-        if ((float)((double)(float)((double)lVar13 * dVar32) - dVar34) < 0.0) {
-          dVar36 = (double)(float)((double)lVar13 * dVar32);
+        iVar18 = *piVar25;
+        pMVar13 = *(Material **)(&DAT_82a21590 + (iVar4 + iVar18) * 4);
+        lVar12 = (longlong)(int)pMVar13;
+        dVar35 = dVar33;
+        if ((float)((double)(float)((double)lVar12 * dVar31) - dVar33) < 0.0) {
+          dVar35 = (double)(float)((double)lVar12 * dVar31);
         }
-        if (dVar30 < dVar36) {
-          switch(iVar19) {
+        if (dVar29 < dVar35) {
+          switch(iVar18) {
           case 0:
             break;
           case 1:
@@ -688,38 +687,40 @@ void CG_DrawSnapshotEntityAnalysis(LocalClientNum_t param_1)
             break;
           default:
             if (alwaysfails == 0) {
-              pcVar9 = va("Missing handler for snapshot entity type %i");
-              pMVar14 = (Material *)lVar13;
-              lVar20 = (longlong)(int)pcVar9;
-              uVar11 = 0;
-              iVar19 = 0x28e;
+              pcVar8 = va("Missing handler for snapshot entity type %i");
+              pMVar13 = (Material *)lVar12;
+              lVar19 = (longlong)(int)pcVar8;
+              uVar10 = 0;
+              iVar18 = 0x28e;
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_net_mp.cpp"
-                              ,0x28e,0,pcVar9);
+                              ,0x28e,0,pcVar8);
             }
             break;
           case 0x12:
           }
-          dVar36 = (double)(float)(dVar36 * dVar33);
-          pSVar8 = ScrPlace_GetActivePlacement(LStack00000014);
-          UI_DrawHandlePic(pSVar8,(float)((double)(longlong)iVar24 * dVar35 + dVar31),
-                           (float)(dVar33 - dVar36),(float)dVar35,(float)dVar36,iVar19,(int)uVar11,
-                           (float *)lVar20,pMVar14);
+          dVar35 = (double)(float)(dVar35 * dVar32);
+          pSVar7 = ScrPlace_GetActivePlacement(LStack00000014);
+          UI_DrawHandlePic(pSVar7,(float)((double)(longlong)iVar23 * dVar34 + dVar30),
+                           (float)(dVar32 - dVar35),(float)dVar34,(float)dVar35,iVar18,(int)uVar10,
+                           (float *)lVar19,pMVar13);
         }
-        lVar10 = lVar10 + -1;
-        piVar26 = piVar26 + 1;
-      } while (lVar10 != 0);
-      iVar5 = iVar5 + 0x13;
-      iVar24 = iVar24 + 1;
-    } while (iVar5 < 0xbe);
+        lVar9 = lVar9 + -1;
+        piVar25 = piVar25 + 1;
+      } while (lVar9 != 0);
+      iVar4 = iVar4 + 0x13;
+      iVar23 = iVar23 + 1;
+    } while (iVar4 < 0xbe);
   }
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
 
 // 822BF5B8  CG_DrawPingAnalysis  (cgame_mp/cg_draw_net_mp.cpp:668)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -728,17 +729,17 @@ void CG_DrawPingAnalysis(LocalClientNum_t param_1)
 
 {
   double dVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  cgs_t *pcVar4;
-  ScreenPlacement *pSVar5;
-  clientActive_t *pcVar6;
-  int iVar7;
-  ulonglong uVar8;
+  int iVar2;
+  cgs_t *pcVar3;
+  ScreenPlacement *pSVar4;
+  clientActive_t *pcVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined8 uVar8;
   undefined8 uVar9;
-  undefined8 uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  longlong lVar10;
+  ulonglong uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -750,84 +751,83 @@ void CG_DrawPingAnalysis(LocalClientNum_t param_1)
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
   undefined1 local_a0 [8];
   GfxDrawSurf local_98 [19];
   
-  __savegprlr_27(param_1);
-  LVar2 = __savefpr_21();
-  iVar3 = CL_IsCgameInitialized(LVar2);
-  if ((((iVar3 != 0) && (pcVar4 = CG_GetLocalClientStaticGlobals(LVar2), pcVar4->localServer != 0))
-      && ((net_showprofile->current).integer != 0)) &&
-     (iVar3 = (cg_packetAnalysisClient->current).integer, -1 < iVar3)) {
-    pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-    UI_DrawText(pSVar5,"Ping",0x20,cgMedia.smallDevFont,-145.0,115.0,-0x7de80000,-0x7dff0000,0.4,
+  iVar2 = CL_IsCgameInitialized(param_1);
+  if ((((iVar2 != 0) && (pcVar3 = CG_GetLocalClientStaticGlobals(param_1), pcVar3->localServer != 0)
+       ) && ((net_showprofile->current).integer != 0)) &&
+     (iVar2 = (cg_packetAnalysisClient->current).integer, -1 < iVar2)) {
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawText(pSVar4,"Ping",0x20,cgMedia.smallDevFont,-145.0,115.0,-0x7de80000,-0x7dff0000,0.4,
                 (float *)0x3,1);
-    pcVar6 = CL_GetLocalClientGlobals(LVar2);
-    uVar12 = (ulonglong)(uint)pcVar6->packetBackupCount - 1;
-    if (-1 < (longlong)uVar12) {
-      lVar11 = uVar12 + (uVar12 & 0x7fffffff) * 2;
-      dVar15 = 3.0;
-      uVar10 = 0xffffffff82010000;
-      dVar14 = 10.0;
+    pcVar5 = CL_GetLocalClientGlobals(param_1);
+    uVar11 = (ulonglong)(uint)pcVar5->packetBackupCount - 1;
+    if (-1 < (longlong)uVar11) {
+      lVar10 = uVar11 + (uVar11 & 0x7fffffff) * 2;
+      dVar14 = 3.0;
       uVar9 = 0xffffffff82010000;
-      dVar16 = 90.0;
-      dVar17 = 150.0;
-      dVar20 = 0.20000000298023224;
-      dVar18 = 0.004999999888241291;
-      dVar19 = 0.00800000037997961;
-      dVar22 = 0.800000011920929;
-      dVar21 = 0.009999999776482582;
-      dVar23 = 1.0;
-      dVar24 = 0.0;
+      dVar13 = 10.0;
+      uVar8 = 0xffffffff82010000;
+      dVar15 = 90.0;
+      dVar16 = 150.0;
+      dVar19 = 0.20000000298023224;
+      dVar17 = 0.004999999888241291;
+      dVar18 = 0.00800000037997961;
+      dVar21 = 0.800000011920929;
+      dVar20 = 0.009999999776482582;
+      dVar22 = 1.0;
+      dVar23 = 0.0;
       do {
-        uVar8 = uVar12;
-        iVar7 = SV_GetClientSnapshotPing(iVar3,(int)uVar12);
-        dVar1 = dVar24;
-        if (iVar7 < 0) {
+        uVar7 = uVar11;
+        iVar6 = SV_GetClientSnapshotPing(iVar2,(int)uVar11);
+        dVar1 = dVar23;
+        if (iVar6 < 0) {
 LAB_822bf7a4:
           local_a0._0_4_ = (undefined4)dVar1;
-          local_a0._4_4_ = (undefined4)dVar24;
+          local_a0._4_4_ = (undefined4)dVar23;
         }
-        else if (iVar7 < 100) {
-          local_a0._0_4_ = (undefined4)dVar24;
+        else if (iVar6 < 100) {
+          local_a0._0_4_ = (undefined4)dVar23;
           local_a0._4_4_ =
-               -(float)((double)(float)((double)(longlong)iVar7 * dVar21) * dVar22 - dVar23);
+               -(float)((double)(float)((double)(longlong)iVar6 * dVar20) * dVar21 - dVar22);
         }
         else {
-          if (199 < iVar7) {
-            dVar13 = -(double)(float)((double)(float)((double)(longlong)(iVar7 + -200) * dVar18) *
-                                      dVar22 - dVar23);
-            dVar1 = dVar20;
-            if ((float)(dVar20 - dVar13) < 0.0) {
-              dVar1 = dVar13;
+          if (199 < iVar6) {
+            dVar12 = -(double)(float)((double)(float)((double)(longlong)(iVar6 + -200) * dVar17) *
+                                      dVar21 - dVar22);
+            dVar1 = dVar19;
+            if ((float)(dVar19 - dVar12) < 0.0) {
+              dVar1 = dVar12;
             }
             goto LAB_822bf7a4;
           }
-          local_a0._4_4_ = -(float)((double)(longlong)(iVar7 + -100) * dVar19 - dVar23);
+          local_a0._4_4_ = -(float)((double)(longlong)(iVar6 + -100) * dVar18 - dVar22);
           local_a0._0_4_ =
-               -(float)((double)(float)((double)(longlong)(iVar7 + -100) * dVar21) * dVar22 - dVar23
+               -(float)((double)(float)((double)(longlong)(iVar6 + -100) * dVar20) * dVar21 - dVar22
                        );
         }
-        local_98[0]._4_4_ = (undefined4)dVar23;
-        local_98[0]._0_4_ = (undefined4)dVar24;
-        CL_DrawStretchPic(pSVar5,(float)((double)(longlong)(int)lVar11 - dVar17),(float)dVar16,
-                          (float)dVar15,(float)dVar14,(int)uVar8,(int)uVar9,(float)dVar24,
-                          (float)dVar24,(float)dVar24,(float)dVar24,(float *)uVar10,
+        local_98[0]._4_4_ = (undefined4)dVar22;
+        local_98[0]._0_4_ = (undefined4)dVar23;
+        CL_DrawStretchPic(pSVar4,(float)((double)(longlong)(int)lVar10 - dVar16),(float)dVar15,
+                          (float)dVar14,(float)dVar13,(int)uVar7,(int)uVar8,(float)dVar23,
+                          (float)dVar23,(float)dVar23,(float)dVar23,(float *)uVar9,
                           (Material *)local_a0);
-        uVar12 = uVar12 - 1;
-        lVar11 = lVar11 + -3;
-      } while (-1 < (longlong)uVar12);
+        uVar11 = uVar11 - 1;
+        lVar10 = lVar10 + -3;
+      } while (-1 < (longlong)uVar11);
     }
   }
-  __restfpr_21();
-  __restgprlr_27();
   return;
 }
 
 
 // 822BF820  CG_DrawLagometer  (cgame_mp/cg_draw_net_mp.cpp:741)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawLagometer(LocalClientNum_t param_1)
@@ -835,14 +835,14 @@ void CG_DrawLagometer(LocalClientNum_t param_1)
 {
   Material *pMVar1;
   float *pfVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  cgs_t *pcVar5;
-  ScreenPlacement *pSVar6;
+  int iVar3;
+  cgs_t *pcVar4;
+  ScreenPlacement *pSVar5;
   int in_r4;
   int in_r5;
   float *in_r6;
-  undefined8 uVar7;
+  undefined8 uVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -853,92 +853,91 @@ void CG_DrawLagometer(LocalClientNum_t param_1)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   
-  __savegprlr_24(param_1);
-  LVar3 = __savefpr_24();
-  iVar4 = CL_IsCgameInitialized(LVar3);
-  if (iVar4 != 0) {
-    pcVar5 = CG_GetLocalClientStaticGlobals(LVar3);
-    if (((cg_drawLagometer->current).enabled != false) && (pcVar5->localServer == 0)) {
-      pSVar6 = ScrPlace_GetActivePlacement(LVar3);
-      dVar12 = 48.0;
-      UI_DrawHandlePic(pSVar6,-55.0,-140.0,48.0,48.0,in_r4,in_r5,in_r6,(Material *)0x82010000);
-      dVar18 = 0.0;
-      uVar7 = 0xffffffff82010000;
-      dVar15 = 1.0;
-      dVar16 = -7.0;
-      dVar17 = -124.0;
-      dVar14 = 16.0;
-      iVar4 = 0;
-      dVar13 = 0.0533333346247673;
-      dVar11 = dVar18;
+  iVar3 = CL_IsCgameInitialized(param_1);
+  if (iVar3 != 0) {
+    pcVar4 = CG_GetLocalClientStaticGlobals(param_1);
+    if (((cg_drawLagometer->current).enabled != false) && (pcVar4->localServer == 0)) {
+      pSVar5 = ScrPlace_GetActivePlacement(param_1);
+      dVar11 = 48.0;
+      UI_DrawHandlePic(pSVar5,-55.0,-140.0,48.0,48.0,in_r4,in_r5,in_r6,(Material *)0x82010000);
+      dVar17 = 0.0;
+      uVar6 = 0xffffffff82010000;
+      dVar14 = 1.0;
+      dVar15 = -7.0;
+      dVar16 = -124.0;
+      dVar13 = 16.0;
+      iVar3 = 0;
+      dVar12 = 0.0533333346247673;
+      dVar10 = dVar17;
       do {
-        pMVar1 = (Material *)lagometer.frameSamples[(lagometer.frameCount - iVar4) - 1U & 0x7f];
-        dVar9 = (double)(float)((double)(longlong)(int)pMVar1 * dVar13);
-        if (dVar9 <= dVar11) {
-          if (dVar9 < dVar11) {
-            dVar8 = -dVar9;
-            if (dVar14 < -dVar9) {
-              dVar8 = dVar14;
+        pMVar1 = (Material *)lagometer.frameSamples[(lagometer.frameCount - iVar3) - 1U & 0x7f];
+        dVar8 = (double)(float)((double)(longlong)(int)pMVar1 * dVar12);
+        if (dVar8 <= dVar10) {
+          if (dVar8 < dVar10) {
+            dVar7 = -dVar8;
+            if (dVar13 < -dVar8) {
+              dVar7 = dVar13;
             }
-            CL_DrawStretchPic(pSVar6,(float)(dVar16 - dVar18),(float)dVar17,(float)dVar15,
-                              (float)dVar8,in_r4,in_r5,(float)dVar11,(float)dVar11,(float)dVar11,
-                              (float)dVar11,(float *)uVar7,pMVar1);
+            CL_DrawStretchPic(pSVar5,(float)(dVar15 - dVar17),(float)dVar16,(float)dVar14,
+                              (float)dVar7,in_r4,in_r5,(float)dVar10,(float)dVar10,(float)dVar10,
+                              (float)dVar10,(float *)uVar6,pMVar1);
           }
         }
         else {
-          if (dVar14 < dVar9) {
-            dVar9 = dVar14;
+          if (dVar13 < dVar8) {
+            dVar8 = dVar13;
           }
-          CL_DrawStretchPic(pSVar6,(float)(dVar16 - dVar18),(float)(dVar17 - dVar9),(float)dVar15,
-                            (float)dVar9,in_r4,in_r5,(float)dVar11,(float)dVar11,(float)dVar11,
-                            (float)dVar11,(float *)uVar7,pMVar1);
+          CL_DrawStretchPic(pSVar5,(float)(dVar15 - dVar17),(float)(dVar16 - dVar8),(float)dVar14,
+                            (float)dVar8,in_r4,in_r5,(float)dVar10,(float)dVar10,(float)dVar10,
+                            (float)dVar10,(float *)uVar6,pMVar1);
         }
-        iVar4 = iVar4 + 1;
-        dVar18 = (double)(longlong)iVar4;
-      } while (dVar18 < dVar12);
-      dVar14 = -116.0;
-      dVar17 = -92.0;
-      iVar4 = 0;
-      dVar9 = 24.0;
-      dVar13 = 0.02666666731238365;
-      dVar18 = dVar11;
+        iVar3 = iVar3 + 1;
+        dVar17 = (double)(longlong)iVar3;
+      } while (dVar17 < dVar11);
+      dVar13 = -116.0;
+      dVar16 = -92.0;
+      iVar3 = 0;
+      dVar8 = 24.0;
+      dVar12 = 0.02666666731238365;
+      dVar17 = dVar10;
       do {
         pfVar2 = *(float **)
                   ((int)lagometer.snapshotSamples +
-                  (((lagometer.snapshotCount - iVar4) + -1) * 4 & 0x1fcU));
-        dVar8 = (double)(longlong)(int)pfVar2;
-        if (dVar8 <= dVar18) {
-          if (dVar8 < dVar18) {
-            CL_DrawStretchPic(pSVar6,(float)(dVar16 - dVar11),(float)dVar14,(float)dVar15,
-                              (float)dVar9,in_r4,in_r5,(float)dVar18,(float)dVar18,(float)dVar18,
-                              (float)dVar18,pfVar2,(Material *)pfVar2);
+                  (((lagometer.snapshotCount - iVar3) + -1) * 4 & 0x1fcU));
+        dVar7 = (double)(longlong)(int)pfVar2;
+        if (dVar7 <= dVar17) {
+          if (dVar7 < dVar17) {
+            CL_DrawStretchPic(pSVar5,(float)(dVar15 - dVar10),(float)dVar13,(float)dVar14,
+                              (float)dVar8,in_r4,in_r5,(float)dVar17,(float)dVar17,(float)dVar17,
+                              (float)dVar17,pfVar2,(Material *)pfVar2);
           }
         }
         else {
-          dVar10 = (double)(float)(dVar8 * dVar13);
-          if (dVar9 < (double)(float)(dVar8 * dVar13)) {
-            dVar10 = dVar9;
+          dVar9 = (double)(float)(dVar7 * dVar12);
+          if (dVar8 < (double)(float)(dVar7 * dVar12)) {
+            dVar9 = dVar8;
           }
-          CL_DrawStretchPic(pSVar6,(float)(dVar16 - dVar11),(float)(dVar17 - dVar10),(float)dVar15,
-                            (float)dVar10,in_r4,in_r5,(float)dVar18,(float)dVar18,(float)dVar18,
-                            (float)dVar18,pfVar2,(Material *)pfVar2);
+          CL_DrawStretchPic(pSVar5,(float)(dVar15 - dVar10),(float)(dVar16 - dVar9),(float)dVar14,
+                            (float)dVar9,in_r4,in_r5,(float)dVar17,(float)dVar17,(float)dVar17,
+                            (float)dVar17,pfVar2,(Material *)pfVar2);
         }
-        iVar4 = iVar4 + 1;
-        dVar11 = (double)(longlong)iVar4;
-      } while (dVar11 < dVar12);
+        iVar3 = iVar3 + 1;
+        dVar10 = (double)(longlong)iVar3;
+      } while (dVar10 < dVar11);
     }
-    CG_DrawDisconnect(LVar3);
+    CG_DrawDisconnect(param_1);
   }
-  __restfpr_24();
-  __restgprlr_24();
   return;
 }
 
 
 // 822BFB48  CG_DrawEntityCount  (cgame_mp/cg_draw_net_mp.cpp:849)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawEntityCount(LocalClientNum_t param_1)
@@ -947,102 +946,101 @@ void CG_DrawEntityCount(LocalClientNum_t param_1)
   float fVar1;
   float fVar2;
   uint uVar3;
-  LocalClientNum_t LVar5;
-  int iVar6;
-  ScreenPlacement *pSVar7;
+  int iVar5;
+  ScreenPlacement *pSVar6;
   longlong lVar4;
-  longlong lVar9;
-  int iVar10;
-  Font_s *pFVar12;
-  longlong lVar11;
-  float *pfVar13;
-  IMAGE_DOS_HEADER *pIVar14;
-  Material *pMVar15;
+  longlong lVar8;
+  int iVar9;
+  Font_s *pFVar11;
+  longlong lVar10;
+  float *pfVar12;
+  IMAGE_DOS_HEADER *pIVar13;
+  Material *pMVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  char *pcVar8;
+  char *pcVar7;
   
-  __savegprlr_22(param_1);
-  LVar5 = __savefpr_25();
-  iVar6 = CL_IsCgameInitialized(LVar5);
-  if ((iVar6 != 0) && ((drawEntityCount->current).enabled != false)) {
-    dVar21 = (double)(drawEntityCountPos->current).value;
-    dVar20 = (double)(drawEntityCountPos->current).vector[1];
-    pSVar7 = ScrPlace_GetActivePlacement(LVar5);
-    pFVar12 = cgMedia.smallDevFont;
-    dVar18 = (double)(longlong)(drawEntityCountSize->current).integer;
-    dVar19 = (double)(float)(dVar18 + dVar20);
-    pcVar8 = va("Ents: %3i/%3i/%3i");
-    lVar4 = (longlong)(int)pcVar8;
-    pIVar14 = &IMAGE_DOS_HEADER_82000000;
-    lVar9 = 500;
-    UI_DrawText(pSVar7,pcVar8,500,pFVar12,(float)(dVar21 - 50.0),(float)(dVar19 + 18.0),-0x7e000000,
+  iVar5 = CL_IsCgameInitialized(param_1);
+  if ((iVar5 != 0) && ((drawEntityCount->current).enabled != false)) {
+    dVar20 = (double)(drawEntityCountPos->current).value;
+    dVar19 = (double)(drawEntityCountPos->current).vector[1];
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    pFVar11 = cgMedia.smallDevFont;
+    dVar17 = (double)(longlong)(drawEntityCountSize->current).integer;
+    dVar18 = (double)(float)(dVar17 + dVar19);
+    pcVar7 = va("Ents: %3i/%3i/%3i");
+    lVar4 = (longlong)(int)pcVar7;
+    pIVar13 = &IMAGE_DOS_HEADER_82000000;
+    lVar8 = 500;
+    UI_DrawText(pSVar6,pcVar7,500,pFVar11,(float)(dVar20 - 50.0),(float)(dVar18 + 18.0),-0x7e000000,
                 -0x7e000000,0.3,(float *)0x3,3);
-    UI_DrawHandlePic(pSVar7,(float)dVar21,(float)dVar20,(float)dVar18,(float)dVar18,(int)lVar4,
-                     (int)lVar9,(float *)pFVar12,(Material *)pIVar14);
-    iVar6 = 0;
-    dVar20 = 0.0;
-    dVar16 = (double)(float)(dVar18 * 0.0015384615398943424);
-    if (0.0 < dVar18) {
-      dVar17 = (double)(float)(dVar18 + dVar21);
-      dVar22 = 1.0;
-      dVar21 = dVar20;
+    UI_DrawHandlePic(pSVar6,(float)dVar20,(float)dVar19,(float)dVar17,(float)dVar17,(int)lVar4,
+                     (int)lVar8,(float *)pFVar11,(Material *)pIVar13);
+    iVar5 = 0;
+    dVar19 = 0.0;
+    dVar15 = (double)(float)(dVar17 * 0.0015384615398943424);
+    if (0.0 < dVar17) {
+      dVar16 = (double)(float)(dVar17 + dVar20);
+      dVar21 = 1.0;
+      dVar20 = dVar19;
       do {
-        uVar3 = (lagometer.frameCount - iVar6) - 1U & 0x7f;
-        pMVar15 = (Material *)lagometer.entitySamples[uVar3];
-        fVar2 = (float)((double)(float)(dVar17 - dVar20) - dVar22);
-        dVar20 = (double)fVar2;
-        lVar11 = (longlong)(int)pMVar15;
-        fVar1 = (float)((double)lVar11 * dVar16);
-        iVar10 = (int)lVar9;
-        if ((int)pMVar15 < 500) {
-          CL_DrawStretchPic(pSVar7,fVar2,(float)(dVar19 - (double)fVar1),(float)dVar22,fVar1,
-                            (int)lVar4,iVar10,(float)dVar21,(float)dVar21,(float)dVar22,
-                            (float)dVar22,(float *)pMVar15,pMVar15);
-          pfVar13 = (float *)lVar11;
+        uVar3 = (lagometer.frameCount - iVar5) - 1U & 0x7f;
+        pMVar14 = (Material *)lagometer.entitySamples[uVar3];
+        fVar2 = (float)((double)(float)(dVar16 - dVar19) - dVar21);
+        dVar19 = (double)fVar2;
+        lVar10 = (longlong)(int)pMVar14;
+        fVar1 = (float)((double)lVar10 * dVar15);
+        iVar9 = (int)lVar8;
+        if ((int)pMVar14 < 500) {
+          CL_DrawStretchPic(pSVar6,fVar2,(float)(dVar18 - (double)fVar1),(float)dVar21,fVar1,
+                            (int)lVar4,iVar9,(float)dVar20,(float)dVar20,(float)dVar21,(float)dVar21
+                            ,(float *)pMVar14,pMVar14);
+          pfVar12 = (float *)lVar10;
         }
         else {
-          CL_DrawStretchPic(pSVar7,fVar2,(float)(dVar19 - (double)fVar1),(float)dVar22,fVar1,
-                            (int)lVar4,iVar10,(float)dVar21,(float)dVar21,(float)dVar22,
-                            (float)dVar22,(float *)pMVar15,pMVar15);
-          pfVar13 = (float *)lVar11;
+          CL_DrawStretchPic(pSVar6,fVar2,(float)(dVar18 - (double)fVar1),(float)dVar21,fVar1,
+                            (int)lVar4,iVar9,(float)dVar20,(float)dVar20,(float)dVar21,(float)dVar21
+                            ,(float *)pMVar14,pMVar14);
+          pfVar12 = (float *)lVar10;
         }
-        fVar1 = (float)((double)(longlong)lagometer.archivedEntitySamples[uVar3] * dVar16);
+        fVar1 = (float)((double)(longlong)lagometer.archivedEntitySamples[uVar3] * dVar15);
         if (lagometer.archivedEntitySamples[uVar3] < 300) {
-          CL_DrawStretchPic(pSVar7,(float)dVar20,(float)(dVar19 - (double)fVar1),(float)dVar22,fVar1
-                            ,(int)lVar4,iVar10,(float)dVar21,(float)dVar21,(float)dVar22,
-                            (float)dVar22,pfVar13,pMVar15);
+          CL_DrawStretchPic(pSVar6,(float)dVar19,(float)(dVar18 - (double)fVar1),(float)dVar21,fVar1
+                            ,(int)lVar4,iVar9,(float)dVar20,(float)dVar20,(float)dVar21,
+                            (float)dVar21,pfVar12,pMVar14);
         }
         else {
-          CL_DrawStretchPic(pSVar7,(float)dVar20,(float)(dVar19 - (double)fVar1),(float)dVar22,fVar1
-                            ,(int)lVar4,iVar10,(float)dVar21,(float)dVar21,(float)dVar22,
-                            (float)dVar22,pfVar13,pMVar15);
+          CL_DrawStretchPic(pSVar6,(float)dVar19,(float)(dVar18 - (double)fVar1),(float)dVar21,fVar1
+                            ,(int)lVar4,iVar9,(float)dVar20,(float)dVar20,(float)dVar21,
+                            (float)dVar21,pfVar12,pMVar14);
         }
-        pfVar13 = (float *)lagometer.changedEntitySamples[uVar3];
-        CL_DrawStretchPic(pSVar7,(float)dVar20,
-                          (float)(dVar19 - (double)(float)((double)(longlong)(int)pfVar13 * dVar16))
-                          ,(float)dVar22,(float)((double)(longlong)(int)pfVar13 * dVar16),(int)lVar4
-                          ,iVar10,(float)dVar21,(float)dVar21,(float)dVar22,(float)dVar22,pfVar13,
-                          (Material *)pfVar13);
-        iVar6 = iVar6 + 1;
-        lVar9 = (longlong)iVar6;
-        dVar20 = (double)lVar9;
-      } while (dVar20 < dVar18);
+        pfVar12 = (float *)lagometer.changedEntitySamples[uVar3];
+        CL_DrawStretchPic(pSVar6,(float)dVar19,
+                          (float)(dVar18 - (double)(float)((double)(longlong)(int)pfVar12 * dVar15))
+                          ,(float)dVar21,(float)((double)(longlong)(int)pfVar12 * dVar15),(int)lVar4
+                          ,iVar9,(float)dVar20,(float)dVar20,(float)dVar21,(float)dVar21,pfVar12,
+                          (Material *)pfVar12);
+        iVar5 = iVar5 + 1;
+        lVar8 = (longlong)iVar5;
+        dVar19 = (double)lVar8;
+      } while (dVar19 < dVar17);
     }
   }
-  __restfpr_25();
-  __restgprlr_22();
   return;
 }
 
 
 // 822BFE58  CG_DrawServerBandwidth  (cgame_mp/cg_draw_net_mp.cpp:916)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawServerBandwidth(LocalClientNum_t param_1)
@@ -1051,97 +1049,13 @@ void CG_DrawServerBandwidth(LocalClientNum_t param_1)
   float fVar1;
   char **ppcVar2;
   Material *pMVar3;
-  LocalClientNum_t LVar5;
-  int iVar6;
-  ScreenPlacement *pSVar7;
+  int iVar5;
+  ScreenPlacement *pSVar6;
   longlong lVar4;
-  undefined8 uVar9;
-  Font_s *pFVar10;
-  IMAGE_DOS_HEADER *pIVar11;
-  int iVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  char *pcVar8;
-  
-  __savegprlr_25(param_1);
-  LVar5 = __savefpr_26();
-  iVar6 = CL_IsCgameInitialized(LVar5);
-  if ((iVar6 != 0) && ((drawServerBandwidth->current).enabled != false)) {
-    dVar19 = (double)(drawServerBandwidthPos->current).value;
-    dVar18 = (double)(drawServerBandwidthPos->current).vector[1];
-    pSVar7 = ScrPlace_GetActivePlacement(LVar5);
-    dVar17 = (double)(longlong)(drawServerBandwidthSize->current).integer;
-    iVar6 = Live_GetNecessaryBandwidth((sv_maxclients->current).integer);
-    pFVar10 = cgMedia.smallDevFont;
-    iVar6 = (int)((float)(longlong)iVar6 * 0.0009765625 * 0.9);
-    dVar16 = (double)(float)(dVar17 + dVar18);
-    pcVar8 = va("kbps: %3i");
-    lVar4 = (longlong)(int)pcVar8;
-    pIVar11 = &IMAGE_DOS_HEADER_82000000;
-    uVar9 = 500;
-    UI_DrawText(pSVar7,pcVar8,500,pFVar10,(float)(dVar19 - 50.0),(float)(dVar16 + 18.0),-0x7e000000,
-                -0x7e000000,0.3,(float *)0x3,3);
-    UI_DrawHandlePic(pSVar7,(float)dVar19,(float)dVar18,(float)dVar17,(float)dVar17,(int)lVar4,
-                     (int)uVar9,(float *)pFVar10,(Material *)pIVar11);
-    iVar12 = 0;
-    dVar18 = 0.0;
-    dVar14 = (double)(float)(dVar17 / (double)(longlong)iVar6);
-    if (0.0 < dVar17) {
-      dVar15 = (double)(float)(dVar17 + dVar19);
-      dVar20 = 1.0;
-      dVar19 = dVar18;
-      do {
-        pMVar3 = (Material *)(((lagometer.frameCount - iVar12) + -1) * 4 & 0x1fc);
-        ppcVar2 = pMVar3[-0x16cb42b].subMaterials;
-        dVar13 = (double)(float)((double)(longlong)(int)ppcVar2 * dVar14);
-        if (dVar17 < (double)(float)((double)(longlong)(int)ppcVar2 * dVar14)) {
-          dVar13 = dVar17;
-        }
-        fVar1 = (float)((double)(float)(dVar15 - dVar18) - dVar20);
-        if ((int)ppcVar2 < iVar6) {
-          CL_DrawStretchPic(pSVar7,fVar1,(float)(dVar16 - dVar13),(float)dVar20,(float)dVar13,
-                            (int)lVar4,(int)uVar9,(float)dVar19,(float)dVar19,(float)dVar20,
-                            (float)dVar20,(float *)ppcVar2,pMVar3);
-        }
-        else {
-          CL_DrawStretchPic(pSVar7,fVar1,(float)(dVar16 - dVar13),(float)dVar20,(float)dVar13,
-                            (int)lVar4,(int)uVar9,(float)dVar19,(float)dVar19,(float)dVar20,
-                            (float)dVar20,(float *)ppcVar2,pMVar3);
-        }
-        iVar12 = iVar12 + 1;
-        dVar18 = (double)(longlong)iVar12;
-      } while (dVar18 < dVar17);
-    }
-  }
-  __restfpr_26();
-  __restgprlr_25();
-  return;
-}
-
-
-// 822C00E8  CG_DrawServerKillcamData  (cgame_mp/cg_draw_net_mp.cpp:984)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_DrawServerKillcamData(LocalClientNum_t param_1)
-
-{
-  float fVar1;
-  MaterialTechniqueSet *pMVar2;
-  Material *pMVar3;
-  LocalClientNum_t LVar5;
-  int iVar6;
-  ScreenPlacement *pSVar7;
-  longlong lVar4;
-  undefined8 uVar9;
-  Font_s *pFVar10;
-  IMAGE_DOS_HEADER *pIVar11;
+  undefined8 uVar8;
+  Font_s *pFVar9;
+  IMAGE_DOS_HEADER *pIVar10;
+  int iVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -1150,64 +1064,144 @@ void CG_DrawServerKillcamData(LocalClientNum_t param_1)
   double dVar17;
   double dVar18;
   double dVar19;
-  char *pcVar8;
+  char *pcVar7;
   
-  __savegprlr_26(param_1);
-  LVar5 = __savefpr_26();
-  iVar6 = CL_IsCgameInitialized(LVar5);
-  if ((iVar6 != 0) && ((drawKillcamData->current).enabled != false)) {
-    dVar18 = (double)(drawKillcamDataPos->current).value;
-    dVar17 = (double)(drawKillcamDataPos->current).vector[1];
-    pSVar7 = ScrPlace_GetActivePlacement(LVar5);
-    pFVar10 = cgMedia.smallDevFont;
-    dVar16 = (double)(longlong)(drawKillcamDataSize->current).integer;
+  iVar5 = CL_IsCgameInitialized(param_1);
+  if ((iVar5 != 0) && ((drawServerBandwidth->current).enabled != false)) {
+    dVar18 = (double)(drawServerBandwidthPos->current).value;
+    dVar17 = (double)(drawServerBandwidthPos->current).vector[1];
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    dVar16 = (double)(longlong)(drawServerBandwidthSize->current).integer;
+    iVar5 = Live_GetNecessaryBandwidth((sv_maxclients->current).integer);
+    pFVar9 = cgMedia.smallDevFont;
+    iVar5 = (int)((float)(longlong)iVar5 * 0.0009765625 * 0.9);
     dVar15 = (double)(float)(dVar16 + dVar17);
-    pcVar8 = va("killcam: %3i");
-    lVar4 = (longlong)(int)pcVar8;
-    pIVar11 = &IMAGE_DOS_HEADER_82000000;
-    uVar9 = 500;
-    UI_DrawText(pSVar7,pcVar8,500,pFVar10,(float)(dVar18 - 50.0),(float)(dVar15 + 18.0),-0x7e000000,
+    pcVar7 = va("kbps: %3i");
+    lVar4 = (longlong)(int)pcVar7;
+    pIVar10 = &IMAGE_DOS_HEADER_82000000;
+    uVar8 = 500;
+    UI_DrawText(pSVar6,pcVar7,500,pFVar9,(float)(dVar18 - 50.0),(float)(dVar15 + 18.0),-0x7e000000,
                 -0x7e000000,0.3,(float *)0x3,3);
-    UI_DrawHandlePic(pSVar7,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar16,(int)lVar4,
-                     (int)uVar9,(float *)pFVar10,(Material *)pIVar11);
-    iVar6 = 0;
+    UI_DrawHandlePic(pSVar6,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar16,(int)lVar4,
+                     (int)uVar8,(float *)pFVar9,(Material *)pIVar10);
+    iVar11 = 0;
     dVar17 = 0.0;
-    dVar13 = (double)(float)(dVar16 * 4.999999873689376e-05);
+    dVar13 = (double)(float)(dVar16 / (double)(longlong)iVar5);
     if (0.0 < dVar16) {
       dVar14 = (double)(float)(dVar16 + dVar18);
       dVar19 = 1.0;
       dVar18 = dVar17;
       do {
-        pMVar3 = (Material *)(((lagometer.frameCount - iVar6) + -1) * 4 & 0x1fc);
-        pMVar2 = pMVar3[-0x16cb425].techniqueSet;
-        dVar12 = (double)(float)((double)(longlong)(int)pMVar2 * dVar13);
-        if (dVar16 < (double)(float)((double)(longlong)(int)pMVar2 * dVar13)) {
+        pMVar3 = (Material *)(((lagometer.frameCount - iVar11) + -1) * 4 & 0x1fc);
+        ppcVar2 = pMVar3[-0x16cb42b].subMaterials;
+        dVar12 = (double)(float)((double)(longlong)(int)ppcVar2 * dVar13);
+        if (dVar16 < (double)(float)((double)(longlong)(int)ppcVar2 * dVar13)) {
           dVar12 = dVar16;
         }
         fVar1 = (float)((double)(float)(dVar14 - dVar17) - dVar19);
-        if ((int)pMVar2 < 10000) {
-          CL_DrawStretchPic(pSVar7,fVar1,(float)(dVar15 - dVar12),(float)dVar19,(float)dVar12,
-                            (int)lVar4,(int)uVar9,(float)dVar18,(float)dVar18,(float)dVar19,
-                            (float)dVar19,(float *)pMVar2,pMVar3);
+        if ((int)ppcVar2 < iVar5) {
+          CL_DrawStretchPic(pSVar6,fVar1,(float)(dVar15 - dVar12),(float)dVar19,(float)dVar12,
+                            (int)lVar4,(int)uVar8,(float)dVar18,(float)dVar18,(float)dVar19,
+                            (float)dVar19,(float *)ppcVar2,pMVar3);
         }
         else {
-          CL_DrawStretchPic(pSVar7,fVar1,(float)(dVar15 - dVar12),(float)dVar19,(float)dVar12,
-                            (int)lVar4,(int)uVar9,(float)dVar18,(float)dVar18,(float)dVar19,
-                            (float)dVar19,(float *)pMVar2,pMVar3);
+          CL_DrawStretchPic(pSVar6,fVar1,(float)(dVar15 - dVar12),(float)dVar19,(float)dVar12,
+                            (int)lVar4,(int)uVar8,(float)dVar18,(float)dVar18,(float)dVar19,
+                            (float)dVar19,(float *)ppcVar2,pMVar3);
         }
-        iVar6 = iVar6 + 1;
-        dVar17 = (double)(longlong)iVar6;
+        iVar11 = iVar11 + 1;
+        dVar17 = (double)(longlong)iVar11;
       } while (dVar17 < dVar16);
     }
   }
-  __restfpr_26();
-  __restgprlr_26();
+  return;
+}
+
+
+// 822C00E8  CG_DrawServerKillcamData  (cgame_mp/cg_draw_net_mp.cpp:984)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawServerKillcamData(LocalClientNum_t param_1)
+
+{
+  float fVar1;
+  MaterialTechniqueSet *pMVar2;
+  Material *pMVar3;
+  int iVar5;
+  ScreenPlacement *pSVar6;
+  longlong lVar4;
+  undefined8 uVar8;
+  Font_s *pFVar9;
+  IMAGE_DOS_HEADER *pIVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  char *pcVar7;
+  
+  iVar5 = CL_IsCgameInitialized(param_1);
+  if ((iVar5 != 0) && ((drawKillcamData->current).enabled != false)) {
+    dVar17 = (double)(drawKillcamDataPos->current).value;
+    dVar16 = (double)(drawKillcamDataPos->current).vector[1];
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    pFVar9 = cgMedia.smallDevFont;
+    dVar15 = (double)(longlong)(drawKillcamDataSize->current).integer;
+    dVar14 = (double)(float)(dVar15 + dVar16);
+    pcVar7 = va("killcam: %3i");
+    lVar4 = (longlong)(int)pcVar7;
+    pIVar10 = &IMAGE_DOS_HEADER_82000000;
+    uVar8 = 500;
+    UI_DrawText(pSVar6,pcVar7,500,pFVar9,(float)(dVar17 - 50.0),(float)(dVar14 + 18.0),-0x7e000000,
+                -0x7e000000,0.3,(float *)0x3,3);
+    UI_DrawHandlePic(pSVar6,(float)dVar17,(float)dVar16,(float)dVar15,(float)dVar15,(int)lVar4,
+                     (int)uVar8,(float *)pFVar9,(Material *)pIVar10);
+    iVar5 = 0;
+    dVar16 = 0.0;
+    dVar12 = (double)(float)(dVar15 * 4.999999873689376e-05);
+    if (0.0 < dVar15) {
+      dVar13 = (double)(float)(dVar15 + dVar17);
+      dVar18 = 1.0;
+      dVar17 = dVar16;
+      do {
+        pMVar3 = (Material *)(((lagometer.frameCount - iVar5) + -1) * 4 & 0x1fc);
+        pMVar2 = pMVar3[-0x16cb425].techniqueSet;
+        dVar11 = (double)(float)((double)(longlong)(int)pMVar2 * dVar12);
+        if (dVar15 < (double)(float)((double)(longlong)(int)pMVar2 * dVar12)) {
+          dVar11 = dVar15;
+        }
+        fVar1 = (float)((double)(float)(dVar13 - dVar16) - dVar18);
+        if ((int)pMVar2 < 10000) {
+          CL_DrawStretchPic(pSVar6,fVar1,(float)(dVar14 - dVar11),(float)dVar18,(float)dVar11,
+                            (int)lVar4,(int)uVar8,(float)dVar17,(float)dVar17,(float)dVar18,
+                            (float)dVar18,(float *)pMVar2,pMVar3);
+        }
+        else {
+          CL_DrawStretchPic(pSVar6,fVar1,(float)(dVar14 - dVar11),(float)dVar18,(float)dVar11,
+                            (int)lVar4,(int)uVar8,(float)dVar17,(float)dVar17,(float)dVar18,
+                            (float)dVar18,(float *)pMVar2,pMVar3);
+        }
+        iVar5 = iVar5 + 1;
+        dVar16 = (double)(longlong)iVar5;
+      } while (dVar16 < dVar15);
+    }
+  }
   return;
 }
 
 
 // 822BDFC0  CL_GetLocalClientGlobals  (client_mp/client_mp.h:1163)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1215,24 +1209,19 @@ void CG_DrawServerKillcamData(LocalClientNum_t param_1)
 clientActive_t * CL_GetLocalClientGlobals(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  clientActive_t *pcVar2;
-  
-  uVar1 = __savegprlr_28(param_1);
   if (clients == (clientActive_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x48c,0,"%s");
   }
-  if ((uint)cl_maxLocalClients <= uVar1) {
+  if ((uint)cl_maxLocalClients <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x48e,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if (clients[uVar1].alwaysFalse != false) {
+  if (clients[param_1].alwaysFalse != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x48f,0,"%s");
   }
-  pcVar2 = (clientActive_t *)__restgprlr_28(clients + uVar1);
-  return pcVar2;
+  return clients + param_1;
 }
 

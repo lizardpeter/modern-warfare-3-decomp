@@ -24,6 +24,8 @@ TracerDef * Tracer_Register_FastFile(char *param_1)
 
 // 826E04B0  Tracer_Register  (tracers/tracer_load_obj.cpp:275)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -33,19 +35,15 @@ TracerDef * Tracer_Register_FastFile(char *param_1)
 TracerDef * Tracer_Register(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  TracerDef *pTVar3;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer_load_obj.cpp",
                     0x114,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer_load_obj.cpp",
                     0x107,0,"%s");
   }
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_TRACER,pcVar1,1);
-  pTVar3 = (TracerDef *)__restgprlr_28(XVar2.physPreset);
-  return pTVar3;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_TRACER,param_1,1);
+  return XVar1.tracerDef;
 }
 

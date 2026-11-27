@@ -2,51 +2,52 @@
 
 // 828B52C8  XRegisterThreadNotifyRoutine  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:57)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void XRegisterThreadNotifyRoutine(_XTHREAD_NOTIFICATION *param_1,int param_2)
 
 {
   _LIST_ENTRY *p_Var1;
   _LIST_ENTRY *p_Var2;
   
-  p_Var2 = (_LIST_ENTRY *)__savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff829a85f0);
   if (param_2 == 0) {
-    p_Var1 = p_Var2->Flink;
-    p_Var2 = p_Var2->Blink;
+    p_Var1 = (param_1->ListEntry).Flink;
+    p_Var2 = (param_1->ListEntry).Blink;
     p_Var2->Flink = p_Var1;
     p_Var1->Blink = p_Var2;
   }
   else {
-    p_Var2->Flink = &XapiThreadNotifyRoutineList;
-    p_Var2->Blink = XapiThreadNotifyRoutineList.Blink;
-    (XapiThreadNotifyRoutineList.Blink)->Flink = p_Var2;
-    XapiThreadNotifyRoutineList.Blink = p_Var2;
+    (param_1->ListEntry).Flink = &XapiThreadNotifyRoutineList;
+    (param_1->ListEntry).Blink = XapiThreadNotifyRoutineList.Blink;
+    (XapiThreadNotifyRoutineList.Blink)->Flink = &param_1->ListEntry;
+    XapiThreadNotifyRoutineList.Blink = &param_1->ListEntry;
   }
   RtlLeaveCriticalSection(0xffffffff829a85f0);
-  __restgprlr_29();
   return;
 }
 
 
 // 828B5258  XapiCallThreadNotifyRoutines  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:91)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void XapiCallThreadNotifyRoutines(int param_1)
 
 {
   _LIST_ENTRY *p_Var1;
   _LIST_ENTRY *p_Var2;
-  undefined8 uVar3;
   
-  uVar3 = __savegprlr_28(param_1);
   RtlEnterCriticalSection(0xffffffff829a85f0);
   p_Var2 = XapiThreadNotifyRoutineList.Flink;
   while (p_Var2 != &XapiThreadNotifyRoutineList) {
     p_Var1 = p_Var2->Flink;
-    (*(code *)p_Var2[1].Flink)(uVar3);
+    (*(code *)p_Var2[1].Flink)(param_1);
     p_Var2 = p_Var1;
   }
   RtlLeaveCriticalSection(0xffffffff829a85f0);
-  __restgprlr_28();
   return;
 }
 

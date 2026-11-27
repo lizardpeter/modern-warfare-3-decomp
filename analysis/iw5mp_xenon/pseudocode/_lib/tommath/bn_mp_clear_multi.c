@@ -2,52 +2,54 @@
 
 // 8225A338  mp_clear_multi  (line unknown)
 
-void mp_clear_multi(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+void mp_clear_multi(int *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
                    undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  undefined8 *puVar1;
-  int *piVar2;
+  undefined1 *puVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  undefined8 in_stack_00000018;
-  undefined8 in_stack_00000020;
-  undefined8 in_stack_00000028;
-  undefined8 in_stack_00000030;
-  undefined8 in_stack_00000038;
-  undefined8 in_stack_00000040;
-  undefined8 in_stack_00000048;
+  int *piStack00000014;
+  undefined8 uStack00000018;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  piVar2 = (int *)__savegprlr_29();
-  puVar1 = &stack0x00000018;
-  in_stack_00000018 = param_2;
-  in_stack_00000020 = param_3;
-  in_stack_00000028 = param_4;
-  in_stack_00000030 = param_5;
-  in_stack_00000038 = param_6;
-  in_stack_00000040 = param_7;
-  in_stack_00000048 = param_8;
-  while (piVar2 != (int *)0x0) {
-    if (piVar2[3] != 0) {
-      iVar3 = 0;
-      if (0 < *piVar2) {
-        iVar4 = 0;
+  puVar1 = (undefined1 *)&stack0x00000018;
+  uStack00000018 = param_2;
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  piStack00000014 = param_1;
+  while (param_1 != (int *)0x0) {
+    if (param_1[3] != 0) {
+      iVar2 = 0;
+      if (0 < *param_1) {
+        iVar3 = 0;
         do {
-          iVar3 = iVar3 + 1;
-          *(undefined4 *)(piVar2[3] + iVar4) = 0;
-          iVar4 = iVar4 + 4;
-        } while (iVar3 < *piVar2);
+          iVar2 = iVar2 + 1;
+          *(undefined4 *)(param_1[3] + iVar3) = 0;
+          iVar3 = iVar3 + 4;
+        } while (iVar2 < *param_1);
       }
-      tom_game_free((void *)piVar2[3]);
-      piVar2[3] = 0;
-      *piVar2 = 0;
-      piVar2[1] = 0;
-      piVar2[2] = 0;
+      tom_game_free((void *)param_1[3]);
+      param_1[3] = 0;
+      *param_1 = 0;
+      param_1[1] = 0;
+      param_1[2] = 0;
     }
-    piVar2 = *(int **)((int)puVar1 + 4);
-    puVar1 = puVar1 + 1;
+    param_1 = *(int **)(puVar1 + 4);
+    puVar1 = puVar1 + 8;
   }
-  __restgprlr_29();
   return;
 }
 

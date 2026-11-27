@@ -43,225 +43,212 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 // 82789198  WaterFrequenciesAtTime  (gfx_d3d/r_water.cpp:291)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void WaterFrequenciesAtTime(float *param_1,float *param_2,water_t *param_3,float param_4)
 
 {
-  int iVar1;
-  float *pfVar2;
+  ulonglong uVar1;
+  int iVar2;
   ulonglong uVar3;
-  int iVar4;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  double extraout_f1;
+  longlong lVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  __savegprlr_16((double)param_4,param_1);
-  iVar4 = __savefpr_26();
-  dVar11 = extraout_f1;
-  if (iVar4 == 0) {
+  dVar8 = (double)param_4;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12d,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12e,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (water_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12f,0,
                     "%s");
   }
-  iVar1 = (int)uVar5;
-  lVar8 = (longlong)*(int *)(iVar1 + 0x14) * (longlong)*(int *)(iVar1 + 0x10);
-  dVar11 = (double)(float)(dVar11 * 162.9746551513672);
-  if (0x1000 < (int)lVar8) {
+  lVar6 = (longlong)param_3->N * (longlong)param_3->M;
+  dVar8 = (double)(float)(dVar8 * 162.9746551513672);
+  if (0x1000 < (int)lVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x134,0,
                     "%s\n\t(vecKCount) = %i");
   }
-  uVar7 = (ulonglong)*(uint *)(iVar1 + 0xc);
-  uVar6 = (ulonglong)*(uint *)(iVar1 + 4);
-  uVar5 = (ulonglong)*(uint *)(iVar1 + 8);
-  if (0 < (int)lVar8) {
-    dVar10 = 0.0;
-    iVar4 = iVar4 - (int)uVar9;
+  uVar5 = ZEXT48(param_3->wTerm);
+  uVar4 = ZEXT48(param_3->H0X);
+  uVar3 = ZEXT48(param_3->H0Y);
+  if (0 < (int)lVar6) {
+    dVar7 = 0.0;
+    iVar2 = (int)param_1 - (int)param_2;
     do {
-      dataCacheBlockTouch(uVar7 + 0x200);
-      dataCacheBlockTouch(uVar6 + 0x200);
       dataCacheBlockTouch(uVar5 + 0x200);
-      pfVar2 = (float *)uVar9;
-      if (*(float *)uVar7 == 0.0) {
-        *(float *)(iVar4 + (int)pfVar2) = (float)dVar10;
-        *pfVar2 = (float)dVar10;
+      dataCacheBlockTouch(uVar4 + 0x200);
+      dataCacheBlockTouch(uVar3 + 0x200);
+      if (*(float *)uVar5 == 0.0) {
+        *(float *)(iVar2 + (int)param_2) = (float)dVar7;
+        *param_2 = (float)dVar7;
       }
       else {
-        dVar15 = (double)*(float *)uVar6;
-        uVar3 = (longlong)((double)*(float *)uVar7 * dVar11) & 0x3ff;
-        dVar14 = (double)*(float *)((int)waterGlobStatic.sinTable + (int)(uVar3 << 2));
-        dVar13 = (double)*(float *)((int)waterGlobStatic.sinTable +
-                                   (((int)uVar3 + 0xff) * 4 & 0xffcU));
-        if (((uint)*(float *)uVar6 & 0x7f800000) == 0x7f800000) {
+        dVar12 = (double)*(float *)uVar4;
+        uVar1 = (longlong)((double)*(float *)uVar5 * dVar8) & 0x3ff;
+        dVar11 = (double)*(float *)((int)waterGlobStatic.sinTable + (int)(uVar1 << 2));
+        dVar10 = (double)*(float *)((int)waterGlobStatic.sinTable +
+                                   (((int)uVar1 + 0xff) * 4 & 0xffcU));
+        if (((uint)*(float *)uVar4 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x146,0,"%s");
         }
-        dVar12 = (double)*(float *)uVar5;
-        if (((uint)*(float *)uVar5 & 0x7f800000) == 0x7f800000) {
+        dVar9 = (double)*(float *)uVar3;
+        if (((uint)*(float *)uVar3 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x147,0,"%s");
         }
-        if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
+        if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x148,0,"%s");
         }
-        if (((uint)(float)dVar14 & 0x7f800000) == 0x7f800000) {
+        if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x149,0,"%s");
         }
-        *(float *)(iVar4 + (int)pfVar2) = (float)(dVar15 * dVar13);
-        *pfVar2 = (float)(dVar12 * dVar14);
-        if (((uint)(float)(dVar15 * dVar13) & 0x7f800000) == 0x7f800000) {
+        *(float *)(iVar2 + (int)param_2) = (float)(dVar12 * dVar10);
+        *param_2 = (float)(dVar9 * dVar11);
+        if (((uint)(float)(dVar12 * dVar10) & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x14d,0,"%s");
         }
-        if (((uint)*pfVar2 & 0x7f800000) == 0x7f800000) {
+        if (((uint)*param_2 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
                           0x14e,0,"%s");
         }
       }
-      lVar8 = lVar8 + -1;
-      uVar9 = uVar9 + 4;
-      uVar7 = uVar7 + 4;
-      uVar6 = uVar6 + 4;
+      lVar6 = lVar6 + -1;
+      param_2 = param_2 + 1;
       uVar5 = uVar5 + 4;
-    } while (lVar8 != 0);
+      uVar4 = uVar4 + 4;
+      uVar3 = uVar3 + 4;
+    } while (lVar6 != 0);
   }
-  __restfpr_26();
-  __restgprlr_16();
   return;
 }
 
 
 // 82789488  TransposeArray  (gfx_d3d/r_water.cpp:341)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void TransposeArray(float *param_1,uint param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  float *pfVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
-  longlong lVar17;
-  ulonglong uVar18;
+  float *pfVar6;
+  longlong lVar7;
+  float *pfVar8;
+  int iVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
   
-  uVar14 = (ulonglong)(int)param_2;
-  uVar9 = __savegprlr_23(param_1);
-  if ((uVar9 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x167,0,
                     "%s");
   }
-  if ((uVar14 & 3) != 0) {
+  if ((param_2 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x168,0,
                     "%s");
   }
-  lVar16 = (uVar14 & 0x3fffffff) * 4;
-  lVar17 = (uVar14 & 0x1fffffff) * 8;
-  iVar8 = (int)lVar16;
-  iVar6 = iVar8 + (int)uVar14 * 8;
-  if ((uVar14 & 0x3fffffff) != 0) {
-    lVar10 = (uVar14 & 0xfffffff) * 0x10;
-    iVar5 = (int)lVar17;
-    iVar2 = iVar6 - iVar5;
-    lVar15 = 0;
-    lVar16 = ((lVar16 - 1U & 0xffffffff) >> 4) + 1;
-    uVar14 = uVar9;
+  iVar10 = param_2 * 4;
+  if (iVar10 != 0) {
+    iVar9 = 0;
+    lVar7 = (ulonglong)(iVar10 - 1U >> 4) + 1;
+    pfVar8 = param_1;
     do {
-      iVar11 = 0;
-      uVar18 = ((0x10 - uVar9) + uVar14 & 0xffffffff) >> 4;
-      lVar13 = uVar14 + lVar17;
-      uVar12 = uVar14;
+      iVar3 = 0;
+      uVar11 = (ulonglong)((uint)((0x10 - (int)param_1) + (int)pfVar8) >> 4);
+      pfVar6 = pfVar8 + param_2 * 2;
+      pfVar4 = pfVar8;
       do {
-        iVar7 = (int)lVar15 + iVar11;
-        auVar29 = *(undefined1 (*) [16])((uint)uVar12 & 0xfffffff0);
-        uVar1 = (uint)lVar13;
-        auVar28 = *(undefined1 (*) [16])((iVar8 - iVar5) + uVar1 & 0xfffffff0);
-        iVar11 = iVar11 + 0x10;
-        auVar27 = *(undefined1 (*) [16])(iVar2 + uVar1 & 0xfffffff0);
-        iVar4 = iVar7 + iVar6;
-        auVar26 = vectorMergeHighWord128(auVar29,*(undefined1 (*) [16])(uVar1 & 0xfffffff0));
-        iVar3 = (int)uVar9;
-        auVar25 = *(undefined1 (*) [16])(iVar7 + iVar3 & 0xfffffff0);
-        auVar24 = vectorMergeHighWord128(auVar28,auVar27);
-        auVar23 = vectorMergeLowWord128(auVar29,*(undefined1 (*) [16])(uVar1 & 0xfffffff0));
-        auVar22 = *(undefined1 (*) [16])(iVar7 + iVar8 + iVar3 & 0xfffffff0);
-        auVar21 = vectorMergeLowWord128(auVar28,auVar27);
-        auVar28 = *(undefined1 (*) [16])(iVar7 + iVar5 + iVar3 & 0xfffffff0);
-        auVar27 = *(undefined1 (*) [16])(iVar4 + iVar3 & 0xfffffff0);
-        auVar20 = vectorMergeHighWord128(auVar26,auVar24);
-        auVar19 = vectorMergeHighWord128(auVar25,auVar28);
-        auVar29 = vectorMergeHighWord128(auVar22,auVar27);
-        auVar28 = vectorMergeLowWord128(auVar25,auVar28);
-        auVar27 = vectorMergeLowWord128(auVar22,auVar27);
-        auVar25 = vectorMergeLowWord128(auVar26,auVar24);
-        auVar24 = vectorMergeHighWord128(auVar19,auVar29);
-        auVar22 = vectorMergeLowWord128(auVar19,auVar29);
-        auVar19 = vectorMergeHighWord128(auVar28,auVar27);
-        auVar29 = vectorMergeLowWord128(auVar28,auVar27);
-        auVar28 = vectorMergeHighWord128(auVar23,auVar21);
-        auVar27 = vectorMergeLowWord128(auVar23,auVar21);
-        *(undefined1 (*) [16])((uint)uVar12 & 0xfffffff0) = auVar24;
-        uVar12 = lVar10 + uVar12;
-        *(undefined1 (*) [16])((iVar8 - iVar5) + uVar1 & 0xfffffff0) = auVar22;
-        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar19;
-        *(undefined1 (*) [16])(iVar2 + uVar1 & 0xfffffff0) = auVar29;
-        lVar13 = lVar10 + lVar13;
-        *(undefined1 (*) [16])(iVar7 + iVar3 & 0xfffffff0) = auVar20;
-        *(undefined1 (*) [16])(iVar7 + iVar8 + iVar3 & 0xfffffff0) = auVar25;
-        *(undefined1 (*) [16])(iVar7 + iVar5 + iVar3 & 0xfffffff0) = auVar28;
-        *(undefined1 (*) [16])(iVar4 + iVar3 & 0xfffffff0) = auVar27;
-        uVar18 = uVar18 - 1;
-      } while (uVar18 != 0);
-      lVar16 = lVar16 + -1;
-      lVar15 = lVar15 + lVar10;
-      uVar14 = uVar14 + 0x10;
-    } while (lVar16 != 0);
+        iVar5 = iVar9 + iVar3;
+        iVar3 = iVar3 + 0x10;
+        iVar1 = iVar5 + param_2 * 8;
+        iVar2 = iVar5 + param_2 * 0xc;
+        auVar22 = vectorMergeHighWord128
+                            (*(undefined1 (*) [16])((uint)pfVar4 & 0xfffffff0),
+                             *(undefined1 (*) [16])((uint)pfVar6 & 0xfffffff0));
+        auVar21 = *(undefined1 (*) [16])(iVar5 + (int)param_1 & 0xfffffff0);
+        auVar20 = vectorMergeHighWord128
+                            (*(undefined1 (*) [16])((uint)(pfVar6 + -param_2) & 0xfffffff0),
+                             *(undefined1 (*) [16])((uint)(pfVar6 + param_2) & 0xfffffff0));
+        auVar19 = vectorMergeLowWord128
+                            (*(undefined1 (*) [16])((uint)pfVar4 & 0xfffffff0),
+                             *(undefined1 (*) [16])((uint)pfVar6 & 0xfffffff0));
+        auVar18 = *(undefined1 (*) [16])(iVar5 + iVar10 + (int)param_1 & 0xfffffff0);
+        auVar17 = vectorMergeLowWord128
+                            (*(undefined1 (*) [16])((uint)(pfVar6 + -param_2) & 0xfffffff0),
+                             *(undefined1 (*) [16])((uint)(pfVar6 + param_2) & 0xfffffff0));
+        auVar16 = *(undefined1 (*) [16])(iVar1 + (int)param_1 & 0xfffffff0);
+        auVar15 = *(undefined1 (*) [16])(iVar2 + (int)param_1 & 0xfffffff0);
+        auVar14 = vectorMergeHighWord128(auVar22,auVar20);
+        auVar13 = vectorMergeHighWord128(auVar21,auVar16);
+        auVar12 = vectorMergeHighWord128(auVar18,auVar15);
+        auVar16 = vectorMergeLowWord128(auVar21,auVar16);
+        auVar15 = vectorMergeLowWord128(auVar18,auVar15);
+        auVar21 = vectorMergeLowWord128(auVar22,auVar20);
+        auVar20 = vectorMergeHighWord128(auVar13,auVar12);
+        auVar18 = vectorMergeLowWord128(auVar13,auVar12);
+        auVar13 = vectorMergeHighWord128(auVar16,auVar15);
+        auVar12 = vectorMergeLowWord128(auVar16,auVar15);
+        auVar16 = vectorMergeHighWord128(auVar19,auVar17);
+        auVar15 = vectorMergeLowWord128(auVar19,auVar17);
+        *(undefined1 (*) [16])((uint)pfVar4 & 0xfffffff0) = auVar20;
+        pfVar4 = pfVar4 + param_2 * 4;
+        *(undefined1 (*) [16])((uint)(pfVar6 + -param_2) & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])((uint)pfVar6 & 0xfffffff0) = auVar13;
+        *(undefined1 (*) [16])((uint)(pfVar6 + param_2) & 0xfffffff0) = auVar12;
+        pfVar6 = pfVar6 + param_2 * 4;
+        *(undefined1 (*) [16])(iVar5 + (int)param_1 & 0xfffffff0) = auVar14;
+        *(undefined1 (*) [16])(iVar5 + iVar10 + (int)param_1 & 0xfffffff0) = auVar21;
+        *(undefined1 (*) [16])(iVar1 + (int)param_1 & 0xfffffff0) = auVar16;
+        *(undefined1 (*) [16])(iVar2 + (int)param_1 & 0xfffffff0) = auVar15;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
+      lVar7 = lVar7 + -1;
+      iVar9 = iVar9 + param_2 * 0x10;
+      pfVar8 = pfVar8 + 4;
+    } while (lVar7 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82789608  WaterAmplitudesFromFrequencies  (gfx_d3d/r_water.cpp:409)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void WaterAmplitudesFromFrequencies(float *param_1,float *param_2,water_t *param_3)
 
@@ -269,89 +256,79 @@ void WaterAmplitudesFromFrequencies(float *param_1,float *param_2,water_t *param
   ulonglong uVar1;
   ulonglong uVar2;
   int iVar3;
-  float *pfVar4;
-  int iVar5;
-  float *pfVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulong uVar9;
-  ulonglong uVar10;
-  int iVar11;
+  uint uVar4;
+  ulonglong uVar5;
+  ulong uVar6;
+  int iVar7;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  pfVar6 = (float *)__savegprlr_21(param_1);
-  if (pfVar6 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x19e,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x19f,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (water_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1a0,0,
                     "%s");
   }
-  iVar3 = (int)uVar8;
-  if (*(int *)(iVar3 + 0x10) != *(int *)(iVar3 + 0x14)) {
+  if (param_3->M != param_3->N) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1a1,0,
                     "%s");
   }
-  uVar9 = 0;
-  uVar8 = 1;
-  if (*(uint *)(iVar3 + 0x10) != 1) {
+  uVar6 = 0;
+  uVar5 = 1;
+  if (param_3->M != 1) {
     do {
-      uVar1 = uVar8 << 1;
-      uVar2 = uVar8 >> 0x1f;
-      uVar8 = uVar1 & 0xffffffff | uVar2;
-      uVar9 = uVar9 + 1;
-    } while (*(uint *)(iVar3 + 0x10) != ((uint)uVar1 | (uint)uVar2));
+      uVar1 = uVar5 << 1;
+      uVar2 = uVar5 >> 0x1f;
+      uVar5 = uVar1 & 0xffffffff | uVar2;
+      uVar6 = uVar6 + 1;
+    } while (param_3->M != ((uint)uVar1 | (uint)uVar2));
   }
-  iVar11 = 0;
-  pfVar4 = (float *)uVar10;
-  if (0 < *(int *)(iVar3 + 0x14)) {
+  iVar7 = 0;
+  if (0 < param_3->N) {
     do {
-      uVar10 = (longlong)*(int *)(iVar3 + 0x10) * (longlong)iVar11;
-      if ((longlong)uVar10 < 0) {
+      uVar5 = (longlong)param_3->M * (longlong)iVar7;
+      if ((longlong)uVar5 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1ab
                         ,0,"%s");
       }
-      if (0xfff < (int)uVar10) {
+      if (0xfff < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1ac
                         ,0,"%s");
       }
-      iVar5 = (int)((uVar10 & 0xffffffff) << 2);
-      FFT((float *)(iVar5 + (int)pfVar6),(float *)(iVar5 + (int)pfVar4),uVar9,
+      iVar3 = (int)((uVar5 & 0xffffffff) << 2);
+      FFT((float *)(iVar3 + (int)param_1),(float *)(iVar3 + (int)param_2),uVar6,
           waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
-      iVar11 = iVar11 + 1;
-    } while (iVar11 < *(int *)(iVar3 + 0x14));
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < param_3->N);
   }
-  TransposeArray(pfVar6,*(uint *)(iVar3 + 0x10));
-  TransposeArray(pfVar4,*(uint *)(iVar3 + 0x10));
-  uVar7 = *(uint *)(iVar3 + 0x10);
-  iVar11 = 0;
-  if (0 < (int)uVar7) {
+  TransposeArray(param_1,param_3->M);
+  TransposeArray(param_2,param_3->M);
+  uVar4 = param_3->M;
+  iVar7 = 0;
+  if (0 < (int)uVar4) {
     do {
-      uVar10 = (longlong)*(int *)(iVar3 + 0x14) * (longlong)iVar11;
-      if ((longlong)uVar10 < 0) {
+      uVar5 = (longlong)param_3->N * (longlong)iVar7;
+      if ((longlong)uVar5 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1b8
                         ,0,"%s");
       }
-      if (0xfff < (int)uVar10) {
+      if (0xfff < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1b9
                         ,0,"%s");
       }
-      iVar5 = (int)((uVar10 & 0xffffffff) << 2);
-      FFT((float *)(iVar5 + (int)pfVar6),(float *)(iVar5 + (int)pfVar4),uVar9,
+      iVar3 = (int)((uVar5 & 0xffffffff) << 2);
+      FFT((float *)(iVar3 + (int)param_1),(float *)(iVar3 + (int)param_2),uVar6,
           waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
-      uVar7 = *(uint *)(iVar3 + 0x10);
-      iVar11 = iVar11 + 1;
-    } while (iVar11 < (int)uVar7);
+      uVar4 = param_3->M;
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < (int)uVar4);
   }
-  TransposeArray(pfVar6,uVar7);
-  TransposeArray(pfVar4,*(uint *)(iVar3 + 0x10));
-  __restgprlr_21();
+  TransposeArray(param_1,uVar4);
+  TransposeArray(param_2,param_3->M);
   return;
 }
 
@@ -373,45 +350,41 @@ void _dynamic_initializer_for__g_selectByteFromInt__(void)
 
 // 82789838  WaterPixelsFromAmplitudes  (gfx_d3d/r_water.cpp:455)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void WaterPixelsFromAmplitudes(uchar *param_1,float *param_2,float *param_3,water_t *param_4)
 
 {
-  uint uVar1;
+  __vector4 _Var1;
   __vector4 _Var2;
   __vector4 _Var3;
   __vector4 _Var4;
   __vector4 _Var5;
-  __vector4 _Var6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  uint uVar13;
+  longlong lVar6;
+  float *pfVar7;
+  float *pfVar8;
+  uint uVar9;
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar7 = __savegprlr_26(param_1);
-  if (uVar7 == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d5,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d6,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d7,0,
                     "%s");
   }
@@ -419,99 +392,105 @@ void WaterPixelsFromAmplitudes(uchar *param_1,float *param_2,float *param_3,wate
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d8,0,
                     "%s");
   }
-  if ((uVar8 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d9,0,
                     "%s");
   }
-  if ((uVar9 & 0xf) != 0) {
+  if (((uint)param_3 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1da,0,
                     "%s");
   }
-  if ((uVar7 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1db,0,
                     "%s");
   }
-  uVar13 = param_4->N * param_4->M;
-  if ((uVar13 & 3) != 0) {
+  uVar9 = param_4->N * param_4->M;
+  if ((uVar9 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1de,0,
                     "%s\n\t(count) = %i");
   }
-  _Var6.field0_0x0 = g_selectByteFromInt.field0_0x0;
-  _Var5.field0_0x0 = g_negativeZero.field0_0x0;
-  _Var4.field0_0x0 = g_XYxy.field0_0x0;
-  _Var3.field0_0x0 = g_fltMin.field0_0x0;
-  _Var2.field0_0x0 = g_one.field0_0x0;
-  auVar23 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x40);
-  auVar22 = loadVectorLeftIndexed(0xffffffff821d3e40);
-  auVar22 = vectorSplatWord(auVar22,0);
-  auVar23 = vectorSplatWord(auVar23,0);
-  if (uVar13 != 0) {
-    lVar10 = (ulonglong)(uVar13 - 1 >> 4) + 1;
-    lVar11 = uVar8 + 0x30;
-    lVar12 = uVar9 + 0x10;
+  _Var5.field0_0x0 = g_selectByteFromInt.field0_0x0;
+  _Var4.field0_0x0 = g_negativeZero.field0_0x0;
+  _Var3.field0_0x0 = g_XYxy.field0_0x0;
+  _Var2.field0_0x0 = g_fltMin.field0_0x0;
+  _Var1.field0_0x0 = g_one.field0_0x0;
+  auVar19 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x40);
+  auVar18 = loadVectorLeftIndexed(0xffffffff821d3e40);
+  auVar18 = vectorSplatWord(auVar18,0);
+  auVar19 = vectorSplatWord(auVar19,0);
+  if (uVar9 != 0) {
+    lVar6 = (ulonglong)(uVar9 - 1 >> 4) + 1;
+    pfVar7 = param_2 + 0xc;
+    pfVar8 = param_3 + 4;
     do {
-      uVar13 = (uint)lVar11;
-      auVar19 = *(undefined1 (*) [16])(uVar13 - 0x30 & 0xfffffff0);
-      auVar16 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
-      uVar1 = (uint)lVar12;
-      auVar19 = *(undefined1 (*) [16])(((int)uVar8 - (int)uVar9) + uVar1 & 0xfffffff0);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
-      auVar19 = *(undefined1 (*) [16])(uVar13 - 0x10 & 0xfffffff0);
-      auVar14 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
-      auVar19 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar13 & 0xfffffff0),
-                           *(undefined1 (*) [16])(uVar13 & 0xfffffff0),
-                           (undefined1  [16])_Var3.field0_0x0);
-      auVar20 = *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0);
-      lVar11 = lVar11 + 0x40;
-      auVar18 = vectorMultiplyAddFloatingPoint(auVar20,auVar20,auVar16);
+      auVar13 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)(pfVar7 + -0xc) & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)(pfVar7 + -0xc) & 0xfffffff0),
+                           (undefined1  [16])_Var2.field0_0x0);
+      auVar16 = *(undefined1 (*) [16])(((int)param_2 - (int)param_3) + (int)pfVar8 & 0xfffffff0);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar16,auVar16,(undefined1  [16])_Var2.field0_0x0);
+      auVar10 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)(pfVar7 + -4) & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)(pfVar7 + -4) & 0xfffffff0),
+                           (undefined1  [16])_Var2.field0_0x0);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)pfVar7 & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)pfVar7 & 0xfffffff0),
+                           (undefined1  [16])_Var2.field0_0x0);
+      pfVar7 = pfVar7 + 0x10;
+      auVar15 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)(pfVar8 + -4) & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)(pfVar8 + -4) & 0xfffffff0),auVar13);
+      auVar14 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)pfVar8 & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)pfVar8 & 0xfffffff0),auVar11);
+      auVar12 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((uint)(pfVar8 + 4) & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)(pfVar8 + 4) & 0xfffffff0),auVar10);
       auVar17 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar1 & 0xfffffff0),
-                           *(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar15);
-      auVar15 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar20 = vectorMultiplyAddFloatingPoint(auVar15,auVar15,auVar14);
-      auVar14 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar21 = vectorMultiplyAddFloatingPoint(auVar14,auVar14,auVar19);
-      lVar12 = lVar12 + 0x40;
-      auVar15 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar18);
-      auVar14 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar17);
-      auVar19 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar20);
-      auVar16 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar21);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar18,auVar15,(undefined1  [16])_Var5.field0_0x0);
-      auVar14 = vectorMultiplyAddFloatingPoint(auVar17,auVar14,(undefined1  [16])_Var5.field0_0x0);
-      auVar19 = vectorMultiplyAddFloatingPoint(auVar20,auVar19,(undefined1  [16])_Var5.field0_0x0);
-      auVar16 = vectorMultiplyAddFloatingPoint(auVar21,auVar16,(undefined1  [16])_Var5.field0_0x0);
-      auVar20 = vectorMultiplyFloatingPoint(auVar15,auVar23);
-      auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar23);
-      auVar15 = vectorMultiplyFloatingPoint(auVar19,auVar23);
-      auVar19 = vectorMultiplyFloatingPoint(auVar16,auVar23);
-      auVar16 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar20);
-      auVar14 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar14);
-      auVar15 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar15);
-      auVar19 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar19);
-      auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar22);
-      auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar22);
-      auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar22);
-      auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar22);
+                          (*(undefined1 (*) [16])((uint)(pfVar8 + 8) & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)(pfVar8 + 8) & 0xfffffff0),auVar16);
+      pfVar8 = pfVar8 + 0x10;
+      auVar11 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar15);
+      auVar10 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar14);
+      auVar16 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar12);
+      auVar13 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar17);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar15,auVar11,(undefined1  [16])_Var4.field0_0x0);
+      auVar10 = vectorMultiplyAddFloatingPoint(auVar14,auVar10,(undefined1  [16])_Var4.field0_0x0);
+      auVar16 = vectorMultiplyAddFloatingPoint(auVar12,auVar16,(undefined1  [16])_Var4.field0_0x0);
+      auVar13 = vectorMultiplyAddFloatingPoint(auVar17,auVar13,(undefined1  [16])_Var4.field0_0x0);
+      auVar12 = vectorMultiplyFloatingPoint(auVar11,auVar19);
+      auVar10 = vectorMultiplyFloatingPoint(auVar10,auVar19);
+      auVar11 = vectorMultiplyFloatingPoint(auVar16,auVar19);
+      auVar16 = vectorMultiplyFloatingPoint(auVar13,auVar19);
+      auVar13 = vectorMinimumFloatingPoint128((undefined1  [16])_Var1.field0_0x0,auVar12);
+      auVar10 = vectorMinimumFloatingPoint128((undefined1  [16])_Var1.field0_0x0,auVar10);
+      auVar11 = vectorMinimumFloatingPoint128((undefined1  [16])_Var1.field0_0x0,auVar11);
+      auVar16 = vectorMinimumFloatingPoint128((undefined1  [16])_Var1.field0_0x0,auVar16);
+      auVar13 = vectorMultiplyFloatingPoint(auVar13,auVar18);
+      auVar10 = vectorMultiplyFloatingPoint(auVar10,auVar18);
+      auVar11 = vectorMultiplyFloatingPoint(auVar11,auVar18);
+      auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar18);
+      auVar13 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar13,0);
+      auVar10 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar10,0);
+      auVar11 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar11,0);
       auVar16 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar16,0);
-      auVar14 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar14,0);
-      auVar15 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar15,0);
-      auVar19 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar19,0);
-      auVar14 = vectorPermute128(auVar16,auVar14,(undefined1  [16])_Var6.field0_0x0);
-      auVar19 = vectorPermute128(auVar15,auVar19,(undefined1  [16])_Var6.field0_0x0);
-      auVar19 = vectorPermute128(auVar14,auVar19,(undefined1  [16])_Var4.field0_0x0);
-      *(undefined1 (*) [16])(uVar7 & 0xfffffff0) = auVar19;
-      uVar7 = uVar7 + 0x10;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
+      auVar10 = vectorPermute128(auVar13,auVar10,(undefined1  [16])_Var5.field0_0x0);
+      auVar16 = vectorPermute128(auVar11,auVar16,(undefined1  [16])_Var5.field0_0x0);
+      auVar16 = vectorPermute128(auVar10,auVar16,(undefined1  [16])_Var3.field0_0x0);
+      *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0) = auVar16;
+      param_1 = param_1 + 0x10;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82789B28  GenerateMipMaps  (gfx_d3d/r_water.cpp:588)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void GenerateMipMaps(_D3DFORMAT param_1,uchar *param_2,water_t *param_3)
@@ -520,75 +499,62 @@ void GenerateMipMaps(_D3DFORMAT param_1,uchar *param_2,water_t *param_3)
   int iVar1;
   uint uVar2;
   undefined8 uVar3;
-  int iVar4;
-  _D3DFORMAT _Var5;
-  int iVar6;
-  uchar *puVar7;
-  void *pvVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined4 *puVar11;
-  uint uVar12;
-  uint *puVar13;
+  void *pvVar4;
+  undefined4 *puVar5;
+  uint uVar6;
+  uint *puVar7;
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  _Var5 = __savegprlr_18(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x250,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (water_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x251,0,
                     "%s");
   }
-  iVar4 = (int)uVar10;
-  if (*(int *)(iVar4 + 0x10) != *(int *)(iVar4 + 0x14)) {
+  if (param_3->M != param_3->N) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x252,0,
                     "%s");
   }
   Profile_Begin(0x7a);
-  Image_UploadData(*(GfxImage **)(iVar4 + 0x44),D3DFMT_L8,D3DCUBEMAP_FACE_POSITIVE_X,0,
-                   waterGlob.pixels);
-  iVar6 = Profile_EndInternal((double *)0x0);
-  uVar12 = 1;
-  for (iVar1 = *(int *)(iVar4 + 0x10); 1 < iVar1; iVar1 = iVar1 >> 1) {
-    puVar7 = (uchar *)uVar9;
-    R_DownsampleMipMapBilinear(puVar7,iVar1,iVar1,1,puVar7);
-    pvVar8 = Sys_GetValue(0);
-    puVar13 = (uint *)((int)pvVar8 + 0x173c);
-    if (2 < *(int *)((int)pvVar8 + 0x173c) + 1U) {
+  Image_UploadData(param_3->image,D3DFMT_L8,D3DCUBEMAP_FACE_POSITIVE_X,0,waterGlob.pixels);
+  Profile_EndInternal((double *)0x0);
+  uVar6 = 1;
+  for (iVar1 = param_3->M; 1 < iVar1; iVar1 = iVar1 >> 1) {
+    R_DownsampleMipMapBilinear(param_2,iVar1,iVar1,1,param_2);
+    pvVar4 = Sys_GetValue(0);
+    puVar7 = (uint *)((int)pvVar4 + 0x173c);
+    if (2 < *(int *)((int)pvVar4 + 0x173c) + 1U) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
                       ,0xee,0,
                       "p->write.nesting + 1 doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
                      );
     }
-    uVar2 = *puVar13;
-    *puVar13 = uVar2 + 1;
+    uVar2 = *puVar7;
+    *puVar7 = uVar2 + 1;
     if (2 < uVar2 + 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
                       ,0xf0,0,
                       "p->write.nesting doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
                      );
     }
-    if (*(uint *)((int)pvVar8 + 0x428) < (int)pvVar8 + 0x28U) {
+    if (*(uint *)((int)pvVar4 + 0x428) < (int)pvVar4 + 0x28U) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
                       ,0xf2,0,"%s");
     }
-    puVar11 = (undefined4 *)(*(int *)((int)pvVar8 + 0x428) + 4);
-    *(undefined4 **)((int)pvVar8 + 0x428) = puVar11;
-    *puVar11 = puVar13;
-    if (*(uint *)((int)pvVar8 + 0x428) <= (int)pvVar8 + 0x28U) {
+    puVar5 = (undefined4 *)(*(int *)((int)pvVar4 + 0x428) + 4);
+    *(undefined4 **)((int)pvVar4 + 0x428) = puVar5;
+    *puVar5 = puVar7;
+    if (*(uint *)((int)pvVar4 + 0x428) <= (int)pvVar4 + 0x28U) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
                       ,0xf5,0,"%s");
     }
     uVar3 = TBLr;
-    puVar13[*puVar13 + 2] = (uint)uVar3;
-    Image_UploadData(*(GfxImage **)(iVar4 + 0x44),_Var5,D3DCUBEMAP_FACE_POSITIVE_X,uVar12,puVar7);
-    iVar6 = Profile_EndInternal((double *)0x0);
-    uVar12 = uVar12 + 1;
+    puVar7[*puVar7 + 2] = (uint)uVar3;
+    Image_UploadData(param_3->image,param_1,D3DCUBEMAP_FACE_POSITIVE_X,uVar6,param_2);
+    Profile_EndInternal((double *)0x0);
+    uVar6 = uVar6 + 1;
   }
-  __restgprlr_18(iVar6);
   return;
 }
 
@@ -629,6 +595,8 @@ void R_UploadWaterTextureInternal(void *param_1)
 
 // 82789E88  R_InitWater  (gfx_d3d/r_water.cpp:710)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_InitWater(void)
@@ -640,7 +608,6 @@ void R_InitWater(void)
   double dVar4;
   double dVar5;
   
-  __savegprlr_29();
   pWVar2 = &waterGlobStatic;
   iVar1 = 0;
   dVar5 = 0.3515625;
@@ -652,7 +619,6 @@ void R_InitWater(void)
     iVar1 = iVar1 + 1;
   } while ((int)pWVar2 < -0x7b810200);
   FFT_Init(waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
-  __restgprlr_29();
   return;
 }
 

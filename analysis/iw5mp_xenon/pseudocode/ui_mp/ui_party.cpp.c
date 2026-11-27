@@ -39,23 +39,22 @@ char * GetLobbyMemberName(LocalClientNum_t param_1,int param_2)
 
 // 825B3930  GetLobbyMemberStat  (ui_mp/ui_party.cpp:29)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * GetLobbyMemberStat(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  char *pcVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  pcVar4 = PartyUI_GetMemberStat(pPVar3,iVar2,param_2,param_3);
-  pcVar4 = (char *)__restgprlr_29(pcVar4);
-  return pcVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  pcVar3 = PartyUI_GetMemberStat(pPVar2,iVar1,param_2,param_3);
+  return pcVar3;
 }
 
 
@@ -161,29 +160,27 @@ int IsLobbyMemberAway(LocalClientNum_t param_1,int param_2)
 
 // 825B3B10  GetLobbyMemberPartyIcon  (ui_mp/ui_party.cpp:68)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetLobbyMemberPartyIcon(LocalClientNum_t param_1,int param_2,Material **param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  Material *pMVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  Material *pMVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  iVar2 = PartyUI_ShowMemberPrivatePartyHostIcon(pPVar3,iVar2,param_2);
-  if (iVar2 != 0) {
-    pMVar4 = Material_RegisterHandle("ui_host",7);
-    *param_3 = pMVar4;
-    __restgprlr_29();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar1 = PartyUI_ShowMemberPrivatePartyHostIcon(pPVar2,iVar1,param_2);
+  if (iVar1 != 0) {
+    pMVar3 = Material_RegisterHandle("ui_host",7);
+    *param_3 = pMVar3;
     return;
   }
   *param_3 = (Material *)0x0;
-  __restgprlr_29();
   return;
 }
 
@@ -209,21 +206,20 @@ bool IsHeadsetPresentForLobbyMember(LocalClientNum_t param_1,int param_2)
 
 // 825B3BB8  GetLobbyMemberRankIcon  (ui_mp/ui_party.cpp:96)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetLobbyMemberRankIcon(LocalClientNum_t param_1,int param_2,Material **param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
+  int iVar1;
+  PartyData *pPVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  PartyUI_MemberRankIcon(pPVar3,iVar2,param_2,param_3);
-  __restgprlr_29();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  PartyUI_MemberRankIcon(pPVar2,iVar1,param_2,param_3);
   return;
 }
 
@@ -249,21 +245,20 @@ char * GetLobbyMemberRank(LocalClientNum_t param_1,int param_2)
 
 // 825B3C38  GetLobbyMemberPartyColor  (ui_mp/ui_party.cpp:107)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetLobbyMemberPartyColor(LocalClientNum_t param_1,int param_2,float *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
+  int iVar1;
+  PartyData *pPVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  PartyUI_MemberPartyColor(pPVar3,iVar2,param_2,param_3);
-  __restgprlr_29();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  PartyUI_MemberPartyColor(pPVar2,iVar1,param_2,param_3);
   return;
 }
 
@@ -320,24 +315,23 @@ ulong64 GetPartyMemberXuid(LocalClientNum_t param_1,int param_2)
 
 // 825B3D00  IsPartyMemberAway  (ui_mp/ui_party.cpp:131)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int IsPartyMemberAway(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   
-  LVar1 = __savegprlr_29(param_1);
   if (g_partyData.inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_party.cpp",0x84,0,
                     "%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar2 = PartyUI_IsMemberSlotAway(&g_partyData,iVar2,param_2);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar1 = PartyUI_IsMemberSlotAway(&g_partyData,iVar1,param_2);
+  return iVar1;
 }
 
 
@@ -512,229 +506,215 @@ int GetTeamMemberCount(int param_1)
 
 // 825B4078  GetTeamMemberXuid  (ui_mp/ui_party.cpp:243)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 ulong64 GetTeamMemberXuid(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar2;
-  int iVar3;
-  PartyData *pPVar4;
+  int iVar2;
+  PartyData *pPVar3;
   ulong64 uVar1;
   
-  LVar2 = __savegprlr_29(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  pPVar4 = Lobby_GetPartyData();
-  PartyUI_GetTeamMemberXuid(pPVar4,iVar3,param_2,param_3);
-  uVar1 = __restgprlr_29();
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar3 = Lobby_GetPartyData();
+  uVar1 = PartyUI_GetTeamMemberXuid(pPVar3,iVar2,param_2,param_3);
   return uVar1;
 }
 
 
 // 825B40B0  GetTeamMemberName  (ui_mp/ui_party.cpp:249)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * GetTeamMemberName(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  char *pcVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  pcVar4 = PartyUI_GetTeamMemberName(pPVar3,iVar2,param_2,param_3);
-  pcVar4 = (char *)__restgprlr_29(pcVar4);
-  return pcVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  pcVar3 = PartyUI_GetTeamMemberName(pPVar2,iVar1,param_2,param_3);
+  return pcVar3;
 }
 
 
 // 825B40E8  GetTeamMemberStat  (ui_mp/ui_party.cpp:255)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * GetTeamMemberStat(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  char *pcVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  pcVar4 = PartyUI_GetTeamMemberStat(pPVar3,iVar2,param_2,param_3,param_4);
-  pcVar4 = (char *)__restgprlr_28(pcVar4);
-  return pcVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  pcVar3 = PartyUI_GetTeamMemberStat(pPVar2,iVar1,param_2,param_3,param_4);
+  return pcVar3;
 }
 
 
 // 825B4128  GetTeamMemberSkill  (ui_mp/ui_party.cpp:261)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * GetTeamMemberSkill(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  char *pcVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  pcVar4 = PartyUI_GetTeamMemberSkill(pPVar3,iVar2,param_2,param_3);
-  pcVar4 = (char *)__restgprlr_29(pcVar4);
-  return pcVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  pcVar3 = PartyUI_GetTeamMemberSkill(pPVar2,iVar1,param_2,param_3);
+  return pcVar3;
 }
 
 
 // 825B4160  IsTeamMemberTalking  (ui_mp/ui_party.cpp:268)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool IsTeamMemberTalking(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  bool bVar4;
-  undefined1 uVar5;
+  int iVar1;
+  PartyData *pPVar2;
+  bool bVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  bVar4 = PartyUI_IsTeamMemberTalking(pPVar3,iVar2,param_2,param_3);
-  uVar5 = __restgprlr_29(bVar4);
-  return (bool)uVar5;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  bVar3 = PartyUI_IsTeamMemberTalking(pPVar2,iVar1,param_2,param_3);
+  return bVar3;
 }
 
 
 // 825B4198  IsTeamMemberMuted  (ui_mp/ui_party.cpp:274)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool IsTeamMemberMuted(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  bool bVar4;
-  undefined1 uVar5;
+  int iVar1;
+  PartyData *pPVar2;
+  bool bVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  bVar4 = PartyUI_IsTeamMemberMuted(pPVar3,iVar2,param_2,param_3);
-  uVar5 = __restgprlr_29(bVar4);
-  return (bool)uVar5;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  bVar3 = PartyUI_IsTeamMemberMuted(pPVar2,iVar1,param_2,param_3);
+  return bVar3;
 }
 
 
 // 825B41D0  IsHeadsetPresentForTeamMember  (ui_mp/ui_party.cpp:280)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool IsHeadsetPresentForTeamMember(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  bool bVar4;
-  undefined1 uVar5;
+  int iVar1;
+  PartyData *pPVar2;
+  bool bVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  bVar4 = PartyUI_TeamMemberHasHeadset(pPVar3,iVar2,param_2,param_3);
-  uVar5 = __restgprlr_29(bVar4);
-  return (bool)uVar5;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  bVar3 = PartyUI_TeamMemberHasHeadset(pPVar2,iVar1,param_2,param_3);
+  return bVar3;
 }
 
 
 // 825B4208  GetTeamMemberRankIcon  (ui_mp/ui_party.cpp:287)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetTeamMemberRankIcon(LocalClientNum_t param_1,int param_2,int param_3,Material **param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
+  int iVar1;
+  PartyData *pPVar2;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  PartyUI_TeamMemberRankIcon(pPVar3,iVar2,param_2,param_3,param_4);
-  __restgprlr_28();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  PartyUI_TeamMemberRankIcon(pPVar2,iVar1,param_2,param_3,param_4);
   return;
 }
 
 
 // 825B4248  GetTeamMemberRank  (ui_mp/ui_party.cpp:293)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * GetTeamMemberRank(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  char *pcVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  pcVar4 = PartyUI_TeamMemberRank(pPVar3,iVar2,param_2,param_3);
-  pcVar4 = (char *)__restgprlr_29(pcVar4);
-  return pcVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  pcVar3 = PartyUI_TeamMemberRank(pPVar2,iVar1,param_2,param_3);
+  return pcVar3;
 }
 
 
 // 825B4280  GetTeamMembersPartyIcon  (ui_mp/ui_party.cpp:299)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetTeamMembersPartyIcon(LocalClientNum_t param_1,int param_2,int param_3,Material **param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  Material *pMVar4;
+  int iVar1;
+  PartyData *pPVar2;
+  Material *pMVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pPVar3 = Lobby_GetPartyData();
-  iVar2 = PartyUI_ShowTeamMemberPrivatePartyHostIcon(pPVar3,iVar2,param_2,param_3);
-  if (iVar2 != 0) {
-    pMVar4 = Material_RegisterHandle("ui_host",7);
-    *param_4 = pMVar4;
-    __restgprlr_28();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar1 = PartyUI_ShowTeamMemberPrivatePartyHostIcon(pPVar2,iVar1,param_2,param_3);
+  if (iVar1 != 0) {
+    pMVar3 = Material_RegisterHandle("ui_host",7);
+    *param_4 = pMVar3;
     return;
   }
   *param_4 = (Material *)0x0;
-  __restgprlr_28();
   return;
 }
 

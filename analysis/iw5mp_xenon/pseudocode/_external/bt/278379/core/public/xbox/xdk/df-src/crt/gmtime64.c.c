@@ -2,101 +2,93 @@
 
 // 82923400  _gmtime64_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/gmtime64.c:47)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int _gmtime64_s(tm *param_1,long64 *param_2)
 
 {
   bool bVar1;
-  int *piVar3;
-  undefined8 uVar2;
+  int *piVar2;
+  longlong lVar3;
   int iVar4;
-  ulonglong uVar5;
+  int_0_ *piVar5;
   longlong lVar6;
-  int_0_ *piVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  int *piVar10;
+  ulonglong uVar7;
+  int iVar8;
+  longlong lVar9;
+  ulonglong uVar10;
   int iVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  int iVar14;
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar3 = (int *)__savegprlr_28(param_1);
   bVar1 = false;
-  if ((piVar3 == (int *)0x0) || (memset(), (uVar5 & 0xffffffff) == 0)) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  if ((param_1 == (tm *)0x0) || (memset(), param_2 == (long64 *)0x0)) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    uVar2 = 0x16;
-    goto LAB_8292366c;
+    return 0x16;
   }
-  lVar8 = *(longlong *)uVar5;
-  if ((lVar8 < -0xa8c0) || (0x7934126cf < lVar8)) {
-    piVar3 = _errno();
-    uVar2 = 0x16;
-    *piVar3 = 0x16;
-    goto LAB_8292366c;
+  lVar6 = *param_2;
+  if ((lVar6 < -0xa8c0) || (0x7934126cf < lVar6)) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
+    return 0x16;
   }
-  iVar14 = (int)(lVar8 / 0x1e13380);
-  lVar12 = (longlong)iVar14;
-  uVar13 = lVar12 + 0x46;
-  uVar9 = lVar12 + 0x45;
-  iVar4 = (int)uVar9;
-  lVar8 = lVar8 + ((longlong)
-                   (int)(((iVar14 + 0x171) / 400 - iVar4 / 100) +
-                         (iVar4 >> 2) + (uint)(iVar4 < 0 && (uVar9 & 3) != 0) + -0x11) +
-                  (longlong)iVar14 * 0x16d) * -0x15180;
-  if (lVar8 < 0) {
-    uVar13 = uVar9;
-    if (((uVar9 == ((longlong)(iVar4 >> 2) + (ulonglong)(iVar4 < 0 && (uVar9 & 3) != 0) & 0x3fffffff
-                   ) << 2) && (uVar9 != (longlong)(iVar4 / 100) * 100)) ||
-       (lVar6 = lVar8 + 0x1e13380, lVar12 + 0x7b1 == (longlong)((int)(lVar12 + 0x7b1) / 400) * 400))
-    {
-      lVar8 = lVar8 + 0x1e28500;
-LAB_82923580:
-      bVar1 = true;
-      lVar6 = lVar8;
-    }
+  iVar11 = (int)(lVar6 / 0x1e13380);
+  lVar9 = (longlong)iVar11;
+  uVar10 = lVar9 + 0x46;
+  uVar7 = lVar9 + 0x45;
+  iVar4 = (int)uVar7;
+  lVar6 = lVar6 + ((longlong)
+                   (int)(((iVar11 + 0x171) / 400 - iVar4 / 100) +
+                         (iVar4 >> 2) + (uint)(iVar4 < 0 && (uVar7 & 3) != 0) + -0x11) +
+                  (longlong)iVar11 * 0x16d) * -0x15180;
+  if (lVar6 < 0) {
+    uVar10 = uVar7;
+    if (((uVar7 != ((longlong)(iVar4 >> 2) + (ulonglong)(iVar4 < 0 && (uVar7 & 3) != 0) & 0x3fffffff
+                   ) << 2) || (uVar7 == (longlong)(iVar4 / 100) * 100)) &&
+       (lVar3 = lVar6 + 0x1e13380, lVar9 + 0x7b1 != (longlong)((int)(lVar9 + 0x7b1) / 400) * 400))
+    goto LAB_82923584;
+    lVar6 = lVar6 + 0x1e28500;
   }
   else {
-    iVar4 = (int)uVar13;
-    if (((uVar13 == ((longlong)(iVar4 >> 2) + (ulonglong)(iVar4 < 0 && (uVar13 & 3) != 0) &
-                    0x3fffffff) << 2) && (uVar13 != (longlong)(iVar4 / 100) * 100)) ||
-       (lVar6 = lVar8, lVar12 + 0x7b2 == (longlong)((int)(lVar12 + 0x7b2) / 400) * 400))
-    goto LAB_82923580;
+    iVar4 = (int)uVar10;
+    if (((uVar10 != ((longlong)(iVar4 >> 2) + (ulonglong)(iVar4 < 0 && (uVar10 & 3) != 0) &
+                    0x3fffffff) << 2) || (uVar10 == (longlong)(iVar4 / 100) * 100)) &&
+       (lVar3 = lVar6, lVar9 + 0x7b2 != (longlong)((int)(lVar9 + 0x7b2) / 400) * 400))
+    goto LAB_82923584;
   }
-  piVar3[5] = (int)uVar13;
-  iVar4 = (int)(lVar6 / 0x15180);
-  piVar3[7] = iVar4;
-  lVar6 = lVar6 + (longlong)iVar4 * -0x15180;
+  bVar1 = true;
+  lVar3 = lVar6;
+LAB_82923584:
+  param_1->tm_year = (int)uVar10;
+  iVar4 = (int)(lVar3 / 0x15180);
+  param_1->tm_yday = iVar4;
+  lVar3 = lVar3 + (longlong)iVar4 * -0x15180;
   if (bVar1) {
-    piVar7 = &_lpdays;
+    piVar5 = &_lpdays;
   }
   else {
-    piVar7 = &_days;
+    piVar5 = &_days;
   }
-  piVar10 = (int *)(piVar7 + 4);
-  iVar14 = 1;
-  iVar4 = *(int *)(piVar7 + 4);
-  while (iVar4 < piVar3[7]) {
-    piVar10 = piVar10 + 1;
-    iVar14 = iVar14 + 1;
-    iVar4 = *piVar10;
+  piVar2 = (int *)(piVar5 + 4);
+  iVar11 = 1;
+  iVar4 = *(int *)(piVar5 + 4);
+  while (iVar4 < param_1->tm_yday) {
+    piVar2 = piVar2 + 1;
+    iVar11 = iVar11 + 1;
+    iVar4 = *piVar2;
   }
-  piVar3[4] = iVar14 + -1;
-  iVar11 = (int)(lVar6 / 0xe10);
-  lVar6 = lVar6 + (longlong)iVar11 * -0xe10;
-  uVar2 = 0;
-  iVar4 = (int)(lVar6 / 0x3c);
-  piVar3[3] = piVar3[7] - *(int *)(piVar7 + (iVar14 + -1) * 4);
-  lVar8 = *(longlong *)uVar5;
-  piVar3[2] = iVar11;
-  piVar3[1] = iVar4;
-  *piVar3 = (int)lVar6 + iVar4 * -0x3c;
-  piVar3[8] = 0;
-  piVar3[6] = ((int)(lVar8 / 0x15180) + 4) % 7;
-LAB_8292366c:
-  iVar4 = __restgprlr_28(uVar2);
-  return iVar4;
+  param_1->tm_mon = iVar11 + -1;
+  iVar8 = (int)(lVar3 / 0xe10);
+  lVar3 = lVar3 + (longlong)iVar8 * -0xe10;
+  iVar4 = (int)(lVar3 / 0x3c);
+  param_1->tm_mday = param_1->tm_yday - *(int *)(piVar5 + (iVar11 + -1) * 4);
+  lVar6 = *param_2;
+  param_1->tm_hour = iVar8;
+  param_1->tm_min = iVar4;
+  param_1->tm_sec = (int)lVar3 + iVar4 * -0x3c;
+  param_1->tm_isdst = 0;
+  param_1->tm_wday = ((int)(lVar6 / 0x15180) + 4) % 7;
+  return 0;
 }
 

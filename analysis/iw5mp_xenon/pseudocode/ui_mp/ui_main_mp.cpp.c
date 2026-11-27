@@ -53,6 +53,8 @@ UiContext * UI_GetClientDC(LocalClientNum_t param_1)
 
 // 825A4CD8  UI_RegisterDvars  (ui_mp/ui_main_mp.cpp:479)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_RegisterDvars(void)
@@ -71,7 +73,6 @@ void UI_RegisterDvars(void)
   double dVar11;
   double dVar12;
   
-  __savefpr_26();
   uVar6 = 0x68af;
   ui_customModeName = Dvar_RegisterString("ui_customModeName","",0,"Custom game mode name");
   ui_customModeEditName =
@@ -242,7 +243,6 @@ void UI_RegisterDvars(void)
        Dvar_RegisterInt("ui_playlistPopulationRefreshTime",0x4b0,0,0x7fffffff,0,
                         "The number of seconds before the playlist population heatmap is refreshed."
                        );
-  __restfpr_26();
   return;
 }
 
@@ -266,12 +266,13 @@ void TRACK_ui_main(void)
 
 // 825A5888  UI_AssetCache  (ui_mp/ui_main_mp.cpp:678)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_AssetCache(void)
 
 {
-  __savegprlr_29();
   sharedUiInfo.assets.whiteMaterial = Material_RegisterHandle("white",3);
   sharedUiInfo.assets.scrollBar = Material_RegisterHandle("ui_scrollbar",3);
   sharedUiInfo.assets.scrollBarArrowDown = Material_RegisterHandle("ui_scrollbar_arrow_dwn_a",3);
@@ -293,7 +294,6 @@ void UI_AssetCache(void)
   sharedUiInfo.assets.objectiveFont = CL_RegisterFont("fonts/objectivefont",0);
   sharedUiInfo.assets.hudBigFont = CL_RegisterFont("fonts/hudbigfont",0);
   sharedUiInfo.assets.hudSmallFont = CL_RegisterFont("fonts/hudsmallfont",0);
-  __restgprlr_29();
   return;
 }
 
@@ -347,120 +347,114 @@ void UI_ClearScissorRect(void)
 
 // 825A5AE0  UI_DrawSides  (ui_mp/ui_main_mp.cpp:719)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void UI_DrawSides(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
                  int param_6,int param_7,float param_8,float *param_9)
 
 {
-  ScreenPlacement *pSVar1;
   Material *in_r7;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar5 = (double)param_8;
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  __savegprlr_27((double)param_2,param_1);
-  pSVar1 = (ScreenPlacement *)__savefpr_26();
-  dVar7 = 0.0;
-  dVar6 = extraout_f1;
-  CL_DrawStretchPic(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar5,(float)dVar4,param_6,param_7
-                    ,0.0,0.0,0.0,0.0,param_9,in_r7);
-  CL_DrawStretchPic(pSVar1,(float)((double)(float)(dVar6 + dVar3) - dVar5),(float)dVar2,(float)dVar5
-                    ,(float)dVar4,param_6,param_7,(float)dVar7,(float)dVar7,(float)dVar7,
-                    (float)dVar7,param_9,in_r7);
-  __restfpr_26();
-  __restgprlr_27();
+  dVar6 = 0.0;
+  CL_DrawStretchPic(param_1,param_2,param_3,param_8,param_5,param_6,param_7,0.0,0.0,0.0,0.0,param_9,
+                    in_r7);
+  CL_DrawStretchPic(param_1,(float)((double)(float)(dVar1 + dVar3) - dVar5),(float)dVar2,
+                    (float)dVar5,(float)dVar4,param_6,param_7,(float)dVar6,(float)dVar6,(float)dVar6
+                    ,(float)dVar6,param_9,in_r7);
   return;
 }
 
 
 // 825A5BA0  UI_DrawTopBottom  (ui_mp/ui_main_mp.cpp:726)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void UI_DrawTopBottom(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
                      float param_5,int param_6,int param_7,float param_8,float *param_9)
 
 {
-  ScreenPlacement *pSVar1;
   Material *in_r7;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar4 = (double)param_5;
   dVar5 = (double)param_8;
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  __savegprlr_27((double)param_2,param_1);
-  pSVar1 = (ScreenPlacement *)__savefpr_26();
-  dVar7 = 0.0;
-  dVar6 = extraout_f1;
-  CL_DrawStretchPic(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar3,(float)dVar5,param_6,param_7
-                    ,0.0,0.0,0.0,0.0,param_9,in_r7);
-  CL_DrawStretchPic(pSVar1,(float)dVar6,(float)((double)(float)(dVar2 + dVar4) - dVar5),(float)dVar3
-                    ,(float)dVar5,param_6,param_7,(float)dVar7,(float)dVar7,(float)dVar7,
-                    (float)dVar7,param_9,in_r7);
-  __restfpr_26();
-  __restgprlr_27();
+  dVar1 = (double)param_2;
+  dVar6 = 0.0;
+  CL_DrawStretchPic(param_1,param_2,param_3,param_4,param_8,param_6,param_7,0.0,0.0,0.0,0.0,param_9,
+                    in_r7);
+  CL_DrawStretchPic(param_1,(float)dVar1,(float)((double)(float)(dVar2 + dVar4) - dVar5),
+                    (float)dVar3,(float)dVar5,param_6,param_7,(float)dVar6,(float)dVar6,(float)dVar6
+                    ,(float)dVar6,param_9,in_r7);
   return;
 }
 
 
 // 825A5C60  UI_DrawRect  (ui_mp/ui_main_mp.cpp:740)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void UI_DrawRect(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
                 int param_6,int param_7,float param_8,float *param_9)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
   dVar4 = (double)param_5;
   dVar5 = (double)param_8;
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1);
-  pSVar1 = (ScreenPlacement *)__savefpr_27();
-  dVar6 = extraout_f1;
-  UI_DrawTopBottom(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar3,(float)dVar4,param_6,param_7,
-                   (float)dVar5,param_9);
-  UI_DrawSides(pSVar1,(float)dVar6,(float)(dVar2 + dVar5),(float)dVar3,-(float)(dVar5 * 2.0 - dVar4)
-               ,param_6,param_7,(float)dVar5,param_9);
-  __restfpr_27();
-  __restgprlr_28();
+  UI_DrawTopBottom(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9);
+  UI_DrawSides(param_1,(float)dVar1,(float)(dVar2 + dVar5),(float)dVar3,
+               -(float)(dVar5 * 2.0 - dVar4),param_6,param_7,(float)dVar5,param_9);
   return;
 }
 
 
 // 825A5CE0  UI_DrawHighlightRect  (ui_mp/ui_main_mp.cpp:747)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void UI_DrawHighlightRect
                (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
                int param_6,int param_7,float param_8,float *param_9,float *param_10)
 
 {
-  ScreenPlacement *pSVar1;
   int in_r8;
   int in_r9;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  double dVar1;
   float fStack0000001c;
   float fStack00000024;
   float fStack0000002c;
@@ -480,23 +474,18 @@ void UI_DrawHighlightRect
   float local_38;
   float local_34;
   
-  dVar5 = (double)param_8;
-  dVar4 = (double)param_5;
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  pSVar1 = (ScreenPlacement *)
-           __savegprlr_29((double)param_2,param_1,param_6,param_7,param_9,param_10);
-  fStack0000001c = (float)extraout_f1;
-  fStack00000024 = (float)dVar2;
-  fStack0000002c = (float)dVar3;
-  fStack00000034 = (float)dVar4;
-  ScrPlace_ApplyRect(pSVar1,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034,
+  dVar1 = (double)param_8;
+  fStack0000001c = param_2;
+  fStack00000024 = param_3;
+  fStack0000002c = param_4;
+  fStack00000034 = param_5;
+  ScrPlace_ApplyRect(param_1,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034,
                      in_r8,in_r9);
-  local_5c = (float)dVar5;
-  local_60 = (float)dVar5;
+  local_5c = (float)dVar1;
+  local_60 = (float)dVar1;
   local_58 = 0.0;
   local_54 = 0.0;
-  ScrPlace_ApplyRect(pSVar1,&local_58,&local_54,&local_5c,&local_60,in_r8,in_r9);
+  ScrPlace_ApplyRect(param_1,&local_58,&local_54,&local_5c,&local_60,in_r8,in_r9);
   local_44 = fStack00000024;
   local_48 = fStack0000001c + fStack0000002c;
   local_38 = local_5c + fStack0000001c;
@@ -533,34 +522,28 @@ void UI_DrawHighlightRect
   local_48 = local_50;
   local_38 = local_40;
   R_AddCmdDrawQuadPic((float (*) [2])&local_50,in_stack_0000005c,sharedUiInfo.assets.whiteMaterial);
-  __restgprlr_29();
   return;
 }
 
 
 // 825A5ED8  UI_TextWidthModCase  (ui_mp/ui_main_mp.cpp:789)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int UI_TextWidthModCase(char *param_1,int param_2,Font_s *param_3,float param_4,int param_5)
 
 {
-  char *pcVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar1;
   int in_r7;
-  double extraout_f1;
-  double dVar5;
-  float fVar6;
+  double dVar2;
+  float fVar3;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)param_2;
-  pcVar1 = (char *)__savegprlr_28((double)param_4,param_1,lVar3,lVar4,param_5);
-  fVar6 = R_NormalizedTextScale((Font_s *)lVar4,(float)extraout_f1);
-  dVar5 = (double)fVar6;
-  iVar2 = R_TextWidthModCase(pcVar1,(int)lVar3,(Font_s *)lVar4,in_r7);
-  dVar5 = floor((double)(float)((double)(longlong)iVar2 * dVar5 + 0.5));
-  iVar2 = __restgprlr_28((int)dVar5);
-  return iVar2;
+  fVar3 = R_NormalizedTextScale(param_3,param_4);
+  dVar2 = (double)fVar3;
+  iVar1 = R_TextWidthModCase(param_1,param_2,param_3,in_r7);
+  dVar2 = floor((double)(float)((double)(longlong)iVar1 * dVar2 + 0.5));
+  return (int)dVar2;
 }
 
 
@@ -596,157 +579,140 @@ int UI_TextHeight(Font_s *param_1,float param_2)
 
 // 825AF818  UI_TruncateEscapeCharacterTextWithEllipsis  (ui_mp/ui_main_mp.cpp:813)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 char * UI_TruncateEscapeCharacterTextWithEllipsis
                  (char *param_1,Font_s *param_2,float param_3,int param_4)
 
 {
   char cVar1;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
   ulonglong uVar2;
-  longlong lVar5;
-  Font_s *pFVar7;
-  undefined8 uVar6;
+  char *pcVar4;
+  undefined8 uVar5;
   int in_r6;
-  char *pcVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  double extraout_f1;
-  double dVar11;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  double dVar8;
   char local_850 [1024];
   char acStack_450 [1104];
   
-  lVar5 = (longlong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_24((double)param_3,param_1,lVar5,param_4);
-  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
-    pFVar7 = (Font_s *)lVar5;
-    dVar11 = extraout_f1;
-    iVar4 = UI_TextWidthModCase(pcVar3,0,pFVar7,(float)extraout_f1,in_r6);
-    pcVar8 = pcVar3;
-    if (in_r6 < iVar4) {
-      do {
-        cVar1 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
-      } while (cVar1 != '\0');
-      if ((char *)0x3ff < pcVar8 + (-1 - (int)pcVar3)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                        0x33f,0,"%s");
-      }
-      uVar6 = 0x400;
-      I_strncpyz(acStack_450,pcVar3,0x400);
-      uVar2 = ZEXT48(&stack0x00000000) - 0x450;
-      uVar10 = ZEXT48(&stack0x00000000) - 0x450;
-      strchr();
-      iVar4 = (int)uVar6;
-      local_850[0] = '\0';
-      pcVar3 = (char *)uVar10;
-      while ((uVar2 & 0xffffffff) != 0) {
-        pcVar3 = (char *)uVar10;
-        iVar4 = (int)uVar6;
-        uVar9 = uVar2 + 1;
-        if (((undefined1 *)uVar2)[1] == '\0') break;
-        *(undefined1 *)uVar2 = 0;
-        UI_TruncateTextWithEllipsis(pcVar3,pFVar7,(float)dVar11,iVar4);
-        strrchr();
-        if ((uVar10 & 0xffffffff) != 0) {
-          va("%s%c%c");
-        }
-        pcVar3 = va("%s%s\n");
-        uVar6 = 0x400;
-        I_strncpyz(local_850,pcVar3,0x400);
-        uVar2 = uVar9;
-        strchr();
-        iVar4 = (int)uVar6;
-        uVar10 = uVar9;
-        pcVar3 = (char *)uVar9;
-      }
-      UI_TruncateTextWithEllipsis(pcVar3,pFVar7,(float)dVar11,iVar4);
-      pcVar3 = va("%s%s");
-      pcVar3 = (char *)__restgprlr_24(pcVar3);
-      return pcVar3;
-    }
+  dVar8 = (double)param_3;
+  if (((param_1 == (char *)0x0) || (*param_1 == '\0')) ||
+     (iVar3 = UI_TextWidthModCase(param_1,0,param_2,param_3,in_r6), pcVar4 = param_1, iVar3 <= in_r6
+     )) {
+    return param_1;
   }
-  pcVar3 = (char *)__restgprlr_24(pcVar3);
-  return pcVar3;
+  do {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0x3ff < pcVar4 + (-1 - (int)param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x33f,0,
+                    "%s");
+  }
+  uVar5 = 0x400;
+  I_strncpyz(acStack_450,param_1,0x400);
+  uVar2 = ZEXT48(&stack0x00000000) - 0x450;
+  uVar7 = ZEXT48(&stack0x00000000) - 0x450;
+  strchr();
+  iVar3 = (int)uVar5;
+  local_850[0] = '\0';
+  pcVar4 = (char *)uVar7;
+  while ((uVar2 & 0xffffffff) != 0) {
+    pcVar4 = (char *)uVar7;
+    iVar3 = (int)uVar5;
+    uVar6 = uVar2 + 1;
+    if (((undefined1 *)uVar2)[1] == '\0') break;
+    *(undefined1 *)uVar2 = 0;
+    UI_TruncateTextWithEllipsis(pcVar4,param_2,(float)dVar8,iVar3);
+    strrchr();
+    if ((uVar7 & 0xffffffff) != 0) {
+      va("%s%c%c");
+    }
+    pcVar4 = va("%s%s\n");
+    uVar5 = 0x400;
+    I_strncpyz(local_850,pcVar4,0x400);
+    uVar2 = uVar6;
+    strchr();
+    iVar3 = (int)uVar5;
+    uVar7 = uVar6;
+    pcVar4 = (char *)uVar6;
+  }
+  UI_TruncateTextWithEllipsis(pcVar4,param_2,(float)dVar8,iVar3);
+  pcVar4 = va("%s%s");
+  return pcVar4;
 }
 
 
 // 825ACFA8  UI_TruncateTextWithEllipsis  (ui_mp/ui_main_mp.cpp:858)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 char * UI_TruncateTextWithEllipsis(char *param_1,Font_s *param_2,float param_3,int param_4)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  char cVar2;
   int iVar3;
   char *pcVar4;
   int iVar5;
-  Font_s *pFVar6;
   int in_r6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int iVar9;
+  char *pcVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  double extraout_f1;
+  double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar14;
   
-  lVar8 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_20((double)param_3,param_1,lVar8,param_4);
-  if (((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) {
-    pFVar6 = (Font_s *)lVar8;
-    dVar14 = extraout_f1;
-    iVar5 = in_r6;
-    iVar3 = UI_TextWidthModCase((char *)uVar2,0,pFVar6,(float)extraout_f1,in_r6);
-    uVar7 = uVar2;
-    if (in_r6 < iVar3) {
-      do {
-        pcVar4 = (char *)uVar7;
-        uVar7 = uVar7 + 1;
-      } while (*pcVar4 != '\0');
-      uVar7 = (uVar7 - uVar2) - 1;
-      uVar2 = uVar7 & 0xffffffff;
-      pcVar4 = UI_SafeTranslateString("MENU_ELLIPSIS");
-      iVar5 = UI_TextWidthModCase(pcVar4,0,pFVar6,(float)dVar14,iVar5);
-      iVar9 = (int)uVar7;
-      uVar1 = (uint)(((float)(longlong)(in_r6 - iVar5) / (float)(longlong)iVar3) *
-                    (float)(longlong)iVar9);
-      uVar7 = (ulonglong)uVar1;
-      if (iVar9 <= (int)uVar1) {
-        uVar7 = uVar2;
-      }
-      uVar7 = (uVar7 >> 0x1f) - (ulonglong)(uVar7 != 0) & uVar7;
-      dVar13 = 0.5;
-      uVar10 = uVar7;
-      do {
-        pcVar4 = va("%s");
-        pcVar4[(int)uVar10] = '\0';
-        pcVar4 = va("%s%s");
-        fVar15 = R_NormalizedTextScale(pFVar6,(float)dVar14);
-        dVar12 = (double)fVar15;
-        iVar5 = R_TextWidthModCase(pcVar4,0,pFVar6,0);
-        dVar12 = floor((double)(float)((double)(longlong)iVar5 * dVar12 + dVar13));
-        lVar8 = 1;
-        if (in_r6 < (int)dVar12) {
-          lVar8 = -1;
-        }
-        uVar11 = lVar8 + uVar10;
-        if (iVar9 <= (int)(lVar8 + uVar10)) {
-          uVar11 = uVar2;
-        }
-        uVar11 = ((uVar11 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar11 != 0) & uVar11;
-        iVar5 = (int)uVar11;
-      } while ((iVar5 != (int)uVar10) &&
-              (iVar3 = (int)uVar7, uVar7 = uVar10, uVar10 = uVar11, iVar5 != iVar3));
-      pcVar4 = (char *)__restgprlr_20(pcVar4);
-      return pcVar4;
+  dVar11 = (double)param_3;
+  if (((param_1 != (char *)0x0) && (*param_1 != '\0')) &&
+     (iVar5 = in_r6, iVar3 = UI_TextWidthModCase(param_1,0,param_2,param_3,in_r6), pcVar6 = param_1,
+     in_r6 < iVar3)) {
+    do {
+      cVar2 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar2 != '\0');
+    pcVar6 = pcVar6 + (-1 - (int)param_1);
+    pcVar4 = UI_SafeTranslateString("MENU_ELLIPSIS");
+    iVar5 = UI_TextWidthModCase(pcVar4,0,param_2,(float)dVar11,iVar5);
+    uVar1 = (uint)(((float)(longlong)(in_r6 - iVar5) / (float)(longlong)iVar3) *
+                  (float)(longlong)(int)pcVar6);
+    uVar8 = (ulonglong)uVar1;
+    if ((int)pcVar6 <= (int)uVar1) {
+      uVar8 = ZEXT48(pcVar6);
     }
+    uVar8 = (uVar8 >> 0x1f) - (ulonglong)(uVar8 != 0) & uVar8;
+    dVar13 = 0.5;
+    uVar9 = uVar8;
+    do {
+      pcVar4 = va("%s");
+      pcVar4[(int)uVar9] = '\0';
+      pcVar4 = va("%s%s");
+      fVar14 = R_NormalizedTextScale(param_2,(float)dVar11);
+      dVar12 = (double)fVar14;
+      iVar5 = R_TextWidthModCase(pcVar4,0,param_2,0);
+      dVar12 = floor((double)(float)((double)(longlong)iVar5 * dVar12 + dVar13));
+      lVar7 = 1;
+      if (in_r6 < (int)dVar12) {
+        lVar7 = -1;
+      }
+      uVar10 = lVar7 + uVar9;
+      if ((int)pcVar6 <= (int)(lVar7 + uVar9)) {
+        uVar10 = ZEXT48(pcVar6);
+      }
+      uVar10 = ((uVar10 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar10 != 0) & uVar10;
+      iVar5 = (int)uVar10;
+    } while ((iVar5 != (int)uVar9) &&
+            (iVar3 = (int)uVar8, uVar8 = uVar9, uVar9 = uVar10, iVar5 != iVar3));
+    return pcVar4;
   }
-  pcVar4 = (char *)__restgprlr_20(uVar2);
-  return pcVar4;
+  return param_1;
 }
 
 
@@ -773,44 +739,45 @@ int UI_GetLocalClientUIContextMilliseconds(LocalClientNum_t param_1)
 
 // 825A6070  UI_DrawText  (ui_mp/ui_main_mp.cpp:911)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void UI_DrawText(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
                 float param_6,int param_7,int param_8,float param_9,float *param_10,int param_11)
 
 {
-  ScreenPlacement *pSVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
-  double dVar5;
   float fStack00000034;
   float fStack0000003c;
   float local_50;
   float local_4c [19];
   
-  dVar5 = (double)param_9;
-  dVar4 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  local_50 = R_NormalizedTextScale(param_4,(float)dVar5);
-  pfVar3 = &local_50;
-  pfVar2 = local_4c;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  local_50 = R_NormalizedTextScale(param_4,param_9);
+  pfVar2 = &local_50;
+  pfVar1 = local_4c;
   local_4c[0] = local_50;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_10,param_11);
-  dVar5 = 0.5;
-  dVar4 = floor((double)(fStack00000034 + 0.5));
-  fStack00000034 = (float)dVar4;
-  dVar4 = floor((double)(float)((double)fStack0000003c + dVar5));
-  fStack0000003c = (float)dVar4;
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,pfVar2,(int)param_10,param_11)
+  ;
+  dVar4 = 0.5;
+  dVar3 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar3;
+  dVar3 = floor((double)(float)((double)fStack0000003c + dVar4));
+  fStack0000003c = (float)dVar3;
   CL_DrawTextPhysical(param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,
-                      pfVar2,(int)pfVar3);
-  __restgprlr_26();
+                      pfVar1,(int)pfVar2);
   return;
 }
 
 
 // 825A6138  UI_DrawTextWithGlow  (ui_mp/ui_main_mp.cpp:928)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void UI_DrawTextWithGlow(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
                         float param_5,float param_6,int param_7,int param_8,float param_9,
@@ -819,11 +786,9 @@ void UI_DrawTextWithGlow(ScreenPlacement *param_1,char *param_2,int param_3,Font
                         ,int param_20)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
-  double extraout_f1;
+  float *pfVar1;
+  double dVar2;
   double dVar3;
-  double dVar4;
   float fStack00000034;
   float fStack0000003c;
   Material *in_stack_0000005c;
@@ -841,26 +806,22 @@ void UI_DrawTextWithGlow(ScreenPlacement *param_1,char *param_2,int param_3,Font
   float local_50;
   float local_4c [19];
   
-  dVar4 = (double)param_9;
-  dVar3 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar3;
-  local_50 = R_NormalizedTextScale(param_4,(float)dVar4);
-  pfVar2 = local_4c;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  local_50 = R_NormalizedTextScale(param_4,param_9);
+  pfVar1 = local_4c;
   local_4c[0] = local_50;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&local_50,(int)param_10,
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,&local_50,(int)param_10,
                      param_11);
-  dVar4 = 0.5;
-  dVar3 = floor((double)(fStack00000034 + 0.5));
-  fStack00000034 = (float)dVar3;
-  dVar3 = floor((double)(float)((double)fStack0000003c + dVar4));
-  fStack0000003c = (float)dVar3;
+  dVar3 = 0.5;
+  dVar2 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar2;
+  dVar2 = floor((double)(float)((double)fStack0000003c + dVar3));
+  fStack0000003c = (float)dVar2;
   if (in_stack_00000077 != '\0') {
     R_AddCmdDrawTextSubtitle
-              (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,0.0,pfVar2
+              (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,0.0,pfVar1
                ,(int)in_stack_0000005c,in_stack_00000064,(bool)in_stack_0000006f);
-    __restgprlr_26();
     return;
   }
   CL_DrawTextPhysicalWithEffects
@@ -868,47 +829,45 @@ void UI_DrawTextWithGlow(ScreenPlacement *param_1,char *param_2,int param_3,Font
              in_stack_0000008c,in_stack_00000094,in_stack_0000009c,in_stack_000000a4,
              in_stack_0000005c,in_stack_ffffff28,in_stack_ffffff2c,in_stack_ffffff30,
              in_stack_ffffff34);
-  __restgprlr_26();
   return;
 }
 
 
 // 825A6280  UI_DrawTextNoSnap  (ui_mp/ui_main_mp.cpp:948)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void UI_DrawTextNoSnap(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
                       float param_5,float param_6,int param_7,int param_8,float param_9,
                       float *param_10,int param_11)
 
 {
-  ScreenPlacement *pSVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
   float fStack00000034;
   float fStack0000003c;
   float local_40;
   float local_3c [15];
   
-  dVar4 = (double)param_6;
-  dVar5 = (double)param_9;
-  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  local_40 = R_NormalizedTextScale(param_4,(float)dVar5);
-  pfVar3 = &local_40;
-  pfVar2 = local_3c;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  local_40 = R_NormalizedTextScale(param_4,param_9);
+  pfVar2 = &local_40;
+  pfVar1 = local_3c;
   local_3c[0] = local_40;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_10,param_11);
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,pfVar2,(int)param_10,param_11)
+  ;
   CL_DrawTextPhysical(param_2,param_3,param_4,fStack00000034,fStack0000003c,local_3c[0],local_40,
-                      pfVar2,(int)pfVar3);
-  __restgprlr_26();
+                      pfVar1,(int)pfVar2);
   return;
 }
 
 
 // 825A6318  UI_DrawTextWithCursor  (ui_mp/ui_main_mp.cpp:961)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void UI_DrawTextWithCursor
                (ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
@@ -916,11 +875,9 @@ void UI_DrawTextWithCursor
                int param_12,char param_13)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
-  double extraout_f1;
+  float *pfVar1;
+  double dVar2;
   double dVar3;
-  double dVar4;
   float fStack00000034;
   float fStack0000003c;
   int in_stack_00000064;
@@ -929,25 +886,21 @@ void UI_DrawTextWithCursor
   float local_50;
   float local_4c [19];
   
-  dVar4 = (double)param_9;
-  dVar3 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar3;
-  local_50 = R_NormalizedTextScale(param_4,(float)dVar4);
-  pfVar2 = local_4c;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  local_50 = R_NormalizedTextScale(param_4,param_9);
+  pfVar1 = local_4c;
   local_4c[0] = local_50;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&local_50,(int)param_10,
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,&local_50,(int)param_10,
                      param_11);
-  dVar4 = 0.5;
-  dVar3 = floor((double)(fStack00000034 + 0.5));
-  fStack00000034 = (float)dVar3;
-  dVar3 = floor((double)(float)((double)fStack0000003c + dVar4));
-  fStack0000003c = (float)dVar3;
+  dVar3 = 0.5;
+  dVar2 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar2;
+  dVar2 = floor((double)(float)((double)fStack0000003c + dVar3));
+  fStack0000003c = (float)dVar2;
   CL_DrawTextPhysicalWithCursor
-            (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,pfVar2,
+            (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,pfVar1,
              in_stack_00000064,in_stack_0000006c,in_stack_00000077);
-  __restgprlr_26();
   return;
 }
 
@@ -1048,74 +1001,72 @@ void UI_UpdateTime(LocalClientNum_t param_1,int param_2)
 
 // 825A66C8  UI_DrawBuildNumber  (ui_mp/ui_main_mp.cpp:1059)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawBuildNumber(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  ScreenPlacement *pSVar4;
-  char *pcVar5;
-  Font_s *pFVar6;
+  int iVar1;
+  char *pcVar2;
+  ScreenPlacement *pSVar3;
+  char *pcVar4;
+  Font_s *pFVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = LiveStorage_ShouldDrawFFotDVersion();
-  if (iVar2 == 0) {
-    dVar8 = (double)(ui_buildSize->current).value;
-    ScrPlace_GetActivePlacement(LVar1);
-    dVar8 = (double)(float)((double)cg_hudSplitscreenScale * dVar8);
-    iVar2 = R_IsHiDef();
-    if (iVar2 != 0) {
-      dVar8 = (double)(float)(dVar8 * 1.5);
+  iVar1 = LiveStorage_ShouldDrawFFotDVersion();
+  if (iVar1 == 0) {
+    dVar7 = (double)(ui_buildSize->current).value;
+    ScrPlace_GetActivePlacement(param_1);
+    dVar7 = (double)(float)((double)cg_hudSplitscreenScale * dVar7);
+    iVar1 = R_IsHiDef();
+    if (iVar1 != 0) {
+      dVar7 = (double)(float)(dVar7 * 1.5);
     }
-    pFVar6 = sharedUiInfo.assets.smallFont;
-    if ((((double)(ui_smallFont->current).value < dVar8) &&
-        (pFVar6 = sharedUiInfo.assets.extraBigFont, dVar8 < (double)(ui_extraBigFont->current).value
-        )) && (pFVar6 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar8))
+    pFVar5 = sharedUiInfo.assets.smallFont;
+    if ((((double)(ui_smallFont->current).value < dVar7) &&
+        (pFVar5 = sharedUiInfo.assets.extraBigFont, dVar7 < (double)(ui_extraBigFont->current).value
+        )) && (pFVar5 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar7))
     {
-      pFVar6 = sharedUiInfo.assets.bigFont;
+      pFVar5 = sharedUiInfo.assets.bigFont;
     }
-    dVar9 = (double)(ui_buildSize->current).value;
-    dVar7 = (double)(ui_buildLocation->current).vector[1];
-    dVar8 = (double)(ui_buildLocation->current).value;
+    dVar8 = (double)(ui_buildSize->current).value;
+    dVar6 = (double)(ui_buildLocation->current).vector[1];
+    dVar7 = (double)(ui_buildLocation->current).value;
     getBuildNumberAsInt();
-    pcVar5 = "%s.%i";
-    pcVar3 = va("%s.%i");
-    pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawText(pSVar4,pcVar3,0x40,pFVar6,(float)dVar8,(float)dVar7,-0x7de80000,(int)pcVar5,
-                (float)dVar9,(float *)0x3,0);
-    __restgprlr_28();
+    pcVar4 = "%s.%i";
+    pcVar2 = va("%s.%i");
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawText(pSVar3,pcVar2,0x40,pFVar5,(float)dVar7,(float)dVar6,-0x7de80000,(int)pcVar4,
+                (float)dVar8,(float *)0x3,0);
     return;
   }
   LiveStorage_GetFFotDVersion();
+  dVar7 = (double)(ui_buildSize->current).value;
+  ScrPlace_GetActivePlacement(param_1);
+  dVar7 = (double)(float)((double)cg_hudSplitscreenScale * dVar7);
+  iVar1 = R_IsHiDef();
+  if (iVar1 != 0) {
+    dVar7 = (double)(float)(dVar7 * 1.5);
+  }
+  pFVar5 = sharedUiInfo.assets.smallFont;
+  if ((((double)(ui_smallFont->current).value < dVar7) &&
+      (pFVar5 = sharedUiInfo.assets.extraBigFont, dVar7 < (double)(ui_extraBigFont->current).value))
+     && (pFVar5 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar7)) {
+    pFVar5 = sharedUiInfo.assets.bigFont;
+  }
   dVar8 = (double)(ui_buildSize->current).value;
-  ScrPlace_GetActivePlacement(LVar1);
-  dVar8 = (double)(float)((double)cg_hudSplitscreenScale * dVar8);
-  iVar2 = R_IsHiDef();
-  if (iVar2 != 0) {
-    dVar8 = (double)(float)(dVar8 * 1.5);
-  }
-  pFVar6 = sharedUiInfo.assets.smallFont;
-  if ((((double)(ui_smallFont->current).value < dVar8) &&
-      (pFVar6 = sharedUiInfo.assets.extraBigFont, dVar8 < (double)(ui_extraBigFont->current).value))
-     && (pFVar6 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar8)) {
-    pFVar6 = sharedUiInfo.assets.bigFont;
-  }
-  dVar9 = (double)(ui_buildSize->current).value;
-  dVar7 = (double)(ui_buildLocation->current).vector[1];
-  dVar8 = (double)(ui_buildLocation->current).value;
+  dVar6 = (double)(ui_buildLocation->current).vector[1];
+  dVar7 = (double)(ui_buildLocation->current).value;
   getBuildNumberAsInt();
-  pcVar5 = "%s.%i.%i";
-  pcVar3 = va("%s.%i.%i");
-  pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-  UI_DrawText(pSVar4,pcVar3,0x40,pFVar6,(float)dVar8,(float)dVar7,-0x7de80000,(int)pcVar5,
-              (float)dVar9,(float *)0x3,0);
-  __restgprlr_28();
+  pcVar4 = "%s.%i.%i";
+  pcVar2 = va("%s.%i.%i");
+  pSVar3 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawText(pSVar3,pcVar2,0x40,pFVar5,(float)dVar7,(float)dVar6,-0x7de80000,(int)pcVar4,
+              (float)dVar8,(float *)0x3,0);
   return;
 }
 
@@ -1200,6 +1151,8 @@ void UI_Shutdown(LocalClientNum_t param_1)
 
 // 825A6A60  GetMenuBuffer_FastFile  (ui_mp/ui_main_mp.cpp:1196)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -1209,23 +1162,20 @@ void UI_Shutdown(LocalClientNum_t param_1)
 char * GetMenuBuffer_FastFile(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
+  XAssetHeader XVar1;
+  int iVar2;
+  char *pcVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
-  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
-  if (iVar3 != 0) {
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,param_1,1);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,param_1);
+  if (iVar2 != 0) {
     Com_PrintError(0xd,"menu file not found: %s, using default\n");
-    pcVar1 = (char *)__restgprlr_29(0);
-    return pcVar1;
+    return (char *)0x0;
   }
-  iVar3 = DB_GetRawFileLen(XVar2.rawfile);
-  pcVar1 = Z_VirtualAlloc(iVar3,"GetMenuBuffer_FastFile",10);
-  DB_GetRawBuffer(XVar2.rawfile,pcVar1,iVar3);
-  pcVar1 = (char *)__restgprlr_29(pcVar1);
-  return pcVar1;
+  iVar2 = DB_GetRawFileLen(XVar1.rawfile);
+  pcVar3 = Z_VirtualAlloc(iVar2,"GetMenuBuffer_FastFile",10);
+  DB_GetRawBuffer(XVar1.rawfile,pcVar3,iVar2);
+  return pcVar3;
 }
 
 
@@ -1292,6 +1242,10 @@ Material * UI_GetLevelShot(int param_1)
 
 // 825AD1D8  UI_DrawMapCustomData  (ui_mp/ui_main_mp.cpp:1368)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawMapCustomData
@@ -1299,110 +1253,98 @@ void UI_DrawMapCustomData
                float *param_5,int param_6,int param_7,char *param_8)
 
 {
-  LocalClientNum_t LVar1;
-  mapInfo *pmVar2;
-  int iVar3;
-  char *pcVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  Material *pMVar7;
+  mapInfo *pmVar1;
+  int iVar2;
+  char *pcVar3;
+  ScreenPlacement *pSVar4;
+  Font_s *pFVar5;
+  Material *pMVar6;
   char *in_r10;
-  double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   undefined1 in_stack_ffffff0b;
   
-  __savegprlr_23((double)param_4,param_1);
-  LVar1 = __savefpr_28();
-  dVar8 = extraout_f1;
-  pMVar7 = (Material *)param_6;
-  pFVar6 = param_3;
-  pmVar2 = UI_GetMapInfo_Sorted((ui_currentFeederMapIndex->current).integer);
-  iVar3 = I_strcmp("longname",in_r10);
-  if (iVar3 == 0) {
-    if (pmVar2->mapName[0] == '\x15') {
-      pmVar2 = (mapInfo *)(pmVar2->mapName + 1);
-      pcVar4 = (char *)0x0;
+  dVar7 = (double)param_4;
+  pMVar6 = (Material *)param_6;
+  pFVar5 = param_3;
+  pmVar1 = UI_GetMapInfo_Sorted((ui_currentFeederMapIndex->current).integer);
+  iVar2 = I_strcmp("longname",in_r10);
+  if (iVar2 == 0) {
+    if (pmVar1->mapName[0] == '\x15') {
+      pmVar1 = (mapInfo *)(pmVar1->mapName + 1);
+      pcVar3 = (char *)0x0;
     }
     else {
-      pcVar4 = SEH_StringEd_GetString(pmVar2->mapName);
+      pcVar3 = SEH_StringEd_GetString(pmVar1->mapName);
     }
-    pcVar4 = UI_CheckStringTranslation(pmVar2->mapName,pcVar4);
-    dVar10 = (double)param_2->y;
-    dVar9 = (double)param_2->x;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawWrappedText(pSVar5,pcVar4,param_2,param_3,(float)dVar9,(float)dVar10,(float)dVar8,
-                       (float *)pMVar7,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
-    __restfpr_28();
-    __restgprlr_23();
-    return;
-  }
-  iVar3 = I_strcmp("description",in_r10);
-  if (iVar3 == 0) {
-    pcVar4 = UI_SafeTranslateString(pmVar2->mapDescription);
-    dVar10 = (double)param_2->y;
-    dVar9 = (double)param_2->x;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawWrappedText(pSVar5,pcVar4,param_2,param_3,(float)dVar9,(float)dVar10,(float)dVar8,
-                       (float *)pMVar7,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
-    __restfpr_28();
-    __restgprlr_23();
-    return;
-  }
-  iVar3 = I_strcmp("mapimage",in_r10);
-  if (iVar3 == 0) {
-    UI_GetLevelShot((ui_currentFeederMapIndex->current).integer);
-    dVar11 = (double)param_2->h;
-    dVar10 = (double)param_2->w;
+    pcVar3 = UI_CheckStringTranslation(pmVar1->mapName,pcVar3);
     dVar9 = (double)param_2->y;
     dVar8 = (double)param_2->x;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawHandlePic(pSVar5,(float)dVar8,(float)dVar9,(float)dVar10,(float)dVar11,(int)in_r10,
-                     (int)pFVar6,param_5,pMVar7);
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawWrappedText(pSVar4,pcVar3,param_2,param_3,(float)dVar8,(float)dVar9,(float)dVar7,
+                       (float *)pMVar6,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
+    return;
   }
-  __restfpr_28();
-  __restgprlr_23();
+  iVar2 = I_strcmp("description",in_r10);
+  if (iVar2 == 0) {
+    pcVar3 = UI_SafeTranslateString(pmVar1->mapDescription);
+    dVar9 = (double)param_2->y;
+    dVar8 = (double)param_2->x;
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawWrappedText(pSVar4,pcVar3,param_2,param_3,(float)dVar8,(float)dVar9,(float)dVar7,
+                       (float *)pMVar6,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
+    return;
+  }
+  iVar2 = I_strcmp("mapimage",in_r10);
+  if (iVar2 == 0) {
+    UI_GetLevelShot((ui_currentFeederMapIndex->current).integer);
+    dVar10 = (double)param_2->h;
+    dVar9 = (double)param_2->w;
+    dVar8 = (double)param_2->y;
+    dVar7 = (double)param_2->x;
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawHandlePic(pSVar4,(float)dVar7,(float)dVar8,(float)dVar9,(float)dVar10,(int)in_r10,
+                     (int)pFVar5,param_5,pMVar6);
+  }
   return;
 }
 
 
 // 825AD3B8  UI_GetMapDisplayName  (ui_mp/ui_main_mp.cpp:1395)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * UI_GetMapDisplayName(char *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  mapInfo *pmVar5;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  mapInfo *pmVar4;
   
-  uVar1 = __savegprlr_28(param_1);
   UI_UpdateArenas();
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < sharedUiInfo.mapCount) {
-    pmVar5 = sharedUiInfo.mapList;
+    pmVar4 = sharedUiInfo.mapList;
     do {
-      iVar2 = I_stricmp((char *)uVar1,pmVar5->mapLoadName);
-      if (iVar2 == 0) {
-        if (pmVar5->mapName[0] == '\x15') {
-          pcVar3 = UI_CheckStringTranslation(pmVar5->mapName + 1,(char *)0x0);
-          pcVar3 = (char *)__restgprlr_28(pcVar3);
-          return pcVar3;
+      iVar1 = I_stricmp(param_1,pmVar4->mapLoadName);
+      if (iVar1 == 0) {
+        if (pmVar4->mapName[0] == '\x15') {
+          pcVar2 = UI_CheckStringTranslation(pmVar4->mapName + 1,(char *)0x0);
+          return pcVar2;
         }
-        pcVar3 = SEH_StringEd_GetString(pmVar5->mapName);
-        pcVar3 = UI_CheckStringTranslation(pmVar5->mapName,pcVar3);
-        pcVar3 = (char *)__restgprlr_28(pcVar3);
-        return pcVar3;
+        pcVar2 = SEH_StringEd_GetString(pmVar4->mapName);
+        pcVar2 = UI_CheckStringTranslation(pmVar4->mapName,pcVar2);
+        return pcVar2;
       }
-      iVar4 = iVar4 + 1;
-      pmVar5 = pmVar5 + 1;
-    } while (iVar4 < sharedUiInfo.mapCount);
+      iVar3 = iVar3 + 1;
+      pmVar4 = pmVar4 + 1;
+    } while (iVar3 < sharedUiInfo.mapCount);
   }
-  pcVar3 = (char *)__restgprlr_28(uVar1);
-  return pcVar3;
+  return param_1;
 }
 
 
@@ -1446,35 +1388,34 @@ char * UI_GetMapVoteMapName(int param_1)
 
 // 825A6C58  UI_GetMapImageFromName  (ui_mp/ui_main_mp.cpp:1438)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * UI_GetMapImageFromName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x5a2,0,
                     "%s");
   }
   UI_UpdateArenas();
-  iVar3 = 0;
+  iVar2 = 0;
   if (0 < sharedUiInfo.mapCount) {
-    lVar4 = -0x7c082098;
+    iVar3 = -0x7c082098;
     do {
-      iVar2 = I_stricmp(pcVar1,(char *)((int)lVar4 + 0x20));
-      if (iVar2 == 0) {
-        pcVar1 = (char *)__restgprlr_28(lVar4 + 0x50);
-        return pcVar1;
+      iVar1 = I_stricmp(param_1,(char *)(iVar3 + 0x20));
+      if (iVar1 == 0) {
+        return (char *)(iVar3 + 0x50);
       }
-      iVar3 = iVar3 + 1;
-      lVar4 = lVar4 + 0xa78;
-    } while (iVar3 < sharedUiInfo.mapCount);
+      iVar2 = iVar2 + 1;
+      iVar3 = iVar3 + 0xa78;
+    } while (iVar2 < sharedUiInfo.mapCount);
   }
-  pcVar1 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar1;
+  return "";
 }
 
 
@@ -1518,44 +1459,43 @@ char * UI_GetMapVoteMapImage(int param_1)
 
 // 825A6D98  UI_GetMapCustom  (ui_mp/ui_main_mp.cpp:1485)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 char * UI_GetMapCustom(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  char (*pacVar5) [16];
-  int *piVar6;
+  char (*pacVar4) [16];
+  int *piVar5;
   
-  pcVar1 = (char *)__savegprlr_24(param_1);
   UI_UpdateArenas();
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < sharedUiInfo.mapCount) {
-    piVar6 = &sharedUiInfo.mapList[0].mapCustomCount;
+    piVar5 = &sharedUiInfo.mapList[0].mapCustomCount;
     do {
-      iVar2 = I_stricmp(param_2,(char *)(piVar6 + -0x294));
-      if (iVar2 == 0) {
-        iVar2 = 0;
-        if (0 < *piVar6) {
-          pacVar5 = (char (*) [16])(piVar6 + -0x280);
+      iVar1 = I_stricmp(param_2,(char *)(piVar5 + -0x294));
+      if (iVar1 == 0) {
+        iVar1 = 0;
+        if (0 < *piVar5) {
+          pacVar4 = (char (*) [16])(piVar5 + -0x280);
           do {
-            iVar3 = I_stricmp(pcVar1,*pacVar5);
-            if (iVar3 == 0) {
-              pcVar1 = (char *)__restgprlr_24(piVar6 + iVar2 * 0x10 + -0x200);
-              return pcVar1;
+            iVar2 = I_stricmp(param_1,*pacVar4);
+            if (iVar2 == 0) {
+              return (char *)(piVar5 + iVar1 * 0x10 + -0x200);
             }
-            iVar2 = iVar2 + 1;
-            pacVar5 = pacVar5 + 1;
-          } while (iVar2 < *piVar6);
+            iVar1 = iVar1 + 1;
+            pacVar4 = pacVar4 + 1;
+          } while (iVar1 < *piVar5);
         }
       }
-      iVar4 = iVar4 + 1;
-      piVar6 = piVar6 + 0x29e;
-    } while (iVar4 < sharedUiInfo.mapCount);
+      iVar3 = iVar3 + 1;
+      piVar5 = piVar5 + 0x29e;
+    } while (iVar3 < sharedUiInfo.mapCount);
   }
-  pcVar1 = (char *)__restgprlr_24(0xffffffff820068af);
-  return pcVar1;
+  return "";
 }
 
 
@@ -1586,177 +1526,167 @@ char * UI_GetCurrentPreviewMapCustom(char *param_1)
 
 // 825AD500  UI_GetMapDisplayNameFromPartialLoadNameMatch  (ui_mp/ui_main_mp.cpp:1526)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 char * UI_GetMapDisplayNameFromPartialLoadNameMatch(char *param_1,int *param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  mapInfo *pmVar6;
-  int iVar7;
-  char *pcVar8;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
+  mapInfo *pmVar5;
+  int iVar6;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x5fa,0,
                     "%s");
   }
   UI_UpdateArenas();
-  iVar7 = 0;
+  iVar6 = 0;
   if (0 < sharedUiInfo.mapCount) {
-    pcVar8 = sharedUiInfo.mapList[0].mapLoadName;
+    pcVar3 = sharedUiInfo.mapList[0].mapLoadName;
     do {
-      pmVar6 = (mapInfo *)(pcVar8 + -0x20);
-      pcVar5 = pcVar8;
+      pmVar5 = (mapInfo *)(pcVar3 + -0x20);
+      pcVar4 = pcVar3;
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      *(undefined4 *)uVar4 = pcVar5 + (-1 - (int)pcVar8);
-      iVar3 = I_strnicmp(pcVar2,pcVar8,(int)(pcVar5 + (-1 - (int)pcVar8)));
-      if (iVar3 == 0) {
-        if (pmVar6->mapName[0] == '\x15') {
-          pcVar2 = UI_CheckStringTranslation(pcVar8 + -0x1f,(char *)0x0);
-          pcVar2 = (char *)__restgprlr_26(pcVar2);
-          return pcVar2;
+      *param_2 = (int)(pcVar4 + (-1 - (int)pcVar3));
+      iVar2 = I_strnicmp(param_1,pcVar3,(int)(pcVar4 + (-1 - (int)pcVar3)));
+      if (iVar2 == 0) {
+        if (pmVar5->mapName[0] == '\x15') {
+          pcVar3 = UI_CheckStringTranslation(pcVar3 + -0x1f,(char *)0x0);
+          return pcVar3;
         }
-        pcVar2 = SEH_StringEd_GetString((char *)pmVar6);
-        pcVar2 = UI_CheckStringTranslation((char *)pmVar6,pcVar2);
-        pcVar2 = (char *)__restgprlr_26(pcVar2);
-        return pcVar2;
+        pcVar3 = SEH_StringEd_GetString((char *)pmVar5);
+        pcVar3 = UI_CheckStringTranslation((char *)pmVar5,pcVar3);
+        return pcVar3;
       }
-      iVar7 = iVar7 + 1;
-      pcVar8 = pcVar8 + 0xa78;
-    } while (iVar7 < sharedUiInfo.mapCount);
+      iVar6 = iVar6 + 1;
+      pcVar3 = pcVar3 + 0xa78;
+    } while (iVar6 < sharedUiInfo.mapCount);
   }
-  pcVar2 = (char *)__restgprlr_26(0);
-  return pcVar2;
+  return (char *)0x0;
 }
 
 
 // 825AD600  UI_GetGameTypeDisplayName  (ui_mp/ui_main_mp.cpp:1548)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * UI_GetGameTypeDisplayName(char *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  gameTypeInfo *pgVar5;
-  int iVar6;
+  gameTypeInfo *pgVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar6 = 0;
+  iVar5 = 0;
   if (0 < sharedUiInfo.numGameTypes) {
-    pgVar5 = sharedUiInfo.gameTypes;
+    pgVar4 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
-      if (iVar2 == 0) {
-        pcVar3 = sharedUiInfo.gameTypes[iVar6].gameTypeName;
-        if (sharedUiInfo.gameTypes[iVar6].gameTypeName[0] == '\x15') {
-          pcVar3 = UI_CheckStringTranslation
-                             (sharedUiInfo.gameTypes[iVar6].gameTypeName + 1,(char *)0x0);
-          pcVar3 = (char *)__restgprlr_28(pcVar3);
-          return pcVar3;
+      iVar1 = I_stricmp(param_1,pgVar4->gameType);
+      if (iVar1 == 0) {
+        pcVar2 = sharedUiInfo.gameTypes[iVar5].gameTypeName;
+        if (sharedUiInfo.gameTypes[iVar5].gameTypeName[0] == '\x15') {
+          pcVar2 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar5].gameTypeName + 1,(char *)0x0);
+          return pcVar2;
         }
-        pcVar4 = SEH_StringEd_GetString(pcVar3);
-        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
-        pcVar3 = (char *)__restgprlr_28(pcVar3);
-        return pcVar3;
+        pcVar3 = SEH_StringEd_GetString(pcVar2);
+        pcVar2 = UI_CheckStringTranslation(pcVar2,pcVar3);
+        return pcVar2;
       }
-      iVar6 = iVar6 + 1;
-      pgVar5 = pgVar5 + 1;
-    } while (iVar6 < sharedUiInfo.numGameTypes);
+      iVar5 = iVar5 + 1;
+      pgVar4 = pgVar4 + 1;
+    } while (iVar5 < sharedUiInfo.numGameTypes);
   }
-  pcVar3 = (char *)__restgprlr_28(uVar1);
-  return pcVar3;
+  return param_1;
 }
 
 
 // 825AD6B0  UI_GetCustomizedGameTypeDefaultDisplayName  (ui_mp/ui_main_mp.cpp:1563)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * UI_GetCustomizedGameTypeDefaultDisplayName(char *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  gameTypeInfo *pgVar5;
-  int iVar6;
+  gameTypeInfo *pgVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar6 = 0;
+  iVar5 = 0;
   if (0 < sharedUiInfo.numGameTypes) {
-    pgVar5 = sharedUiInfo.gameTypes;
+    pgVar4 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
-      if (iVar2 == 0) {
-        pcVar3 = sharedUiInfo.gameTypes[iVar6].customizedGameTypeName;
-        if (sharedUiInfo.gameTypes[iVar6].customizedGameTypeName[0] == '\x15') {
-          pcVar3 = UI_CheckStringTranslation
-                             (sharedUiInfo.gameTypes[iVar6].customizedGameTypeName + 1,(char *)0x0);
-          pcVar3 = (char *)__restgprlr_28(pcVar3);
-          return pcVar3;
+      iVar1 = I_stricmp(param_1,pgVar4->gameType);
+      if (iVar1 == 0) {
+        pcVar2 = sharedUiInfo.gameTypes[iVar5].customizedGameTypeName;
+        if (sharedUiInfo.gameTypes[iVar5].customizedGameTypeName[0] == '\x15') {
+          pcVar2 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar5].customizedGameTypeName + 1,(char *)0x0);
+          return pcVar2;
         }
-        pcVar4 = SEH_StringEd_GetString(pcVar3);
-        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
-        pcVar3 = (char *)__restgprlr_28(pcVar3);
-        return pcVar3;
+        pcVar3 = SEH_StringEd_GetString(pcVar2);
+        pcVar2 = UI_CheckStringTranslation(pcVar2,pcVar3);
+        return pcVar2;
       }
-      iVar6 = iVar6 + 1;
-      pgVar5 = pgVar5 + 1;
-    } while (iVar6 < sharedUiInfo.numGameTypes);
+      iVar5 = iVar5 + 1;
+      pgVar4 = pgVar4 + 1;
+    } while (iVar5 < sharedUiInfo.numGameTypes);
   }
-  pcVar3 = (char *)__restgprlr_28(uVar1);
-  return pcVar3;
+  return param_1;
 }
 
 
 // 825AD760  UI_GetCustomizedGameTypeDefaultDisplayDesc  (ui_mp/ui_main_mp.cpp:1578)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * UI_GetCustomizedGameTypeDefaultDisplayDesc(char *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  gameTypeInfo *pgVar5;
-  int iVar6;
+  gameTypeInfo *pgVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar6 = 0;
+  iVar5 = 0;
   if (0 < sharedUiInfo.numGameTypes) {
-    pgVar5 = sharedUiInfo.gameTypes;
+    pgVar4 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
-      if (iVar2 == 0) {
-        pcVar3 = sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc;
-        if (sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc[0] == '\x15') {
-          pcVar3 = UI_CheckStringTranslation
-                             (sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc + 1,(char *)0x0);
-          pcVar3 = (char *)__restgprlr_28(pcVar3);
-          return pcVar3;
+      iVar1 = I_stricmp(param_1,pgVar4->gameType);
+      if (iVar1 == 0) {
+        pcVar2 = sharedUiInfo.gameTypes[iVar5].customizedGameTypeDesc;
+        if (sharedUiInfo.gameTypes[iVar5].customizedGameTypeDesc[0] == '\x15') {
+          pcVar2 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar5].customizedGameTypeDesc + 1,(char *)0x0);
+          return pcVar2;
         }
-        pcVar4 = SEH_StringEd_GetString(pcVar3);
-        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
-        pcVar3 = (char *)__restgprlr_28(pcVar3);
-        return pcVar3;
+        pcVar3 = SEH_StringEd_GetString(pcVar2);
+        pcVar2 = UI_CheckStringTranslation(pcVar2,pcVar3);
+        return pcVar2;
       }
-      iVar6 = iVar6 + 1;
-      pgVar5 = pgVar5 + 1;
-    } while (iVar6 < sharedUiInfo.numGameTypes);
+      iVar5 = iVar5 + 1;
+      pgVar4 = pgVar4 + 1;
+    } while (iVar5 < sharedUiInfo.numGameTypes);
   }
-  pcVar3 = (char *)__restgprlr_28(uVar1);
-  return pcVar3;
+  return param_1;
 }
 
 
@@ -1791,62 +1721,61 @@ int UI_OwnerDrawWidth(int param_1,Font_s *param_2,float param_3)
 
 // 825A6EA0  UI_BuildPlayerList  (ui_mp/ui_main_mp.cpp:1650)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_BuildPlayerList(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  char *pcVar3;
+  char *pcVar1;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  longlong lVar6;
+  longlong lVar5;
   char acStack_860 [48];
   uiClientState_s uStack_830;
   
-  LVar1 = __savegprlr_28(param_1);
-  CL_GetClientState(LVar1,&uStack_830);
-  pcVar2 = CL_GetConfigString(0);
-  pcVar2 = Info_ValueForKey(pcVar2,"sv_maxclients");
-  pcVar3 = (char *)atoi(pcVar2);
-  pcVar2 = sharedUiInfo.teamNames[0x11] + 0x18;
-  lVar6 = 9;
+  CL_GetClientState(param_1,&uStack_830);
+  pcVar1 = CL_GetConfigString(0);
+  pcVar1 = Info_ValueForKey(pcVar1,"sv_maxclients");
+  iVar2 = atoi(pcVar1);
+  pcVar1 = sharedUiInfo.teamNames[0x11] + 0x18;
+  lVar5 = 9;
   do {
-    pcVar2 = pcVar2 + 8;
-    pcVar2[0] = -1;
-    pcVar2[1] = -1;
-    pcVar2[2] = -1;
-    pcVar2[3] = -1;
-    pcVar2[4] = -1;
-    pcVar2[5] = -1;
-    pcVar2[6] = -1;
-    pcVar2[7] = -1;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  iVar5 = 0;
+    pcVar1 = pcVar1 + 8;
+    pcVar1[0] = -1;
+    pcVar1[1] = -1;
+    pcVar1[2] = -1;
+    pcVar1[3] = -1;
+    pcVar1[4] = -1;
+    pcVar1[5] = -1;
+    pcVar1[6] = -1;
+    pcVar1[7] = -1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar4 = 0;
   sharedUiInfo.playerCount = 0;
-  pcVar2 = pcVar3;
-  if (0 < (int)pcVar3) {
+  if (0 < iVar2) {
     do {
-      iVar4 = CL_GetClientName(LVar1,iVar5,acStack_860,0x2a);
-      pcVar2 = (char *)0x0;
-      if (iVar4 != 0) {
-        sharedUiInfo.playerClientNums[sharedUiInfo.playerCount] = iVar5;
+      iVar3 = CL_GetClientName(param_1,iVar4,acStack_860,0x2a);
+      if (iVar3 != 0) {
+        sharedUiInfo.playerClientNums[sharedUiInfo.playerCount] = iVar4;
         I_strncpyz(sharedUiInfo.playerNames[sharedUiInfo.playerCount],acStack_860,0x20);
-        pcVar2 = I_CleanStr(sharedUiInfo.playerNames[sharedUiInfo.playerCount]);
+        I_CleanStr(sharedUiInfo.playerNames[sharedUiInfo.playerCount]);
         sharedUiInfo.playerCount = sharedUiInfo.playerCount + 1;
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < (int)pcVar3);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < iVar2);
   }
-  __restgprlr_28(pcVar2);
   return;
 }
 
 
 // 825A6F88  UI_BuildCustomGameTypeList  (ui_mp/ui_main_mp.cpp:1679)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1858,80 +1787,78 @@ void UI_BuildCustomGameTypeList(LocalClientNum_t param_1)
   char cVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
+  char *pcVar5;
   char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  uint uVar9;
-  longlong lVar10;
+  uint uVar8;
+  longlong lVar9;
   
-  iVar3 = __savegprlr_24(param_1);
   sharedUiInfo.numCustomGameTypes = 0;
   memset();
-  uVar9 = 0xffffffff;
-  iVar5 = 0;
-  pcVar8 = savedContentDiscoveryBuffer[0].szFileName + 3;
+  uVar8 = 0xffffffff;
+  iVar4 = 0;
+  pcVar7 = savedContentDiscoveryBuffer[0].szFileName + 3;
   do {
-    if (*(ulong *)(pcVar8 + -0x107) != 0) {
-      pcVar6 = pcVar8 + -3;
+    if (*(ulong *)(pcVar7 + -0x107) != 0) {
+      pcVar5 = pcVar7 + -3;
       strncmp();
-      if (pcVar6 == (char *)0x0) {
+      if (pcVar5 == (char *)0x0) {
         if (sharedUiInfo.numCustomGameTypes == 0x20) {
           Com_Printf(0x10,"Error, reached max custom gametypes limit\n");
-          __restgprlr_24();
           return;
         }
-        I_strncpyz(sharedUiInfo.customGameTypes[sharedUiInfo.numCustomGameTypes].gameTypeName,pcVar8
+        I_strncpyz(sharedUiInfo.customGameTypes[sharedUiInfo.numCustomGameTypes].gameTypeName,pcVar7
                    ,0x20);
         sharedUiInfo.numCustomGameTypes = sharedUiInfo.numCustomGameTypes + 1;
-        pcVar6 = (ui_customModeName->current).string;
-        pcVar7 = pcVar8;
+        pcVar5 = (ui_customModeName->current).string;
+        pcVar6 = pcVar7;
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar6;
+          cVar1 = *pcVar6;
+          cVar2 = *pcVar5;
           if (cVar1 == '\0') break;
-          pcVar7 = pcVar7 + 1;
           pcVar6 = pcVar6 + 1;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          iVar4 = CustomGameTypes_GetGametypeCount();
-          uVar9 = iVar4 + iVar5;
+          iVar3 = CustomGameTypes_GetGametypeCount();
+          uVar8 = iVar3 + iVar4;
         }
-        iVar5 = iVar5 + 1;
+        iVar4 = iVar4 + 1;
       }
     }
-    pcVar8 = pcVar8 + 0x134;
-  } while ((int)pcVar8 < -0x7bfadc5d);
-  if ((int)uVar9 < 0) {
-    lVar10 = 0;
-    iVar5 = CustomGameTypes_GetGametypeCount();
-    if (0 < iVar5) {
+    pcVar7 = pcVar7 + 0x134;
+  } while ((int)pcVar7 < -0x7bfadc5d);
+  if ((int)uVar8 < 0) {
+    lVar9 = 0;
+    iVar4 = CustomGameTypes_GetGametypeCount();
+    if (0 < iVar4) {
       do {
-        pcVar6 = CustomGameTypes_GetGametypeInternalName((int)lVar10);
-        pcVar8 = (ui_gametype->current).string;
+        pcVar5 = CustomGameTypes_GetGametypeInternalName((int)lVar9);
+        pcVar7 = (ui_gametype->current).string;
         do {
-          cVar1 = *pcVar8;
-          cVar2 = *pcVar6;
+          cVar1 = *pcVar7;
+          cVar2 = *pcVar5;
           if (cVar1 == '\0') break;
-          pcVar8 = pcVar8 + 1;
-          pcVar6 = pcVar6 + 1;
+          pcVar7 = pcVar7 + 1;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) break;
-        lVar10 = lVar10 + 1;
-        iVar5 = CustomGameTypes_GetGametypeCount();
-      } while ((int)lVar10 < iVar5);
+        lVar9 = lVar9 + 1;
+        iVar4 = CustomGameTypes_GetGametypeCount();
+      } while ((int)lVar9 < iVar4);
     }
-    iVar5 = CustomGameTypes_GetGametypeCount();
-    uVar9 = -(uint)(iVar5 != lVar10) & (uint)lVar10;
+    iVar4 = CustomGameTypes_GetGametypeCount();
+    uVar8 = -(uint)(iVar4 != lVar9) & (uint)lVar9;
   }
-  Menu_SetFeederSelection(&uiInfoArray[iVar3].uiDC,(menuDef_t *)0x0,0x19,uVar9,(char *)0x0);
-  __restgprlr_24();
+  Menu_SetFeederSelection(&uiInfoArray[param_1].uiDC,(menuDef_t *)0x0,0x19,uVar8,(char *)0x0);
   return;
 }
 
 
 // 825AD898  UI_DrawKeyBindStatus  (ui_mp/ui_main_mp.cpp:1782)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawKeyBindStatus
@@ -1941,54 +1868,46 @@ void UI_DrawKeyBindStatus
 {
   byte bVar1;
   byte bVar2;
-  float *pfVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  char *pcVar6;
-  char *pcVar7;
-  ScreenPlacement *pSVar8;
-  longlong lVar9;
-  longlong lVar10;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  ScreenPlacement *pSVar6;
   int in_r8;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  LVar4 = __savegprlr_25((double)param_4,param_1,lVar9,lVar10,param_5);
-  dVar13 = extraout_f1;
-  iVar5 = Display_KeyBindPending();
-  if (iVar5 == 0) {
-    pcVar7 = "EXE_KEYCHANGE";
+  dVar7 = (double)param_4;
+  iVar3 = Display_KeyBindPending();
+  if (iVar3 == 0) {
+    pcVar5 = "EXE_KEYCHANGE";
   }
   else {
-    pcVar7 = "EXE_KEYWAIT";
+    pcVar5 = "EXE_KEYWAIT";
   }
-  if (*pcVar7 == '\x15') {
-    pcVar7 = pcVar7 + 1;
-    pcVar6 = (char *)0x0;
+  if (*pcVar5 == '\x15') {
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = (char *)0x0;
   }
   else {
-    pcVar6 = SEH_StringEd_GetString(pcVar7);
+    pcVar4 = SEH_StringEd_GetString(pcVar5);
   }
-  pcVar7 = UI_CheckStringTranslation(pcVar7,pcVar6);
-  pfVar3 = (float *)lVar9;
-  bVar1 = *(byte *)((int)pfVar3 + 0x11);
-  bVar2 = *(byte *)(pfVar3 + 4);
-  dVar12 = (double)pfVar3[1];
-  dVar11 = (double)*pfVar3;
-  pSVar8 = ScrPlace_GetActivePlacement(LVar4);
-  UI_DrawText(pSVar8,pcVar7,0x7fffffff,(Font_s *)lVar10,(float)dVar11,(float)dVar12,param_6,in_r8,
-              (float)dVar13,(float *)(uint)bVar2,(uint)bVar1);
-  __restgprlr_25();
+  pcVar5 = UI_CheckStringTranslation(pcVar5,pcVar4);
+  bVar1 = param_2->vertAlign;
+  bVar2 = param_2->horzAlign;
+  dVar9 = (double)param_2->y;
+  dVar8 = (double)param_2->x;
+  pSVar6 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawText(pSVar6,pcVar5,0x7fffffff,param_3,(float)dVar8,(float)dVar9,param_6,in_r8,(float)dVar7,
+              (float *)(uint)bVar2,(uint)bVar1);
   return;
 }
 
 
 // 825A7140  UI_DrawMapLevelshot  (ui_mp/ui_main_mp.cpp:1791)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1999,56 +1918,47 @@ void UI_DrawKeyBindStatus
 void UI_DrawMapLevelshot(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar2;
-  uiInfo_s *puVar3;
-  char *pcVar4;
-  longlong lVar1;
-  XAssetHeader XVar6;
-  ScreenPlacement *pSVar7;
-  uint uVar8;
-  bool bVar9;
+  char *pcVar1;
+  int iVar2;
+  XAssetHeader XVar3;
+  ScreenPlacement *pSVar4;
+  uint uVar5;
   int in_r5;
-  int iVar5;
+  uiInfo_s *puVar6;
   
-  LVar2 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     in_r5 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar3 = uiInfoArray + LVar2;
-  pcVar4 = (char *)Menus_FindByName(&puVar3->uiDC,"pregame_loaderror_mp");
-  if ((menuDef_t *)pcVar4 != (menuDef_t *)0x0) {
-    iVar5 = Menus_MenuIsInStack(&puVar3->uiDC,(menuDef_t *)pcVar4);
-    lVar1 = (longlong)iVar5;
-    if (iVar5 != 0) goto LAB_825a72a4;
+  puVar6 = uiInfoArray + param_1;
+  pcVar1 = (char *)Menus_FindByName(&puVar6->uiDC,"pregame_loaderror_mp");
+  if (((menuDef_t *)pcVar1 != (menuDef_t *)0x0) &&
+     (iVar2 = Menus_MenuIsInStack(&puVar6->uiDC,(menuDef_t *)pcVar1), iVar2 != 0)) {
+    return;
   }
   if (g_showLoadingScreenMenu != false) {
     in_r5 = 1;
-    pcVar4 = "connect";
-    XVar6 = DB_FindXAssetHeader(ASSET_TYPE_MENU,"connect",1);
-    if (XVar6.physPreset != (PhysPreset *)0x0) {
-      uVar8 = DB_GetLoadedFlags();
-      if ((uVar8 & 8) == 0) {
+    pcVar1 = "connect";
+    XVar3 = DB_FindXAssetHeader(ASSET_TYPE_MENU,"connect",1);
+    if (XVar3.physPreset != (PhysPreset *)0x0) {
+      uVar5 = DB_GetLoadedFlags();
+      if ((uVar5 & 8) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                         0x728,0,"%s");
       }
-      iVar5 = Menus_MenuIsInStack(&puVar3->uiDC,XVar6.menu);
-      if (iVar5 == 0) {
-        Menus_Open(&puVar3->uiDC,XVar6.menu);
+      iVar2 = Menus_MenuIsInStack(&puVar6->uiDC,XVar3.menu);
+      if (iVar2 == 0) {
+        Menus_Open(&puVar6->uiDC,XVar3.menu);
       }
-      uiInfoArray[LVar2].uiDC.blurRadiusOut = 0.0;
-      Window_SetDynamicFlags(LVar2,&(XVar6.menu)->window,0x4004);
-      bVar9 = Menu_Paint(&puVar3->uiDC,XVar6.menu);
-      lVar1 = (longlong)bVar9;
-LAB_825a72a4:
-      __restgprlr_28(lVar1);
+      uiInfoArray[param_1].uiDC.blurRadiusOut = 0.0;
+      Window_SetDynamicFlags(param_1,&(XVar3.menu)->window,0x4004);
+      Menu_Paint(&puVar6->uiDC,XVar3.menu);
       return;
     }
   }
-  pSVar7 = ScrPlace_GetActivePlacement(LVar2);
-  UI_FillRect(pSVar7,0.0,0.0,640.0,480.0,(int)pcVar4,in_r5,(float *)0x82180000);
-  __restgprlr_28();
+  pSVar4 = ScrPlace_GetActivePlacement(param_1);
+  UI_FillRect(pSVar4,0.0,0.0,640.0,480.0,(int)pcVar1,in_r5,(float *)0x82180000);
   return;
 }
 
@@ -2079,29 +1989,31 @@ void UI_LoadIngameMenus(LocalClientNum_t param_1)
 
 // 825A7348  UI_SetMap  (ui_mp/ui_main_mp.cpp:1864)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void UI_SetMap(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  I_strncpyz(g_mapname,pcVar1,0x40);
+  I_strncpyz(g_mapname,param_1,0x40);
   I_strncpyz(&DAT_83fe7430,param_2,0x40);
-  if (*pcVar1 != '\0') {
-    Dvar_SetStringByName("ui_mapname",pcVar1);
+  if (*param_1 != '\0') {
+    Dvar_SetStringByName("ui_mapname",param_1);
     Dvar_SetStringByName("ui_gametype",param_2);
     g_showLoadingScreenMenu = true;
-    __restgprlr_29();
     return;
   }
   g_showLoadingScreenMenu = false;
-  __restgprlr_29();
   return;
 }
 
 
 // 825A73D8  UI_DrawLocalTalking  (ui_mp/ui_main_mp.cpp:1950)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2109,40 +2021,37 @@ void UI_DrawLocalTalking(SessionData *param_1,LocalClientNum_t param_2,rectDef_s
                         float *param_4)
 
 {
-  SessionData *pSVar1;
-  bool bVar4;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  rectDef_s *prVar5;
+  bool bVar3;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  rectDef_s *prVar4;
   Material *in_r7;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  __savegprlr_27(param_1);
-  pSVar1 = (SessionData *)__savefpr_28();
-  prVar5 = param_3;
-  bVar4 = Voice_IsLocalClientTalking(pSVar1,param_2);
-  if ((bVar4) && (iVar2 = CL_Demo_IsRenderingMovie(param_2), iVar2 == 0)) {
-    iVar2 = 7;
+  prVar4 = param_3;
+  bVar3 = Voice_IsLocalClientTalking(param_1,param_2);
+  if ((bVar3) && (iVar1 = CL_Demo_IsRenderingMovie(param_2), iVar1 == 0)) {
+    iVar1 = 7;
     Material_RegisterHandle("voice_on",7);
-    dVar9 = (double)param_3->h;
-    dVar8 = (double)param_3->w;
-    dVar7 = (double)param_3->y;
-    dVar6 = (double)param_3->x;
-    pSVar3 = ScrPlace_GetActivePlacement(param_2);
-    UI_DrawHandlePic(pSVar3,(float)dVar6,(float)dVar7,(float)dVar8,(float)dVar9,iVar2,(int)prVar5,
+    dVar8 = (double)param_3->h;
+    dVar7 = (double)param_3->w;
+    dVar6 = (double)param_3->y;
+    dVar5 = (double)param_3->x;
+    pSVar2 = ScrPlace_GetActivePlacement(param_2);
+    UI_DrawHandlePic(pSVar2,(float)dVar5,(float)dVar6,(float)dVar7,(float)dVar8,iVar1,(int)prVar4,
                      param_4,in_r7);
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 825A7480  UI_GetTalkerClientNum  (ui_mp/ui_main_mp.cpp:1969)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -2152,9 +2061,8 @@ int UI_GetTalkerClientNum(LocalClientNum_t param_1,int param_2)
   bool bVar3;
   SessionData *pSVar1;
   int iVar2;
-  longlong lVar4;
+  int iVar4;
   
-  __savegprlr_28(param_1);
   bVar3 = Lobby_IsInRunningLobby();
   if (bVar3) {
     pSVar1 = Lobby_GetSession();
@@ -2167,71 +2075,70 @@ int UI_GetTalkerClientNum(LocalClientNum_t param_1,int param_2)
     }
   }
   iVar2 = 0;
-  lVar4 = 0;
+  iVar4 = 0;
   do {
-    bVar3 = CL_IsClientLocal((int)lVar4);
-    if ((!bVar3) && (bVar3 = CL_IsPlayerTalking(pSVar1,(int)lVar4), bVar3)) {
+    bVar3 = CL_IsClientLocal(iVar4);
+    if ((!bVar3) && (bVar3 = CL_IsPlayerTalking(pSVar1,iVar4), bVar3)) {
       if (iVar2 == param_2) {
-        iVar2 = __restgprlr_28(lVar4);
-        return iVar2;
+        return iVar4;
       }
       iVar2 = iVar2 + 1;
     }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 0x12);
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 0x12);
+  return -1;
 }
 
 
 // 825A7538  UI_DrawTalkerNum  (ui_mp/ui_main_mp.cpp:2009)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawTalkerNum(LocalClientNum_t param_1,int param_2,rectDef_s *param_3,Font_s *param_4,
                      float *param_5,float param_6,int param_7)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  int iVar4;
-  char *pcVar5;
-  float *pfVar6;
-  double extraout_f1;
-  double dVar7;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  char *pcVar4;
+  float *pfVar5;
+  double dVar6;
   char acStack_80 [128];
   
-  LVar1 = __savegprlr_25((double)param_6,param_1);
-  dVar7 = extraout_f1;
-  iVar2 = UI_GetTalkerClientNum(LVar1,param_2);
-  if (-1 < iVar2) {
-    pfVar6 = (float *)0x2a;
-    pcVar5 = acStack_80;
-    iVar2 = CL_GetClientName(LVar1,iVar2,pcVar5,0x2a);
-    if (iVar2 == 0) {
+  dVar6 = (double)param_6;
+  iVar1 = UI_GetTalkerClientNum(param_1,param_2);
+  if (-1 < iVar1) {
+    pfVar5 = (float *)0x2a;
+    pcVar4 = acStack_80;
+    iVar1 = CL_GetClientName(param_1,iVar1,pcVar4,0x2a);
+    if (iVar1 == 0) {
       Com_PrintWarning(0xd,"Unable to find client %i but they are talking\n");
-      __restgprlr_25();
       return;
     }
-    iVar4 = 7;
+    iVar3 = 7;
     Material_RegisterHandle("voice_on",7);
-    iVar2 = UI_TextHeight(param_4,(float)dVar7);
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawHandlePic(pSVar3,param_3->x,param_3->y,param_3->w,param_3->h,iVar4,(int)pcVar5,pfVar6,
+    iVar1 = UI_TextHeight(param_4,(float)dVar6);
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawHandlePic(pSVar2,param_3->x,param_3->y,param_3->w,param_3->h,iVar3,(int)pcVar4,pfVar5,
                      (Material *)param_5);
-    UI_DrawText(pSVar3,acStack_80,0x20,param_4,param_3->x + param_3->w + 2.0,
-                (param_3->h - (float)(longlong)iVar2) * 0.5 + (float)(longlong)iVar2 + param_3->y,
-                -0x7e000000,iVar2,(float)dVar7,(float *)(uint)param_3->horzAlign,
+    UI_DrawText(pSVar2,acStack_80,0x20,param_4,param_3->x + param_3->w + 2.0,
+                (param_3->h - (float)(longlong)iVar1) * 0.5 + (float)(longlong)iVar1 + param_3->y,
+                -0x7e000000,iVar1,(float)dVar6,(float *)(uint)param_3->horzAlign,
                 (uint)param_3->vertAlign);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825A7680  UI_DrawReservedSlots  (ui_mp/ui_main_mp.cpp:2044)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawReservedSlots
@@ -2241,35 +2148,32 @@ void UI_DrawReservedSlots
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  char *pcVar4;
-  ScreenPlacement *pSVar5;
+  char *pcVar3;
+  ScreenPlacement *pSVar4;
   int in_r8;
-  double extraout_f1;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  __savegprlr_25((double)param_5,param_1);
-  LVar3 = __savefpr_28();
-  dVar9 = extraout_f1;
-  pcVar4 = va("%i");
+  dVar5 = (double)param_5;
+  pcVar3 = va("%i");
   bVar1 = param_2->vertAlign;
   bVar2 = param_2->horzAlign;
   dVar8 = (double)param_2->y;
   dVar7 = (double)param_2->w;
   dVar6 = (double)param_2->x;
-  pSVar5 = ScrPlace_GetActivePlacement(LVar3);
-  UI_DrawText(pSVar5,pcVar4,0x7fffffff,param_3,(float)(dVar7 + dVar6) + 2.0,(float)dVar8,param_6,
-              in_r8,(float)dVar9,(float *)(uint)bVar2,(uint)bVar1);
-  __restfpr_28();
-  __restgprlr_25();
+  pSVar4 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawText(pSVar4,pcVar3,0x7fffffff,param_3,(float)(dVar7 + dVar6) + 2.0,(float)dVar8,param_6,
+              in_r8,(float)dVar5,(float *)(uint)bVar2,(uint)bVar1);
   return;
 }
 
 
 // 825AF9C8  UI_DrawLoggedInUser  (ui_mp/ui_main_mp.cpp:2053)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void UI_DrawLoggedInUser(ScreenPlacement *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
                         float *param_5,int param_6)
@@ -2277,48 +2181,39 @@ void UI_DrawLoggedInUser(ScreenPlacement *param_1,rectDef_s *param_2,Font_s *par
 {
   byte bVar1;
   byte bVar2;
-  float *pfVar3;
-  ScreenPlacement *pSVar4;
-  char *pcVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
+  char *pcVar3;
+  char *pcVar4;
   int in_r8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pSVar4 = (ScreenPlacement *)__savegprlr_25((double)param_4,param_1,lVar7,lVar8,param_5);
+  dVar5 = (double)param_4;
   if (cl_multi_gamepads_enabled == 0) {
-    dVar11 = extraout_f1;
-    pcVar5 = Live_GetLocalClientName(cl_controller_in_use);
-    pfVar3 = (float *)lVar7;
-    if (*pcVar5 == '\0') {
-      bVar1 = *(byte *)((int)pfVar3 + 0x11);
-      dVar10 = (double)pfVar3[1];
-      bVar2 = *(byte *)(pfVar3 + 4);
-      dVar9 = (double)*pfVar3;
-      pcVar5 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
-      UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,(float)dVar9,(float)dVar10,param_6,in_r8,
-                  (float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
-      __restgprlr_25();
+    pcVar3 = Live_GetLocalClientName(cl_controller_in_use);
+    if (*pcVar3 == '\0') {
+      bVar1 = param_2->vertAlign;
+      dVar7 = (double)param_2->y;
+      bVar2 = param_2->horzAlign;
+      dVar6 = (double)param_2->x;
+      pcVar3 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
+      UI_DrawText(param_1,pcVar3,0x7fffffff,param_3,(float)dVar6,(float)dVar7,param_6,in_r8,
+                  (float)dVar5,(float *)(uint)bVar2,(uint)bVar1);
       return;
     }
-    pcVar6 = UI_SafeTranslateString("XBOXLIVE_SIGNEDINAS");
-    pcVar5 = UI_ReplaceConversionString(pcVar6,pcVar5);
-    UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,*pfVar3,pfVar3[1],param_6,in_r8,
-                (float)dVar11,(float *)(uint)*(byte *)(pfVar3 + 4),
-                (uint)*(byte *)((int)pfVar3 + 0x11));
+    pcVar4 = UI_SafeTranslateString("XBOXLIVE_SIGNEDINAS");
+    pcVar3 = UI_ReplaceConversionString(pcVar4,pcVar3);
+    UI_DrawText(param_1,pcVar3,0x7fffffff,param_3,param_2->x,param_2->y,param_6,in_r8,(float)dVar5,
+                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825AD978  UI_DrawLoggedInUserName  (ui_mp/ui_main_mp.cpp:2074)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void UI_DrawLoggedInUserName
                (ScreenPlacement *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
@@ -2327,80 +2222,68 @@ void UI_DrawLoggedInUserName
 {
   byte bVar1;
   byte bVar2;
-  float *pfVar3;
-  ScreenPlacement *pSVar4;
-  char *pcVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
+  char *pcVar3;
+  char *pcVar4;
   int in_r8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pSVar4 = (ScreenPlacement *)__savegprlr_25((double)param_4,param_1,lVar7,lVar8,param_5);
+  dVar5 = (double)param_4;
   if (cl_multi_gamepads_enabled == 0) {
-    dVar11 = extraout_f1;
-    pcVar5 = Live_GetLocalClientName(cl_controller_in_use);
-    pfVar3 = (float *)lVar7;
-    if (*pcVar5 == '\0') {
-      bVar1 = *(byte *)((int)pfVar3 + 0x11);
-      dVar10 = (double)pfVar3[1];
-      bVar2 = *(byte *)(pfVar3 + 4);
-      dVar9 = (double)*pfVar3;
-      pcVar5 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
-      UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,(float)dVar9,(float)dVar10,param_6,in_r8,
-                  (float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
-      __restgprlr_25();
+    pcVar3 = Live_GetLocalClientName(cl_controller_in_use);
+    if (*pcVar3 == '\0') {
+      bVar1 = param_2->vertAlign;
+      dVar7 = (double)param_2->y;
+      bVar2 = param_2->horzAlign;
+      dVar6 = (double)param_2->x;
+      pcVar3 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
+      UI_DrawText(param_1,pcVar3,0x7fffffff,param_3,(float)dVar6,(float)dVar7,param_6,in_r8,
+                  (float)dVar5,(float *)(uint)bVar2,(uint)bVar1);
       return;
     }
-    pcVar6 = GamerProfile_GetClanName(cl_controller_in_use);
-    if (*pcVar6 != '\0') {
-      pcVar5 = va("[%s]%s");
+    pcVar4 = GamerProfile_GetClanName(cl_controller_in_use);
+    if (*pcVar4 != '\0') {
+      pcVar3 = va("[%s]%s");
     }
-    UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,*pfVar3,pfVar3[1],param_6,in_r8,
-                (float)dVar11,(float *)(uint)*(byte *)(pfVar3 + 4),
-                (uint)*(byte *)((int)pfVar3 + 0x11));
+    UI_DrawText(param_1,pcVar3,0x7fffffff,param_3,param_2->x,param_2->y,param_6,in_r8,(float)dVar5,
+                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825ADAB0  GetXpLockDescription  (ui_mp/ui_main_mp.cpp:2101)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * GetXpLockDescription(LocalClientNum_t param_1,uint param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
   char acStack_460 [16];
   ConversionArguments local_450;
   char acStack_420 [1056];
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar2 = PlaylistFeeder_GetUnlockXp(iVar2,param_2);
-  iVar2 = CL_GetRankForXpMP(iVar2);
-  pcVar3 = CL_GetRankDataMP(iVar2,RANKTABLE_FULLRANK);
-  if (*pcVar3 == '\x15') {
-    pcVar3 = pcVar3 + 1;
-    pcVar4 = (char *)0x0;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar1 = PlaylistFeeder_GetUnlockXp(iVar1,param_2);
+  iVar1 = CL_GetRankForXpMP(iVar1);
+  pcVar2 = CL_GetRankDataMP(iVar1,RANKTABLE_FULLRANK);
+  if (*pcVar2 == '\x15') {
+    pcVar2 = pcVar2 + 1;
+    pcVar3 = (char *)0x0;
   }
   else {
-    pcVar4 = SEH_StringEd_GetString(pcVar3);
+    pcVar3 = SEH_StringEd_GetString(pcVar2);
   }
-  pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
-  CL_GetRankDataMP(iVar2,RANKTABLE_DISPLAYLEVEL);
+  pcVar2 = UI_CheckStringTranslation(pcVar2,pcVar3);
+  CL_GetRankDataMP(iVar1,RANKTABLE_DISPLAYLEVEL);
   Com_sprintf(acStack_460,5,"%s");
-  if (*pcVar3 == '\0') {
+  if (*pcVar2 == '\0') {
     Com_PrintWarning(0xd,"Empty rank string for rank %i\n");
   }
   local_450.args[3] = (char *)0x0;
@@ -2410,19 +2293,20 @@ char * GetXpLockDescription(LocalClientNum_t param_1,uint param_2)
   local_450.args[7] = (char *)0x0;
   local_450.args[8] = (char *)0x0;
   local_450.argCount = 2;
-  local_450.args[0] = pcVar3;
+  local_450.args[0] = pcVar2;
   local_450.args._4_8_ = ZEXT48(acStack_460) << 0x20;
-  pcVar3 = SEH_StringEd_GetString("MPUI_UNLOCKXP");
-  pcVar3 = UI_CheckStringTranslation("MPUI_UNLOCKXP",pcVar3);
-  UI_ReplaceConversions(pcVar3,&local_450,acStack_420,0x400);
-  pcVar3 = va(acStack_420);
-  pcVar3 = (char *)__restgprlr_29(pcVar3);
-  return pcVar3;
+  pcVar2 = SEH_StringEd_GetString("MPUI_UNLOCKXP");
+  pcVar2 = UI_CheckStringTranslation("MPUI_UNLOCKXP",pcVar2);
+  UI_ReplaceConversions(pcVar2,&local_450,acStack_420,0x400);
+  pcVar2 = va(acStack_420);
+  return pcVar2;
 }
 
 
 // 825AFAE8  UI_DrawPlaylistDescription  (ui_mp/ui_main_mp.cpp:2129)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawPlaylistDescription
@@ -2430,142 +2314,144 @@ void UI_DrawPlaylistDescription
                float param_5,int param_6,int param_7)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  PlaylistLockState PVar7;
-  uint uVar8;
-  char *pcVar9;
-  bool bVar11;
-  ScreenPlacement *pSVar10;
-  float *pfVar12;
-  char *pcVar13;
-  IMAGE_DOS_HEADER *pIVar14;
-  double extraout_f1;
-  double dVar15;
+  PlaylistLockState PVar6;
+  uint uVar7;
+  char *pcVar8;
+  bool bVar10;
+  ScreenPlacement *pSVar9;
+  float *pfVar11;
+  char *pcVar12;
+  IMAGE_DOS_HEADER *pIVar13;
+  double dVar14;
   undefined1 in_stack_fffff6fb;
   int local_8a0;
   uint local_89c;
   char local_870 [2160];
   
-  LVar1 = __savegprlr_21((double)param_5,param_1);
-  dVar15 = extraout_f1;
-  uVar2 = PlaylistFeeder_GetSelectedIndex(LVar1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 < 1) {
-    iVar4 = 1;
+  dVar14 = (double)param_5;
+  uVar1 = PlaylistFeeder_GetSelectedIndex(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 < 1) {
+    iVar3 = 1;
   }
-  iVar5 = GetPartyMemberCount();
-  if (iVar4 < iVar5) {
-    iVar4 = iVar5;
+  iVar4 = GetPartyMemberCount();
+  if (iVar3 < iVar4) {
+    iVar3 = iVar4;
   }
-  iVar5 = Live_GetPrestigeMP(iVar3);
-  iVar6 = Live_GetXpMP(iVar3);
-  PVar7 = PlaylistFeeder_IsLocked(iVar3,uVar2,iVar6,iVar5,iVar4);
-  local_8a0 = PlaylistFeeder_GetActivePlayersCount(LVar1,uVar2);
+  iVar4 = Live_GetPrestigeMP(iVar2);
+  iVar5 = Live_GetXpMP(iVar2);
+  PVar6 = PlaylistFeeder_IsLocked(iVar2,uVar1,iVar5,iVar4,iVar3);
+  local_8a0 = PlaylistFeeder_GetActivePlayersCount(param_1,uVar1);
   local_89c = ComGroups_GetCount("playlist");
-  uVar8 = ComGroups_GetCount("online");
-  pIVar14 = (IMAGE_DOS_HEADER *)0x82170000;
-  pcVar9 = SEH_StringEd_GetString("XBOXLIVE_PLAYLISTUSERCOUNT");
-  pcVar9 = UI_CheckStringTranslation("XBOXLIVE_PLAYLISTUSERCOUNT",pcVar9);
-  pcVar9 = UI_ReplaceConversionInts(pcVar9,2,&local_8a0);
-  pcVar13 = "story";
-  Dvar_SetStringByName("playlist_population",pcVar9);
-  pfVar12 = (float *)0x82170000;
-  pcVar9 = SEH_StringEd_GetString("XBOXLIVE_TOTALUSERCOUNT");
-  pcVar9 = UI_CheckStringTranslation("XBOXLIVE_TOTALUSERCOUNT",pcVar9);
-  pcVar9 = UI_ReplaceConversionInt(pcVar9,uVar8);
-  Dvar_SetStringByName("playlist_totalonline",pcVar9);
-  pcVar9 = PlaylistFeeder_GetItemName(LVar1,uVar2);
-  if (pcVar9 == (char *)0x0) {
-    pcVar9 = "";
+  uVar7 = ComGroups_GetCount("online");
+  pIVar13 = (IMAGE_DOS_HEADER *)0x82170000;
+  pcVar8 = SEH_StringEd_GetString("XBOXLIVE_PLAYLISTUSERCOUNT");
+  pcVar8 = UI_CheckStringTranslation("XBOXLIVE_PLAYLISTUSERCOUNT",pcVar8);
+  pcVar8 = UI_ReplaceConversionInts(pcVar8,2,&local_8a0);
+  pcVar12 = "story";
+  Dvar_SetStringByName("playlist_population",pcVar8);
+  pfVar11 = (float *)0x82170000;
+  pcVar8 = SEH_StringEd_GetString("XBOXLIVE_TOTALUSERCOUNT");
+  pcVar8 = UI_CheckStringTranslation("XBOXLIVE_TOTALUSERCOUNT",pcVar8);
+  pcVar8 = UI_ReplaceConversionInt(pcVar8,uVar7);
+  Dvar_SetStringByName("playlist_totalonline",pcVar8);
+  pcVar8 = PlaylistFeeder_GetItemName(param_1,uVar1);
+  if (pcVar8 == (char *)0x0) {
+    pcVar8 = "";
   }
-  Dvar_SetStringByName("playlist_name",pcVar9);
-  pcVar9 = PlaylistFeeder_GetItemImage(LVar1,uVar2);
-  if (pcVar9 == (char *)0x0) {
-    pcVar9 = "";
+  Dvar_SetStringByName("playlist_name",pcVar8);
+  pcVar8 = PlaylistFeeder_GetItemImage(param_1,uVar1);
+  if (pcVar8 == (char *)0x0) {
+    pcVar8 = "";
   }
-  Dvar_SetStringByName("playlist_image",pcVar9);
+  Dvar_SetStringByName("playlist_image",pcVar8);
   local_870[0] = '\0';
-  if (PLS_DLC < PVar7) {
+  if (PLS_DLC < PVar6) {
     if (alwaysfails == 0) {
-      pcVar9 = va("Unknown playlist lock state: %i\n");
+      pcVar8 = va("Unknown playlist lock state: %i\n");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8b1,
-                      0,pcVar9);
+                      0,pcVar8);
     }
-LAB_825aff10:
-    __restgprlr_21();
     return;
   }
-  if (PVar7 == PLS_FETCHING) goto LAB_825aff10;
-  if (PVar7 == PLS_XP) {
-    pcVar9 = GetXpLockDescription(LVar1,uVar2);
+  if (PVar6 == PLS_FETCHING) {
+    return;
   }
-  else if (PVar7 == PLS_MAXPARTY) {
-    iVar4 = PlaylistFeeder_GetItemPlaylistId(LVar1,uVar2);
-    iVar4 = Playlist_GetMaxPartySize(iVar3,iVar4);
-    pcVar9 = UI_SafeTranslateString("MPUI_MAXPARTYSIZE");
-    pcVar9 = UI_ReplaceConversionInt(pcVar9,iVar4);
+  if (PVar6 == PLS_XP) {
+    pcVar8 = GetXpLockDescription(param_1,uVar1);
   }
-  else if (PVar7 == PLS_MINPARTY) {
-    iVar4 = PlaylistFeeder_GetItemPlaylistId(LVar1,uVar2);
-    iVar4 = Playlist_GetMinPartySize(iVar3,iVar4);
-    pcVar9 = UI_SafeTranslateString("MPUI_MINPARTYSIZE");
-    pcVar9 = UI_ReplaceConversionInt(pcVar9,iVar4);
+  else if (PVar6 == PLS_MAXPARTY) {
+    iVar3 = PlaylistFeeder_GetItemPlaylistId(param_1,uVar1);
+    iVar3 = Playlist_GetMaxPartySize(iVar2,iVar3);
+    pcVar8 = UI_SafeTranslateString("MPUI_MAXPARTYSIZE");
+    pcVar8 = UI_ReplaceConversionInt(pcVar8,iVar3);
+  }
+  else if (PVar6 == PLS_MINPARTY) {
+    iVar3 = PlaylistFeeder_GetItemPlaylistId(param_1,uVar1);
+    iVar3 = Playlist_GetMinPartySize(iVar2,iVar3);
+    pcVar8 = UI_SafeTranslateString("MPUI_MINPARTYSIZE");
+    pcVar8 = UI_ReplaceConversionInt(pcVar8,iVar3);
   }
   else {
-    if (PVar7 == PLS_UNLOCKED) {
-      pcVar9 = PlaylistFeeder_GetItemDesc(LVar1,uVar2);
-      I_strncpyz(local_870,pcVar9,0x800);
-      if (local_870[0] == '\0') goto LAB_825aff10;
-      bVar11 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar2);
-      if (!bVar11) {
+    if (PVar6 == PLS_UNLOCKED) {
+      pcVar8 = PlaylistFeeder_GetItemDesc(param_1,uVar1);
+      I_strncpyz(local_870,pcVar8,0x800);
+      if (local_870[0] == '\0') {
+        return;
+      }
+      bVar10 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar2,uVar1);
+      if (!bVar10) {
         I_strncat(local_870,0x800,"\n\n");
-        pcVar9 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
-        I_strncat(local_870,0x800,pcVar9);
-        pIVar14 = &IMAGE_DOS_HEADER_82000000;
+        pcVar8 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
+        I_strncat(local_870,0x800,pcVar8);
+        pIVar13 = &IMAGE_DOS_HEADER_82000000;
         I_strncat(local_870,0x800,"\n");
       }
       goto LAB_825afe90;
     }
-    bVar11 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar2);
-    if (!bVar11) {
-      pcVar9 = PlaylistFeeder_GetItemDesc(LVar1,uVar2);
-      I_strncpyz(local_870,pcVar9,0x800);
+    bVar10 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar2,uVar1);
+    if (!bVar10) {
+      pcVar8 = PlaylistFeeder_GetItemDesc(param_1,uVar1);
+      I_strncpyz(local_870,pcVar8,0x800);
       I_strncat(local_870,0x800,"\n\n");
-      pcVar9 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
-      I_strncat(local_870,0x800,pcVar9);
-      pIVar14 = &IMAGE_DOS_HEADER_82000000;
+      pcVar8 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
+      I_strncat(local_870,0x800,pcVar8);
+      pIVar13 = &IMAGE_DOS_HEADER_82000000;
       I_strncat(local_870,0x800,"\n");
       goto LAB_825afe90;
     }
-    bVar11 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar3,uVar2);
-    if (!bVar11) {
+    bVar10 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar2,uVar1);
+    if (!bVar10) {
       I_strncat(local_870,0x800,"\n\n");
-      pcVar9 = UI_SafeTranslateString("DLC_NOTEVERYONEHASREQUIREDDLC");
-      I_strncat(local_870,0x800,pcVar9);
-      pIVar14 = &IMAGE_DOS_HEADER_82000000;
+      pcVar8 = UI_SafeTranslateString("DLC_NOTEVERYONEHASREQUIREDDLC");
+      I_strncat(local_870,0x800,pcVar8);
+      pIVar13 = &IMAGE_DOS_HEADER_82000000;
       I_strncat(local_870,0x800,"\n");
       goto LAB_825afe90;
     }
-    pcVar9 = UI_SafeTranslateString("DLC_PLAYLIST_MAPS_NOT_ENABLED");
+    pcVar8 = UI_SafeTranslateString("DLC_PLAYLIST_MAPS_NOT_ENABLED");
   }
-  I_strncpyz(local_870,pcVar9,0x800);
+  I_strncpyz(local_870,pcVar8,0x800);
 LAB_825afe90:
-  pSVar10 = ScrPlace_GetActivePlacement(LVar1);
-  UI_DrawWrappedText(pSVar10,local_870,param_2,param_3,param_2->x,param_2->y,(float)dVar15,pfVar12,
-                     (int)pcVar13,(int)pIVar14,(rectDef_s *)param_4,(bool)in_stack_fffff6fb);
-  __restgprlr_21();
+  pSVar9 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawWrappedText(pSVar9,local_870,param_2,param_3,param_2->x,param_2->y,(float)dVar14,pfVar11,
+                     (int)pcVar12,(int)pIVar13,(rectDef_s *)param_4,(bool)in_stack_fffff6fb);
   return;
 }
 
 
 // 825AFF20  UI_OwnerDraw  (ui_mp/ui_main_mp.cpp:2237)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -2575,13 +2461,12 @@ void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float par
                  Material *param_17,int param_18,rectDef_s param_19,int param_20,char *param_21)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  SessionData *pSVar4;
-  char *pcVar5;
-  Font_s *pFVar6;
-  double extraout_f1;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  SessionData *pSVar3;
+  char *pcVar4;
+  Font_s *pFVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -2589,7 +2474,6 @@ void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float par
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   int in_stack_0000005c;
   Material *in_stack_00000064;
   char *in_stack_0000006c;
@@ -2611,34 +2495,32 @@ void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float par
   dVar13 = (double)param_15;
   dVar8 = (double)param_4;
   dVar7 = (double)param_3;
-  pcVar5 = (char *)param_11;
-  __savegprlr_21((double)param_2,param_1,param_6,param_7);
-  LVar1 = __savefpr_24();
-  dVar14 = extraout_f1;
-  pFVar6 = (Font_s *)param_12;
-  iVar2 = CL_IsCgameInitialized(LVar1);
-  if ((iVar2 != 0) && (iVar2 = CG_HasSnapshot(LVar1), iVar2 != 0)) {
+  dVar6 = (double)param_2;
+  pcVar4 = (char *)param_11;
+  pFVar5 = (Font_s *)param_12;
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if ((iVar1 != 0) && (iVar1 = CG_HasSnapshot(param_1), iVar1 != 0)) {
     param_10 = 0;
-    CG_OwnerDraw(LVar1,in_stack_fffffe88,(float)dVar14,(float)dVar7,(float)dVar8,(float)dVar9,
-                 in_stack_000000a4,in_stack_000000ac,(float)dVar10,(float)dVar11,0,(int)pcVar5,
-                 (float)dVar12,pFVar6,(float)dVar13,in_stack_000000b0,in_stack_00000064,
+    CG_OwnerDraw(param_1,in_stack_fffffe88,(float)dVar6,(float)dVar7,(float)dVar8,(float)dVar9,
+                 in_stack_000000a4,in_stack_000000ac,(float)dVar10,(float)dVar11,0,(int)pcVar4,
+                 (float)dVar12,pFVar5,(float)dVar13,in_stack_000000b0,in_stack_00000064,
                  in_stack_fffffe9c,in_stack_fffffea0);
   }
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  local_c0[0].horzAlign = (uchar)param_12;
-  local_c0[0].x = (float)(dVar14 + dVar10);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  local_c0[0].x = (float)(dVar6 + dVar10);
   local_c0[0].y = (float)(dVar7 + dVar11);
+  local_c0[0].horzAlign = (uchar)param_12;
   local_c0[0].vertAlign = (uchar)param_14;
   local_c0[0].w = (float)dVar8;
   local_c0[0].h = (float)dVar9;
-  if ((Font_s *)(param_12 & 0xffU) != (Font_s *)param_12) {
-    pcVar5 = "rect.horzAlign == horzAlign";
+  if ((param_12 & 0xffU) != param_12) {
+    pcVar4 = "rect.horzAlign == horzAlign";
     param_10 = (int)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8cb,0,
                     "%s");
   }
   if ((Font_s *)(uint)local_c0[0].vertAlign != param_14) {
-    pcVar5 = "rect.vertAlign == vertAlign";
+    pcVar4 = "rect.vertAlign == vertAlign";
     param_10 = (int)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8cc,0,
                     "%s");
@@ -2646,85 +2528,61 @@ void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float par
   switch(in_stack_0000005c) {
   case 0x15e:
     UI_DrawKeyBindStatus
-              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+              (param_1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
                (int)in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x16c:
-    ProfLoad_DrawOverlay(pSVar3,local_c0);
-    __restfpr_24();
-    __restgprlr_21();
+    ProfLoad_DrawOverlay(pSVar2,local_c0);
     return;
   case 0x16e:
-    pSVar4 = &g_serverSession;
+    pSVar3 = &g_serverSession;
     if ((g_partySession.dyn.sessionHandle != (void *)0x0) &&
        (g_serverSession.dyn.sessionHandle == (void *)0x0)) {
-      pSVar4 = &g_partySession;
+      pSVar3 = &g_partySession;
     }
-    UI_DrawLocalTalking(pSVar4,LVar1,local_c0,in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
+    UI_DrawLocalTalking(pSVar3,param_1,local_c0,in_stack_0000008c);
     return;
   case 0x16f:
   case 0x170:
   case 0x171:
   case 0x172:
-    UI_DrawTalkerNum(LVar1,in_stack_0000005c + -0x16f,local_c0,in_stack_0000007c,in_stack_0000008c,
-                     (float)dVar13,(int)pFVar6);
-    __restfpr_24();
-    __restgprlr_21();
+    UI_DrawTalkerNum(param_1,in_stack_0000005c + -0x16f,local_c0,in_stack_0000007c,in_stack_0000008c
+                     ,(float)dVar13,(int)pFVar5);
     return;
   case 0x174:
-    UI_DrawLoggedInUser(pSVar3,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+    UI_DrawLoggedInUser(pSVar2,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
                         (int)in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x175:
     UI_DrawReservedSlots
-              (LVar1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar5);
-    __restfpr_24();
-    __restgprlr_21();
+              (param_1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar4);
     return;
   case 0x177:
     UI_DrawPlaylistDescription
-              (LVar1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar5,
+              (param_1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar4,
                in_stack_0000009c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x178:
     UI_DrawLoggedInUserName
-              (pSVar3,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+              (pSVar2,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
                (int)in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x17a:
     UI_DrawMapCustomData
-              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+              (param_1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
                (int)in_stack_0000008c,in_stack_0000009c,in_stack_0000006c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x17b:
-    UI_ScreenshotViewerDraw(LVar1,local_c0,in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
+    UI_ScreenshotViewerDraw(param_1,local_c0,in_stack_0000008c);
     return;
   case 0x17c:
     UI_ScreenshotThumbnailDraw
-              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+              (param_1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
                (int)in_stack_0000008c);
-    __restfpr_24();
-    __restgprlr_21();
     return;
   case 0x17d:
-    UI_DrawPlaylistPopulation(LVar1,local_c0,in_stack_0000008c);
+    UI_DrawPlaylistPopulation(param_1,local_c0,in_stack_0000008c);
   }
-  __restfpr_24();
-  __restgprlr_21();
   return;
 }
 
@@ -2811,6 +2669,8 @@ LAB_825a7844:
 
 // 825A78A0  UI_VerifyLanguage  (ui_mp/ui_main_mp.cpp:2965)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_VerifyLanguage(void)
@@ -2820,7 +2680,6 @@ void UI_VerifyLanguage(void)
   int iVar2;
   int iVar3;
   
-  __savegprlr_29();
   iVar1 = Dvar_GetInt("loc_language");
   iVar2 = Dvar_GetInt("ui_language");
   iVar3 = SEH_VerifyLanguageSelection(iVar2);
@@ -2828,7 +2687,6 @@ void UI_VerifyLanguage(void)
     Dvar_SetIntByName("ui_language",iVar3);
   }
   Dvar_SetBoolByName("ui_languagechanged",iVar2 != iVar1);
-  __restgprlr_29();
   return;
 }
 
@@ -2857,83 +2715,74 @@ void UI_UpdateDisplayServers(uiInfo_s *param_1)
 
 // 825A7910  UI_GetOpenOrCloseMenuOnDvarArgs  (ui_mp/ui_main_mp.cpp:3075)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool UI_GetOpenOrCloseMenuOnDvarArgs
                (char **param_1,char *param_2,char *param_3,int param_4,char *param_5,int param_6,
                char *param_7,int param_8)
 
 {
-  char **ppcVar1;
-  int iVar2;
-  undefined1 uVar3;
+  int iVar1;
   
-  ppcVar1 = (char **)__savegprlr_26(param_1,param_2);
-  iVar2 = String_Parse(ppcVar1,param_3,param_4);
-  if (iVar2 == 0) {
+  iVar1 = String_Parse(param_1,param_3,param_4);
+  if (iVar1 == 0) {
     Com_Printf(0xd,"%s: invalid dvar name.\n");
-    uVar3 = __restgprlr_26(0);
-    return (bool)uVar3;
+    return false;
   }
-  iVar2 = String_Parse(ppcVar1,param_5,param_6);
-  if (iVar2 == 0) {
+  iVar1 = String_Parse(param_1,param_5,param_6);
+  if (iVar1 == 0) {
     Com_Printf(0xd,"%s: invalid test value.\n");
-    uVar3 = __restgprlr_26(0);
-    return (bool)uVar3;
+    return false;
   }
-  iVar2 = String_Parse(ppcVar1,param_7,param_8);
-  if (iVar2 == 0) {
+  iVar1 = String_Parse(param_1,param_7,param_8);
+  if (iVar1 == 0) {
     Com_Printf(0xd,"%s: invalid menu name.\n");
-    uVar3 = __restgprlr_26(0);
-    return (bool)uVar3;
+    return false;
   }
-  uVar3 = __restgprlr_26(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 825A79E8  UI_DvarValueTest  (ui_mp/ui_main_mp.cpp:3099)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool UI_DvarValueTest(char *param_1,char *param_2,char *param_3,bool param_4)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  undefined1 uVar4;
-  char *pcVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  dvar_t *pdVar1;
+  char *pcVar2;
+  int iVar3;
   
-  uVar7 = (uint)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1,uVar5,uVar6,param_4);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc20,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc21,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc22,0,
                     "%s");
   }
-  pdVar2 = Dvar_FindVar((char *)uVar5);
-  if (pdVar2 == (dvar_t *)0x0) {
+  pdVar1 = Dvar_FindVar(param_2);
+  if (pdVar1 == (dvar_t *)0x0) {
     Com_Printf(0xd,"%s: cannot find dvar %s\n");
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    return false;
   }
-  pcVar3 = Dvar_GetVariantString((char *)uVar5);
-  iVar1 = I_stricmp((char *)uVar6,pcVar3);
-  uVar4 = __restgprlr_26((uVar7 & 0xff) == (uint)(iVar1 == 0));
-  return (bool)uVar4;
+  pcVar2 = Dvar_GetVariantString(param_2);
+  iVar3 = I_stricmp(param_3,pcVar2);
+  return (uint)param_4 == (uint)LZCOUNT(iVar3) >> 5;
 }
 
 
 // 825A7AE8  UI_OpenMenuOnDvar  (ui_mp/ui_main_mp.cpp:3122)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2941,43 +2790,35 @@ bool UI_DvarValueTest(char *param_1,char *param_2,char *param_3,bool param_4)
 void UI_OpenMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *param_4,char *param_5)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar3;
+  int iVar1;
+  bool bVar2;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_24(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc35,0,
                     "%s");
   }
-  pcVar3 = (char *)uVar5;
-  iVar2 = I_stricmp(pcVar3,"openMenuOnDvar");
-  if ((iVar2 != 0) && (iVar2 = I_stricmp(pcVar3,"openMenuOnDvarNot"), iVar2 != 0)) {
+  iVar1 = I_stricmp(param_2,"openMenuOnDvar");
+  if ((iVar1 != 0) && (iVar1 = I_stricmp(param_2,"openMenuOnDvarNot"), iVar1 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc36,0,
                     "%s\n\t(cmd) = %s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc37,0,
                     "%s");
   }
-  iVar2 = I_stricmp(pcVar3,"openMenuOnDvar");
-  bVar4 = UI_DvarValueTest(pcVar3,param_4,param_5,iVar2 == 0);
-  iVar2 = 0;
-  if (bVar4) {
-    iVar2 = Menus_OpenByName(pUVar1,(char *)uVar6);
+  iVar1 = I_stricmp(param_2,"openMenuOnDvar");
+  bVar2 = UI_DvarValueTest(param_2,param_4,param_5,iVar1 == 0);
+  if (bVar2) {
+    Menus_OpenByName(&param_1->uiDC,param_3);
   }
-  __restgprlr_24(iVar2);
   return;
 }
 
 
 // 825A7C00  UI_CloseMenuOnDvar  (ui_mp/ui_main_mp.cpp:3136)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2985,42 +2826,35 @@ void UI_OpenMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *param
 void UI_CloseMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *param_4,char *param_5)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar3;
+  int iVar1;
+  bool bVar2;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_24(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc43,0,
                     "%s");
   }
-  pcVar3 = (char *)uVar5;
-  iVar2 = I_stricmp(pcVar3,"closeMenuOnDvar");
-  if ((iVar2 != 0) && (iVar2 = I_stricmp(pcVar3,"closeMenuOnDvarNot"), iVar2 != 0)) {
+  iVar1 = I_stricmp(param_2,"closeMenuOnDvar");
+  if ((iVar1 != 0) && (iVar1 = I_stricmp(param_2,"closeMenuOnDvarNot"), iVar1 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc44,0,
                     "%s\n\t(cmd) = %s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc45,0,
                     "%s");
   }
-  iVar2 = I_stricmp(pcVar3,"closeMenuOnDvar");
-  bVar4 = UI_DvarValueTest(pcVar3,param_4,param_5,iVar2 == 0);
-  if (bVar4) {
-    Menus_CloseByName(pUVar1,(char *)uVar6);
+  iVar1 = I_stricmp(param_2,"closeMenuOnDvar");
+  bVar2 = UI_DvarValueTest(param_2,param_4,param_5,iVar1 == 0);
+  if (bVar2) {
+    Menus_CloseByName(&param_1->uiDC,param_3);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 825A7D18  UI_ResetVScroll  (ui_mp/ui_main_mp.cpp:3150)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3028,29 +2862,25 @@ void UI_CloseMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *para
 void UI_ResetVScroll(uiInfo_s *param_1,char *param_2)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  itemDef_t *piVar3;
-  textScrollDef_s *ptVar4;
-  int iVar5;
+  menuDef_t *pmVar1;
+  itemDef_t *piVar2;
+  textScrollDef_s *ptVar3;
+  int iVar4;
   
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  iVar5 = 0;
-  pmVar2 = Menu_GetTopOfStack(pUVar1,0);
-  if (pmVar2 != (menuDef_t *)0x0) {
-    while ((piVar3 = Menu_FindItemByName(pmVar2,param_2), piVar3 == (itemDef_t *)0x0 ||
-           (piVar3->type != 0x15))) {
-      iVar5 = iVar5 + 1;
-      pmVar2 = Menu_GetTopOfStack(pUVar1,iVar5);
-      if (pmVar2 == (menuDef_t *)0x0) {
-        __restgprlr_29();
+  iVar4 = 0;
+  pmVar1 = Menu_GetTopOfStack(&param_1->uiDC,0);
+  if (pmVar1 != (menuDef_t *)0x0) {
+    while ((piVar2 = Menu_FindItemByName(pmVar1,param_2), piVar2 == (itemDef_t *)0x0 ||
+           (piVar2->type != 0x15))) {
+      iVar4 = iVar4 + 1;
+      pmVar1 = Menu_GetTopOfStack(&param_1->uiDC,iVar4);
+      if (pmVar1 == (menuDef_t *)0x0) {
         return;
       }
     }
-    ptVar4 = Item_GetTextScrollDef(piVar3);
-    ptVar4->startTime = pUVar1->realTime;
+    ptVar3 = Item_GetTextScrollDef(piVar2);
+    ptVar3->startTime = (param_1->uiDC).realTime;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3105,6 +2935,8 @@ void CL_startSingleplayer(LocalClientNum_t param_1)
 
 // 825B03D0  UI_RunMenuScript  (ui_mp/ui_main_mp.cpp:3472)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3115,20 +2947,18 @@ void UI_RunMenuScript(LocalClientNum_t param_1,char **param_2,char *param_3)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  uiInfo_s *puVar5;
-  int iVar6;
+  int iVar2;
+  uiInfo_s *puVar3;
+  int iVar4;
+  char *pcVar5;
+  bool bVar12;
+  StatsSource SVar6;
   char *pcVar7;
-  bool bVar14;
-  StatsSource SVar8;
-  char *pcVar9;
-  UILocalVarContext *pUVar10;
-  UILocalVar *pUVar11;
-  UiContext *pUVar12;
-  uint uVar13;
-  longlong lVar15;
-  char *pcVar16;
+  UILocalVarContext *pUVar8;
+  UILocalVar *pUVar9;
+  UiContext *pUVar10;
+  uint uVar11;
+  char *pcVar13;
   int local_e60;
   int local_e5c;
   StringTable *local_e58 [2];
@@ -3138,103 +2968,93 @@ void UI_RunMenuScript(LocalClientNum_t param_1,char **param_2,char *param_3)
   char acStack_8d0 [128];
   char acStack_850 [1024];
   char acStack_450 [1104];
-  char **ppcVar4;
   
-  lVar15 = (longlong)(int)param_2;
-  LVar2 = __savegprlr_24(param_1,lVar15,param_3);
-  if (LVar2 == LOCAL_CLIENT_INVALID) {
+  if (param_1 == LOCAL_CLIENT_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xd9e,0,
                     "%s");
   }
-  ppcVar4 = (char **)lVar15;
-  iVar3 = String_Parse(ppcVar4,acStack_e50,0x400);
-  if (iVar3 == 0) {
+  iVar2 = String_Parse(param_2,acStack_e50,0x400);
+  if (iVar2 == 0) {
     Com_PrintWarning(0xd,"Empty uiScript command here: %s\n");
-    __restgprlr_24();
     return;
   }
-  puVar5 = UI_GetClientInfo(LVar2);
-  iVar3 = I_stricmp(acStack_e50,"StartServer");
-  if (iVar3 == 0) {
+  puVar3 = UI_GetClientInfo(param_1);
+  iVar2 = I_stricmp(acStack_e50,"StartServer");
+  if (iVar2 == 0) {
     if ((systemlink->current).enabled != false) {
       Dvar_SetBool(systemlink_host,true);
     }
     Dvar_SetBoolByName("cg_thirdPerson",false);
     Dvar_SetStringByName("g_gametype",(ui_gametype->current).string);
-    Cbuf_AddCall(LVar2,UI_Map);
-    __restgprlr_24();
+    Cbuf_AddCall(param_1,UI_Map);
     return;
   }
-  iVar3 = I_stricmp(acStack_e50,"clearError");
-  if (iVar3 == 0) {
-    UIScript_ClearError(LVar2);
-    __restgprlr_24();
+  iVar2 = I_stricmp(acStack_e50,"clearError");
+  if (iVar2 == 0) {
+    UIScript_ClearError(param_1);
     return;
   }
-  iVar3 = I_stricmp(acStack_e50,"RefreshServers");
-  if (iVar3 == 0) {
-    UI_StartServerRefresh(LVar2,1);
-    UI_BuildServerDisplayList(puVar5,1);
-    __restgprlr_24();
+  iVar2 = I_stricmp(acStack_e50,"RefreshServers");
+  if (iVar2 == 0) {
+    UI_StartServerRefresh(param_1,1);
+    UI_BuildServerDisplayList(puVar3,1);
     return;
   }
-  iVar3 = I_stricmp(acStack_e50,"RefreshFilter");
-  if (iVar3 == 0) {
-    UI_StartServerRefresh(LVar2,0);
-    UI_BuildServerDisplayList(puVar5,1);
-    __restgprlr_24();
+  iVar2 = I_stricmp(acStack_e50,"RefreshFilter");
+  if (iVar2 == 0) {
+    UI_StartServerRefresh(param_1,0);
+    UI_BuildServerDisplayList(puVar3,1);
     return;
   }
-  iVar3 = I_stricmp(acStack_e50,"UpdateFilter");
-  if (iVar3 == 0) {
+  iVar2 = I_stricmp(acStack_e50,"UpdateFilter");
+  if (iVar2 == 0) {
     if ((ui_netSource->current).integer == 0) {
-      UI_StartServerRefresh(LVar2,1);
+      UI_StartServerRefresh(param_1,1);
     }
-    iVar3 = 1;
-    UI_BuildServerDisplayList(puVar5,1);
-    UI_FeederSelection(LVar2,2.0,iVar3);
-    __restgprlr_24();
+    iVar2 = 1;
+    UI_BuildServerDisplayList(puVar3,1);
+    UI_FeederSelection(param_1,2.0,iVar2);
     return;
   }
-  iVar3 = I_stricmp(acStack_e50,"JoinServer");
-  if (iVar3 == 0) {
+  iVar2 = I_stricmp(acStack_e50,"JoinServer");
+  if (iVar2 == 0) {
     if ((systemlink->current).enabled != false) {
       Dvar_SetBool(systemlink_host,false);
     }
     Dvar_SetBoolByName("cg_thirdPerson",false);
-    UI_UpdateDisplayServers(puVar5);
+    UI_UpdateDisplayServers(puVar3);
     if ((-1 < sharedUiInfo.serverStatus.currentServer) &&
        (sharedUiInfo.serverStatus.currentServer < sharedUiInfo.serverStatus.numDisplayServers)) {
-      iVar3 = sharedUiInfo.serverStatus.displayServers[sharedUiInfo.serverStatus.currentServer];
-      iVar6 = CL_ControllerIndexFromClientNum(LVar2);
-      LAN_GetServerInfo((ui_netSource->current).integer,iVar3,info,0x400);
-      pcVar7 = Info_ValueForKey(info,"st");
-      iVar3 = atoi(pcVar7);
-      if ((iVar3 != 0) == (useonlinestats->current).enabled) {
-        bVar14 = LiveStorage_DoWeHaveStats(iVar6);
-        if (!bVar14) {
+      iVar2 = sharedUiInfo.serverStatus.displayServers[sharedUiInfo.serverStatus.currentServer];
+      iVar4 = CL_ControllerIndexFromClientNum(param_1);
+      LAN_GetServerInfo((ui_netSource->current).integer,iVar2,info,0x400);
+      pcVar5 = Info_ValueForKey(info,"st");
+      iVar2 = atoi(pcVar5);
+      if ((iVar2 != 0) == (useonlinestats->current).enabled) {
+        bVar12 = LiveStorage_DoWeHaveStats(iVar4);
+        if (!bVar12) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0xe76,0,"%s");
         }
       }
       else {
-        Dvar_SetBool(useonlinestats,iVar3 != 0);
-        bVar14 = LiveStorage_DoWeHaveStats(iVar6);
-        if (!bVar14) {
+        Dvar_SetBool(useonlinestats,iVar2 != 0);
+        bVar12 = LiveStorage_DoWeHaveStats(iVar4);
+        if (!bVar12) {
           if ((useonlinestats->current).value == 0.0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                             0xe6d,0,"%s");
           }
-          SVar8 = LiveStorage_GetActiveStatsSource(iVar6);
-          if (SVar8 != STATS_ONLINE) {
-            LiveStorage_GetActiveStatsSource(iVar6);
+          SVar6 = LiveStorage_GetActiveStatsSource(iVar4);
+          if (SVar6 != STATS_ONLINE) {
+            LiveStorage_GetActiveStatsSource(iVar4);
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                             0xe6e,0,
                             "LiveStorage_GetActiveStatsSource( controllerIndex ) == STATS_ONLINE\n\t%i, %i"
                            );
           }
-          ShowPopupGettingData(iVar6);
-          LiveStorage_DownloadStats(iVar6);
+          ShowPopupGettingData(iVar4);
+          LiveStorage_DownloadStats(iVar4);
         }
       }
       LAN_GetServerAddressString
@@ -3242,984 +3062,860 @@ void UI_RunMenuScript(LocalClientNum_t param_1,char **param_2,char *param_3)
                  sharedUiInfo.serverStatus.displayServers[sharedUiInfo.serverStatus.currentServer],
                  acStack_850,0x400);
       Com_sprintf(acStack_450,0x400,"connect %s\n");
-      bVar14 = Menu_IsMenuOpenAndVisible(LVar2,"popup_gettingdata");
-      pcVar7 = acStack_450;
-      if (bVar14) {
-        LiveStorage_SetPostDownloadCommand(LVar2,pcVar7);
-        __restgprlr_24();
+      bVar12 = Menu_IsMenuOpenAndVisible(param_1,"popup_gettingdata");
+      pcVar5 = acStack_450;
+      if (bVar12) {
+        LiveStorage_SetPostDownloadCommand(param_1,pcVar5);
         return;
       }
 LAB_825b1924:
-      Cbuf_AddText(LVar2,pcVar7);
-      __restgprlr_24();
+      Cbuf_AddText(param_1,pcVar5);
       return;
     }
   }
   else {
-    iVar3 = I_stricmp(acStack_e50,"Controls");
-    if (iVar3 == 0) {
+    iVar2 = I_stricmp(acStack_e50,"Controls");
+    if (iVar2 == 0) {
       Dvar_SetIntByName("cl_paused",1);
-      Key_SetCatcher(LVar2,0x10);
-      Menus_CloseAll(&puVar5->uiDC);
-      iVar3 = Menus_OpenByName(&puVar5->uiDC,"setup_menu2");
-      __restgprlr_24(iVar3);
+      Key_SetCatcher(param_1,0x10);
+      Menus_CloseAll(&puVar3->uiDC);
+      Menus_OpenByName(&puVar3->uiDC,"setup_menu2");
       return;
     }
-    iVar3 = I_stricmp(acStack_e50,"Leave");
-    if (iVar3 == 0) {
-      Cbuf_AddText(LVar2,"disconnect\n");
-      Key_SetCatcher(LVar2,0x10);
-      Menus_CloseAll(&puVar5->uiDC);
-      iVar3 = Menus_OpenByName(&puVar5->uiDC,"main");
-      __restgprlr_24(iVar3);
+    iVar2 = I_stricmp(acStack_e50,"Leave");
+    if (iVar2 == 0) {
+      Cbuf_AddText(param_1,"disconnect\n");
+      Key_SetCatcher(param_1,0x10);
+      Menus_CloseAll(&puVar3->uiDC);
+      Menus_OpenByName(&puVar3->uiDC,"main");
       return;
     }
-    iVar3 = I_stricmp(acStack_e50,"ServerSort");
-    if (iVar3 == 0) {
-      iVar3 = Int_Parse(ppcVar4,(int *)local_e58);
-      if (iVar3 != 0) {
+    iVar2 = I_stricmp(acStack_e50,"ServerSort");
+    if (iVar2 == 0) {
+      iVar2 = Int_Parse(param_2,(int *)local_e58);
+      if (iVar2 != 0) {
         if (local_e58[0] == (StringTable *)sharedUiInfo.serverStatus.sortKey) {
           sharedUiInfo.serverStatus.sortDir = (uint)LZCOUNT(sharedUiInfo.serverStatus.sortDir) >> 5;
         }
         sharedUiInfo.serverStatus.sortKey = (int)local_e58[0];
         qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4
               ,UI_ServersQsortCompare);
-        __restgprlr_24();
         return;
       }
     }
     else {
-      iVar3 = I_stricmp(acStack_e50,"closeingame");
-      if (iVar3 == 0) {
-        Key_RemoveCatcher(LVar2,-0x11);
-        Key_ClearStates(LVar2);
+      iVar2 = I_stricmp(acStack_e50,"closeingame");
+      if (iVar2 == 0) {
+        Key_RemoveCatcher(param_1,-0x11);
+        Key_ClearStates(param_1);
         Dvar_SetIntByName("cl_paused",0);
 LAB_825b0994:
-        Menus_CloseAll(&puVar5->uiDC);
-        __restgprlr_24();
+        Menus_CloseAll(&puVar3->uiDC);
         return;
       }
-      iVar3 = I_stricmp(acStack_e50,"update");
-      if (iVar3 != 0) {
-        iVar3 = I_stricmp(acStack_e50,"startSingleplayer");
-        if (iVar3 == 0) {
-          Cbuf_AddCall(LVar2,CL_startSingleplayer);
-          __restgprlr_24();
+      iVar2 = I_stricmp(acStack_e50,"update");
+      if (iVar2 != 0) {
+        iVar2 = I_stricmp(acStack_e50,"startSingleplayer");
+        if (iVar2 == 0) {
+          Cbuf_AddCall(param_1,CL_startSingleplayer);
           return;
         }
-        iVar3 = I_stricmp(acStack_e50,"getLanguage");
-        if (iVar3 == 0) {
-          iVar3 = Dvar_GetInt("loc_language");
-          Dvar_SetIntByName("ui_language",iVar3);
+        iVar2 = I_stricmp(acStack_e50,"getLanguage");
+        if (iVar2 == 0) {
+          iVar2 = Dvar_GetInt("loc_language");
+          Dvar_SetIntByName("ui_language",iVar2);
         }
         else {
-          iVar3 = I_stricmp(acStack_e50,"verifyLanguage");
-          if (iVar3 != 0) {
-            iVar3 = I_stricmp(acStack_e50,"openMenuOnDvar");
-            if ((iVar3 == 0) || (iVar3 = I_stricmp(acStack_e50,"openMenuOnDvarNot"), iVar3 == 0)) {
-              bVar14 = UI_GetOpenOrCloseMenuOnDvarArgs
-                                 (ppcVar4,acStack_e50,acStack_8d0,0x80,local_9d0,0x100,acStack_a50,
+          iVar2 = I_stricmp(acStack_e50,"verifyLanguage");
+          if (iVar2 != 0) {
+            iVar2 = I_stricmp(acStack_e50,"openMenuOnDvar");
+            if ((iVar2 == 0) || (iVar2 = I_stricmp(acStack_e50,"openMenuOnDvarNot"), iVar2 == 0)) {
+              bVar12 = UI_GetOpenOrCloseMenuOnDvarArgs
+                                 (param_2,acStack_e50,acStack_8d0,0x80,local_9d0,0x100,acStack_a50,
                                   0x80);
-              if (bVar14) {
-                UI_OpenMenuOnDvar(puVar5,acStack_e50,acStack_a50,acStack_8d0,local_9d0);
+              if (!bVar12) {
+                return;
               }
+              UI_OpenMenuOnDvar(puVar3,acStack_e50,acStack_a50,acStack_8d0,local_9d0);
+              return;
             }
-            else {
-              iVar3 = I_stricmp(acStack_e50,"closeMenuOnDvar");
-              if ((iVar3 == 0) || (iVar3 = I_stricmp(acStack_e50,"closeMenuOnDvarNot"), iVar3 == 0))
-              {
-                bVar14 = UI_GetOpenOrCloseMenuOnDvarArgs
-                                   (ppcVar4,acStack_e50,acStack_8d0,0x80,local_9d0,0x100,acStack_a50
-                                    ,0x80);
-                if (bVar14) {
-                  UI_CloseMenuOnDvar(puVar5,acStack_e50,acStack_a50,acStack_8d0,local_9d0);
-                  __restgprlr_24();
-                  return;
-                }
+            iVar2 = I_stricmp(acStack_e50,"closeMenuOnDvar");
+            if ((iVar2 == 0) || (iVar2 = I_stricmp(acStack_e50,"closeMenuOnDvarNot"), iVar2 == 0)) {
+              bVar12 = UI_GetOpenOrCloseMenuOnDvarArgs
+                                 (param_2,acStack_e50,acStack_8d0,0x80,local_9d0,0x100,acStack_a50,
+                                  0x80);
+              if (!bVar12) {
+                return;
               }
-              else {
-                iVar3 = I_stricmp(acStack_e50,"resetvscroll");
-                if (iVar3 == 0) {
-                  iVar3 = String_Parse(ppcVar4,acStack_850,0x400);
-                  if (iVar3 != 0) {
-                    UI_ResetVScroll(puVar5,acStack_850);
-                    __restgprlr_24();
+              UI_CloseMenuOnDvar(puVar3,acStack_e50,acStack_a50,acStack_8d0,local_9d0);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"resetvscroll");
+            if (iVar2 == 0) {
+              iVar2 = String_Parse(param_2,acStack_850,0x400);
+              if (iVar2 == 0) {
+                return;
+              }
+              UI_ResetVScroll(puVar3,acStack_850);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"clearLoadErrorsSummary");
+            if (iVar2 == 0) goto LAB_825b0994;
+            iVar2 = I_stricmp(acStack_e50,"BuildGameModesList");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Content_FindSavedContent(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RefreshLeaderboards");
+            if (iVar2 == 0) {
+              LB_ForceRefresh();
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"ViewGamerCard");
+            if (iVar2 == 0) {
+              LB_OnSelect(param_1);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"OpenLeaderboard");
+            if (iVar2 == 0) {
+              iVar2 = String_Parse(param_2,acStack_a50,0x80);
+              if (iVar2 != 0) {
+                LB_OpenLeaderboard(acStack_a50);
+                return;
+              }
+              Com_PrintError(0xd,"OpenLeaderboard requires a leaderboard name as its argument\n.");
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"OpenLeaderboardExt");
+            if (iVar2 == 0) {
+              iVar2 = String_Parse(param_2,acStack_8d0,0x80);
+              if (iVar2 == 0) {
+                Com_PrintError(0xd,"OpenLeaderboardExt requires a dvar filter its arguments.\n");
+                return;
+              }
+              pcVar7 = Dvar_GetString(acStack_8d0);
+              pcVar5 = pcVar7;
+              if (pcVar7 != (char *)0x0) {
+                do {
+                  cVar1 = *pcVar5;
+                  pcVar5 = pcVar5 + 1;
+                } while (cVar1 != '\0');
+                if ((int)pcVar5 - (int)pcVar7 != 1) {
+                  pcVar5 = strstr(pcVar7," ");
+                  if (pcVar5 == (char *)0x0) {
+                    Com_PrintError(0xd,
+                                   "OpenLeaderboardExt requires the dvar to contain 2 arguments.\n")
+                    ;
                     return;
                   }
-                }
-                else {
-                  iVar3 = I_stricmp(acStack_e50,"clearLoadErrorsSummary");
-                  if (iVar3 == 0) goto LAB_825b0994;
-                  iVar3 = I_stricmp(acStack_e50,"BuildGameModesList");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Content_FindSavedContent(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RefreshLeaderboards");
-                  if (iVar3 == 0) {
-                    LB_ForceRefresh();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"ViewGamerCard");
-                  if (iVar3 == 0) {
-                    LB_OnSelect(LVar2);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"OpenLeaderboard");
-                  if (iVar3 == 0) {
-                    iVar3 = String_Parse(ppcVar4,acStack_a50,0x80);
-                    if (iVar3 == 0) {
-                      Com_PrintError(0xd,
-                                     "OpenLeaderboard requires a leaderboard name as its argument\n."
-                                    );
-                      __restgprlr_24();
-                      return;
-                    }
-                    LB_OpenLeaderboard(acStack_a50);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"OpenLeaderboardExt");
-                  if (iVar3 == 0) {
-                    iVar3 = String_Parse(ppcVar4,acStack_8d0,0x80);
-                    if (iVar3 == 0) {
-                      Com_PrintError(0xd,
-                                     "OpenLeaderboardExt requires a dvar filter its arguments.\n");
-                      __restgprlr_24();
-                      return;
-                    }
-                    pcVar9 = Dvar_GetString(acStack_8d0);
-                    pcVar7 = pcVar9;
-                    if (pcVar9 != (char *)0x0) {
+                  strncpy(local_9d0,pcVar7,(int)pcVar5 - (int)pcVar7);
+                  pcVar13 = pcVar5 + 1;
+                  iVar2 = -(int)pcVar13;
+                  do {
+                    cVar1 = *pcVar13;
+                    pcVar13[(int)(acStack_a50 + iVar2)] = cVar1;
+                    pcVar13 = pcVar13 + 1;
+                  } while (cVar1 != '\0');
+                  local_9d0[(int)pcVar5 - (int)pcVar7] = '\0';
+                  iVar2 = I_stricmp(local_9d0,"LB_ACCOLADES");
+                  if (iVar2 != 0) {
+                    bVar12 = Dvar_GetBool("lb_hardcore");
+                    if (bVar12) {
+                      pcVar7 = "_HC";
+                      pcVar5 = local_9d0;
+                      do {
+                        pcVar13 = pcVar5;
+                        pcVar5 = pcVar13 + 1;
+                      } while (*pcVar13 != '\0');
                       do {
                         cVar1 = *pcVar7;
                         pcVar7 = pcVar7 + 1;
+                        *pcVar13 = cVar1;
+                        pcVar13 = pcVar13 + 1;
                       } while (cVar1 != '\0');
-                      if ((int)pcVar7 - (int)pcVar9 != 1) {
-                        pcVar7 = strstr(pcVar9," ");
-                        if (pcVar7 == (char *)0x0) {
-                          Com_PrintError(0xd,
-                                         "OpenLeaderboardExt requires the dvar to contain 2 arguments.\n"
-                                        );
-                          __restgprlr_24();
-                          return;
-                        }
-                        strncpy(local_9d0,pcVar9,(int)pcVar7 - (int)pcVar9);
-                        pcVar16 = pcVar7 + 1;
-                        iVar3 = -(int)pcVar16;
-                        do {
-                          cVar1 = *pcVar16;
-                          pcVar16[(int)(acStack_a50 + iVar3)] = cVar1;
-                          pcVar16 = pcVar16 + 1;
-                        } while (cVar1 != '\0');
-                        local_9d0[(int)pcVar7 - (int)pcVar9] = '\0';
-                        iVar3 = I_stricmp(local_9d0,"LB_ACCOLADES");
-                        if (iVar3 != 0) {
-                          bVar14 = Dvar_GetBool("lb_hardcore");
-                          if (bVar14) {
-                            pcVar9 = "_HC";
-                            pcVar7 = local_9d0;
-                            do {
-                              pcVar16 = pcVar7;
-                              pcVar7 = pcVar16 + 1;
-                            } while (*pcVar16 != '\0');
-                            do {
-                              cVar1 = *pcVar9;
-                              pcVar9 = pcVar9 + 1;
-                              *pcVar16 = cVar1;
-                              pcVar16 = pcVar16 + 1;
-                            } while (cVar1 != '\0');
-                          }
-                          Com_Printf(0xd,"OpenLeaderboardExt: %s, %s.\n");
-                          LB_OpenLeaderboardExt(local_9d0,acStack_a50);
-                          __restgprlr_24();
-                          return;
-                        }
-                        pUVar10 = UI_GetLocalVarsContext(LVar2);
-                        pUVar11 = UILocalVar_Find(pUVar10,acStack_a50);
-                        if (pUVar11 == (UILocalVar *)0x0) {
-                          Com_PrintError(0xd,
-                                         "OpenLeaderboardExt: Leaderboard \'%s\' requires a localdvar containing the accolade index to show. localdvar \'%s\' was not found.\n"
-                                        );
-                          __restgprlr_24();
-                          return;
-                        }
-                        StringTable_GetAsset("mp/awardTable.csv",local_e58);
-                        if (local_e58[0] != (StringTable *)0x0) {
-                          iVar3 = UILocalVar_GetInt(pUVar11);
-                          pcVar9 = StringTable_GetColumnValueForRow(local_e58[0],iVar3,0);
-                          pcVar7 = pcVar9;
-                          do {
-                            cVar1 = *pcVar7;
-                            pcVar7 = pcVar7 + 1;
-                          } while (cVar1 != '\0');
-                          if ((int)pcVar7 - (int)pcVar9 != 1) {
-                            Com_Printf(0xd,"OpenLeaderboardExt: %s, %s.\n");
-                            LB_OpenLeaderboardExt(local_9d0,pcVar9);
-                            __restgprlr_24();
-                            return;
-                          }
-                          Com_PrintError(0xd,
-                                         "OpenLeaderboardExt: Leaderboard \'%s\' accolade index does not exist.\n"
-                                        );
-                          __restgprlr_24();
-                          return;
-                        }
-                        goto LAB_825b1fcc;
-                      }
                     }
-                    Com_PrintError(0xd,"OpenLeaderboardExt requires a valid dvar as its argument.\n"
+                    Com_Printf(0xd,"OpenLeaderboardExt: %s, %s.\n");
+                    LB_OpenLeaderboardExt(local_9d0,acStack_a50);
+                    return;
+                  }
+                  pUVar8 = UI_GetLocalVarsContext(param_1);
+                  pUVar9 = UILocalVar_Find(pUVar8,acStack_a50);
+                  if (pUVar9 == (UILocalVar *)0x0) {
+                    Com_PrintError(0xd,
+                                   "OpenLeaderboardExt: Leaderboard \'%s\' requires a localdvar containing the accolade index to show. localdvar \'%s\' was not found.\n"
                                   );
-                    __restgprlr_24();
                     return;
                   }
-                  iVar3 = I_stricmp(acStack_e50,"ClearLeaderboard");
-                  if (iVar3 == 0) {
-                    LB_ClearLeaderboard();
-                    __restgprlr_24();
+                  StringTable_GetAsset("mp/awardTable.csv",local_e58);
+                  if (local_e58[0] == (StringTable *)0x0) {
                     return;
                   }
-                  iVar3 = I_stricmp(acStack_e50,"FriendStoreXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederStoreXUID(iVar3);
-                    __restgprlr_24();
+                  iVar2 = UILocalVar_GetInt(pUVar9);
+                  pcVar7 = StringTable_GetColumnValueForRow(local_e58[0],iVar2,0);
+                  pcVar5 = pcVar7;
+                  do {
+                    cVar1 = *pcVar5;
+                    pcVar5 = pcVar5 + 1;
+                  } while (cVar1 != '\0');
+                  if ((int)pcVar5 - (int)pcVar7 == 1) {
+                    Com_PrintError(0xd,
+                                   "OpenLeaderboardExt: Leaderboard \'%s\' accolade index does not exist.\n"
+                                  );
                     return;
                   }
-                  iVar3 = I_stricmp(acStack_e50,"FriendClearXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederClearXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendInvite");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnInviteRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendJoin");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnJoinRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendGamerCard");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnShowCard(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendReportOffensive");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnReportRequest(iVar3,REPORT_OFFENSIVE_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendReportExploiter");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnReportRequest(iVar3,REPORT_EXPLOITING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendReportCheater");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnReportRequest(iVar3,REPORT_CHEATING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FriendReportBooster");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    FriendsMenu_FeederOnReportRequest(iVar3,REPORT_BOOSTING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerStoreXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederStoreXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerClearXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederClearXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerGamerCard");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnShowCard(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerFriendRequest");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnFriendRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerShowGroups");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnShowGroups(LVar2,iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerJoin");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnJoinRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerInvite");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnInviteRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerReportOffensive");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnReportRequest(iVar3,REPORT_OFFENSIVE_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerReportExploiter");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnReportRequest(iVar3,REPORT_EXPLOITING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerReportCheater");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnReportRequest(iVar3,REPORT_CHEATING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"RecentPlayerReportBooster");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    MeetPlayer_FeederOnReportRequest(iVar3,REPORT_BOOSTING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyStoreXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_StoreXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyClearXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_ClearXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyGamerCard");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnShowCard(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyInvite");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnInviteRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyInviteAll");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_InviteAll(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyJoin");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnJoinRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyUI");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_OpenUI(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyReportOffensive");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnReportRequest(iVar3,REPORT_OFFENSIVE_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyReportExploiter");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnReportRequest(iVar3,REPORT_EXPLOITING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyReportCheater");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnReportRequest(iVar3,REPORT_CHEATING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"LivePartyReportBooster");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    LiveParty_FeederOnReportRequest(iVar3,REPORT_BOOSTING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"clearClientMatchData");
-                  if (iVar3 == 0) {
-                    Com_Memset(&cls.matchData,0,0x440);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookStoreXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederStoreXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookClearXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederClearXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookGamerCard");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnShowCard(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookFriendRequest");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnFriendRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookPageRight");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederPageRight(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookPageLeft");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederPageLeft(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookJoin");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederJoin(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookInvite");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederInvite(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookReportOffensive");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnReportRequest(iVar3,REPORT_OFFENSIVE_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookReportExploiter");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnReportRequest(iVar3,REPORT_EXPLOITING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookReportCheater");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnReportRequest(iVar3,REPORT_CHEATING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"FacebookReportBooster");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    Facebook_FeederOnReportRequest(iVar3,REPORT_BOOSTING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanStoreXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederStoreXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanClearXUID");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederClearXUID(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanGamerCard");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnShowCard(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanFriendRequest");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnFriendRequest(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanJoin");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnJoin(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanInvite");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnInvite(iVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanReportOffensive");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnReportRequest(iVar3,REPORT_OFFENSIVE_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanReportExploiter");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnReportRequest(iVar3,REPORT_EXPLOITING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanReportCheater");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnReportRequest(iVar3,REPORT_CHEATING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"EliteClanReportBooster");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    EliteClan_FeederOnReportRequest(iVar3,REPORT_BOOSTING_LOBBY_PLAYER);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"PlayDemo");
-                  if (iVar3 == 0) {
-                    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                    iVar3 = CL_Demo_EnumGetIndex(iVar3);
-                    local_e5c = iVar3;
-                    iVar6 = CL_ControllerIndexFromClientNum(LVar2);
-                    CL_Demo_EnumFileName(iVar6,iVar3);
-                    pcVar7 = va("cl_demo_play %s\n");
-                    Cbuf_AddText(LVar2,pcVar7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar3 = I_stricmp(acStack_e50,"SwitchSegmentTransition");
-                  if (iVar3 == 0) {
-                    iVar3 = Int_Parse(ppcVar4,&local_e5c);
-                    if ((iVar3 != 0) && (iVar3 = Int_Parse(ppcVar4,&local_e60), iVar3 != 0)) {
-                      CL_Demo_SwitchTransition(local_e5c,local_e60);
-                      __restgprlr_24();
-                      return;
-                    }
-                  }
-                  else {
-                    iVar3 = I_stricmp(acStack_e50,"PreviewSegment");
-                    if (iVar3 == 0) {
-                      if (-1 < (cl_demo_ui_selected_segment->current).integer) {
-                        pcVar7 = va("cl_demo_previewsegment %d\n");
-                        goto LAB_825b1924;
-                      }
-                    }
-                    else {
-                      iVar3 = I_stricmp(acStack_e50,"MoveSegment");
-                      if (iVar3 == 0) {
-                        iVar3 = Int_Parse(ppcVar4,&local_e60);
-                        if (iVar3 != 0) {
-                          CL_Demo_MoveSegment((cl_demo_ui_segment_position->current).integer + -1,
-                                              local_e60);
-                          if (local_e60 != 0) {
-                            iVar3 = (cl_demo_ui_segment_position->current).integer;
-                            iVar6 = CL_Demo_GetSegmentCount();
-                            if (iVar3 < iVar6) {
-                              local_e5c = iVar3;
-                              Dvar_SetInt(cl_demo_ui_segment_position,iVar3 + 1);
-                              __restgprlr_24();
-                              return;
-                            }
-                            if (local_e60 != 0) goto LAB_825b1fcc;
-                          }
-                          local_e5c = (cl_demo_ui_segment_position->current).integer;
-                          if (1 < local_e5c) {
-                            Dvar_SetInt(cl_demo_ui_segment_position,local_e5c + -1);
-                            __restgprlr_24();
-                            return;
-                          }
-                        }
-                      }
-                      else {
-                        iVar3 = I_stricmp(acStack_e50,"DeleteSegment");
-                        if (iVar3 == 0) {
-                          if (-1 < (cl_demo_ui_selected_segment->current).integer) {
-                            CL_Demo_DeleteSegment((cl_demo_ui_selected_segment->current).integer);
-                            __restgprlr_24();
-                            return;
-                          }
-                        }
-                        else {
-                          iVar3 = I_stricmp(acStack_e50,"SetFocusOnSegmentButton");
-                          if (iVar3 == 0) {
-                            if (-1 < (cl_demo_ui_segment_position->current).integer) {
-                              pcVar7 = va("segment_%d");
-                              pUVar12 = UI_GetClientDC(LVar2);
-                              Menus_SetFocusToItem(pUVar12,"demo_manage_segments",pcVar7);
-                              __restgprlr_24();
-                              return;
-                            }
-                          }
-                          else {
-                            iVar3 = I_stricmp(acStack_e50,"PopulateLocalDemoFileInformation");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              CL_Demo_EnumPopulateMetaInformationForAllFiles(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"OnlineVault");
-                            if (iVar3 != 0) {
-                              iVar3 = I_stricmp(acStack_e50,"Playlist");
-                              if (iVar3 == 0) {
-                                String_Parse(ppcVar4,acStack_e50,0x400);
-                                iVar3 = I_stricmp(acStack_e50,"Close");
-                                if (iVar3 == 0) {
-                                  PlaylistFeeder_CloseMenu(LVar2,0);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"CloseAll");
-                                if (iVar3 == 0) {
-                                  PlaylistFeeder_CloseMenu(LVar2,1);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"Open");
-                                if (iVar3 == 0) {
-                                  String_Parse(ppcVar4,acStack_e50,0x400);
-                                  uVar13 = atoi(acStack_e50);
-                                  PlaylistFeeder_OpenMenu(LVar2,uVar13);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"DoAction");
-                                if (iVar3 == 0) {
-                                  PlaylistFeeder_DoAction(LVar2);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                              }
-                              else {
-                                iVar3 = I_stricmp(acStack_e50,"UpdateArenas");
-                                if (iVar3 == 0) {
-                                  UI_UpdateArenas();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"SortChallengesTop");
-                                if (iVar3 == 0) {
-                                  pUVar12 = UI_GetClientDC(LVar2);
-                                  Menu_SetFeederSelection
-                                            (pUVar12,(menuDef_t *)0x0,0x26,0,(char *)0x0);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"commerceShowStore");
-                                if (iVar3 == 0) {
-                                  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                                  Commerce_ShowStore(iVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"xlaunchelitesearch");
-                                if (iVar3 == 0) {
-                                  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                                  Live_LaunchEliteSearch(iVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"xlaunchelitelaunch");
-                                if (iVar3 == 0) {
-                                  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                                  Live_LaunchEliteLaunch(iVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"xlaunchelitestore");
-                                if (iVar3 == 0) {
-                                  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                                  Live_LaunchEliteStore(iVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar3 = I_stricmp(acStack_e50,"LobbyShowGroups");
-                                if (iVar3 == 0) {
-                                  UserGroups_ShowLobbyGroups(LVar2);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                              }
-LAB_825b1f14:
-                              Com_PrintError(0xd,"unknown UI script %s in block:\n%s\n");
-                              __restgprlr_24();
-                              return;
-                            }
-                            String_Parse(ppcVar4,acStack_e50,0x400);
-                            iVar3 = I_stricmp(acStack_e50,"Open");
-                            if (iVar3 == 0) {
-                              OnlineVault_ShowVault(LVar2,ppcVar4);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Pop");
-                            if (iVar3 == 0) {
-                              OnlineVault_CloseFeederMenu(LVar2,0);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"CloseAll");
-                            if (iVar3 == 0) {
-                              OnlineVault_CloseFeederMenu(LVar2,1);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Load");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_Load(iVar3,false);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"LoadAndRenderMovie");
-                            if (iVar3 == 0) {
-LAB_825b1cd8:
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_Load(iVar3,true);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"TrySave");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_TrySave(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Save");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_Save(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Rename");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_Rename(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Delete");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_FeederSelectedItem_Delete(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"Abort");
-                            if (iVar3 == 0) {
-                              iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                              OnlineVault_AbortOperation(iVar3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar3 = I_stricmp(acStack_e50,"FacebookUploadPhoto");
-                            if (iVar3 == 0) {
-                              if ((facebook_upload_photo_active->current).integer != 0) {
-                                iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-                                OnlineVault_FeederSelectedItem_FacebookUploadPhoto(iVar3);
-                                __restgprlr_24();
-                                return;
-                              }
-                            }
-                            else {
-                              iVar3 = I_stricmp(acStack_e50,"FacebookUploadVideo");
-                              if (iVar3 != 0) goto LAB_825b1f14;
-                              if ((facebook_upload_video_active->current).integer != 0)
-                              goto LAB_825b1cd8;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  Com_Printf(0xd,"OpenLeaderboardExt: %s, %s.\n");
+                  LB_OpenLeaderboardExt(local_9d0,pcVar7);
+                  return;
                 }
               }
+              Com_PrintError(0xd,"OpenLeaderboardExt requires a valid dvar as its argument.\n");
+              return;
             }
-            goto LAB_825b1fcc;
+            iVar2 = I_stricmp(acStack_e50,"ClearLeaderboard");
+            if (iVar2 == 0) {
+              LB_ClearLeaderboard();
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendStoreXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederStoreXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendClearXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederClearXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendInvite");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnInviteRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendJoin");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnJoinRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendGamerCard");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnShowCard(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendReportOffensive");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnReportRequest(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendReportExploiter");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnReportRequest(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendReportCheater");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnReportRequest(iVar2,REPORT_CHEATING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FriendReportBooster");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              FriendsMenu_FeederOnReportRequest(iVar2,REPORT_BOOSTING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerStoreXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederStoreXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerClearXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederClearXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerGamerCard");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnShowCard(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerFriendRequest");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnFriendRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerShowGroups");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnShowGroups(param_1,iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerJoin");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnJoinRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerInvite");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnInviteRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerReportOffensive");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnReportRequest(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerReportExploiter");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnReportRequest(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerReportCheater");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnReportRequest(iVar2,REPORT_CHEATING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"RecentPlayerReportBooster");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              MeetPlayer_FeederOnReportRequest(iVar2,REPORT_BOOSTING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyStoreXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_StoreXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyClearXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_ClearXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyGamerCard");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnShowCard(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyInvite");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnInviteRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyInviteAll");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_InviteAll(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyJoin");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnJoinRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyUI");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_OpenUI(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyReportOffensive");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnReportRequest(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyReportExploiter");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnReportRequest(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyReportCheater");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnReportRequest(iVar2,REPORT_CHEATING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"LivePartyReportBooster");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              LiveParty_FeederOnReportRequest(iVar2,REPORT_BOOSTING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"clearClientMatchData");
+            if (iVar2 == 0) {
+              Com_Memset(&cls.matchData,0,0x440);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookStoreXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederStoreXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookClearXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederClearXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookGamerCard");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnShowCard(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookFriendRequest");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnFriendRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookPageRight");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederPageRight(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookPageLeft");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederPageLeft(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookJoin");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederJoin(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookInvite");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederInvite(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookReportOffensive");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnReportRequest(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookReportExploiter");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnReportRequest(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookReportCheater");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnReportRequest(iVar2,REPORT_CHEATING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"FacebookReportBooster");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              Facebook_FeederOnReportRequest(iVar2,REPORT_BOOSTING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanStoreXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederStoreXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanClearXUID");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederClearXUID(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanGamerCard");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnShowCard(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanFriendRequest");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnFriendRequest(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanJoin");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnJoin(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanInvite");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnInvite(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanReportOffensive");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnReportRequest(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanReportExploiter");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnReportRequest(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanReportCheater");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnReportRequest(iVar2,REPORT_CHEATING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"EliteClanReportBooster");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              EliteClan_FeederOnReportRequest(iVar2,REPORT_BOOSTING_LOBBY_PLAYER);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"PlayDemo");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              iVar2 = CL_Demo_EnumGetIndex(iVar2);
+              local_e5c = iVar2;
+              iVar4 = CL_ControllerIndexFromClientNum(param_1);
+              CL_Demo_EnumFileName(iVar4,iVar2);
+              pcVar5 = va("cl_demo_play %s\n");
+              Cbuf_AddText(param_1,pcVar5);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"SwitchSegmentTransition");
+            if (iVar2 == 0) {
+              iVar2 = Int_Parse(param_2,&local_e5c);
+              if (iVar2 == 0) {
+                return;
+              }
+              iVar2 = Int_Parse(param_2,&local_e60);
+              if (iVar2 == 0) {
+                return;
+              }
+              CL_Demo_SwitchTransition(local_e5c,local_e60);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"PreviewSegment");
+            if (iVar2 == 0) {
+              if ((cl_demo_ui_selected_segment->current).integer < 0) {
+                return;
+              }
+              pcVar5 = va("cl_demo_previewsegment %d\n");
+              goto LAB_825b1924;
+            }
+            iVar2 = I_stricmp(acStack_e50,"MoveSegment");
+            if (iVar2 == 0) {
+              iVar2 = Int_Parse(param_2,&local_e60);
+              if (iVar2 == 0) {
+                return;
+              }
+              CL_Demo_MoveSegment((cl_demo_ui_segment_position->current).integer + -1,local_e60);
+              if (local_e60 != 0) {
+                iVar2 = (cl_demo_ui_segment_position->current).integer;
+                iVar4 = CL_Demo_GetSegmentCount();
+                if (iVar2 < iVar4) {
+                  local_e5c = iVar2;
+                  Dvar_SetInt(cl_demo_ui_segment_position,iVar2 + 1);
+                  return;
+                }
+                if (local_e60 != 0) {
+                  return;
+                }
+              }
+              local_e5c = (cl_demo_ui_segment_position->current).integer;
+              if (local_e5c < 2) {
+                return;
+              }
+              Dvar_SetInt(cl_demo_ui_segment_position,local_e5c + -1);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"DeleteSegment");
+            if (iVar2 == 0) {
+              if ((cl_demo_ui_selected_segment->current).integer < 0) {
+                return;
+              }
+              CL_Demo_DeleteSegment((cl_demo_ui_selected_segment->current).integer);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"SetFocusOnSegmentButton");
+            if (iVar2 == 0) {
+              if ((cl_demo_ui_segment_position->current).integer < 0) {
+                return;
+              }
+              pcVar5 = va("segment_%d");
+              pUVar10 = UI_GetClientDC(param_1);
+              Menus_SetFocusToItem(pUVar10,"demo_manage_segments",pcVar5);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"PopulateLocalDemoFileInformation");
+            if (iVar2 == 0) {
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              CL_Demo_EnumPopulateMetaInformationForAllFiles(iVar2);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"OnlineVault");
+            if (iVar2 == 0) {
+              String_Parse(param_2,acStack_e50,0x400);
+              iVar2 = I_stricmp(acStack_e50,"Open");
+              if (iVar2 == 0) {
+                OnlineVault_ShowVault(param_1,param_2);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"Pop");
+              if (iVar2 == 0) {
+                OnlineVault_CloseFeederMenu(param_1,0);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"CloseAll");
+              if (iVar2 == 0) {
+                OnlineVault_CloseFeederMenu(param_1,1);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"Load");
+              if (iVar2 == 0) {
+                iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                OnlineVault_FeederSelectedItem_Load(iVar2,false);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"LoadAndRenderMovie");
+              if (iVar2 != 0) {
+                iVar2 = I_stricmp(acStack_e50,"TrySave");
+                if (iVar2 == 0) {
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_FeederSelectedItem_TrySave(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"Save");
+                if (iVar2 == 0) {
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_FeederSelectedItem_Save(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"Rename");
+                if (iVar2 == 0) {
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_FeederSelectedItem_Rename(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"Delete");
+                if (iVar2 == 0) {
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_FeederSelectedItem_Delete(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"Abort");
+                if (iVar2 == 0) {
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_AbortOperation(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"FacebookUploadPhoto");
+                if (iVar2 == 0) {
+                  if ((facebook_upload_photo_active->current).integer == 0) {
+                    return;
+                  }
+                  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                  OnlineVault_FeederSelectedItem_FacebookUploadPhoto(iVar2);
+                  return;
+                }
+                iVar2 = I_stricmp(acStack_e50,"FacebookUploadVideo");
+                if (iVar2 != 0) goto LAB_825b1f14;
+                if ((facebook_upload_video_active->current).integer == 0) {
+                  return;
+                }
+              }
+              iVar2 = CL_ControllerIndexFromClientNum(param_1);
+              OnlineVault_FeederSelectedItem_Load(iVar2,true);
+              return;
+            }
+            iVar2 = I_stricmp(acStack_e50,"Playlist");
+            if (iVar2 == 0) {
+              String_Parse(param_2,acStack_e50,0x400);
+              iVar2 = I_stricmp(acStack_e50,"Close");
+              if (iVar2 == 0) {
+                PlaylistFeeder_CloseMenu(param_1,0);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"CloseAll");
+              if (iVar2 == 0) {
+                PlaylistFeeder_CloseMenu(param_1,1);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"Open");
+              if (iVar2 == 0) {
+                String_Parse(param_2,acStack_e50,0x400);
+                uVar11 = atoi(acStack_e50);
+                PlaylistFeeder_OpenMenu(param_1,uVar11);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"DoAction");
+              if (iVar2 == 0) {
+                PlaylistFeeder_DoAction(param_1);
+                return;
+              }
+            }
+            else {
+              iVar2 = I_stricmp(acStack_e50,"UpdateArenas");
+              if (iVar2 == 0) {
+                UI_UpdateArenas();
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"SortChallengesTop");
+              if (iVar2 == 0) {
+                pUVar10 = UI_GetClientDC(param_1);
+                Menu_SetFeederSelection(pUVar10,(menuDef_t *)0x0,0x26,0,(char *)0x0);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"commerceShowStore");
+              if (iVar2 == 0) {
+                iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                Commerce_ShowStore(iVar2);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"xlaunchelitesearch");
+              if (iVar2 == 0) {
+                iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                Live_LaunchEliteSearch(iVar2);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"xlaunchelitelaunch");
+              if (iVar2 == 0) {
+                iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                Live_LaunchEliteLaunch(iVar2);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"xlaunchelitestore");
+              if (iVar2 == 0) {
+                iVar2 = CL_ControllerIndexFromClientNum(param_1);
+                Live_LaunchEliteStore(iVar2);
+                return;
+              }
+              iVar2 = I_stricmp(acStack_e50,"LobbyShowGroups");
+              if (iVar2 == 0) {
+                UserGroups_ShowLobbyGroups(param_1);
+                return;
+              }
+            }
+LAB_825b1f14:
+            Com_PrintError(0xd,"unknown UI script %s in block:\n%s\n");
+            return;
           }
         }
         UI_VerifyLanguage();
-        __restgprlr_24();
         return;
       }
     }
   }
-LAB_825b1fcc:
-  __restgprlr_24();
   return;
 }
 
 
 // 825A7E20  UI_InsertServerIntoDisplayList  (ui_mp/ui_main_mp.cpp:4610)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void UI_InsertServerIntoDisplayList(int param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  int *piVar3;
   
-  uVar4 = (ulonglong)param_2;
-  iVar1 = __savegprlr_24(param_1);
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1207,0
                     ,"%s");
   }
-  if (iVar5 < sharedUiInfo.serverStatus.numDisplayServers) {
-    iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+  if (param_2 < sharedUiInfo.serverStatus.numDisplayServers) {
+    iVar1 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,param_1,
+                               sharedUiInfo.serverStatus.displayServers[param_2]);
     iVar2 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
-                               sharedUiInfo.serverStatus.sortDir,iVar1,
-                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3));
-    iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
                                sharedUiInfo.serverStatus.sortDir,
-                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3),iVar1
-                              );
-    if (iVar2 != -iVar3) {
+                               sharedUiInfo.serverStatus.displayServers[param_2],param_1);
+    if (iVar1 != -iVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x120c
                       ,0,"%s");
     }
-    if (0 < iVar2) {
+    if (0 < iVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x120d
                       ,0,"%s");
     }
   }
-  if (0 < iVar5) {
-    iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+  if (0 < param_2) {
+    iVar1 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,param_1,
+                               sharedUiInfo.serverStatus.displayServers[param_2 + -1]);
     iVar2 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
-                               sharedUiInfo.serverStatus.sortDir,iVar1,
-                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3 + -4))
-    ;
-    iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
                                sharedUiInfo.serverStatus.sortDir,
-                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3 + -4),
-                               iVar1);
-    if (iVar2 != -iVar3) {
+                               sharedUiInfo.serverStatus.displayServers[param_2 + -1],param_1);
+    if (iVar1 != -iVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1212
                       ,0,"%s");
     }
-    if (iVar2 < 0) {
+    if (iVar1 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1213
                       ,0,"%s");
     }
   }
-  if ((-1 < iVar5) && (iVar5 <= sharedUiInfo.serverStatus.numDisplayServers)) {
-    if ((iVar5 <= sharedUiInfo.serverStatus.currentServer) &&
+  if ((-1 < param_2) && (param_2 <= sharedUiInfo.serverStatus.numDisplayServers)) {
+    if ((param_2 <= sharedUiInfo.serverStatus.currentServer) &&
        (sharedUiInfo.serverStatus.numDisplayServers != 0)) {
       sharedUiInfo.serverStatus.currentServer = sharedUiInfo.serverStatus.currentServer + 1;
     }
-    uVar7 = (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers + 1;
-    sharedUiInfo.serverStatus.numDisplayServers = (int)uVar7;
-    if (iVar5 < sharedUiInfo.serverStatus.numDisplayServers) {
-      lVar6 = uVar7 - uVar4;
-      lVar8 = (uVar7 & 0x3fffffff) * 4 + -0x7c02de0c;
+    iVar1 = sharedUiInfo.serverStatus.numDisplayServers + 1;
+    if (param_2 < iVar1) {
+      iVar2 = iVar1 - param_2;
+      piVar3 = sharedUiInfo.serverStatus.displayServers +
+               sharedUiInfo.serverStatus.numDisplayServers + 1;
+      sharedUiInfo.serverStatus.numDisplayServers = iVar1;
       do {
-        *(undefined4 *)lVar8 = ((undefined4 *)lVar8)[-1];
-        lVar8 = lVar8 + -4;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
+        *piVar3 = piVar3[-1];
+        piVar3 = piVar3 + -1;
+        iVar2 = iVar2 + -1;
+        iVar1 = sharedUiInfo.serverStatus.numDisplayServers;
+      } while (iVar2 != 0);
     }
-    *(int *)((int)sharedUiInfo.serverStatus.displayServers + (int)((uVar4 & 0xffffffff) << 2)) =
-         iVar1;
+    sharedUiInfo.serverStatus.numDisplayServers = iVar1;
+    sharedUiInfo.serverStatus.displayServers[param_2] = param_1;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 825A80B0  UI_BinaryServerInsertion  (ui_mp/ui_main_mp.cpp:4683)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void UI_BinaryServerInsertion(int param_1)
 
@@ -4230,44 +3926,40 @@ void UI_BinaryServerInsertion(int param_1)
   int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
   
-  iVar2 = __savegprlr_20(param_1);
-  iVar5 = 0;
   iVar4 = 0;
-  iVar6 = sharedUiInfo.serverStatus.numDisplayServers;
+  iVar3 = 0;
+  iVar5 = sharedUiInfo.serverStatus.numDisplayServers;
   if (0 < sharedUiInfo.serverStatus.numDisplayServers) {
     do {
-      iVar1 = iVar6 >> 1;
-      iVar7 = iVar5 + iVar1;
+      iVar1 = iVar5 >> 1;
+      iVar6 = iVar4 + iVar1;
+      iVar2 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                                 sharedUiInfo.serverStatus.sortDir,param_1,
+                                 sharedUiInfo.serverStatus.displayServers[iVar6]);
       iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
-                                 sharedUiInfo.serverStatus.sortDir,iVar2,
-                                 sharedUiInfo.serverStatus.displayServers[iVar7]);
-      iVar4 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
                                  sharedUiInfo.serverStatus.sortDir,
-                                 sharedUiInfo.serverStatus.displayServers[iVar7],iVar2);
-      if (iVar3 != -iVar4) {
+                                 sharedUiInfo.serverStatus.displayServers[iVar6],param_1);
+      if (iVar2 != -iVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                         0x1259,0,"%s");
       }
-      if (iVar3 == 0) {
-        UI_InsertServerIntoDisplayList(iVar2,iVar7);
-        __restgprlr_20();
+      if (iVar2 == 0) {
+        UI_InsertServerIntoDisplayList(param_1,iVar6);
         return;
       }
-      iVar4 = iVar5;
-      if (0 < iVar3) {
-        iVar4 = iVar7;
+      iVar3 = iVar4;
+      if (0 < iVar2) {
+        iVar3 = iVar6;
       }
-      iVar6 = iVar6 - iVar1;
-      iVar5 = iVar4;
+      iVar5 = iVar5 - iVar1;
+      iVar4 = iVar3;
     } while (0 < iVar1);
-    if (0 < iVar3) {
-      iVar4 = iVar4 + 1;
+    if (0 < iVar2) {
+      iVar3 = iVar3 + 1;
     }
   }
-  UI_InsertServerIntoDisplayList(iVar2,iVar4);
-  __restgprlr_20();
+  UI_InsertServerIntoDisplayList(param_1,iVar3);
   return;
 }
 
@@ -4288,6 +3980,8 @@ void UI_ClearDisplayedServers(void)
 
 // 825ADBC0  UI_BuildServerDisplayList  (ui_mp/ui_main_mp.cpp:4744)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4296,102 +3990,99 @@ void UI_BuildServerDisplayList(uiInfo_s *param_1,int param_2)
 
 {
   char cVar1;
-  UiContext *pUVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  char *pcVar8;
-  ulonglong uVar9;
+  char *pcVar7;
+  uint uVar8;
   char acStack_460 [1120];
   
-  uVar9 = (ulonglong)param_2;
-  pUVar2 = (UiContext *)__savegprlr_22(param_1);
-  if ((int)uVar9 == 0) {
-    if (pUVar2->realTime <= sharedUiInfo.serverStatus.nextDisplayRefresh) goto LAB_825adf20;
+  if (param_2 == 0) {
+    if ((param_1->uiDC).realTime <= sharedUiInfo.serverStatus.nextDisplayRefresh) {
+      return;
+    }
+    uVar8 = 0;
   }
   else {
-    uVar9 = -(ulonglong)(uVar9 != 2) & uVar9;
+    uVar8 = -(uint)(param_2 != 2) & param_2;
   }
-  pcVar3 = Dvar_GetString("cl_motdString");
-  I_strncpyz(sharedUiInfo.serverStatus.motd,pcVar3,0x400);
-  pcVar3 = sharedUiInfo.serverStatus.motd;
+  pcVar2 = Dvar_GetString("cl_motdString");
+  I_strncpyz(sharedUiInfo.serverStatus.motd,pcVar2,0x400);
+  pcVar2 = sharedUiInfo.serverStatus.motd;
   do {
-    pcVar8 = pcVar3;
-    pcVar3 = pcVar8 + 1;
-  } while (*pcVar8 != '\0');
-  pcVar8 = pcVar8 + 0x7c01a560;
-  if (pcVar8 == (char *)0x0) {
-    pcVar3 = SEH_StringEd_GetString("EXE_COD_MULTIPLAYER");
-    UI_CheckStringTranslation("EXE_COD_MULTIPLAYER",pcVar3);
-    pcVar3 = va("%s - %s");
-    iVar4 = -0x7c01a560 - (int)pcVar3;
+    pcVar7 = pcVar2;
+    pcVar2 = pcVar7 + 1;
+  } while (*pcVar7 != '\0');
+  pcVar7 = pcVar7 + 0x7c01a560;
+  if (pcVar7 == (char *)0x0) {
+    pcVar2 = SEH_StringEd_GetString("EXE_COD_MULTIPLAYER");
+    UI_CheckStringTranslation("EXE_COD_MULTIPLAYER",pcVar2);
+    pcVar2 = va("%s - %s");
+    iVar3 = -0x7c01a560 - (int)pcVar2;
     do {
-      cVar1 = *pcVar3;
-      pcVar3[iVar4] = cVar1;
-      pcVar3 = pcVar3 + 1;
+      cVar1 = *pcVar2;
+      pcVar2[iVar3] = cVar1;
+      pcVar2 = pcVar2 + 1;
     } while (cVar1 != '\0');
-    pcVar3 = sharedUiInfo.serverStatus.motd;
+    pcVar2 = sharedUiInfo.serverStatus.motd;
     do {
-      pcVar8 = pcVar3;
-      pcVar3 = pcVar8 + 1;
-    } while (*pcVar8 != '\0');
-    pcVar8 = pcVar8 + 0x7c01a560;
+      pcVar7 = pcVar2;
+      pcVar2 = pcVar7 + 1;
+    } while (*pcVar7 != '\0');
+    pcVar7 = pcVar7 + 0x7c01a560;
   }
-  if (pcVar8 != (char *)sharedUiInfo.serverStatus.motdLen) {
+  if (pcVar7 != (char *)sharedUiInfo.serverStatus.motdLen) {
     sharedUiInfo.serverStatus.motdWidth = -1;
-    sharedUiInfo.serverStatus.motdLen = (int)pcVar8;
+    sharedUiInfo.serverStatus.motdLen = (int)pcVar7;
   }
-  if ((int)uVar9 != 0) {
+  if (uVar8 != 0) {
     numclean = 0;
     UI_ClearDisplayedServers();
     if (-1 < sharedUiInfo.serverStatus.currentServer) {
-      Menu_SetFeederSelection(pUVar2,(menuDef_t *)0x0,2,0,(char *)0x0);
+      Menu_SetFeederSelection(&param_1->uiDC,(menuDef_t *)0x0,2,0,(char *)0x0);
     }
     LAN_MarkServerDirty((ui_netSource->current).integer,-1,1);
   }
-  iVar4 = LAN_GetServerCount((ui_netSource->current).integer);
-  iVar5 = LAN_WaitServerResponse((ui_netSource->current).integer);
-  if ((iVar5 == 0) && (((ui_netSource->current).integer != 0 || (iVar4 != 0)))) {
+  iVar3 = LAN_GetServerCount((ui_netSource->current).integer);
+  iVar4 = LAN_WaitServerResponse((ui_netSource->current).integer);
+  if ((iVar4 == 0) && (((ui_netSource->current).integer != 0 || (iVar3 != 0)))) {
     qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4,
           UI_ServersQsortCompare);
-    iVar5 = 0;
-    if (0 < iVar4) {
+    iVar4 = 0;
+    if (0 < iVar3) {
       do {
-        iVar6 = LAN_ServerIsDirty((ui_netSource->current).integer,iVar5);
-        if ((iVar6 != 0) &&
-           ((iVar6 = LAN_GetServerPing((ui_netSource->current).integer,iVar5), 0 < iVar6 ||
+        iVar5 = LAN_ServerIsDirty((ui_netSource->current).integer,iVar4);
+        if ((iVar5 != 0) &&
+           ((iVar5 = LAN_GetServerPing((ui_netSource->current).integer,iVar4), 0 < iVar5 ||
             ((ui_netSource->current).integer == 2)))) {
-          LAN_GetServerInfo((ui_netSource->current).integer,iVar5,acStack_460,0x400);
-          pcVar3 = Info_ValueForKey(acStack_460,"clients");
-          iVar7 = atoi(pcVar3);
+          LAN_GetServerInfo((ui_netSource->current).integer,iVar4,acStack_460,0x400);
+          pcVar2 = Info_ValueForKey(acStack_460,"clients");
+          iVar6 = atoi(pcVar2);
           sharedUiInfo.serverStatus.numPlayersOnServers =
-               sharedUiInfo.serverStatus.numPlayersOnServers + iVar7;
-          pcVar3 = Info_ValueForKey(acStack_460,"addr");
-          iVar7 = I_strnicmp(pcVar3,"000.000.000.000",0xf);
-          if (iVar7 == 0) {
-            LAN_MarkServerDirty((ui_netSource->current).integer,iVar5,0);
+               sharedUiInfo.serverStatus.numPlayersOnServers + iVar6;
+          pcVar2 = Info_ValueForKey(acStack_460,"addr");
+          iVar6 = I_strnicmp(pcVar2,"000.000.000.000",0xf);
+          if (iVar6 == 0) {
+            LAN_MarkServerDirty((ui_netSource->current).integer,iVar4,0);
           }
           else {
-            UI_BinaryServerInsertion(iVar5);
-            if (0 < iVar6) {
-              LAN_MarkServerDirty((ui_netSource->current).integer,iVar5,0);
+            UI_BinaryServerInsertion(iVar4);
+            if (0 < iVar5) {
+              LAN_MarkServerDirty((ui_netSource->current).integer,iVar4,0);
               numclean = numclean + 1;
             }
           }
         }
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < iVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < iVar3);
     }
-    sharedUiInfo.serverStatus.refreshtime = pUVar2->realTime;
-    __restgprlr_22();
+    sharedUiInfo.serverStatus.refreshtime = (param_1->uiDC).realTime;
     return;
   }
   UI_ClearDisplayedServers();
-  sharedUiInfo.serverStatus.nextDisplayRefresh = pUVar2->realTime + 500;
-LAB_825adf20:
-  __restgprlr_22();
+  sharedUiInfo.serverStatus.nextDisplayRefresh = (param_1->uiDC).realTime + 500;
   return;
 }
 
@@ -4513,6 +4204,8 @@ int UI_FeederCount_NonPlayingLocalClients(uiInfo_s *param_1)
 
 // 825A83F0  UI_FeederCount_PartyMembers  (ui_mp/ui_main_mp.cpp:5447)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4521,30 +4214,28 @@ int UI_FeederCount_NonPlayingLocalClients(uiInfo_s *param_1)
 int UI_FeederCount_PartyMembers(uiInfo_s *param_1)
 
 {
-  uiInfo_s *puVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  ulonglong uVar1;
-  longlong lVar4;
   
-  puVar2 = (uiInfo_s *)__savegprlr_29(param_1);
-  lVar4 = 0;
-  iVar3 = Party_IsRunning(&g_partyData);
-  if ((iVar3 != 0) && (iVar3 = Party_AreWeHost(&g_partyData), iVar3 != 0)) {
-    iVar3 = UI_FeederCount_NonPlayingLocalClients(puVar2);
-    lVar4 = (longlong)iVar3;
+  iVar2 = 0;
+  iVar1 = Party_IsRunning(&g_partyData);
+  if ((iVar1 != 0) && (iVar1 = Party_AreWeHost(&g_partyData), iVar1 != 0)) {
+    iVar2 = UI_FeederCount_NonPlayingLocalClients(param_1);
   }
   iVar3 = GetPartyMemberCount();
-  uVar1 = iVar3 + lVar4;
-  if ((party_maxplayers->current).integer < (int)(iVar3 + lVar4)) {
-    uVar1 = (ulonglong)(uint)(party_maxplayers->current).integer;
+  iVar1 = iVar3 + iVar2;
+  if ((party_maxplayers->current).integer < iVar3 + iVar2) {
+    iVar1 = (party_maxplayers->current).integer;
   }
-  iVar3 = __restgprlr_29(uVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 825B20B8  UI_FeederCount  (ui_mp/ui_main_mp.cpp:5468)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4553,220 +4244,191 @@ int UI_FeederCount_PartyMembers(uiInfo_s *param_1)
 int UI_FeederCount(LocalClientNum_t param_1,float param_2)
 
 {
-  LocalClientNum_t LVar2;
-  int iVar3;
-  uiInfo_s *puVar4;
-  bool bVar8;
-  PartyData *pPVar5;
-  SessionData *pSVar6;
-  uint uVar7;
-  longlong lVar1;
+  int iVar1;
+  uiInfo_s *puVar2;
+  bool bVar6;
+  PartyData *pPVar3;
+  SessionData *pSVar4;
+  uint uVar5;
   int *in_r4;
-  double extraout_f1;
-  double dVar9;
+  double dVar7;
   int local_30;
   
-  LVar2 = __savegprlr_29((double)param_2,param_1);
-  dVar9 = extraout_f1;
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  dVar7 = (double)param_2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  if (LOCAL_CLIENT_3 < param_1) {
     in_r4 = (int *)0x1c2;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (dVar9 == 3.0) {
+  if (dVar7 == 3.0) {
     UI_UpdateArenas();
-    iVar3 = __restgprlr_29(sharedUiInfo.mapCount);
-    return iVar3;
+    return sharedUiInfo.mapCount;
   }
-  if (dVar9 == 2.0) {
-    puVar4 = UI_GetClientInfo(LVar2);
-    UI_UpdateDisplayServers(puVar4);
-    iVar3 = __restgprlr_29(sharedUiInfo.serverStatus.numDisplayServers);
-    return iVar3;
+  if (dVar7 == 2.0) {
+    puVar2 = UI_GetClientInfo(param_1);
+    UI_UpdateDisplayServers(puVar2);
+    return sharedUiInfo.serverStatus.numDisplayServers;
   }
-  if (dVar9 == 12.0) {
-    iVar3 = __restgprlr_29(sharedUiInfo.serverStatusInfo.numLines);
-    return iVar3;
+  if (dVar7 == 12.0) {
+    return sharedUiInfo.serverStatusInfo.numLines;
   }
-  if (dVar9 == 6.0) {
-    puVar4 = UI_GetClientInfo(LVar2);
-    iVar3 = (puVar4->uiDC).realTime;
-    if (puVar4->playerRefresh < iVar3) {
-      puVar4->playerRefresh = iVar3 + 3000;
-      UI_BuildPlayerList(LVar2);
+  if (dVar7 == 6.0) {
+    puVar2 = UI_GetClientInfo(param_1);
+    iVar1 = (puVar2->uiDC).realTime;
+    if (puVar2->playerRefresh < iVar1) {
+      puVar2->playerRefresh = iVar1 + 3000;
+      UI_BuildPlayerList(param_1);
     }
-    iVar3 = __restgprlr_29(sharedUiInfo.playerCount);
-    return iVar3;
+    return sharedUiInfo.playerCount;
   }
-  if (dVar9 == 17.0) {
-    bVar8 = Live_IsSignedIn(iVar3);
-    if (bVar8) {
-      pPVar5 = Lobby_GetPartyData();
-      if (pPVar5->gameStartTime == 0) {
-        iVar3 = GetLobbyMemberCount();
-        if ((g_partyData.inParty != 0) && (iVar3 == 0)) {
-          iVar3 = GetPartyMemberCount();
-          if (iVar3 < 1) {
-            iVar3 = __restgprlr_29(1);
-            return iVar3;
+  if (dVar7 == 17.0) {
+    bVar6 = Live_IsSignedIn(iVar1);
+    if (bVar6) {
+      pPVar3 = Lobby_GetPartyData();
+      if (pPVar3->gameStartTime == 0) {
+        iVar1 = GetLobbyMemberCount();
+        if ((g_partyData.inParty != 0) && (iVar1 == 0)) {
+          iVar1 = GetPartyMemberCount();
+          if (0 < iVar1) {
+            return iVar1;
           }
-          goto LAB_825b25f4;
+          return 1;
         }
       }
       else {
-        iVar3 = GetLobbyMemberCount();
+        iVar1 = GetLobbyMemberCount();
       }
-      if (iVar3 < 1) goto LAB_825b2240;
-      goto LAB_825b25f4;
+      if (0 < iVar1) {
+        return iVar1;
+      }
+      return 1;
     }
   }
   else {
-    if (dVar9 == 18.0) {
-      pSVar6 = Lobby_GetSession();
-      iVar3 = Session_CountTotalSlots(pSVar6);
-      iVar3 = __restgprlr_29(iVar3);
-      return iVar3;
+    if (dVar7 == 18.0) {
+      pSVar4 = Lobby_GetSession();
+      iVar1 = Session_CountTotalSlots(pSVar4);
+      return iVar1;
     }
-    if (dVar9 == 23.0) {
-      bVar8 = Live_IsSignedIn(iVar3);
-      if (bVar8) {
-        iVar3 = UI_FeederCount_PartyMembers(uiInfoArray + LVar2);
-        if (iVar3 < 1) {
-          iVar3 = __restgprlr_29(1);
-          return iVar3;
+    if (dVar7 == 23.0) {
+      bVar6 = Live_IsSignedIn(iVar1);
+      if (bVar6) {
+        iVar1 = UI_FeederCount_PartyMembers(uiInfoArray + param_1);
+        if (0 < iVar1) {
+          return iVar1;
         }
-        goto LAB_825b25f4;
+        return 1;
       }
     }
     else {
-      bVar8 = GetTeam(LVar2,(float)dVar9,in_r4);
-      if (bVar8) {
-        bVar8 = Live_IsSignedIn(iVar3);
-        if (bVar8) {
-          iVar3 = GetTeamMemberCount(local_30);
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+      bVar6 = GetTeam(param_1,(float)dVar7,in_r4);
+      if (bVar6) {
+        bVar6 = Live_IsSignedIn(iVar1);
+        if (bVar6) {
+          iVar1 = GetTeamMemberCount(local_30);
+          return iVar1;
         }
       }
-      else if (dVar9 == 29.0) {
-        bVar8 = Live_IsSignedIn(iVar3);
-        if (bVar8) {
-          uVar7 = Friends_GetNumFriends(iVar3);
-          iVar3 = __restgprlr_29(uVar7);
-          return iVar3;
+      else if (dVar7 == 29.0) {
+        bVar6 = Live_IsSignedIn(iVar1);
+        if (bVar6) {
+          uVar5 = Friends_GetNumFriends(iVar1);
+          return uVar5;
         }
       }
-      else if (dVar9 == 31.0) {
-        bVar8 = Live_IsSignedIn(iVar3);
-        if (bVar8) {
-          MeetPlayer_Sort(iVar3);
-          iVar3 = MeetPlayer_GetCount(iVar3);
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+      else if (dVar7 == 31.0) {
+        bVar6 = Live_IsSignedIn(iVar1);
+        if (bVar6) {
+          MeetPlayer_Sort(iVar1);
+          iVar1 = MeetPlayer_GetCount(iVar1);
+          return iVar1;
         }
       }
       else {
-        if (dVar9 == 32.0) {
-          iVar3 = LiveParty_GetCount();
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+        if (dVar7 == 32.0) {
+          iVar1 = LiveParty_GetCount();
+          return iVar1;
         }
-        if (dVar9 == 24.0) {
-          iVar3 = PlaylistFeeder_GetCount();
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+        if (dVar7 == 24.0) {
+          iVar1 = PlaylistFeeder_GetCount();
+          return iVar1;
         }
-        if (dVar9 == 30.0) {
-          iVar3 = Content_GetKnownContentPackCount();
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+        if (dVar7 == 30.0) {
+          iVar1 = Content_GetKnownContentPackCount();
+          return iVar1;
         }
-        if (dVar9 == 21.0) {
-          if (cl_multi_gamepads_enabled != 0) {
-            iVar3 = CL_GetLocalClientActiveCount();
-            iVar3 = __restgprlr_29(iVar3);
-            return iVar3;
+        if (dVar7 == 21.0) {
+          if (cl_multi_gamepads_enabled == 0) {
+            return 1;
           }
-LAB_825b2240:
-          iVar3 = __restgprlr_29(1);
-          return iVar3;
+          iVar1 = CL_GetLocalClientActiveCount();
+          return iVar1;
         }
-        if (dVar9 == 25.0) {
-          iVar3 = CustomGameTypes_GetGametypeCount();
-          iVar3 = __restgprlr_29((longlong)iVar3 + (ulonglong)(uint)sharedUiInfo.numCustomGameTypes)
-          ;
-          return iVar3;
+        if (dVar7 == 25.0) {
+          iVar1 = CustomGameTypes_GetGametypeCount();
+          return iVar1 + sharedUiInfo.numCustomGameTypes;
         }
-        if (dVar9 == 26.0) {
-          iVar3 = LB_FeederCount(LVar2);
-          iVar3 = __restgprlr_29(iVar3);
-          return iVar3;
+        if (dVar7 == 26.0) {
+          iVar1 = LB_FeederCount(param_1);
+          return iVar1;
         }
-        if (dVar9 == 35.0) goto LAB_825b2240;
-        if (dVar9 == 33.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-          bVar8 = Live_IsSignedIn(iVar3);
-          if (bVar8) {
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            Facebook_Sort(iVar3);
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            iVar3 = Facebook_GetCount(iVar3);
-            iVar3 = __restgprlr_29(iVar3);
-            return iVar3;
+        if (dVar7 == 35.0) {
+          return 1;
+        }
+        if (dVar7 == 33.0) {
+          iVar1 = CL_ControllerIndexFromClientNum(param_1);
+          bVar6 = Live_IsSignedIn(iVar1);
+          if (bVar6) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            Facebook_Sort(iVar1);
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = Facebook_GetCount(iVar1);
+            return iVar1;
           }
         }
-        else if (dVar9 == 34.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-          bVar8 = Live_IsSignedIn(iVar3);
-          if (bVar8) {
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            EliteClan_Sort(iVar3);
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            iVar3 = EliteClan_GetCount(iVar3);
-            iVar3 = __restgprlr_29(iVar3);
-            return iVar3;
+        else if (dVar7 == 34.0) {
+          iVar1 = CL_ControllerIndexFromClientNum(param_1);
+          bVar6 = Live_IsSignedIn(iVar1);
+          if (bVar6) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            EliteClan_Sort(iVar1);
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = EliteClan_GetCount(iVar1);
+            return iVar1;
           }
         }
         else {
-          if (dVar9 == 37.0) {
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            iVar3 = CL_Demo_EnumCount(iVar3);
-            if (0x31 < iVar3) {
-              iVar3 = __restgprlr_29(0x32);
-              return iVar3;
+          if (dVar7 == 37.0) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = CL_Demo_EnumCount(iVar1);
+            if (iVar1 < 0x32) {
+              return iVar1;
             }
-            goto LAB_825b25f4;
+            return 0x32;
           }
-          if (dVar9 == 36.0) {
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            iVar3 = OnlineVault_FeederGetCount(iVar3);
-            iVar3 = __restgprlr_29(iVar3);
-            return iVar3;
+          if (dVar7 == 36.0) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = OnlineVault_FeederGetCount(iVar1);
+            return iVar1;
           }
-          if (dVar9 == 1.0) {
-            iVar3 = UI_GetMapCount();
-            iVar3 = __restgprlr_29(iVar3);
-            return iVar3;
+          if (dVar7 == 1.0) {
+            iVar1 = UI_GetMapCount();
+            return iVar1;
           }
-          if (dVar9 == 38.0) {
-            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-            iVar3 = LiveStorage_SortedChallengeCurrentCount(iVar3);
-            lVar1 = (longlong)iVar3;
-            if (9 < iVar3) {
-              lVar1 = 10;
+          if (dVar7 == 38.0) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = LiveStorage_SortedChallengeCurrentCount(iVar1);
+            if (9 < iVar1) {
+              iVar1 = 10;
             }
-            iVar3 = __restgprlr_29(lVar1 + -2);
-            return iVar3;
+            return iVar1 + -2;
           }
         }
       }
     }
   }
-  iVar3 = 0;
-LAB_825b25f4:
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  return 0;
 }
 
 
@@ -4837,20 +4499,21 @@ void UI_UpdatePendingPings(uiInfo_s *param_1)
 
 // 825A85D0  UpdatePartyDvars  (ui_mp/ui_main_mp.cpp:5759)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UpdatePartyDvars(LocalClientNum_t param_1,uint param_2,PartyData *param_3,ulong64 param_4)
 
 {
-  int iVar1;
   bool bVar4;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
+  int iVar3;
   ulong64 uVar5;
   
   uVar5 = (ulong64)(int)param_3;
-  iVar1 = __savegprlr_28(param_1);
   if ((party_playerVisible->current).enabled != (uVar5 != 0)) {
     Dvar_SetBool(party_playerVisible,uVar5 != 0);
   }
@@ -4859,25 +4522,27 @@ void UpdatePartyDvars(LocalClientNum_t param_1,uint param_2,PartyData *param_3,u
     bVar4 = Live_XUIDIsLocalPlayer(uVar5);
     Dvar_SetBool(party_IsLocalClientSelected,bVar4);
   }
-  uVar2 = Session_CountTotalSlots(((PartyData *)param_2)->session);
-  uVar3 = PartyClient_CountMembersEvenIfInactive((PartyData *)param_2);
-  if ((((int)uVar3 >> 0x1f) - ((int)uVar2 >> 0x1f)) + (uint)(uVar2 <= uVar3) !=
+  uVar1 = Session_CountTotalSlots(*(SessionData **)param_2);
+  uVar2 = PartyClient_CountMembersEvenIfInactive((PartyData *)param_2);
+  if ((((int)uVar2 >> 0x1f) - ((int)uVar1 >> 0x1f)) + (uint)(uVar1 <= uVar2) !=
       (uint)(ui_partyFull->current).color[0]) {
     Dvar_SetBool(ui_partyFull,
-                 (bool)(((char)((int)uVar3 >> 0x1f) - (char)((int)uVar2 >> 0x1f)) + (uVar2 <= uVar3)
+                 (bool)(((char)((int)uVar2 >> 0x1f) - (char)((int)uVar1 >> 0x1f)) + (uVar1 <= uVar2)
                        ));
   }
-  if (iVar1 != (party_selectedIndex->current).integer) {
-    Dvar_SetInt(party_selectedIndex,iVar1);
-    iVar1 = Sys_Milliseconds();
-    Dvar_SetInt(party_selectedIndexChangedTime,iVar1);
+  if (param_1 != (party_selectedIndex->current).integer) {
+    Dvar_SetInt(party_selectedIndex,param_1);
+    iVar3 = Sys_Milliseconds();
+    Dvar_SetInt(party_selectedIndexChangedTime,iVar3);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825A86E0  UI_FeederMaterialAnimation  (ui_mp/ui_main_mp.cpp:5785)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void UI_FeederMaterialAnimation
                (int param_1,char *param_2,float *param_3,float *param_4,float *param_5,
@@ -4887,9 +4552,9 @@ void UI_FeederMaterialAnimation
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  longlong lVar4;
-  Material *pMVar5;
-  uint uVar6;
+  Material *pMVar4;
+  uint uVar5;
+  longlong lVar6;
   int iVar7;
   ulonglong uVar8;
   ulonglong uVar9;
@@ -4897,24 +4562,24 @@ void UI_FeederMaterialAnimation
   float local_50;
   float local_4c [19];
   
-  lVar4 = __savegprlr_24(param_1);
-  pMVar5 = Material_RegisterHandle(param_2,7);
-  *param_7 = pMVar5;
+  pMVar4 = Material_RegisterHandle(param_2,7);
+  *param_7 = pMVar4;
   uVar9 = (longlong)(lobby_numAnimationFrames->current).integer *
           (longlong)(lobby_animationSpeed->current).integer;
-  uVar6 = Sys_Milliseconds();
+  uVar5 = Sys_Milliseconds();
+  lVar6 = (longlong)param_1 * 0x102b;
   uVar1 = (lobby_animationSpeed->current).integer;
   uVar2 = (lobby_numAnimationFrames->current).integer;
-  iVar7 = (int)(lVar4 * 0x102b);
+  iVar7 = (int)lVar6;
   uVar3 = iVar7 / 0x16af + (iVar7 >> 0x1f);
-  uVar8 = ((longlong)(int)uVar6 - (longlong)((int)uVar6 / (int)uVar9) * (longlong)(int)uVar9) +
-          lVar4 * 0x1d63;
+  uVar8 = ((longlong)(int)uVar5 - (longlong)((int)uVar5 / (int)uVar9) * (longlong)(int)uVar9) +
+          (longlong)param_1 * 0x1d63;
   uVar10 = (longlong)((int)uVar8 / (int)uVar1) +
-           lVar4 * 0x102b + ((longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f)) * -0x16af;
+           lVar6 + ((longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f)) * -0x16af;
   trapWord(6,uVar9,0);
   trapWord(6,(ulonglong)uVar1,0);
   trapWord(6,(ulonglong)uVar2,0);
-  trapWord(5,uVar9 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+  trapWord(5,uVar9 & ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1),
            0xffff);
   trapWord(5,(ulonglong)uVar1 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),
            0xffff);
@@ -4926,45 +4591,41 @@ void UI_FeederMaterialAnimation
              (lobby_animationTilesHigh->current).unsignedInt,param_3,&local_50,param_4,local_4c);
   *param_5 = *param_3 + local_50;
   *param_6 = *param_4 + local_4c[0];
-  __restgprlr_24();
   return;
 }
 
 
 // 825A8820  GetNonUsedGPadControllerIndex  (ui_mp/ui_main_mp.cpp:5804)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int GetNonUsedGPadControllerIndex(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  longlong lVar3;
-  longlong lVar4;
+  bool bVar1;
+  int iVar2;
+  int iVar3;
   LocalClientNum_t aLStack_30 [12];
   
-  iVar1 = __savegprlr_29(param_1);
-  lVar3 = 0;
-  lVar4 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   do {
-    bVar2 = GPad_IsActive((int)lVar4);
-    if ((bVar2) &&
-       (bVar2 = CL_DoesControllerIndexHaveALocalClientNum((int)lVar4,aLStack_30), !bVar2)) {
-      if ((int)lVar3 == iVar1) {
-        iVar1 = __restgprlr_29(lVar4);
-        return iVar1;
+    bVar1 = GPad_IsActive(iVar3);
+    if ((bVar1) && (bVar1 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,aLStack_30), !bVar1)) {
+      if (iVar2 == param_1) {
+        return iVar3;
       }
-      lVar3 = lVar3 + 1;
+      iVar2 = iVar2 + 1;
     }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 4);
-  if (-1 < (int)lVar3) {
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 4);
+  if (-1 < iVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x16c1,0
                     ,"%s");
   }
-  iVar1 = __restgprlr_29(lVar3);
-  return iVar1;
+  return iVar2;
 }
 
 
@@ -5008,6 +4669,8 @@ char * UI_FeederItemText_NonPlayingLocalClients(uiInfo_s *param_1,int param_2,in
 
 // 825ADFF0  UI_FeederItemText_PartyMembers  (ui_mp/ui_main_mp.cpp:5865)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -5018,110 +4681,98 @@ char * UI_FeederItemText_PartyMembers
                  float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar6;
-  Material *pMVar4;
-  uiInfo_s *puVar5;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  int iVar1;
+  bool bVar5;
+  Material *pMVar2;
+  uiInfo_s *puVar3;
+  char *pcVar4;
+  ulong64 uVar6;
   Material **in_stack_00000054;
   
-  uVar7 = (ulonglong)param_5;
-  LVar1 = __savegprlr_23((double)param_3,param_1);
-  uVar8 = uVar7;
-  iVar2 = GetPartyMemberCount();
-  if ((uVar7 & 0xffffffff) < 5) {
-    bVar6 = (int)uVar7 != 0;
-    if (uVar7 == 1 && bVar6) {
-      if ((-1 < param_4) && (param_4 < iVar2)) {
-        GetPartyMemberPartyIcon(LVar1,param_4,in_stack_00000054);
-        pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
-        return pcVar3;
+  uVar6 = (ulong64)param_5;
+  iVar1 = GetPartyMemberCount();
+  if ((uint)param_5 < 5) {
+    if (param_5 == 1) {
+      if ((-1 < param_4) && (param_4 < iVar1)) {
+        GetPartyMemberPartyIcon(param_1,param_4,in_stack_00000054);
+        return "";
       }
     }
     else {
-      if (uVar7 == 2 && bVar6) {
-        if ((iVar2 == 0) && (param_4 == LOCAL_CLIENT_0)) {
-          pcVar3 = PartyUI_GetLocalClientName(LVar1,clientBuff,0x2a);
-          pcVar3 = (char *)__restgprlr_23(pcVar3);
-          return pcVar3;
+      if (param_5 == 2) {
+        if ((iVar1 == 0) && (param_4 == 0)) {
+          pcVar4 = PartyUI_GetLocalClientName(param_1,clientBuff,0x2a);
+          return pcVar4;
         }
         if (param_4 < 0) {
-          if (param_4 < iVar2) goto LAB_825ae0cc;
+          if (param_4 < iVar1) goto LAB_825ae0cc;
         }
-        else if (param_4 < iVar2) {
-          if (param_2->cursorPos[LVar1] == param_4) {
-            sharedUiInfo.partyMemberXuid = GetPartyMemberXuid(LVar1,param_4);
-            UpdatePartyDvars(param_4,0x82b55118,(PartyData *)sharedUiInfo.partyMemberXuid,uVar8);
+        else if (param_4 < iVar1) {
+          if (param_2->cursorPos[param_1] == param_4) {
+            sharedUiInfo.partyMemberXuid = GetPartyMemberXuid(param_1,param_4);
+            UpdatePartyDvars(param_4,0x82b55118,(PartyData *)sharedUiInfo.partyMemberXuid,uVar6);
           }
-          pcVar3 = GetPartyMemberName(LVar1,param_4);
-          pcVar3 = (char *)__restgprlr_23(pcVar3);
-          return pcVar3;
+          pcVar4 = GetPartyMemberName(param_1,param_4);
+          return pcVar4;
         }
-        puVar5 = UI_GetClientInfo(LVar1);
-        pcVar3 = UI_FeederItemText_NonPlayingLocalClients(puVar5,param_4,iVar2);
-        pcVar3 = (char *)__restgprlr_23(pcVar3);
-        return pcVar3;
+        puVar3 = UI_GetClientInfo(param_1);
+        pcVar4 = UI_FeederItemText_NonPlayingLocalClients(puVar3,param_4,iVar1);
+        return pcVar4;
       }
-      if (uVar7 == 3 && bVar6) {
-        if (iVar2 == 0) {
-          pcVar3 = PartyUI_GetLocalClientRank(LVar1,0,in_stack_00000054);
-          pcVar3 = (char *)__restgprlr_23(pcVar3);
-          return pcVar3;
+      if (param_5 == 3) {
+        if (iVar1 == 0) {
+          pcVar4 = PartyUI_GetLocalClientRank(param_1,0,in_stack_00000054);
+          return pcVar4;
         }
-        if ((-1 < param_4) && (param_4 < iVar2)) {
-          GetPartyMemberRankIcon(LVar1,param_4,in_stack_00000054);
-          pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
-          return pcVar3;
+        if ((-1 < param_4) && (param_4 < iVar1)) {
+          GetPartyMemberRankIcon(param_1,param_4,in_stack_00000054);
+          return "";
         }
       }
-      else if (bVar6) {
-        if (iVar2 == 0) {
-          pcVar3 = PartyUI_GetLocalClientRank(LVar1,1,in_stack_00000054);
-          pcVar3 = (char *)__restgprlr_23(pcVar3);
-          return pcVar3;
-        }
-        if ((-1 < param_4) && (param_4 < iVar2)) {
-          pcVar3 = GetPartyMemberRank(LVar1,param_4);
-          pcVar3 = (char *)__restgprlr_23(pcVar3);
-          return pcVar3;
-        }
-      }
-      else if ((-1 < param_4) && (param_4 < iVar2)) {
-        iVar2 = IsPartyMemberAway(LVar1,param_4);
-        if (iVar2 != 0) {
-          UI_FeederMaterialAnimation
-                    (param_4,"party_inactive",param_6,param_7,param_8,param_9,in_stack_00000054);
-          pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
-          return pcVar3;
-        }
-        bVar6 = IsPartyMemberMuted(LVar1,param_4);
-        if (bVar6) {
-          pMVar4 = Material_RegisterHandle("voice_off",7);
-          *in_stack_00000054 = pMVar4;
-        }
-        else {
-          bVar6 = IsHeadsetPresentForPartyMember(LVar1,param_4);
-          if (bVar6) {
-            bVar6 = IsPartyMemberTalking(LVar1,param_4);
-            *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar6];
-            pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
-            return pcVar3;
+      else if (param_5 == 0) {
+        if ((-1 < param_4) && (param_4 < iVar1)) {
+          iVar1 = IsPartyMemberAway(param_1,param_4);
+          if (iVar1 != 0) {
+            UI_FeederMaterialAnimation
+                      (param_4,"party_inactive",param_6,param_7,param_8,param_9,in_stack_00000054);
+            return "";
           }
+          bVar5 = IsPartyMemberMuted(param_1,param_4);
+          if (bVar5) {
+            pMVar2 = Material_RegisterHandle("voice_off",7);
+            *in_stack_00000054 = pMVar2;
+          }
+          else {
+            bVar5 = IsHeadsetPresentForPartyMember(param_1,param_4);
+            if (bVar5) {
+              bVar5 = IsPartyMemberTalking(param_1,param_4);
+              *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar5];
+              return "";
+            }
+          }
+        }
+      }
+      else {
+        if (iVar1 == 0) {
+          pcVar4 = PartyUI_GetLocalClientRank(param_1,1,in_stack_00000054);
+          return pcVar4;
+        }
+        if ((-1 < param_4) && (param_4 < iVar1)) {
+          pcVar4 = GetPartyMemberRank(param_1,param_4);
+          return pcVar4;
         }
       }
     }
   }
 LAB_825ae0cc:
-  pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
-  return pcVar3;
+  return "";
 }
 
 
 // 825A88C0  UI_FeederItemText_TeamAndEnemyMembers  (ui_mp/ui_main_mp.cpp:5957)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5132,117 +4783,132 @@ char * UI_FeederItemText_TeamAndEnemyMembers
                  float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  LocalClientNum_t LVar3;
-  int iVar4;
+  int iVar3;
   ulong64 uVar1;
-  PartyData *pPVar5;
+  PartyData *pPVar4;
+  char *pcVar5;
   ulong64 uVar2;
-  bool bVar8;
+  bool bVar7;
   Material *pMVar6;
-  char *pcVar7;
-  longlong lVar9;
-  ulonglong uVar10;
-  LocalClientNum_t LVar11;
-  double extraout_f1;
   int local_40;
   
-  uVar10 = (ulonglong)(int)param_6;
-  uVar1 = (ulong64)param_5;
-  lVar9 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_27((double)param_3,param_1,lVar9,param_4);
-  uVar2 = uVar1;
-  GetTeam(LVar3,(float)extraout_f1,(int *)lVar9);
-  iVar4 = GetTeamMemberCount(local_40);
-  if (7 < (uVar10 & 0xffffffff)) goto LAB_825a8b50;
-  LVar11 = (LocalClientNum_t)uVar1;
-  if ((int)uVar10 == 0) {
-    if (((int)LVar11 < 0) || (iVar4 <= (int)LVar11)) goto LAB_825a8b50;
-    bVar8 = IsTeamMemberMuted(LVar3,local_40,LVar11);
-    if (!bVar8) {
-      bVar8 = IsHeadsetPresentForTeamMember(LVar3,local_40,LVar11);
-      if (bVar8) {
-        bVar8 = IsTeamMemberTalking(LVar3,local_40,LVar11);
-        *param_7 = (float)sharedUiInfo.talkingIcons[bVar8];
-        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
-        return pcVar7;
-      }
-      goto LAB_825a8b50;
+  uVar2 = (ulong64)param_5;
+  GetTeam(param_1,param_3,(int *)param_2);
+  iVar3 = GetTeamMemberCount(local_40);
+  if ((float *)0x7 < param_6) {
+    return "";
+  }
+  if (param_6 == (float *)0x0) {
+    if (param_5 < 0) {
+      return "";
     }
-    iVar4 = 7;
-    pcVar7 = "voice_off";
+    if (iVar3 <= param_5) {
+      return "";
+    }
+    bVar7 = IsTeamMemberMuted(param_1,local_40,param_5);
+    if (!bVar7) {
+      bVar7 = IsHeadsetPresentForTeamMember(param_1,local_40,param_5);
+      if (!bVar7) {
+        return "";
+      }
+      bVar7 = IsTeamMemberTalking(param_1,local_40,param_5);
+      *param_7 = (float)sharedUiInfo.talkingIcons[bVar7];
+      return "";
+    }
+    iVar3 = 7;
+    pcVar5 = "voice_off";
   }
   else {
-    if (uVar10 == 1) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        GetTeamMembersPartyIcon(LVar3,local_40,LVar11,(Material **)param_7);
-        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
-        return pcVar7;
+    if (param_6 == (float *)0x1) {
+      if (param_5 < 0) {
+        return "";
       }
-      goto LAB_825a8b50;
-    }
-    if (uVar10 == 2) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        if (((int *)lVar9)[LVar3 + 0x5f] == LVar11) {
-          uVar1 = GetTeamMemberXuid(LVar3,local_40,LVar11);
-          pPVar5 = Lobby_GetPartyData();
-          UpdatePartyDvars(LVar11,(uint)pPVar5,(PartyData *)uVar1,uVar2);
-        }
-        pcVar7 = GetTeamMemberName(LVar3,local_40,LVar11);
-        pcVar7 = (char *)__restgprlr_27(pcVar7);
-        return pcVar7;
+      if (iVar3 <= param_5) {
+        return "";
       }
-      goto LAB_825a8b50;
+      GetTeamMembersPartyIcon(param_1,local_40,param_5,(Material **)param_7);
+      return "";
     }
-    if (uVar10 == 3) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        GetTeamMemberRankIcon(LVar3,local_40,LVar11,(Material **)param_7);
-        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
-        return pcVar7;
+    if (param_6 == (float *)0x2) {
+      if (param_5 < 0) {
+        return "";
       }
-      goto LAB_825a8b50;
-    }
-    if (uVar10 == 4) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        pcVar7 = GetTeamMemberRank(LVar3,local_40,LVar11);
-        pcVar7 = (char *)__restgprlr_27(pcVar7);
-        return pcVar7;
+      if (iVar3 <= param_5) {
+        return "";
       }
-      goto LAB_825a8b50;
-    }
-    if (uVar10 == 5) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        pcVar7 = GetTeamMemberStat(LVar3,local_40,LVar11,0);
-        pcVar7 = (char *)__restgprlr_27(pcVar7);
-        return pcVar7;
+      if (param_2->cursorPos[param_1] == param_5) {
+        uVar1 = GetTeamMemberXuid(param_1,local_40,param_5);
+        pPVar4 = Lobby_GetPartyData();
+        UpdatePartyDvars(param_5,(uint)pPVar4,(PartyData *)uVar1,uVar2);
       }
-      goto LAB_825a8b50;
+      pcVar5 = GetTeamMemberName(param_1,local_40,param_5);
+      return pcVar5;
     }
-    if (uVar10 == 6) {
-      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
-        pcVar7 = GetTeamMemberSkill(LVar3,local_40,LVar11);
-        pcVar7 = (char *)__restgprlr_27(pcVar7);
-        return pcVar7;
+    if (param_6 == (float *)0x3) {
+      if (param_5 < 0) {
+        return "";
       }
-      goto LAB_825a8b50;
+      if (iVar3 <= param_5) {
+        return "";
+      }
+      GetTeamMemberRankIcon(param_1,local_40,param_5,(Material **)param_7);
+      return "";
     }
-    if (((int)LVar11 < 0) || (iVar4 <= (int)LVar11)) goto LAB_825a8b50;
-    uVar2 = GetTeamMemberXuid(LVar3,local_40,LVar11);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-    bVar8 = UserGroups_DoesXUIDHaveGroups(iVar4,uVar2);
-    if (!bVar8) goto LAB_825a8b50;
-    iVar4 = 3;
-    pcVar7 = "group_icon";
+    if (param_6 == (float *)&DAT_00000004) {
+      if (param_5 < 0) {
+        return "";
+      }
+      if (iVar3 <= param_5) {
+        return "";
+      }
+      pcVar5 = GetTeamMemberRank(param_1,local_40,param_5);
+      return pcVar5;
+    }
+    if (param_6 == (float *)0x5) {
+      if (param_5 < 0) {
+        return "";
+      }
+      if (iVar3 <= param_5) {
+        return "";
+      }
+      pcVar5 = GetTeamMemberStat(param_1,local_40,param_5,0);
+      return pcVar5;
+    }
+    if (param_6 == (float *)0x6) {
+      if (param_5 < 0) {
+        return "";
+      }
+      if (iVar3 <= param_5) {
+        return "";
+      }
+      pcVar5 = GetTeamMemberSkill(param_1,local_40,param_5);
+      return pcVar5;
+    }
+    if (param_5 < 0) {
+      return "";
+    }
+    if (iVar3 <= param_5) {
+      return "";
+    }
+    uVar2 = GetTeamMemberXuid(param_1,local_40,param_5);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
+    bVar7 = UserGroups_DoesXUIDHaveGroups(iVar3,uVar2);
+    if (!bVar7) {
+      return "";
+    }
+    iVar3 = 3;
+    pcVar5 = "group_icon";
   }
-  pMVar6 = Material_RegisterHandle(pcVar7,iVar4);
+  pMVar6 = Material_RegisterHandle(pcVar5,iVar3);
   *param_7 = (float)pMVar6;
-LAB_825a8b50:
-  pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
-  return pcVar7;
+  return "";
 }
 
 
 // 825A8B60  UI_FeederItemText_LobbyMembers  (ui_mp/ui_main_mp.cpp:6044)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5253,190 +4919,170 @@ char * UI_FeederItemText_LobbyMembers
                  float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  LocalClientNum_t LVar2;
   int iVar3;
   int iVar4;
   ulong64 uVar1;
   bool bVar8;
-  char *pcVar5;
-  PartyData *pPVar6;
+  ulong64 uVar2;
+  PartyData *pPVar5;
+  char *pcVar6;
   Material *pMVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
   Material **in_stack_00000054;
   
-  uVar9 = (ulonglong)param_5;
-  LVar2 = __savegprlr_23((double)param_3,param_1);
-  uVar10 = uVar9;
+  uVar1 = (ulong64)param_5;
   iVar3 = GetLobbyMemberCount();
-  if (7 < (uVar9 & 0xffffffff)) goto LAB_825a90c8;
-  bVar8 = (int)uVar9 != 0;
-  if (uVar9 == 1 && bVar8) {
+  if (7 < (uint)param_5) goto LAB_825a90c8;
+  if (param_5 == 1) {
     if (iVar3 == 0) {
       if ((g_partyData.inParty != 0) && (iVar3 = GetPartyMemberCount(), param_4 < iVar3)) {
-        GetPartyMemberPartyIcon(LVar2,param_4,in_stack_00000054);
-        pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-        return pcVar5;
+        GetPartyMemberPartyIcon(param_1,param_4,in_stack_00000054);
+        return "";
       }
     }
     else if ((-1 < param_4) && (param_4 < iVar3)) {
-      GetLobbyMemberPartyIcon(LVar2,param_4,in_stack_00000054);
-      pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-      return pcVar5;
+      GetLobbyMemberPartyIcon(param_1,param_4,in_stack_00000054);
+      return "";
     }
     goto LAB_825a90c8;
   }
-  if (uVar9 != 2 || !bVar8) {
-    if (uVar9 == 3 && bVar8) {
+  if (param_5 != 2) {
+    if (param_5 == 3) {
       if (iVar3 == 0) {
         if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
-          GetPartyMemberRankIcon(LVar2,param_4,in_stack_00000054);
-          pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-          return pcVar5;
+          GetPartyMemberRankIcon(param_1,param_4,in_stack_00000054);
+          return "";
         }
-        if (param_4 == LOCAL_CLIENT_0) {
-          pcVar5 = PartyUI_GetLocalClientRank(LVar2,0,in_stack_00000054);
-          pcVar5 = (char *)__restgprlr_23(pcVar5);
-          return pcVar5;
+        if (param_4 == 0) {
+          pcVar6 = PartyUI_GetLocalClientRank(param_1,0,in_stack_00000054);
+          return pcVar6;
         }
       }
       if ((-1 < param_4) && (param_4 < iVar3)) {
-        GetLobbyMemberRankIcon(LVar2,param_4,in_stack_00000054);
-        pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-        return pcVar5;
+        GetLobbyMemberRankIcon(param_1,param_4,in_stack_00000054);
+        return "";
       }
     }
-    else if (uVar9 == 4 && bVar8) {
+    else if (param_5 == 4) {
       if (iVar3 == 0) {
         if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
-          pcVar5 = GetPartyMemberRank(LVar2,param_4);
-          pcVar5 = (char *)__restgprlr_23(pcVar5);
-          return pcVar5;
+          pcVar6 = GetPartyMemberRank(param_1,param_4);
+          return pcVar6;
         }
-        if (param_4 == LOCAL_CLIENT_0) {
-          pcVar5 = PartyUI_GetLocalClientRank(LVar2,1,in_stack_00000054);
-          pcVar5 = (char *)__restgprlr_23(pcVar5);
-          return pcVar5;
+        if (param_4 == 0) {
+          pcVar6 = PartyUI_GetLocalClientRank(param_1,1,in_stack_00000054);
+          return pcVar6;
         }
       }
       if ((-1 < param_4) && (param_4 < iVar3)) {
-        pcVar5 = GetLobbyMemberRank(LVar2,param_4);
-        pcVar5 = (char *)__restgprlr_23(pcVar5);
-        return pcVar5;
+        pcVar6 = GetLobbyMemberRank(param_1,param_4);
+        return pcVar6;
       }
     }
-    else if (uVar9 == 5 && bVar8) {
+    else if (param_5 == 5) {
       if ((iVar3 == 0) &&
-         ((param_4 == LOCAL_CLIENT_0 ||
+         ((param_4 == 0 ||
           ((g_partyData.inParty != 0 && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)))))) {
-        pcVar5 = PartyUI_GetEmptyClientStat(LVar2,0);
-        pcVar5 = (char *)__restgprlr_23(pcVar5);
-        return pcVar5;
+        pcVar6 = PartyUI_GetEmptyClientStat(param_1,0);
+        return pcVar6;
       }
       if ((-1 < param_4) && (param_4 < iVar3)) {
-        pcVar5 = GetLobbyMemberStat(LVar2,param_4,0);
-        pcVar5 = (char *)__restgprlr_23(pcVar5);
-        return pcVar5;
+        pcVar6 = GetLobbyMemberStat(param_1,param_4,0);
+        return pcVar6;
       }
     }
-    else if (uVar9 != 6 || !bVar8) {
-      if (bVar8) {
-        if (((iVar3 < 1) || (param_4 < 0)) || (iVar3 <= param_4)) goto LAB_825a90c8;
-        uVar1 = GetLobbyMemberXuid(LVar2,param_4);
-        iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-        bVar8 = UserGroups_DoesXUIDHaveGroups(iVar3,uVar1);
-        if (!bVar8) goto LAB_825a90c8;
-        iVar3 = 3;
-        pcVar5 = "group_icon";
-      }
-      else {
+    else if (param_5 != 6) {
+      if (param_5 == 0) {
         if (((iVar3 == 0) && (g_partyData.inParty != 0)) &&
            (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
-          uVar1 = GetPartyMemberXuid(LVar2,param_4);
+          uVar1 = GetPartyMemberXuid(param_1,param_4);
           bVar8 = Live_XUIDIsLocalPlayer(uVar1);
           if (!bVar8) {
 LAB_825a8c04:
             UI_FeederMaterialAnimation
                       (param_4,"party_inactive",param_6,param_7,param_8,param_9,in_stack_00000054);
-            pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-            return pcVar5;
+            return "";
           }
-          bVar8 = IsPartyMemberMuted(LVar2,param_4);
+          bVar8 = IsPartyMemberMuted(param_1,param_4);
           if (!bVar8) {
-            bVar8 = IsHeadsetPresentForPartyMember(LVar2,param_4);
+            bVar8 = IsHeadsetPresentForPartyMember(param_1,param_4);
             if (bVar8) {
-              bVar8 = IsPartyMemberTalking(LVar2,param_4);
+              bVar8 = IsPartyMemberTalking(param_1,param_4);
               *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar8];
-              pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-              return pcVar5;
+              return "";
             }
             goto LAB_825a90c8;
           }
         }
         else {
           if ((param_4 < 0) || (iVar3 <= param_4)) goto LAB_825a90c8;
-          iVar3 = IsLobbyMemberAway(LVar2,param_4);
+          iVar3 = IsLobbyMemberAway(param_1,param_4);
           if (iVar3 != 0) goto LAB_825a8c04;
-          bVar8 = IsLobbyMemberMuted(LVar2,param_4);
+          bVar8 = IsLobbyMemberMuted(param_1,param_4);
           if (!bVar8) {
-            bVar8 = IsHeadsetPresentForLobbyMember(LVar2,param_4);
+            bVar8 = IsHeadsetPresentForLobbyMember(param_1,param_4);
             if (bVar8) {
-              bVar8 = IsLobbyMemberTalking(LVar2,param_4);
+              bVar8 = IsLobbyMemberTalking(param_1,param_4);
               *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar8];
-              pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-              return pcVar5;
+              return "";
             }
             goto LAB_825a90c8;
           }
         }
         iVar3 = 7;
-        pcVar5 = "voice_off";
+        pcVar6 = "voice_off";
       }
-      pMVar7 = Material_RegisterHandle(pcVar5,iVar3);
+      else {
+        if (((iVar3 < 1) || (param_4 < 0)) || (iVar3 <= param_4)) goto LAB_825a90c8;
+        uVar1 = GetLobbyMemberXuid(param_1,param_4);
+        iVar3 = CL_ControllerIndexFromClientNum(param_1);
+        bVar8 = UserGroups_DoesXUIDHaveGroups(iVar3,uVar1);
+        if (!bVar8) goto LAB_825a90c8;
+        iVar3 = 3;
+        pcVar6 = "group_icon";
+      }
+      pMVar7 = Material_RegisterHandle(pcVar6,iVar3);
       *in_stack_00000054 = pMVar7;
     }
     goto LAB_825a90c8;
   }
-  if ((iVar3 == 0) && (param_4 == LOCAL_CLIENT_0)) {
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    uVar1 = Live_GetXuid(iVar4);
-    sharedUiInfo.partyMemberXuid = uVar1;
-    pPVar6 = Lobby_GetPartyData();
-    UpdatePartyDvars(LOCAL_CLIENT_0,(uint)pPVar6,(PartyData *)uVar1,uVar10);
+  if ((iVar3 == 0) && (param_4 == 0)) {
+    iVar4 = CL_ControllerIndexFromClientNum(param_1);
+    uVar2 = Live_GetXuid(iVar4);
+    sharedUiInfo.partyMemberXuid = uVar2;
+    pPVar5 = Lobby_GetPartyData();
+    UpdatePartyDvars(LOCAL_CLIENT_0,(uint)pPVar5,(PartyData *)uVar2,uVar1);
 LAB_825a8e6c:
     if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
-      pcVar5 = GetPartyMemberName(LVar2,param_4);
-      pcVar5 = (char *)__restgprlr_23(pcVar5);
-      return pcVar5;
+      pcVar6 = GetPartyMemberName(param_1,param_4);
+      return pcVar6;
     }
-    if (param_4 == LOCAL_CLIENT_0) {
-      pcVar5 = PartyUI_GetLocalClientName(LVar2,clientBuff,0x2a);
-      pcVar5 = (char *)__restgprlr_23(pcVar5);
-      return pcVar5;
+    if (param_4 == 0) {
+      pcVar6 = PartyUI_GetLocalClientName(param_1,clientBuff,0x2a);
+      return pcVar6;
     }
   }
   else {
-    if ((-1 < param_4) && ((param_4 < iVar3 && (param_2->cursorPos[LVar2] == param_4)))) {
-      uVar1 = GetLobbyMemberXuid(LVar2,param_4);
-      sharedUiInfo.partyMemberXuid = uVar1;
-      pPVar6 = Lobby_GetPartyData();
-      UpdatePartyDvars(param_4,(uint)pPVar6,(PartyData *)uVar1,uVar10);
+    if ((-1 < param_4) && ((param_4 < iVar3 && (param_2->cursorPos[param_1] == param_4)))) {
+      uVar2 = GetLobbyMemberXuid(param_1,param_4);
+      sharedUiInfo.partyMemberXuid = uVar2;
+      pPVar5 = Lobby_GetPartyData();
+      UpdatePartyDvars(param_4,(uint)pPVar5,(PartyData *)uVar2,uVar1);
     }
     if (iVar3 == 0) goto LAB_825a8e6c;
   }
   if ((-1 < param_4) && (param_4 < iVar3)) {
-    pcVar5 = GetLobbyMemberName(LVar2,param_4);
-    pcVar5 = (char *)__restgprlr_23(pcVar5);
-    return pcVar5;
+    pcVar6 = GetLobbyMemberName(param_1,param_4);
+    return pcVar6;
   }
 LAB_825a90c8:
-  pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
-  return pcVar5;
+  return "";
 }
 
 
 // 825AE2B0  UI_FeederItemText_Searching  (ui_mp/ui_main_mp.cpp:6220)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5454,34 +5100,33 @@ char * UI_FeederItemText_Searching
   PartyData *pPVar5;
   Material *pMVar6;
   uint uVar7;
-  char *pcVar8;
-  uint uVar9;
+  uint uVar8;
+  char *pcVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   float local_60;
   float local_5c [23];
   
-  lVar3 = __savegprlr_23((double)param_3,param_1);
+  lVar3 = (longlong)(int)param_1;
   iVar4 = GetLobbyMemberCount();
   if (iVar4 == 0) {
     iVar4 = GetPartyMemberCount();
   }
-  if (((int)lVar3 != 0) && (iVar4 <= (int)lVar3)) {
+  if ((param_1 != LOCAL_CLIENT_0) && (iVar4 <= (int)param_1)) {
     if (param_2 == (itemDef_t *)0x0) {
       pPVar5 = Lobby_GetPartyData();
       if ((pPVar5->gameStartTime == 0) && ((xblive_privatematch->current).enabled == false)) {
-        uVar9 = Sys_Milliseconds();
+        uVar8 = Sys_Milliseconds();
         iVar4 = (int)(lVar3 * 0x5003);
         uVar1 = iVar4 / 0x96 + (iVar4 >> 0x1f);
         uVar10 = lVar3 * 0x5003 + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -0x96 + 300;
         trapWord(6,uVar10,0);
-        trapWord(5,uVar10 & ~((((ulonglong)uVar9 & 0x7fffffff) << 1 | (ulonglong)(uVar9 >> 0x1f)) -
+        trapWord(5,uVar10 & ~((((ulonglong)uVar8 & 0x7fffffff) << 1 | (ulonglong)(uVar8 >> 0x1f)) -
                              1),0xffff);
         UI_SafeTranslateString("MP_SEARCHING_FOR_PLAYER");
-        pcVar8 = va("%s%s");
-        pcVar8 = (char *)__restgprlr_23(pcVar8);
-        return pcVar8;
+        pcVar9 = va("%s%s");
+        return pcVar9;
       }
     }
     else {
@@ -5493,7 +5138,7 @@ char * UI_FeederItemText_Searching
                  (longlong)(lobby_animationSpeed->current).integer;
         uVar7 = Sys_Milliseconds();
         uVar1 = (lobby_animationSpeed->current).integer;
-        uVar9 = (lobby_numAnimationFrames->current).integer;
+        uVar8 = (lobby_numAnimationFrames->current).integer;
         iVar4 = (int)(lVar3 * 0x102b);
         uVar2 = iVar4 / 0x16af + (iVar4 >> 0x1f);
         uVar10 = ((longlong)(int)uVar7 -
@@ -5502,15 +5147,15 @@ char * UI_FeederItemText_Searching
                  lVar3 * 0x102b + ((longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f)) * -0x16af;
         trapWord(6,uVar11,0);
         trapWord(6,(ulonglong)uVar1,0);
-        trapWord(6,(ulonglong)uVar9,0);
+        trapWord(6,(ulonglong)uVar8,0);
         trapWord(5,uVar11 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) -
                              1),0xffff);
         trapWord(5,(ulonglong)uVar1 &
                    ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        trapWord(5,(ulonglong)uVar9 &
+        trapWord(5,(ulonglong)uVar8 &
                    ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
         TextureAtlas_GetCoords_ByIndex
-                  ((int)uVar12 - ((int)uVar12 / (int)uVar9) * uVar9,
+                  ((int)uVar12 - ((int)uVar12 / (int)uVar8) * uVar8,
                    (lobby_animationTilesWide->current).unsignedInt,
                    (lobby_animationTilesHigh->current).unsignedInt,(float *)param_4,&local_60,
                    (float *)param_5,local_5c);
@@ -5519,13 +5164,14 @@ char * UI_FeederItemText_Searching
       }
     }
   }
-  pcVar8 = (char *)__restgprlr_23(0xffffffff820068af);
-  return pcVar8;
+  return "";
 }
 
 
 // 825B2600  UI_FeederItemText  (ui_mp/ui_main_mp.cpp:6288)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5536,364 +5182,317 @@ char * UI_FeederItemText(LocalClientNum_t param_1,itemDef_t *param_2,float param
                         Material **param_10,float param_11)
 
 {
-  LocalClientNum_t LVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  mapInfo *pmVar4;
-  char *pcVar5;
-  uiInfo_s *puVar6;
-  uint uVar7;
-  ScreenPlacement *pSVar8;
-  Font_s *pFVar9;
-  bool bVar12;
-  Material *pMVar10;
-  int iVar11;
-  itemDef_t *piVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  itemDef_t *piVar17;
-  double extraout_f1;
-  double dVar18;
+  int iVar1;
+  mapInfo *pmVar2;
+  char *pcVar3;
+  uiInfo_s *puVar4;
+  uint uVar5;
+  ScreenPlacement *pSVar6;
+  Font_s *pFVar7;
+  bool bVar11;
+  Material *pMVar8;
+  LocalClientNum_t LVar9;
+  int iVar10;
+  double dVar12;
   float *in_stack_00000054;
   Material **in_stack_0000005c;
   Material **in_stack_ffffff68;
   
-  dVar18 = (double)param_11;
-  uVar15 = (ulonglong)(int)param_6;
-  uVar14 = (ulonglong)param_5;
-  lVar16 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_26((double)param_3,param_1,lVar16,param_4);
+  dVar12 = (double)param_11;
   *in_stack_0000005c = (Material *)0x0;
-  LVar2 = (LocalClientNum_t)uVar14;
-  if (extraout_f1 == 3.0) {
-    iVar3 = UI_SelectedMap(LVar2);
-    if (-1 < iVar3) {
-      pmVar4 = UI_GetMapInfo_Sorted(iVar3);
-      pcVar5 = UI_SafeTranslateString(pmVar4->mapName);
-      pcVar5 = (char *)__restgprlr_26(pcVar5);
-      return pcVar5;
+  if (param_3 == 3.0) {
+    iVar1 = UI_SelectedMap(param_5);
+    if (-1 < iVar1) {
+      pmVar2 = UI_GetMapInfo_Sorted(iVar1);
+      pcVar3 = UI_SafeTranslateString(pmVar2->mapName);
+      return pcVar3;
+    }
+  }
+  else if (param_3 == 2.0) {
+    puVar4 = UI_GetClientInfo(param_1);
+    UI_UpdateDisplayServers(puVar4);
+    if ((-1 < param_5) && (param_5 < sharedUiInfo.serverStatus.numDisplayServers)) {
+      if (((float *)lastColumn != param_6) || ((puVar4->uiDC).realTime + 5000 < lastTime)) {
+        LAN_GetServerInfo((ui_netSource->current).integer,
+                          sharedUiInfo.serverStatus.displayServers[param_5],info,0x400);
+        lastTime = (puVar4->uiDC).realTime;
+        lastColumn = (int)param_6;
+      }
+      pcVar3 = Info_ValueForKey(info,"ping");
+      iVar1 = atoi(pcVar3);
+      if (param_6 < (float *)0x5) {
+        if (param_6 == (float *)0x1) {
+          pcVar3 = Info_ValueForKey(info,"mapname");
+          pcVar3 = UI_GetMapDisplayName(pcVar3);
+          return pcVar3;
+        }
+        if (param_6 == (float *)0x2) {
+          Info_ValueForKey(info,"sv_maxclients");
+          Info_ValueForKey(info,"clients");
+          Com_sprintf(clientBuff,0x2a,"%s (%s)");
+          return clientBuff;
+        }
+        if (param_6 == (float *)0x3) {
+          pcVar3 = Info_ValueForKey(info,"gametype");
+          if ((pcVar3 != (char *)0x0) &&
+             (pcVar3 = Info_ValueForKey(info,"gametype"), *pcVar3 != '\0')) {
+            pcVar3 = Info_ValueForKey(info,"gametype");
+            pcVar3 = UI_GetGameTypeDisplayName(pcVar3);
+            return pcVar3;
+          }
+          return "?";
+        }
+        if (param_6 != (float *)0x0) {
+          if (0 < iVar1) {
+            pcVar3 = Info_ValueForKey(info,"ping");
+            return pcVar3;
+          }
+          return "...";
+        }
+        if (0 < iVar1) {
+          pcVar3 = Info_ValueForKey(info,"hostname");
+          I_strncpyz(clientBuff,pcVar3,0x2a);
+          return clientBuff;
+        }
+        pcVar3 = Info_ValueForKey(info,"addr");
+        return pcVar3;
+      }
+    }
+  }
+  else if (param_3 == 12.0) {
+    if ((((-1 < param_5) && (param_5 < sharedUiInfo.serverStatusInfo.numLines)) &&
+        (-1 < (int)param_6)) && ((int)param_6 < 4)) {
+      pcVar3 = sharedUiInfo.serverStatusInfo.lines[0][(int)(param_6 + param_5)];
+      if (*pcVar3 != '@') {
+        return pcVar3;
+      }
+      pcVar3 = UI_SafeTranslateString(pcVar3 + 1);
+      return pcVar3;
+    }
+  }
+  else if (param_3 == 6.0) {
+    if ((-1 < param_5) && (param_5 < sharedUiInfo.playerCount)) {
+      return sharedUiInfo.playerNames[param_5];
     }
   }
   else {
-    piVar17 = (itemDef_t *)uVar15;
-    if (extraout_f1 == 2.0) {
-      puVar6 = UI_GetClientInfo(LVar1);
-      UI_UpdateDisplayServers(puVar6);
-      if ((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.serverStatus.numDisplayServers)) {
-        if (((itemDef_t *)lastColumn != piVar17) || ((puVar6->uiDC).realTime + 5000 < lastTime)) {
-          LAN_GetServerInfo((ui_netSource->current).integer,
-                            *(int *)((int)sharedUiInfo.serverStatus.displayServers +
-                                    (int)((uVar14 & 0xffffffff) << 2)),info,0x400);
-          lastTime = (puVar6->uiDC).realTime;
-          lastColumn = (int)piVar17;
-        }
-        pcVar5 = Info_ValueForKey(info,"ping");
-        iVar3 = atoi(pcVar5);
-        if ((uVar15 & 0xffffffff) < 5) {
-          bVar12 = piVar17 != (itemDef_t *)0x0;
-          if (uVar15 == 1 && bVar12) {
-            pcVar5 = Info_ValueForKey(info,"mapname");
-            pcVar5 = UI_GetMapDisplayName(pcVar5);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          if (uVar15 == 2 && bVar12) {
-            Info_ValueForKey(info,"sv_maxclients");
-            Info_ValueForKey(info,"clients");
-            Com_sprintf(clientBuff,0x2a,"%s (%s)");
-            pcVar5 = (char *)__restgprlr_26(0xffffffff83fe80e8);
-            return pcVar5;
-          }
-          if (uVar15 == 3 && bVar12) {
-            pcVar5 = Info_ValueForKey(info,"gametype");
-            if ((pcVar5 != (char *)0x0) &&
-               (pcVar5 = Info_ValueForKey(info,"gametype"), *pcVar5 != '\0')) {
-              pcVar5 = Info_ValueForKey(info,"gametype");
-              pcVar5 = UI_GetGameTypeDisplayName(pcVar5);
-              pcVar5 = (char *)__restgprlr_26(pcVar5);
-              return pcVar5;
-            }
-            pcVar5 = (char *)__restgprlr_26(0xffffffff82014c14);
-            return pcVar5;
-          }
-          if (bVar12) {
-            if (iVar3 < 1) {
-              pcVar5 = (char *)__restgprlr_26(0xffffffff820185bc);
-              return pcVar5;
-            }
-            pcVar5 = Info_ValueForKey(info,"ping");
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          if (iVar3 < 1) {
-            pcVar5 = Info_ValueForKey(info,"addr");
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          pcVar5 = Info_ValueForKey(info,"hostname");
-          I_strncpyz(clientBuff,pcVar5,0x2a);
-          pcVar5 = (char *)__restgprlr_26(0xffffffff83fe80e8);
-          return pcVar5;
+    if (param_3 == 17.0) {
+      pcVar3 = UI_FeederItemText_LobbyMembers
+                         (param_1,param_2,param_3,param_5,(int)param_6,param_7,param_8,param_9,
+                          in_stack_00000054,in_stack_ffffff68);
+      return pcVar3;
+    }
+    if (param_3 == 18.0) {
+      pcVar3 = UI_FeederItemText_Searching
+                         (param_5,(itemDef_t *)param_6,param_3,(int)param_7,(int)param_8,param_9,
+                          in_stack_00000054,(float *)in_stack_0000005c,param_9,in_stack_ffffff68);
+      return pcVar3;
+    }
+    if (param_3 == 23.0) {
+      pcVar3 = UI_FeederItemText_PartyMembers
+                         (param_1,param_2,param_3,param_5,(int)param_6,param_7,param_8,param_9,
+                          in_stack_00000054,in_stack_ffffff68);
+      return pcVar3;
+    }
+    if ((param_3 == 27.0) || (param_3 == 28.0)) {
+      pcVar3 = UI_FeederItemText_TeamAndEnemyMembers
+                         (param_1,param_2,param_3,(int)param_7,param_5,param_6,
+                          (float *)in_stack_0000005c,(float *)0x0,param_9,in_stack_ffffff68);
+      return pcVar3;
+    }
+    if (param_3 == 29.0) {
+      if (-1 < param_5) {
+        iVar1 = CL_ControllerIndexFromClientNum(param_1);
+        uVar5 = Friends_GetNumFriends(iVar1);
+        if ((uint)param_5 < uVar5) {
+          dVar12 = (double)param_2->textscale;
+          iVar1 = param_2->fontEnum;
+          pSVar6 = ScrPlace_GetActivePlacement(param_1);
+          pFVar7 = UI_GetFontHandle(pSVar6,iVar1,(float)dVar12);
+          iVar1 = CL_ControllerIndexFromClientNum(param_1);
+          pcVar3 = FriendsMenu_FeederItemText(iVar1,param_5,(int)param_6,pFVar7,(float)dVar12);
+          return pcVar3;
         }
       }
     }
-    else if (extraout_f1 == 12.0) {
-      if ((((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.serverStatusInfo.numLines)) &&
-          (-1 < (int)piVar17)) && ((int)piVar17 < 4)) {
-        pcVar5 = *(char **)((int)sharedUiInfo.serverStatusInfo.lines[0] +
-                           (int)(((uVar14 & 0x3fffffff) * 4 + uVar15 & 0xffffffff) << 2));
-        if (*pcVar5 == '@') {
-          pcVar5 = UI_SafeTranslateString(pcVar5 + 1);
-          pcVar5 = (char *)__restgprlr_26(pcVar5);
-          return pcVar5;
+    else if (param_3 == 31.0) {
+      if (-1 < param_5) {
+        iVar1 = CL_ControllerIndexFromClientNum(param_1);
+        iVar1 = MeetPlayer_GetCount(iVar1);
+        if (param_5 < iVar1) {
+          dVar12 = (double)param_2->textscale;
+          iVar1 = param_2->fontEnum;
+          pSVar6 = ScrPlace_GetActivePlacement(param_1);
+          pFVar7 = UI_GetFontHandle(pSVar6,iVar1,(float)dVar12);
+          iVar1 = CL_ControllerIndexFromClientNum(param_1);
+          pcVar3 = MeetPlayer_FeederItemText(iVar1,param_5,(int)param_6,pFVar7,(float)dVar12);
+          return pcVar3;
         }
-LAB_825b3068:
-        pcVar5 = (char *)__restgprlr_26(pcVar5);
-        return pcVar5;
       }
     }
-    else if (extraout_f1 == 6.0) {
-      if ((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.playerCount)) {
-        pcVar5 = (char *)__restgprlr_26((uVar14 & 0x7ffffff) * 0x20 + -0x7c0855f8);
-        return pcVar5;
+    else if (param_3 == 32.0) {
+      if ((-1 < param_5) && (iVar1 = LiveParty_GetCount(), param_5 < iVar1)) {
+        dVar12 = (double)param_2->textscale;
+        iVar1 = param_2->fontEnum;
+        pSVar6 = ScrPlace_GetActivePlacement(param_1);
+        pFVar7 = UI_GetFontHandle(pSVar6,iVar1,(float)dVar12);
+        iVar1 = CL_ControllerIndexFromClientNum(param_1);
+        pcVar3 = LiveParty_FeederItemText(iVar1,param_5,(int)param_6,pFVar7,(float)dVar12);
+        return pcVar3;
       }
     }
     else {
-      piVar13 = (itemDef_t *)lVar16;
-      if (extraout_f1 == 17.0) {
-        pcVar5 = UI_FeederItemText_LobbyMembers
-                           (LVar1,piVar13,(float)extraout_f1,LVar2,(int)piVar17,param_7,param_8,
-                            param_9,in_stack_00000054,in_stack_ffffff68);
-        pcVar5 = (char *)__restgprlr_26(pcVar5);
-        return pcVar5;
+      if (param_3 == 24.0) {
+        pcVar3 = PlaylistFeeder_GetItemName(param_1,param_5);
+        return pcVar3;
       }
-      if (extraout_f1 == 18.0) {
-        pcVar5 = UI_FeederItemText_Searching
-                           (LVar2,piVar17,(float)extraout_f1,(int)param_7,(int)param_8,param_9,
-                            in_stack_00000054,(float *)in_stack_0000005c,param_9,in_stack_ffffff68);
-        pcVar5 = (char *)__restgprlr_26(pcVar5);
-        return pcVar5;
-      }
-      if (extraout_f1 == 23.0) {
-        pcVar5 = UI_FeederItemText_PartyMembers
-                           (LVar1,piVar13,(float)extraout_f1,LVar2,(int)piVar17,param_7,param_8,
-                            param_9,in_stack_00000054,in_stack_ffffff68);
-        pcVar5 = (char *)__restgprlr_26(pcVar5);
-        return pcVar5;
-      }
-      if ((extraout_f1 == 27.0) || (extraout_f1 == 28.0)) {
-        pcVar5 = UI_FeederItemText_TeamAndEnemyMembers
-                           (LVar1,piVar13,(float)extraout_f1,(int)param_7,LVar2,(float *)piVar17,
-                            (float *)in_stack_0000005c,(float *)0x0,param_9,in_stack_ffffff68);
-        goto LAB_825b3068;
-      }
-      if (extraout_f1 == 29.0) {
-        if (-1 < (int)LVar2) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          uVar7 = Friends_GetNumFriends(iVar3);
-          if ((uVar14 & 0xffffffff) < (ulonglong)uVar7) {
-            dVar18 = (double)piVar13->textscale;
-            iVar3 = piVar13->fontEnum;
-            pSVar8 = ScrPlace_GetActivePlacement(LVar1);
-            pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
-            iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-            pcVar5 = FriendsMenu_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-        }
-      }
-      else if (extraout_f1 == 31.0) {
-        if (-1 < (int)LVar2) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          iVar3 = MeetPlayer_GetCount(iVar3);
-          if ((int)LVar2 < iVar3) {
-            dVar18 = (double)piVar13->textscale;
-            iVar3 = piVar13->fontEnum;
-            pSVar8 = ScrPlace_GetActivePlacement(LVar1);
-            pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
-            iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-            pcVar5 = MeetPlayer_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-        }
-      }
-      else if (extraout_f1 == 32.0) {
-        if ((-1 < (int)LVar2) && (iVar3 = LiveParty_GetCount(), (int)LVar2 < iVar3)) {
-          dVar18 = (double)piVar13->textscale;
-          iVar3 = piVar13->fontEnum;
-          pSVar8 = ScrPlace_GetActivePlacement(LVar1);
-          pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          pcVar5 = LiveParty_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
-          pcVar5 = (char *)__restgprlr_26(pcVar5);
-          return pcVar5;
-        }
-      }
-      else {
-        if (extraout_f1 == 24.0) {
-          pcVar5 = PlaylistFeeder_GetItemName(LVar1,LVar2);
-          pcVar5 = (char *)__restgprlr_26(pcVar5);
-          return pcVar5;
-        }
-        if (extraout_f1 == 30.0) {
-          if ((-1 < (int)LVar2) && (iVar3 = Content_GetKnownContentPackCount(), (int)LVar2 < iVar3))
-          {
-            if (piVar17 == (itemDef_t *)0x0) {
-              bVar12 = Lobby_IsInRunningLobby();
-              if ((bVar12) ||
-                 ((iVar3 = Party_InParty(&g_partyData), iVar3 != 0 &&
-                  (iVar3 = Party_AreWeHost(&g_partyData), iVar3 == 0)))) {
-                bVar12 = Party_IsIndexedContentPackEnabled(LVar2);
-              }
-              else {
-                bVar12 = Content_IsIndexedContentPackEnabled(LVar2);
-              }
-              if (bVar12 == false) {
-                pcVar5 = "mappack_checkbox_unchecked";
-              }
-              else {
-                pcVar5 = "mappack_checkbox_checked";
-              }
+      if (param_3 == 30.0) {
+        if ((-1 < param_5) && (iVar1 = Content_GetKnownContentPackCount(), param_5 < iVar1)) {
+          if (param_6 == (float *)0x0) {
+            bVar11 = Lobby_IsInRunningLobby();
+            if ((bVar11) ||
+               ((iVar1 = Party_InParty(&g_partyData), iVar1 != 0 &&
+                (iVar1 = Party_AreWeHost(&g_partyData), iVar1 == 0)))) {
+              bVar11 = Party_IsIndexedContentPackEnabled(param_5);
             }
             else {
-              if (piVar17 == (itemDef_t *)0x1) {
-                pcVar5 = Content_GetIndexedContentPackName(LVar2);
-                pcVar5 = UI_SafeTranslateString(pcVar5);
-                pcVar5 = (char *)__restgprlr_26(pcVar5);
-                return pcVar5;
-              }
-              if ((piVar17 != (itemDef_t *)0x2) ||
-                 (bVar12 = Content_DoWeHaveIndexedContentPack(LVar2), bVar12)) goto LAB_825b2c64;
-              pcVar5 = "specialty_new";
+              bVar11 = Content_IsIndexedContentPackEnabled(param_5);
             }
-            pMVar10 = Material_RegisterHandle(pcVar5,7);
-            *in_stack_0000005c = pMVar10;
-          }
-        }
-        else if (extraout_f1 == 21.0) {
-          if ((-1 < (int)LVar2) && (iVar3 = CL_GetLocalClientActiveCount(), (int)LVar2 < iVar3)) {
-            LVar1 = CL_ControllerIndexFromActiveClient(LVar2);
-            if (LOCAL_CLIENT_3 < LVar1) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
-                              ,0x197f,0,
-                              "activeLocalClientIndex doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                             );
-            }
-            if (cl_multi_gamepads_enabled == 0) {
-              bVar12 = CL_IsLocalClientActive(LOCAL_CLIENT_0);
-              if (!bVar12) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
-                                ,0x1983,0,"%s");
-              }
+            if (bVar11 == false) {
+              pcVar3 = "mappack_checkbox_unchecked";
             }
             else {
-              bVar12 = CL_IsLocalClientActive(LVar1);
-              if (!bVar12) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
-                                ,0x1981,0,"%s\n\t(activeLocalClientIndex) = %i");
-              }
-            }
-            pcVar5 = PartyUI_GetLocalClientName(LVar1,clientBuff,0x2a);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-        }
-        else if (extraout_f1 == 25.0) {
-          iVar3 = CustomGameTypes_GetGametypeCount();
-          if ((-1 < (int)LVar2) && ((int)LVar2 < iVar3)) {
-            pcVar5 = CustomGameTypes_GetGametypeLocalizedName(LVar2);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          lVar16 = uVar14 - (longlong)iVar3;
-          if ((-1 < lVar16) && ((int)lVar16 < sharedUiInfo.numCustomGameTypes)) {
-            pcVar5 = (char *)__restgprlr_26(lVar16 * 0x6c + -0x7c084398);
-            return pcVar5;
-          }
-        }
-        else {
-          if (extraout_f1 == 26.0) {
-            pcVar5 = LB_FeederItemText(LVar1,LVar2,(int)piVar17,in_stack_0000005c);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          if (extraout_f1 == 35.0) {
-            pcVar5 = LB_FeederItemText_Player(LVar1,(int)piVar17,in_stack_0000005c);
-            pcVar5 = (char *)__restgprlr_26(pcVar5);
-            return pcVar5;
-          }
-          if (extraout_f1 == 33.0) {
-            if (-1 < (int)LVar2) {
-              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-              iVar3 = Facebook_GetCount(iVar3);
-              if ((int)LVar2 < iVar3) {
-                dVar18 = (double)piVar13->textscale;
-                iVar3 = piVar13->fontEnum;
-                pSVar8 = ScrPlace_GetActivePlacement(LVar1);
-                pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
-                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-                pcVar5 = Facebook_FeederItemText
-                                   (iVar3,LVar2,(int)piVar17,in_stack_0000005c,pFVar9,(float)dVar18)
-                ;
-                pcVar5 = (char *)__restgprlr_26(pcVar5);
-                return pcVar5;
-              }
-            }
-          }
-          else if (extraout_f1 == 34.0) {
-            if (-1 < (int)LVar2) {
-              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-              iVar3 = EliteClan_GetCount(iVar3);
-              if ((int)LVar2 < iVar3) {
-                dVar18 = (double)piVar13->textscale;
-                iVar3 = piVar13->fontEnum;
-                pSVar8 = ScrPlace_GetActivePlacement(LVar1);
-                pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
-                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-                pcVar5 = EliteClan_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
-                pcVar5 = (char *)__restgprlr_26(pcVar5);
-                return pcVar5;
-              }
-            }
-          }
-          else if (extraout_f1 == 37.0) {
-            if (-1 < (int)LVar2) {
-              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-              iVar3 = CL_Demo_EnumCount(iVar3);
-              if ((int)LVar2 < iVar3) {
-                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-                iVar3 = CL_Demo_FeederIndexToEnumIndex(iVar3,LVar2);
-                iVar11 = CL_ControllerIndexFromClientNum(LVar1);
-                pcVar5 = CL_Demo_RecentGames_FeederItemText(iVar11,iVar3);
-                pcVar5 = (char *)__restgprlr_26(pcVar5);
-                return pcVar5;
-              }
+              pcVar3 = "mappack_checkbox_checked";
             }
           }
           else {
-            if (extraout_f1 == 36.0) {
-              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-              pcVar5 = OnlineVault_FeederItemText
-                                 (iVar3,LVar2,(int)piVar17,in_stack_0000005c,piVar13,(float)dVar18);
-              pcVar5 = (char *)__restgprlr_26(pcVar5);
-              return pcVar5;
+            if (param_6 == (float *)0x1) {
+              pcVar3 = Content_GetIndexedContentPackName(param_5);
+              pcVar3 = UI_SafeTranslateString(pcVar3);
+              return pcVar3;
             }
-            if (extraout_f1 == 1.0) {
-              pcVar5 = UI_FeederItemText_Maps(LVar1,piVar13,LVar2,(int)piVar17,in_stack_0000005c);
-              pcVar5 = (char *)__restgprlr_26(pcVar5);
-              return pcVar5;
+            if (param_6 != (float *)0x2) {
+              return "";
             }
+            bVar11 = Content_DoWeHaveIndexedContentPack(param_5);
+            if (bVar11) {
+              return "";
+            }
+            pcVar3 = "specialty_new";
+          }
+          pMVar8 = Material_RegisterHandle(pcVar3,7);
+          *in_stack_0000005c = pMVar8;
+        }
+      }
+      else if (param_3 == 21.0) {
+        if ((-1 < param_5) && (iVar1 = CL_GetLocalClientActiveCount(), param_5 < iVar1)) {
+          LVar9 = CL_ControllerIndexFromActiveClient(param_5);
+          if (LOCAL_CLIENT_3 < LVar9) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x197f,0,
+                            "activeLocalClientIndex doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                           );
+          }
+          if (cl_multi_gamepads_enabled == 0) {
+            bVar11 = CL_IsLocalClientActive(LOCAL_CLIENT_0);
+            if (!bVar11) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
+                              ,0x1983,0,"%s");
+            }
+          }
+          else {
+            bVar11 = CL_IsLocalClientActive(LVar9);
+            if (!bVar11) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
+                              ,0x1981,0,"%s\n\t(activeLocalClientIndex) = %i");
+            }
+          }
+          pcVar3 = PartyUI_GetLocalClientName(LVar9,clientBuff,0x2a);
+          return pcVar3;
+        }
+      }
+      else if (param_3 == 25.0) {
+        iVar1 = CustomGameTypes_GetGametypeCount();
+        if ((-1 < param_5) && (param_5 < iVar1)) {
+          pcVar3 = CustomGameTypes_GetGametypeLocalizedName(param_5);
+          return pcVar3;
+        }
+        if ((-1 < (longlong)param_5 - (longlong)iVar1) &&
+           (iVar1 = (int)((longlong)param_5 - (longlong)iVar1),
+           iVar1 < sharedUiInfo.numCustomGameTypes)) {
+          return sharedUiInfo.customGameTypes[iVar1].gameTypeName;
+        }
+      }
+      else {
+        if (param_3 == 26.0) {
+          pcVar3 = LB_FeederItemText(param_1,param_5,(int)param_6,in_stack_0000005c);
+          return pcVar3;
+        }
+        if (param_3 == 35.0) {
+          pcVar3 = LB_FeederItemText_Player(param_1,(int)param_6,in_stack_0000005c);
+          return pcVar3;
+        }
+        if (param_3 == 33.0) {
+          if (-1 < param_5) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = Facebook_GetCount(iVar1);
+            if (param_5 < iVar1) {
+              dVar12 = (double)param_2->textscale;
+              iVar1 = param_2->fontEnum;
+              pSVar6 = ScrPlace_GetActivePlacement(param_1);
+              pFVar7 = UI_GetFontHandle(pSVar6,iVar1,(float)dVar12);
+              iVar1 = CL_ControllerIndexFromClientNum(param_1);
+              pcVar3 = Facebook_FeederItemText
+                                 (iVar1,param_5,(int)param_6,in_stack_0000005c,pFVar7,(float)dVar12)
+              ;
+              return pcVar3;
+            }
+          }
+        }
+        else if (param_3 == 34.0) {
+          if (-1 < param_5) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = EliteClan_GetCount(iVar1);
+            if (param_5 < iVar1) {
+              dVar12 = (double)param_2->textscale;
+              iVar1 = param_2->fontEnum;
+              pSVar6 = ScrPlace_GetActivePlacement(param_1);
+              pFVar7 = UI_GetFontHandle(pSVar6,iVar1,(float)dVar12);
+              iVar1 = CL_ControllerIndexFromClientNum(param_1);
+              pcVar3 = EliteClan_FeederItemText(iVar1,param_5,(int)param_6,pFVar7,(float)dVar12);
+              return pcVar3;
+            }
+          }
+        }
+        else if (param_3 == 37.0) {
+          if (-1 < param_5) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            iVar1 = CL_Demo_EnumCount(iVar1);
+            if (param_5 < iVar1) {
+              iVar1 = CL_ControllerIndexFromClientNum(param_1);
+              iVar1 = CL_Demo_FeederIndexToEnumIndex(iVar1,param_5);
+              iVar10 = CL_ControllerIndexFromClientNum(param_1);
+              pcVar3 = CL_Demo_RecentGames_FeederItemText(iVar10,iVar1);
+              return pcVar3;
+            }
+          }
+        }
+        else {
+          if (param_3 == 36.0) {
+            iVar1 = CL_ControllerIndexFromClientNum(param_1);
+            pcVar3 = OnlineVault_FeederItemText
+                               (iVar1,param_5,(int)param_6,in_stack_0000005c,param_2,(float)dVar12);
+            return pcVar3;
+          }
+          if (param_3 == 1.0) {
+            pcVar3 = UI_FeederItemText_Maps(param_1,param_2,param_5,(int)param_6,in_stack_0000005c);
+            return pcVar3;
           }
         }
       }
     }
   }
-LAB_825b2c64:
-  pcVar5 = (char *)__restgprlr_26(0xffffffff820068af);
-  return pcVar5;
+  return "";
 }
 
 
@@ -5945,156 +5544,142 @@ int UI_FeederDoubleClick(LocalClientNum_t param_1,float param_2,int param_3)
 
 // 825A9210  UI_FeederItemEnabled  (ui_mp/ui_main_mp.cpp:6685)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int UI_FeederItemEnabled(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
+  bool bVar3;
   int iVar2;
-  bool bVar4;
-  int iVar3;
   uint in_r5;
-  double extraout_f1;
-  double dVar5;
+  double dVar4;
   
-  LVar1 = __savegprlr_29((double)param_2,param_1,param_3);
-  dVar5 = extraout_f1;
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  if (dVar5 == 24.0) {
-    bVar4 = PlaylistFeeder_ItemEnabled(LVar1,in_r5);
-    iVar2 = __restgprlr_29(bVar4);
-    return iVar2;
+  dVar4 = (double)param_2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  if (dVar4 == 24.0) {
+    bVar3 = PlaylistFeeder_ItemEnabled(param_1,in_r5);
+    return (uint)bVar3;
   }
-  if (dVar5 == 36.0) {
-    iVar2 = OnlineVault_FeederItemEnabled(iVar2,in_r5);
-    iVar2 = __restgprlr_29(iVar2);
-    return iVar2;
+  if (dVar4 == 36.0) {
+    iVar1 = OnlineVault_FeederItemEnabled(iVar1,in_r5);
+    return iVar1;
   }
-  if (dVar5 == 37.0) {
-    iVar3 = CL_Demo_FeederIndexToEnumIndex(iVar2,in_r5);
-    iVar2 = CL_Demo_EnumIsValidFile(iVar2,iVar3);
-    iVar2 = __restgprlr_29(iVar2);
-    return iVar2;
+  if (dVar4 == 37.0) {
+    iVar2 = CL_Demo_FeederIndexToEnumIndex(iVar1,in_r5);
+    iVar1 = CL_Demo_EnumIsValidFile(iVar1,iVar2);
+    return iVar1;
   }
-  iVar2 = __restgprlr_29(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 825A92D0  MapIsPresentInRotation  (ui_mp/ui_main_mp.cpp:6714)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool MapIsPresentInRotation(char *param_1)
 
 {
   LobbyMapRotation *pLVar1;
-  char *pcVar2;
-  bool bVar5;
-  GameStateInfo *pGVar3;
-  int iVar4;
-  undefined1 uVar6;
-  uint uVar7;
-  <unnamed_type_entry> *p<Var8;
+  bool bVar4;
+  GameStateInfo *pGVar2;
+  int iVar3;
+  uint uVar5;
+  <unnamed_type_entry> *p<Var6;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  bVar5 = Lobby_IsInLobby();
-  if (((bVar5) && (bVar5 = Lobby_AreWeHost(), bVar5)) &&
+  bVar4 = Lobby_IsInLobby();
+  if (((bVar4) && (bVar4 = Lobby_AreWeHost(), bVar4)) &&
      ((xblive_privatematch->current).enabled != false)) {
-    pGVar3 = GameStateInfo_Get();
-    pLVar1 = pGVar3->mapRotation;
-    if (((pLVar1 != (LobbyMapRotation *)0x0) && (pGVar3->usingRotation != 0)) &&
-       (uVar7 = 0, pLVar1->entryCount != 0)) {
-      p<Var8 = pLVar1->entry;
+    pGVar2 = GameStateInfo_Get();
+    pLVar1 = pGVar2->mapRotation;
+    if (((pLVar1 != (LobbyMapRotation *)0x0) && (pGVar2->usingRotation != 0)) &&
+       (uVar5 = 0, pLVar1->entryCount != 0)) {
+      p<Var6 = pLVar1->entry;
       do {
-        iVar4 = I_strncmp(pcVar2,p<Var8->name,0x10);
-        if (iVar4 == 0) {
-          uVar6 = __restgprlr_28(1);
-          return (bool)uVar6;
+        iVar3 = I_strncmp(param_1,p<Var6->name,0x10);
+        if (iVar3 == 0) {
+          return true;
         }
-        uVar7 = uVar7 + 1;
-        p<Var8 = p<Var8 + 1;
-      } while (uVar7 < pLVar1->entryCount);
+        uVar5 = uVar5 + 1;
+        p<Var6 = p<Var6 + 1;
+      } while (uVar5 < pLVar1->entryCount);
     }
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 825A9388  UI_FeederItemImage  (ui_mp/ui_main_mp.cpp:6738)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 Material * UI_FeederItemImage(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  Material *pMVar2;
-  int iVar3;
-  GameStateInfo *pGVar4;
-  bool bVar5;
+  Material *pMVar1;
+  int iVar2;
+  GameStateInfo *pGVar3;
+  bool bVar4;
   int in_r5;
-  int iVar6;
-  char *pcVar7;
-  int *piVar8;
-  double extraout_f1;
+  int iVar5;
+  char *pcVar6;
+  int *piVar7;
   
-  LVar1 = __savegprlr_26((double)param_2,param_1,param_3);
-  if (extraout_f1 == 24.0) {
-    pMVar2 = PlaylistFeeder_ItemImage(LVar1,in_r5);
-    pMVar2 = (Material *)__restgprlr_26(pMVar2);
-    return pMVar2;
+  if (param_2 == 24.0) {
+    pMVar1 = PlaylistFeeder_ItemImage(param_1,in_r5);
+    return pMVar1;
   }
-  if (extraout_f1 == 3.0) {
-    iVar3 = UI_SelectedMap(in_r5);
-    pMVar2 = UI_GetLevelShot(iVar3);
-    pMVar2 = (Material *)__restgprlr_26(pMVar2);
-    return pMVar2;
+  if (param_2 == 3.0) {
+    iVar2 = UI_SelectedMap(in_r5);
+    pMVar1 = UI_GetLevelShot(iVar2);
+    return pMVar1;
   }
-  if (extraout_f1 == 1.0) {
-    pGVar4 = GameStateInfo_Get();
-    iVar3 = UI_GetMapIdForNum(in_r5);
-    if (((pGVar4->usingRotation != 0) && (-1 < in_r5)) && (in_r5 < sharedUiInfo.mapCount)) {
-      pcVar7 = sharedUiInfo.mapList[iVar3].mapLoadName;
-      iVar3 = I_strcmp(pcVar7,"bonus_map");
-      if (iVar3 == 0) {
-        iVar3 = 0;
+  if (param_2 == 1.0) {
+    pGVar3 = GameStateInfo_Get();
+    iVar2 = UI_GetMapIdForNum(in_r5);
+    if (((pGVar3->usingRotation != 0) && (-1 < in_r5)) && (in_r5 < sharedUiInfo.mapCount)) {
+      pcVar6 = sharedUiInfo.mapList[iVar2].mapLoadName;
+      iVar2 = I_strcmp(pcVar6,"bonus_map");
+      if (iVar2 == 0) {
+        iVar2 = 0;
         if (0 < sharedUiInfo.mapCount) {
-          piVar8 = &sharedUiInfo.mapList[0].mapPack;
-          iVar6 = sharedUiInfo.mapCount;
+          piVar7 = &sharedUiInfo.mapList[0].mapPack;
+          iVar5 = sharedUiInfo.mapCount;
           do {
-            if (((0 < *piVar8) &&
+            if (((0 < *piVar7) &&
                 (((accessToSubscriberContent->current).enabled != false ||
-                 (bVar5 = Content_DoWeHaveContentPack(2 << (*piVar8 & 0x3fU)),
-                 iVar6 = sharedUiInfo.mapCount, bVar5)))) &&
-               (bVar5 = MapIsPresentInRotation((char *)(piVar8 + -0x295)),
-               iVar6 = sharedUiInfo.mapCount, bVar5)) goto LAB_825a94c0;
-            iVar3 = iVar3 + 1;
-            piVar8 = piVar8 + 0x29e;
-          } while (iVar3 < iVar6);
+                 (bVar4 = Content_DoWeHaveContentPack(2 << (*piVar7 & 0x3fU)),
+                 iVar5 = sharedUiInfo.mapCount, bVar4)))) &&
+               (bVar4 = MapIsPresentInRotation((char *)(piVar7 + -0x295)),
+               iVar5 = sharedUiInfo.mapCount, bVar4)) goto LAB_825a94c0;
+            iVar2 = iVar2 + 1;
+            piVar7 = piVar7 + 0x29e;
+          } while (iVar2 < iVar5);
         }
       }
       else {
-        bVar5 = MapIsPresentInRotation(pcVar7);
-        if (bVar5) {
+        bVar4 = MapIsPresentInRotation(pcVar6);
+        if (bVar4) {
 LAB_825a94c0:
-          pMVar2 = Material_RegisterHandle("box_check",3);
-          pMVar2 = (Material *)__restgprlr_26(pMVar2);
-          return pMVar2;
+          pMVar1 = Material_RegisterHandle("box_check",3);
+          return pMVar1;
         }
       }
-      if (0xf < pGVar4->mapRotation->entryCount) {
-        pMVar2 = Material_RegisterHandle("box_x",3);
-        pMVar2 = (Material *)__restgprlr_26(pMVar2);
-        return pMVar2;
+      if (0xf < pGVar3->mapRotation->entryCount) {
+        pMVar1 = Material_RegisterHandle("box_x",3);
+        return pMVar1;
       }
-      pMVar2 = Material_RegisterHandle("box_empty",3);
-      pMVar2 = (Material *)__restgprlr_26(pMVar2);
-      return pMVar2;
+      pMVar1 = Material_RegisterHandle("box_empty",3);
+      return pMVar1;
     }
   }
-  pMVar2 = (Material *)__restgprlr_26(0);
-  return pMVar2;
+  return (Material *)0x0;
 }
 
 
@@ -6129,6 +5714,8 @@ void UI_FeederGetColorPulsed(LocalClientNum_t param_1,float *param_2)
 
 // 825A95F0  UI_FeederItemColor  (ui_mp/ui_main_mp.cpp:6810)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6139,234 +5726,217 @@ void UI_FeederItemColor(LocalClientNum_t param_1,itemDef_t *param_2,float param_
 
 {
   float fVar1;
-  LocalClientNum_t LVar3;
-  listBoxDef_s *plVar4;
-  int iVar6;
-  int iVar7;
+  listBoxDef_s *plVar3;
+  int iVar4;
+  int iVar5;
   ulong64 uVar2;
-  bool bVar9;
-  char *pcVar8;
-  longlong lVar10;
-  itemDef_t *piVar11;
-  longlong lVar12;
-  float *pfVar13;
-  ulonglong in_r9;
-  double extraout_f1;
-  double dVar14;
+  bool bVar7;
+  char *pcVar6;
+  itemDef_t *piVar8;
+  bool in_r9;
+  ulonglong uVar9;
+  double dVar10;
   itemDef_t *local_50;
-  itemDef_t *piVar5;
   
-  pfVar13 = (float *)(int)param_7;
-  lVar12 = (longlong)(int)param_6;
-  lVar10 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_26((double)param_3,param_1,lVar10,param_4);
-  piVar5 = (itemDef_t *)lVar10;
-  dVar14 = extraout_f1;
-  piVar11 = piVar5;
-  plVar4 = Item_GetListBoxDef(piVar5);
-  if (plVar4 == (listBoxDef_s *)0x0) {
-    piVar11 = (itemDef_t *)0x1aa0;
+  dVar10 = (double)param_3;
+  piVar8 = param_2;
+  plVar3 = Item_GetListBoxDef(param_2);
+  if (plVar3 == (listBoxDef_s *)0x0) {
+    piVar8 = (itemDef_t *)0x1aa0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1aa0,0
                     ,"%s");
   }
-  if (dVar14 == 17.0) {
-    iVar6 = GetLobbyMemberCount();
-    if ((lVar12 - 1U & 0xffffffff) < 6) {
-      if (((int)(lVar12 - 1U) == 0) || (lVar12 != 2)) {
-        if ((iVar6 == 0) &&
-           ((g_partyData.inParty != 0 && (iVar7 = GetPartyMemberCount(), param_5 < iVar7)))) {
-          piVar11 = (itemDef_t *)param_5;
-          uVar2 = GetPartyMemberXuid(LVar3,param_5);
-          bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-          if (!bVar9) goto LAB_825a9828;
+  if (dVar10 != 17.0) {
+    if (dVar10 != 23.0) {
+      if ((dVar10 == 27.0) || (dVar10 == 28.0)) {
+        GetTeam(param_1,(float)dVar10,(int *)piVar8);
+        if ((-1 < param_5) && (iVar4 = GetTeamMemberCount((int)local_50), param_5 < iVar4)) {
+          piVar8 = local_50;
+          uVar2 = GetTeamMemberXuid(param_1,(int)local_50,param_5);
+          bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+          if (bVar7) goto LAB_825a9720;
+          iVar4 = Party_IsPlayerInPrivateParty(uVar2);
+          if (iVar4 != 0) {
+            Dvar_GetUnpackedColor(ui_myPartyColor,(float *)(int)param_7);
+            return;
+          }
         }
-        if ((-1 < param_5) && (param_5 < iVar6)) goto LAB_825a981c;
+        goto LAB_825a9a68;
       }
-      else {
-        if (iVar6 == 0) {
-          if ((g_partyData.inParty != 0) && (iVar7 = GetPartyMemberCount(), param_5 < iVar7)) {
-            uVar2 = GetPartyMemberXuid(LVar3,param_5);
-            bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-            if (bVar9) {
-              Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
-              __restgprlr_26();
-              return;
-            }
-            goto LAB_825a9700;
-          }
-          if ((itemDef_t *)param_5 == (itemDef_t *)0x0) goto LAB_825a9720;
-        }
-        if (-1 < param_5) {
-          if (iVar6 <= param_5) {
-            Dvar_GetUnpackedColor(lobby_searchingPartyColor,pfVar13);
-            __restgprlr_26();
-            return;
-          }
-          uVar2 = GetLobbyMemberXuid(LVar3,param_5);
-          bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-          if (bVar9) {
-LAB_825a9720:
-            Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
-            __restgprlr_26();
-            return;
-          }
-          iVar6 = Party_IsPlayerInPrivateParty(uVar2);
-          if (iVar6 != 0) {
-            iVar6 = IsLobbyMemberAway(LVar3,param_5);
-            goto LAB_825a96f4;
-          }
-LAB_825a981c:
-          piVar11 = (itemDef_t *)param_5;
-          iVar6 = IsLobbyMemberAway(LVar3,param_5);
-          if (iVar6 != 0) {
-LAB_825a9828:
-            Dvar_GetUnpackedColor(ui_inactiveBaseColor,pfVar13);
-            __restgprlr_26();
-            return;
-          }
-        }
+      if (dVar10 == 24.0) {
+        PlaylistFeeder_ItemColor(param_1,param_2,param_5,(float *)(int)param_7,in_r9);
+        return;
       }
-    }
-  }
-  else if (dVar14 == 23.0) {
-    iVar6 = GetPartyMemberCount();
-    if ((int)lVar12 == 2) {
-      if ((-1 < param_5) && (param_5 < iVar6)) {
-        uVar2 = GetPartyMemberXuid(LVar3,param_5);
-        bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-        if (bVar9) goto LAB_825a9720;
-        iVar6 = IsPartyMemberAway(LVar3,param_5);
-LAB_825a96f4:
-        if (iVar6 == 0) {
-          Dvar_GetUnpackedColor(ui_myPartyColor,pfVar13);
-          __restgprlr_26();
+      if ((dVar10 == 37.0) || (dVar10 == 36.0)) {
+        iVar4 = UI_FeederItemEnabled(param_1,(float)dVar10,(int)piVar8);
+        if ((iVar4 != 0) && (in_r9 != false)) {
+          *(float *)(int)param_7 = (param_2->window).foreColor[0];
+          *(float *)(param_7 + 4) = (param_2->window).foreColor[1];
+          *(float *)(param_7 + 8) = (param_2->window).foreColor[2];
+          *(float *)(param_7 + 0xc) = (param_2->window).foreColor[3];
+          UI_FeederGetColorPulsed(param_1,(float *)(int)param_7);
           return;
         }
-LAB_825a9700:
-        Dvar_GetUnpackedColor(ui_inactivePartyColor,pfVar13);
-        __restgprlr_26();
-        return;
+        if (in_r9 != false) {
+          *(undefined4 *)(int)param_7 = 0;
+          *(float *)(param_7 + 4) = 0.0;
+          *(float *)(param_7 + 8) = 0.0;
+          *(float *)(param_7 + 0xc) = 1.0;
+          return;
+        }
+        goto LAB_825a9a68;
       }
-      if (iVar6 == 0) {
-        Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
-        __restgprlr_26();
-        return;
+      if (dVar10 == 33.0) {
+        piVar8 = (itemDef_t *)param_5;
+        bVar7 = Facebook_FeederItemColor(param_1,param_5,(int)param_6,(float *)(int)param_7);
+        if (bVar7) {
+          return;
+        }
+        goto LAB_825a9a68;
       }
-    }
-    else if (((iVar6 != 0) && (-1 < param_5)) && (param_5 < iVar6)) {
-      piVar11 = (itemDef_t *)param_5;
-      uVar2 = GetPartyMemberXuid(LVar3,param_5);
-      bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-      if ((!bVar9) &&
-         (piVar11 = (itemDef_t *)param_5, iVar6 = IsPartyMemberAway(LVar3,param_5), iVar6 != 0)) {
-        Dvar_GetUnpackedColor(ui_inactiveBaseColor,pfVar13);
-        __restgprlr_26();
-        return;
+      if (dVar10 != 1.0) goto LAB_825a9a68;
+      iVar4 = UI_FeederItemEnabled(param_1,(float)dVar10,(int)piVar8);
+      if (param_5 == 0) {
+        pcVar6 = UI_GetMapLoadNameForCurrentIndex(0);
+        iVar5 = I_strcmp("bonus_map",pcVar6);
+        if (iVar5 == 0) {
+          *(undefined4 *)(int)param_7 = 0x3f7df3b6;
+          *(undefined4 *)(param_7 + 4) = 0x3f68b439;
+          *(undefined4 *)(param_7 + 8) = 0x3e53f7cf;
+          *(undefined4 *)(param_7 + 0xc) = 0x3f800000;
+          goto LAB_825a9b6c;
+        }
       }
-    }
-  }
-  else if ((dVar14 == 27.0) || (dVar14 == 28.0)) {
-    GetTeam(LVar3,(float)dVar14,(int *)piVar11);
-    if ((-1 < param_5) && (iVar6 = GetTeamMemberCount((int)local_50), param_5 < iVar6)) {
-      piVar11 = local_50;
-      uVar2 = GetTeamMemberXuid(LVar3,(int)local_50,param_5);
-      bVar9 = Live_XUIDIsLocalPlayer(uVar2);
-      if (bVar9) goto LAB_825a9720;
-      iVar6 = Party_IsPlayerInPrivateParty(uVar2);
-      if (iVar6 != 0) {
-        Dvar_GetUnpackedColor(ui_myPartyColor,pfVar13);
-        __restgprlr_26();
-        return;
-      }
-    }
-  }
-  else {
-    if (dVar14 == 24.0) {
-      PlaylistFeeder_ItemColor(LVar3,piVar5,param_5,pfVar13,SUB81(in_r9,0));
-      __restgprlr_26();
-      return;
-    }
-    if ((dVar14 == 37.0) || (dVar14 == 36.0)) {
-      iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
-      if ((iVar6 != 0) && ((in_r9 & 0xff) != 0)) {
-        *pfVar13 = (piVar5->window).foreColor[0];
-        pfVar13[1] = (piVar5->window).foreColor[1];
-        pfVar13[2] = (piVar5->window).foreColor[2];
-        pfVar13[3] = (piVar5->window).foreColor[3];
-        UI_FeederGetColorPulsed(LVar3,pfVar13);
-        __restgprlr_26();
-        return;
-      }
-      if ((in_r9 & 0xff) != 0) {
-        *pfVar13 = 0.0;
-        pfVar13[1] = 0.0;
-        pfVar13[2] = 0.0;
-        pfVar13[3] = 1.0;
-        __restgprlr_26();
-        return;
-      }
-    }
-    else if (dVar14 == 33.0) {
-      piVar11 = (itemDef_t *)param_5;
-      bVar9 = Facebook_FeederItemColor(LVar3,param_5,(int)lVar12,pfVar13);
-      if (bVar9) goto LAB_825a9c30;
-    }
-    else if (dVar14 == 1.0) {
-      iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
-      if ((itemDef_t *)param_5 == (itemDef_t *)0x0) {
-        pcVar8 = UI_GetMapLoadNameForCurrentIndex(0);
-        iVar7 = I_strcmp("bonus_map",pcVar8);
-        if (iVar7 != 0) goto LAB_825a9b24;
-        *pfVar13 = 0.992;
-        pfVar13[1] = 0.909;
-        pfVar13[2] = 0.207;
-        pfVar13[3] = 1.0;
+      if (iVar4 == 0) {
+        *(float *)(int)param_7 = (param_2->window).disableColor[0];
+        *(float *)(param_7 + 4) = (param_2->window).disableColor[1];
+        *(float *)(param_7 + 8) = (param_2->window).disableColor[2];
+        fVar1 = (param_2->window).disableColor[3];
       }
       else {
-LAB_825a9b24:
-        if (iVar6 == 0) {
-          *pfVar13 = (piVar5->window).disableColor[0];
-          pfVar13[1] = (piVar5->window).disableColor[1];
-          pfVar13[2] = (piVar5->window).disableColor[2];
-          fVar1 = (piVar5->window).disableColor[3];
-        }
-        else {
-          *pfVar13 = (piVar5->window).foreColor[0];
-          pfVar13[1] = (piVar5->window).foreColor[1];
-          pfVar13[2] = (piVar5->window).foreColor[2];
-          fVar1 = (piVar5->window).foreColor[3];
-        }
-        pfVar13[3] = fVar1;
+        *(float *)(int)param_7 = (param_2->window).foreColor[0];
+        *(float *)(param_7 + 4) = (param_2->window).foreColor[1];
+        *(float *)(param_7 + 8) = (param_2->window).foreColor[2];
+        fVar1 = (param_2->window).foreColor[3];
       }
-      if (((in_r9 & 0xff) != 0) && (iVar6 != 0)) {
-        UI_FeederGetColorPulsed(LVar3,pfVar13);
-        __restgprlr_26();
+      *(float *)(param_7 + 0xc) = fVar1;
+LAB_825a9b6c:
+      if (in_r9 == false) {
         return;
       }
-      goto LAB_825a9c30;
+      if (iVar4 == 0) {
+        return;
+      }
+      UI_FeederGetColorPulsed(param_1,(float *)(int)param_7);
+      return;
     }
-  }
-  iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
-  if (iVar6 != 0) {
-    *pfVar13 = (piVar5->window).foreColor[0];
-    pfVar13[1] = (piVar5->window).foreColor[1];
-    pfVar13[2] = (piVar5->window).foreColor[2];
-    pfVar13[3] = (piVar5->window).foreColor[3];
-    __restgprlr_26();
+    iVar4 = GetPartyMemberCount();
+    if (param_6 != (float *)0x2) {
+      if (((iVar4 != 0) && (-1 < param_5)) && (param_5 < iVar4)) {
+        piVar8 = (itemDef_t *)param_5;
+        uVar2 = GetPartyMemberXuid(param_1,param_5);
+        bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+        if ((!bVar7) &&
+           (piVar8 = (itemDef_t *)param_5, iVar4 = IsPartyMemberAway(param_1,param_5), iVar4 != 0))
+        {
+          Dvar_GetUnpackedColor(ui_inactiveBaseColor,(float *)(int)param_7);
+          return;
+        }
+      }
+      goto LAB_825a9a68;
+    }
+    if ((param_5 < 0) || (iVar4 <= param_5)) {
+      if (iVar4 == 0) {
+        Dvar_GetUnpackedColor(ui_playerPartyColor,(float *)(int)param_7);
+        return;
+      }
+      goto LAB_825a9a68;
+    }
+    uVar2 = GetPartyMemberXuid(param_1,param_5);
+    bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+    if (bVar7) goto LAB_825a9720;
+    iVar4 = IsPartyMemberAway(param_1,param_5);
+LAB_825a96f4:
+    if (iVar4 == 0) {
+      Dvar_GetUnpackedColor(ui_myPartyColor,(float *)(int)param_7);
+      return;
+    }
+LAB_825a9700:
+    Dvar_GetUnpackedColor(ui_inactivePartyColor,(float *)(int)param_7);
     return;
   }
-  *pfVar13 = (piVar5->window).disableColor[0];
-  pfVar13[1] = (piVar5->window).disableColor[1];
-  pfVar13[2] = (piVar5->window).disableColor[2];
-  pfVar13[3] = (piVar5->window).disableColor[3];
-LAB_825a9c30:
-  __restgprlr_26();
+  iVar4 = GetLobbyMemberCount();
+  uVar9 = (longlong)(int)param_6 - 1;
+  if (5 < (uVar9 & 0xffffffff)) goto LAB_825a9a68;
+  if (((int)uVar9 == 0) || ((longlong)(int)param_6 != 2)) {
+    if ((iVar4 == 0) &&
+       ((g_partyData.inParty != 0 && (iVar5 = GetPartyMemberCount(), param_5 < iVar5)))) {
+      piVar8 = (itemDef_t *)param_5;
+      uVar2 = GetPartyMemberXuid(param_1,param_5);
+      bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+      if (!bVar7) goto LAB_825a9828;
+    }
+    if ((param_5 < 0) || (iVar4 <= param_5)) goto LAB_825a9a68;
+  }
+  else {
+    if (iVar4 == 0) {
+      if ((g_partyData.inParty != 0) && (iVar5 = GetPartyMemberCount(), param_5 < iVar5)) {
+        uVar2 = GetPartyMemberXuid(param_1,param_5);
+        bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+        if (bVar7) {
+          Dvar_GetUnpackedColor(ui_playerPartyColor,(float *)(int)param_7);
+          return;
+        }
+        goto LAB_825a9700;
+      }
+      if (param_5 == 0) goto LAB_825a9720;
+    }
+    if (param_5 < 0) goto LAB_825a9a68;
+    if (iVar4 <= param_5) {
+      Dvar_GetUnpackedColor(lobby_searchingPartyColor,(float *)(int)param_7);
+      return;
+    }
+    uVar2 = GetLobbyMemberXuid(param_1,param_5);
+    bVar7 = Live_XUIDIsLocalPlayer(uVar2);
+    if (bVar7) {
+LAB_825a9720:
+      Dvar_GetUnpackedColor(ui_playerPartyColor,(float *)(int)param_7);
+      return;
+    }
+    iVar4 = Party_IsPlayerInPrivateParty(uVar2);
+    if (iVar4 != 0) {
+      iVar4 = IsLobbyMemberAway(param_1,param_5);
+      goto LAB_825a96f4;
+    }
+  }
+  piVar8 = (itemDef_t *)param_5;
+  iVar4 = IsLobbyMemberAway(param_1,param_5);
+  if (iVar4 != 0) {
+LAB_825a9828:
+    Dvar_GetUnpackedColor(ui_inactiveBaseColor,(float *)(int)param_7);
+    return;
+  }
+LAB_825a9a68:
+  iVar4 = UI_FeederItemEnabled(param_1,(float)dVar10,(int)piVar8);
+  if (iVar4 == 0) {
+    *(float *)(int)param_7 = (param_2->window).disableColor[0];
+    *(float *)(param_7 + 4) = (param_2->window).disableColor[1];
+    *(float *)(param_7 + 8) = (param_2->window).disableColor[2];
+    *(float *)(param_7 + 0xc) = (param_2->window).disableColor[3];
+    return;
+  }
+  *(float *)(int)param_7 = (param_2->window).foreColor[0];
+  *(float *)(param_7 + 4) = (param_2->window).foreColor[1];
+  *(float *)(param_7 + 8) = (param_2->window).foreColor[2];
+  *(float *)(param_7 + 0xc) = (param_2->window).foreColor[3];
   return;
 }
 
 
 // 825A9C40  UI_FeederBackColor  (ui_mp/ui_main_mp.cpp:7042)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6376,79 +5946,51 @@ void UI_FeederBackColor(LocalClientNum_t param_1,itemDef_t *param_2,float param_
                        float *param_5)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
   int iVar4;
   int iVar5;
   PartyData *pPVar6;
   longlong lVar7;
-  ulonglong uVar8;
-  undefined4 *in_r7;
-  undefined8 *puVar9;
-  undefined4 *puVar10;
-  int iVar11;
-  double dVar12;
-  undefined8 local_90;
-  undefined4 local_88;
-  undefined4 local_84;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  float *in_r7;
+  float *pfVar8;
+  float local_90 [36];
   
-  uVar8 = (ulonglong)(int)param_5;
-  lVar7 = (longlong)(int)param_2;
-  dVar12 = (double)__savegprlr_28((double)param_3,param_1,lVar7,param_4);
-  local_90 = 0x3e4ccccd3e4ccccd;
-  local_88 = 0x3e4ccccd;
-  local_84 = 0x3f000000;
-  local_80 = 0x3e19999a;
-  local_7c = 0x3e19999a;
-  local_78 = 0x3e19999a;
-  local_74 = 0x3f000000;
-  local_50 = 0x3e449ba6;
-  local_4c = 0x3e8ac083;
-  local_48 = 0x3ebef9db;
-  local_44 = 0x3f000000;
-  local_40 = 0x3e1cac08;
-  local_3c = 0x3e591687;
-  local_38 = 0x3e96872b;
-  local_34 = 0x3f000000;
-  local_70 = 0x3ebef9db;
-  local_6c = 0x3e449ba6;
-  local_68 = 0x3e449ba6;
-  local_64 = 0x3f000000;
-  local_60 = 0x3e96872b;
-  local_5c = 0x3e1cac08;
-  local_58 = 0x3e1cac08;
-  local_54 = 0x3f000000;
-  if ((int)dVar12 - 0x11U < 0xc) {
-    iVar11 = (int)uVar8;
-    iVar4 = iVar11 >> 1;
-    switch((int)dVar12) {
+  lVar7 = (longlong)(int)param_5;
+  local_90[0] = 0.2;
+  local_90[1] = 0.2;
+  local_90[2] = 0.2;
+  local_90[3] = 0.5;
+  local_90[4] = 0.15;
+  local_90[5] = 0.15;
+  local_90[6] = 0.15;
+  local_90[7] = 0.5;
+  local_90[0x10] = 0.192;
+  local_90[0x11] = 0.271;
+  local_90[0x12] = 0.373;
+  local_90[0x13] = 0.5;
+  local_90[0x14] = 0.153;
+  local_90[0x15] = 0.212;
+  local_90[0x16] = 0.294;
+  local_90[0x17] = 0.5;
+  local_90[8] = 0.373;
+  local_90[9] = 0.192;
+  local_90[10] = 0.192;
+  local_90[0xb] = 0.5;
+  local_90[0xc] = 0.294;
+  local_90[0xd] = 0.153;
+  local_90[0xe] = 0.153;
+  local_90[0xf] = 0.5;
+  if ((int)param_3 - 0x11U < 0xc) {
+    iVar4 = (int)param_5 >> 1;
+    switch((int)param_3) {
     case 0x11:
     case 0x17:
-      puVar9 = &local_90;
-      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
-      {
-        puVar9 = (undefined8 *)&local_80;
+      pfVar8 = local_90;
+      if (lVar7 == ((longlong)iVar4 + (ulonglong)((int)param_5 < 0 && ((uint)param_5 & 1) != 0) &
+                   0x7fffffff) << 1) {
+        pfVar8 = local_90 + 4;
       }
       break;
     case 0x12:
@@ -6458,74 +6000,70 @@ void UI_FeederBackColor(LocalClientNum_t param_1,itemDef_t *param_2,float param_
       }
       pPVar6 = Lobby_GetPartyData();
       if ((((pPVar6->gameStartTime != 0) || ((xblive_privatematch->current).enabled != false)) ||
-          (iVar11 == 0)) || (iVar11 < iVar5)) goto switchD_825a9d2c_caseD_13;
-      puVar9 = &local_90;
-      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
-      {
-        *in_r7 = local_80;
-        in_r7[1] = local_7c;
-        in_r7[2] = local_78;
-        in_r7[3] = local_74;
-        __restgprlr_28();
+          (param_5 == (float *)0x0)) || ((int)param_5 < iVar5)) goto switchD_825a9d2c_caseD_13;
+      pfVar8 = local_90;
+      if (lVar7 == ((longlong)iVar4 + (ulonglong)((int)param_5 < 0 && ((uint)param_5 & 1) != 0) &
+                   0x7fffffff) << 1) {
+        *in_r7 = local_90[4];
+        in_r7[1] = local_90[5];
+        in_r7[2] = local_90[6];
+        in_r7[3] = local_90[7];
         return;
       }
       break;
     default:
       goto switchD_825a9d2c_caseD_13;
     case 0x1b:
-      puVar10 = &local_50;
-      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
-      {
-        puVar10 = &local_40;
+      pfVar8 = local_90 + 0x10;
+      if (lVar7 == ((longlong)iVar4 + (ulonglong)((int)param_5 < 0 && ((uint)param_5 & 1) != 0) &
+                   0x7fffffff) << 1) {
+        pfVar8 = local_90 + 0x14;
       }
-      uVar1 = puVar10[1];
-      uVar2 = puVar10[2];
-      uVar3 = puVar10[3];
-      *in_r7 = *puVar10;
-      in_r7[1] = uVar1;
-      in_r7[2] = uVar2;
-      in_r7[3] = uVar3;
-      __restgprlr_28();
+      fVar1 = pfVar8[1];
+      fVar2 = pfVar8[2];
+      fVar3 = pfVar8[3];
+      *in_r7 = *pfVar8;
+      in_r7[1] = fVar1;
+      in_r7[2] = fVar2;
+      in_r7[3] = fVar3;
       return;
     case 0x1c:
-      puVar10 = &local_70;
-      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
-      {
-        puVar10 = &local_60;
+      pfVar8 = local_90 + 8;
+      if (lVar7 == ((longlong)iVar4 + (ulonglong)((int)param_5 < 0 && ((uint)param_5 & 1) != 0) &
+                   0x7fffffff) << 1) {
+        pfVar8 = local_90 + 0xc;
       }
-      uVar1 = puVar10[1];
-      uVar2 = puVar10[2];
-      uVar3 = puVar10[3];
-      *in_r7 = *puVar10;
-      in_r7[1] = uVar1;
-      in_r7[2] = uVar2;
-      in_r7[3] = uVar3;
-      __restgprlr_28();
+      fVar1 = pfVar8[1];
+      fVar2 = pfVar8[2];
+      fVar3 = pfVar8[3];
+      *in_r7 = *pfVar8;
+      in_r7[1] = fVar1;
+      in_r7[2] = fVar2;
+      in_r7[3] = fVar3;
       return;
     }
-    uVar1 = *(undefined4 *)((int)puVar9 + 4);
-    uVar2 = *(undefined4 *)(puVar9 + 1);
-    uVar3 = *(undefined4 *)((int)puVar9 + 0xc);
-    *in_r7 = *(undefined4 *)puVar9;
-    in_r7[1] = uVar1;
-    in_r7[2] = uVar2;
-    in_r7[3] = uVar3;
-    __restgprlr_28();
+    fVar1 = pfVar8[1];
+    fVar2 = pfVar8[2];
+    fVar3 = pfVar8[3];
+    *in_r7 = *pfVar8;
+    in_r7[1] = fVar1;
+    in_r7[2] = fVar2;
+    in_r7[3] = fVar3;
     return;
   }
 switchD_825a9d2c_caseD_13:
-  iVar4 = (int)lVar7;
-  *in_r7 = *(undefined4 *)(iVar4 + 0x6c);
-  in_r7[1] = *(undefined4 *)(iVar4 + 0x70);
-  in_r7[2] = *(undefined4 *)(iVar4 + 0x74);
-  in_r7[3] = *(undefined4 *)(iVar4 + 0x78);
-  __restgprlr_28();
+  *in_r7 = (param_2->window).backColor[0];
+  in_r7[1] = (param_2->window).backColor[1];
+  in_r7[2] = (param_2->window).backColor[2];
+  in_r7[3] = (param_2->window).backColor[3];
   return;
 }
 
 
 // 825B3078  UI_FeederData  (ui_mp/ui_main_mp.cpp:7089)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6534,49 +6072,38 @@ bool UI_FeederData(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,cha
                   float *param_5)
 
 {
-  ulonglong uVar1;
-  listBoxDef_s *plVar2;
-  int iVar3;
-  undefined1 uVar4;
-  char *pcVar5;
+  listBoxDef_s *plVar1;
+  int iVar2;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_27(param_1);
   *param_4 = (char *)0x0;
-  plVar2 = Item_GetListBoxDef(param_2);
-  if (plVar2 != (listBoxDef_s *)0x0) {
-    iVar3 = I_stricmp(param_3,"count");
-    if (iVar3 == 0) {
-      iVar3 = UI_FeederCount((LocalClientNum_t)uVar1,param_2->special);
-      *param_5 = (float)(longlong)iVar3;
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+  plVar1 = Item_GetListBoxDef(param_2);
+  if (plVar1 != (listBoxDef_s *)0x0) {
+    iVar2 = I_stricmp(param_3,"count");
+    if (iVar2 == 0) {
+      iVar2 = UI_FeederCount(param_1,param_2->special);
+      *param_5 = (float)(longlong)iVar2;
+      return true;
     }
-    iVar3 = I_stricmp(param_3,"selection");
-    if (iVar3 == 0) {
-      *param_5 = (float)(longlong)
-                        *(int *)((int)(param_2->window).dynamicFlags +
-                                (int)((uVar1 + 0x5f & 0xffffffff) << 2) + -0x48);
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+    iVar2 = I_stricmp(param_3,"selection");
+    if (iVar2 == 0) {
+      *param_5 = (float)(longlong)param_2->cursorPos[param_1];
+      return true;
     }
-    iVar3 = I_stricmp(param_3,"start");
-    if (iVar3 == 0) {
-      *param_5 = (float)(longlong)*(int *)((int)plVar2->startPos + (int)((uVar1 & 0xffffffff) << 2))
-      ;
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+    iVar2 = I_stricmp(param_3,"start");
+    if (iVar2 == 0) {
+      *param_5 = (float)(longlong)plVar1->startPos[param_1];
+      return true;
     }
-    pcVar5 = "enabled";
-    iVar3 = I_stricmp(param_3,"enabled");
-    if (iVar3 == 0) {
-      iVar3 = UI_FeederItemEnabled((LocalClientNum_t)uVar1,param_2->special,(int)pcVar5);
-      *param_5 = (float)(longlong)iVar3;
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+    pcVar3 = "enabled";
+    iVar2 = I_stricmp(param_3,"enabled");
+    if (iVar2 == 0) {
+      iVar2 = UI_FeederItemEnabled(param_1,param_2->special,(int)pcVar3);
+      *param_5 = (float)(longlong)iVar2;
+      return true;
     }
   }
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -6597,6 +6124,8 @@ bool UI_FeederDataExtended
 
 // 825AE528  UI_OverrideCursorPos  (ui_mp/ui_main_mp.cpp:7132)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6606,304 +6135,259 @@ void UI_OverrideCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 {
   float fVar1;
   uint uVar2;
+  bool bVar9;
   int iVar3;
-  ulonglong uVar4;
-  LocalClientNum_t LVar5;
-  bool bVar12;
+  uiInfo_s *puVar4;
+  int iVar5;
   int iVar6;
-  uiInfo_s *puVar7;
-  int iVar8;
-  int iVar9;
-  listBoxDef_s *plVar10;
-  char *pcVar11;
-  ulonglong uVar13;
-  longlong lVar14;
-  int *piVar15;
-  double dVar16;
-  double dVar17;
+  listBoxDef_s *plVar7;
+  char *pcVar8;
+  ulonglong uVar10;
+  longlong lVar11;
+  int *piVar12;
+  double dVar13;
+  double dVar14;
   
-  uVar4 = __savegprlr_22(param_1);
   fVar1 = param_2->special;
-  dVar17 = 17.0;
-  dVar16 = 23.0;
-  LVar5 = (LocalClientNum_t)uVar4;
-  if ((fVar1 != 17.0) && (fVar1 != 23.0)) {
-    bVar12 = GetTeam(LVar5,fVar1,(int *)param_2);
-    if (!bVar12) {
-      fVar1 = param_2->special;
-      if (fVar1 == 3.0) {
-        iVar6 = UI_GetListIndexFromMapIndex((ui_currentFeederMapIndex->current).integer);
-        *(int *)((int)(param_2->window).dynamicFlags +
-                (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) = iVar6;
-        puVar7 = UI_GetClientInfo(LVar5);
-        Menu_SetFeederSelection(&puVar7->uiDC,param_2->parent,3,iVar6,(char *)0x0);
-        __restgprlr_22();
-        return;
-      }
-      if (fVar1 == 24.0) {
-        PlaylistFeeder_OverrideCursorPos(LVar5,param_2);
-        __restgprlr_22();
-        return;
-      }
-      if (fVar1 == 2.0) {
-        plVar10 = (param_2->typeData).listBox;
-        iVar6 = (int)((uVar4 + 4 & 0x3fffffff) << 2);
-        if (*(int *)((int)plVar10->startPos + iVar6) == 0) {
-          *(undefined4 *)
-           ((int)(param_2->window).dynamicFlags + (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) =
-               0xffffffff;
-          __restgprlr_22();
-          return;
-        }
-        iVar3 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
-        iVar9 = (int)((uVar4 & 0x3fffffff) << 2);
-        iVar8 = *(int *)((int)plVar10->startPos + iVar9);
-        if (*(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) < iVar8) {
-          *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) = iVar8;
-        }
-        iVar8 = *(int *)((int)plVar10->startPos + iVar6);
-        if (iVar8 <= *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48)) {
-          *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) = iVar8 + -1;
-        }
-        uVar13 = (ulonglong)(uint)sharedUiInfo.serverStatus.currentServer;
-        if (sharedUiInfo.serverStatus.currentServer < sharedUiInfo.serverStatus.numDisplayServers) {
-LAB_825ae6d4:
-          if ((int)uVar13 < 0) goto LAB_825aed34;
-        }
-        else {
-          uVar13 = (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers - 1;
-          if (0 < (longlong)uVar13) {
-            sharedUiInfo.serverStatus.currentServer = (int)uVar13;
-            goto LAB_825ae6d4;
-          }
-          uVar13 = 0;
-          sharedUiInfo.serverStatus.currentServer = 0;
-        }
-        uVar2 = *(uint *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48);
-        if (((int)uVar2 < *(int *)((int)plVar10->startPos + iVar9)) ||
-           (*(int *)((int)plVar10->startPos + iVar6) < (int)uVar2)) goto LAB_825aed34;
-        iVar8 = Item_ListBox_MaxScroll(LVar5,param_2);
-        lVar14 = (ulonglong)*(uint *)((int)plVar10->startPos + iVar9) + (uVar13 - uVar2);
-        if (iVar8 <= (int)lVar14) {
-          lVar14 = (longlong)iVar8;
-        }
-        iVar8 = *(int *)((int)plVar10->startPos + iVar6);
-        *(uint *)((int)plVar10->startPos + iVar9) =
-             -((int)(uint)lVar14 >> 0x1f) - (uint)(lVar14 != 0) & (uint)lVar14;
-        *(int *)((int)plVar10->startPos + iVar6) = iVar8 + (int)(uVar13 - uVar2);
-        *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) =
-             sharedUiInfo.serverStatus.currentServer;
-      }
-      if (param_2->special == 25.0) {
-        uVar13 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
-        iVar6 = CustomGameTypes_GetGametypeCount();
-        if ((longlong)((longlong)iVar6 + uVar13) < 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                          0x1c49,0,"%s");
-        }
-        uVar13 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
-        iVar8 = CustomGameTypes_GetGametypeCount();
-        iVar6 = sharedUiInfo.numCustomGameTypes;
-        if ((longlong)iVar8 + uVar13 == 0) {
-LAB_825ae7b0:
-          *(undefined4 *)
-           ((int)(param_2->window).dynamicFlags + (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) =
-               0;
-          __restgprlr_22();
-          return;
-        }
-        iVar8 = (int)((uVar4 + 0x5f & 0xffffffff) << 2);
-        iVar9 = CustomGameTypes_GetGametypeCount();
-        iVar3 = sharedUiInfo.numCustomGameTypes;
-        if (iVar9 + iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
-          iVar6 = CustomGameTypes_GetGametypeCount();
-          *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = iVar6 + iVar3 + -1;
-          __restgprlr_22();
-          return;
-        }
-      }
-      else {
-        if (param_2->special == 26.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1c5b,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          LB_OverrideCursorPos
-                    (iVar6,(int *)((int)(param_2->window).dynamicFlags +
-                                  (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        if (param_2->special == 29.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1c69,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
-          FriendsMenu_FeederOverrideCursorPos
-                    (iVar8,iVar6,
-                     (int *)((int)(param_2->window).dynamicFlags +
-                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        if (param_2->special == 31.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1c77,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
-          MeetPlayer_FeederOverrideCursorPos
-                    (iVar8,iVar6,
-                     (int *)((int)(param_2->window).dynamicFlags +
-                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        if (param_2->special == 32.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1c85,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          LiveParty_FeederOverrideCursorPos
-                    (iVar6,(int *)((int)(param_2->window).dynamicFlags +
-                                  (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        if (param_2->special == 33.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1c93,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
-          Facebook_FeederOverrideCursorPos
-                    (iVar8,iVar6,
-                     (int *)((int)(param_2->window).dynamicFlags +
-                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        if (param_2->special == 34.0) {
-          plVar10 = Item_GetListBoxDef(param_2);
-          if (plVar10 == (listBoxDef_s *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1ca1,0,"%s");
-          }
-          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
-          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
-          EliteClan_FeederOverrideCursorPos
-                    (iVar8,iVar6,
-                     (int *)((int)(param_2->window).dynamicFlags +
-                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
-                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
-        }
-        fVar1 = param_2->special;
-        if (fVar1 == 37.0) {
-          iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-          iVar6 = CL_Demo_EnumCount(iVar6);
-          if (iVar6 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
-                            0x1cad,0,"%s");
-          }
-          iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-          iVar6 = CL_Demo_EnumCount(iVar6);
-          if (iVar6 == 0) goto LAB_825ae7b0;
-          iVar8 = (int)((uVar4 + 0x5f & 0xffffffff) << 2);
-          if (iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
-            *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = iVar6 + -1;
-            __restgprlr_22();
-            return;
-          }
-        }
-        else {
-          if (fVar1 == 36.0) {
-            iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-            OnlineVault_FeederOverrideCursorPos(iVar6,param_2);
-            __restgprlr_22();
-            return;
-          }
-          if (fVar1 == 1.0) {
-            iVar8 = UI_GetMapCount();
-            iVar6 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
-            if (iVar8 <= *(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48)) {
-              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
-            }
-            if (iVar8 == 0) {
-              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
-              Dvar_SetStringByName("ui_selectedFeederMap","");
-              __restgprlr_22();
-              return;
-            }
-            bVar12 = Dvar_GetBool("ui_mapPackChanged");
-            if (bVar12) {
-              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
-              Dvar_SetBoolByName("ui_mapPackChanged",false);
-              __restgprlr_22();
-              return;
-            }
-            pcVar11 = UI_GetMapLoadNameForCurrentIndex
-                                (*(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48));
-            iVar8 = I_strcmp((ui_selectedFeederMap->current).string,pcVar11);
-            if (iVar8 != 0) {
-              iVar8 = UI_GetIndexForMapLoadName((ui_selectedFeederMap->current).string);
-              *(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = iVar8;
-              pcVar11 = UI_GetMapLoadNameForCurrentIndex(iVar8);
-              Dvar_SetStringByName("ui_selectedFeederMap",pcVar11);
-              __restgprlr_22();
-              return;
-            }
-          }
-        }
-      }
-      goto LAB_825aed34;
+  dVar14 = 17.0;
+  dVar13 = 23.0;
+  if (((fVar1 == 17.0) || (fVar1 == 23.0)) || (bVar9 = GetTeam(param_1,fVar1,(int *)param_2), bVar9)
+     ) {
+    if ((double)param_2->special == dVar14) {
+      iVar3 = GetLobbyMemberCount();
     }
+    else if ((double)param_2->special == dVar13) {
+      iVar3 = GetPartyMemberCount();
+    }
+    else {
+      iVar3 = GetTeamMemberCount(0);
+    }
+    if (iVar3 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1bef
+                      ,0,"%s\n\t(count) = %i");
+    }
+    piVar12 = param_2->cursorPos + param_1;
+    if (iVar3 == 0) {
+      param_2->cursorPos[param_1] = 0;
+    }
+    else if (iVar3 <= param_2->cursorPos[param_1]) {
+      *piVar12 = iVar3 + -1;
+    }
+    plVar7 = (param_2->typeData).listBox;
+    if (plVar7 == (listBoxDef_s *)0x0) {
+      return;
+    }
+    iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+    if (*piVar12 < plVar7->startPos[param_1]) {
+      plVar7->startPos[param_1] = *piVar12;
+    }
+    if (*piVar12 - iVar3 < plVar7->startPos[param_1]) {
+      return;
+    }
+    plVar7->startPos[param_1] = (*piVar12 - iVar3) + 1;
+    return;
   }
-  if ((double)param_2->special == dVar17) {
-    iVar6 = GetLobbyMemberCount();
+  fVar1 = param_2->special;
+  if (fVar1 == 3.0) {
+    iVar3 = UI_GetListIndexFromMapIndex((ui_currentFeederMapIndex->current).integer);
+    param_2->cursorPos[param_1] = iVar3;
+    puVar4 = UI_GetClientInfo(param_1);
+    Menu_SetFeederSelection(&puVar4->uiDC,param_2->parent,3,iVar3,(char *)0x0);
+    return;
   }
-  else if ((double)param_2->special == dVar16) {
-    iVar6 = GetPartyMemberCount();
+  if (fVar1 == 24.0) {
+    PlaylistFeeder_OverrideCursorPos(param_1,param_2);
+    return;
+  }
+  if (fVar1 == 2.0) {
+    plVar7 = (param_2->typeData).listBox;
+    if (plVar7->endPos[param_1] == 0) {
+      param_2->cursorPos[param_1] = -1;
+      return;
+    }
+    if (param_2->cursorPos[param_1] < plVar7->startPos[param_1]) {
+      param_2->cursorPos[param_1] = plVar7->startPos[param_1];
+    }
+    if (plVar7->endPos[param_1] <= param_2->cursorPos[param_1]) {
+      param_2->cursorPos[param_1] = plVar7->endPos[param_1] + -1;
+    }
+    uVar10 = (ulonglong)(uint)sharedUiInfo.serverStatus.currentServer;
+    if (sharedUiInfo.serverStatus.currentServer < sharedUiInfo.serverStatus.numDisplayServers) {
+LAB_825ae6d4:
+      if ((int)uVar10 < 0) {
+        return;
+      }
+    }
+    else {
+      uVar10 = (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers - 1;
+      if (0 < (longlong)uVar10) {
+        sharedUiInfo.serverStatus.currentServer = (int)uVar10;
+        goto LAB_825ae6d4;
+      }
+      uVar10 = 0;
+      sharedUiInfo.serverStatus.currentServer = 0;
+    }
+    uVar2 = param_2->cursorPos[param_1];
+    if ((int)uVar2 < plVar7->startPos[param_1]) {
+      return;
+    }
+    if (plVar7->endPos[param_1] < (int)uVar2) {
+      return;
+    }
+    iVar3 = Item_ListBox_MaxScroll(param_1,param_2);
+    lVar11 = (ulonglong)(uint)plVar7->startPos[param_1] + (uVar10 - uVar2);
+    if (iVar3 <= (int)lVar11) {
+      lVar11 = (longlong)iVar3;
+    }
+    plVar7->startPos[param_1] = -((int)(uint)lVar11 >> 0x1f) - (uint)(lVar11 != 0) & (uint)lVar11;
+    plVar7->endPos[param_1] = plVar7->endPos[param_1] + (int)(uVar10 - uVar2);
+    param_2->cursorPos[param_1] = sharedUiInfo.serverStatus.currentServer;
+  }
+  if (param_2->special == 25.0) {
+    uVar10 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
+    iVar3 = CustomGameTypes_GetGametypeCount();
+    if ((longlong)((longlong)iVar3 + uVar10) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c49
+                      ,0,"%s");
+    }
+    uVar10 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
+    iVar5 = CustomGameTypes_GetGametypeCount();
+    iVar3 = sharedUiInfo.numCustomGameTypes;
+    if ((longlong)iVar5 + uVar10 == 0) {
+LAB_825ae7b0:
+      param_2->cursorPos[param_1] = 0;
+      return;
+    }
+    iVar6 = CustomGameTypes_GetGametypeCount();
+    iVar5 = sharedUiInfo.numCustomGameTypes;
+    if (iVar6 + iVar3 <= param_2->cursorPos[param_1]) {
+      iVar3 = CustomGameTypes_GetGametypeCount();
+      param_2->cursorPos[param_1] = iVar3 + iVar5 + -1;
+      return;
+    }
   }
   else {
-    iVar6 = GetTeamMemberCount(0);
-  }
-  if (iVar6 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1bef,0
-                    ,"%s\n\t(count) = %i");
-  }
-  iVar8 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
-  piVar15 = (int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48);
-  if (iVar6 == 0) {
-    *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = 0;
-  }
-  else if (iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
-    *piVar15 = iVar6 + -1;
-  }
-  plVar10 = (param_2->typeData).listBox;
-  if (plVar10 != (listBoxDef_s *)0x0) {
-    iVar8 = Item_ListBox_Viewmax(LVar5,param_2);
-    iVar6 = (int)((uVar4 & 0x3fffffff) << 2);
-    if (*piVar15 < *(int *)((int)plVar10->startPos + iVar6)) {
-      *(int *)((int)plVar10->startPos + iVar6) = *piVar15;
+    if (param_2->special == 26.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1c5b,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      LB_OverrideCursorPos(iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
     }
-    if (*(int *)((int)plVar10->startPos + iVar6) <= *piVar15 - iVar8) {
-      *(int *)((int)plVar10->startPos + iVar6) = (*piVar15 - iVar8) + 1;
+    if (param_2->special == 29.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1c69,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      iVar5 = CL_ControllerIndexFromClientNum(param_1);
+      FriendsMenu_FeederOverrideCursorPos
+                (iVar5,iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
+    }
+    if (param_2->special == 31.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1c77,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      iVar5 = CL_ControllerIndexFromClientNum(param_1);
+      MeetPlayer_FeederOverrideCursorPos
+                (iVar5,iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
+    }
+    if (param_2->special == 32.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1c85,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      LiveParty_FeederOverrideCursorPos
+                (iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
+    }
+    if (param_2->special == 33.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1c93,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      iVar5 = CL_ControllerIndexFromClientNum(param_1);
+      Facebook_FeederOverrideCursorPos
+                (iVar5,iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
+    }
+    if (param_2->special == 34.0) {
+      plVar7 = Item_GetListBoxDef(param_2);
+      if (plVar7 == (listBoxDef_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1ca1,0,"%s");
+      }
+      iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+      iVar5 = CL_ControllerIndexFromClientNum(param_1);
+      EliteClan_FeederOverrideCursorPos
+                (iVar5,iVar3,param_2->cursorPos + param_1,plVar7->startPos + param_1);
+    }
+    fVar1 = param_2->special;
+    if (fVar1 == 37.0) {
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      iVar3 = CL_Demo_EnumCount(iVar3);
+      if (iVar3 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1cad,0,"%s");
+      }
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      iVar3 = CL_Demo_EnumCount(iVar3);
+      if (iVar3 == 0) goto LAB_825ae7b0;
+      if (iVar3 <= param_2->cursorPos[param_1]) {
+        param_2->cursorPos[param_1] = iVar3 + -1;
+        return;
+      }
+    }
+    else {
+      if (fVar1 == 36.0) {
+        iVar3 = CL_ControllerIndexFromClientNum(param_1);
+        OnlineVault_FeederOverrideCursorPos(iVar3,param_2);
+        return;
+      }
+      if (fVar1 == 1.0) {
+        iVar3 = UI_GetMapCount();
+        if (iVar3 <= param_2->cursorPos[param_1]) {
+          param_2->cursorPos[param_1] = 0;
+        }
+        if (iVar3 == 0) {
+          param_2->cursorPos[param_1] = 0;
+          Dvar_SetStringByName("ui_selectedFeederMap","");
+          return;
+        }
+        bVar9 = Dvar_GetBool("ui_mapPackChanged");
+        if (bVar9) {
+          param_2->cursorPos[param_1] = 0;
+          Dvar_SetBoolByName("ui_mapPackChanged",false);
+          return;
+        }
+        pcVar8 = UI_GetMapLoadNameForCurrentIndex(param_2->cursorPos[param_1]);
+        iVar3 = I_strcmp((ui_selectedFeederMap->current).string,pcVar8);
+        if (iVar3 != 0) {
+          iVar3 = UI_GetIndexForMapLoadName((ui_selectedFeederMap->current).string);
+          param_2->cursorPos[param_1] = iVar3;
+          pcVar8 = UI_GetMapLoadNameForCurrentIndex(iVar3);
+          Dvar_SetStringByName("ui_selectedFeederMap",pcVar8);
+          return;
+        }
+      }
     }
   }
-LAB_825aed34:
-  __restgprlr_22();
   return;
 }
 
 
 // 825AED48  UI_FeederSelection  (ui_mp/ui_main_mp.cpp:7392)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6911,148 +6395,147 @@ LAB_825aed34:
 void UI_FeederSelection(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
   ulonglong in_r5;
-  double extraout_f1;
-  double dVar6;
+  double dVar5;
   
-  LVar1 = __savegprlr_29((double)param_2,param_1,param_3);
-  uVar2 = (uint)in_r5;
-  dVar6 = extraout_f1;
-  if ((int)uVar2 < 0) {
+  dVar5 = (double)param_2;
+  uVar1 = (uint)in_r5;
+  if ((int)uVar1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1ce4,0
                     ,"%s");
   }
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (dVar6 == 3.0) {
-    uVar2 = UI_SelectedMap(uVar2);
-    uVar2 = -((int)uVar2 >> 0x1f) - 1U & uVar2;
-    Dvar_SetInt(ui_currentMap,uVar2);
-    Dvar_SetInt(ui_currentFeederMapIndex,uVar2);
-    __restgprlr_29();
+  if (dVar5 == 3.0) {
+    uVar1 = UI_SelectedMap(uVar1);
+    uVar1 = -((int)uVar1 >> 0x1f) - 1U & uVar1;
+    Dvar_SetInt(ui_currentMap,uVar1);
+    Dvar_SetInt(ui_currentFeederMapIndex,uVar1);
     return;
   }
-  if (dVar6 == 1.0) {
-    iVar3 = UI_GetMapIdForNum(uVar2);
-    if ((-1 < iVar3) && (iVar3 < sharedUiInfo.mapCount)) {
-      Dvar_SetString(ui_selectedFeederMap,sharedUiInfo.mapList[iVar3].mapLoadName);
-      __restgprlr_29();
+  if (dVar5 == 1.0) {
+    iVar2 = UI_GetMapIdForNum(uVar1);
+    if (iVar2 < 0) {
       return;
     }
-    goto LAB_825af1a0;
+    if (sharedUiInfo.mapCount <= iVar2) {
+      return;
+    }
+    Dvar_SetString(ui_selectedFeederMap,sharedUiInfo.mapList[iVar2].mapLoadName);
+    return;
   }
-  if (dVar6 == 2.0) {
+  if (dVar5 == 2.0) {
     if (0 < sharedUiInfo.serverStatus.numDisplayServers) {
-      sharedUiInfo.serverStatus.currentServer = uVar2;
+      sharedUiInfo.serverStatus.currentServer = uVar1;
     }
     LAN_GetServerInfo((ui_netSource->current).integer,
                       *(int *)((int)sharedUiInfo.serverStatus.displayServers +
                               (int)((in_r5 & 0xffffffff) << 2)),info,0x400);
-    __restgprlr_29();
     return;
   }
-  if (dVar6 == 6.0) {
-    uiInfoArray[LVar1].playerIndex = uVar2;
-    __restgprlr_29();
+  if (dVar5 == 6.0) {
+    uiInfoArray[param_1].playerIndex = uVar1;
     return;
   }
-  if (dVar6 == 17.0) {
-    if (-1 < (int)uVar2) goto LAB_825af1a0;
-    iVar3 = 0x1d12;
+  if (dVar5 == 17.0) {
+    if (-1 < (int)uVar1) {
+      return;
+    }
+    iVar2 = 0x1d12;
   }
-  else if (dVar6 == 23.0) {
-    if (-1 < (int)uVar2) goto LAB_825af1a0;
-    iVar3 = 0x1d17;
+  else if (dVar5 == 23.0) {
+    if (-1 < (int)uVar1) {
+      return;
+    }
+    iVar2 = 0x1d17;
   }
   else {
-    if ((dVar6 != 27.0) && (dVar6 != 28.0)) {
-      if (dVar6 == 24.0) {
-        PlaylistFeeder_Selected(uVar2);
-        __restgprlr_29();
+    if ((dVar5 != 27.0) && (dVar5 != 28.0)) {
+      if (dVar5 == 24.0) {
+        PlaylistFeeder_Selected(uVar1);
         return;
       }
-      if (dVar6 == 25.0) {
-        if ((-1 < (int)uVar2) && (iVar3 = CustomGameTypes_GetGametypeCount(), (int)uVar2 < iVar3)) {
-          pcVar4 = CustomGameTypes_GetGametypeInternalName(uVar2);
-          Dvar_SetStringByName("ui_gametype",pcVar4);
-          pcVar4 = CustomGameTypes_GetGametypeLocalizedName(uVar2);
-          Dvar_SetStringByName("ui_gametype_text",pcVar4);
-          Dvar_SetStringByName("ui_custommodeName","");
-          __restgprlr_29();
+      if (dVar5 != 25.0) {
+        if (dVar5 == 26.0) {
+          LB_FeederSelection(param_1,uVar1);
+        }
+        if (dVar5 == 29.0) {
+          iVar2 = CL_ControllerIndexFromClientNum(param_1);
+          FriendsMenu_FeederSelection(iVar2,uVar1);
+        }
+        if (dVar5 == 31.0) {
+          iVar2 = CL_ControllerIndexFromClientNum(param_1);
+          MeetPlayer_FeederSelection(iVar2,uVar1);
+        }
+        if (dVar5 == 32.0) {
+          LiveParty_FeederSelection(uVar1);
+        }
+        if (dVar5 == 33.0) {
+          iVar2 = CL_ControllerIndexFromClientNum(param_1);
+          Facebook_FeederSelection(iVar2,uVar1);
+        }
+        if (dVar5 == 34.0) {
+          iVar2 = CL_ControllerIndexFromClientNum(param_1);
+          EliteClan_FeederSelection(iVar2,uVar1);
+        }
+        if (dVar5 == 37.0) {
+          iVar2 = CL_ControllerIndexFromClientNum(param_1);
+          CL_Demo_EnumSetIndex(iVar2,uVar1);
+        }
+        if (dVar5 != 36.0) {
           return;
         }
-        iVar5 = CustomGameTypes_GetGametypeCount();
-        iVar3 = sharedUiInfo.numCustomGameTypes;
-        if ((-1 < (longlong)(in_r5 - (longlong)iVar5)) &&
-           (iVar5 = CustomGameTypes_GetGametypeCount(), (int)(uVar2 - iVar5) < iVar3)) {
-          iVar3 = CustomGameTypes_GetGametypeCount();
-          Dvar_SetStringByName
-                    ("ui_gametype_text",
-                     (char *)((int)&sharedUiInfo + (uVar2 - iVar3) * 0x6c + 0x12b8));
-          iVar3 = CustomGameTypes_GetGametypeCount();
-          Dvar_SetStringByName
-                    ("ui_custommodeName",
-                     (char *)((int)&sharedUiInfo + (uVar2 - iVar3) * 0x6c + 0x12b8));
-          __restgprlr_29();
-          return;
-        }
+        iVar2 = CL_ControllerIndexFromClientNum(param_1);
+        OnlineVault_FeederSelection(iVar2,uVar1);
+        return;
       }
-      else {
-        if (dVar6 == 26.0) {
-          LB_FeederSelection(LVar1,uVar2);
-        }
-        if (dVar6 == 29.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          FriendsMenu_FeederSelection(iVar3,uVar2);
-        }
-        if (dVar6 == 31.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          MeetPlayer_FeederSelection(iVar3,uVar2);
-        }
-        if (dVar6 == 32.0) {
-          LiveParty_FeederSelection(uVar2);
-        }
-        if (dVar6 == 33.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          Facebook_FeederSelection(iVar3,uVar2);
-        }
-        if (dVar6 == 34.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          EliteClan_FeederSelection(iVar3,uVar2);
-        }
-        if (dVar6 == 37.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          CL_Demo_EnumSetIndex(iVar3,uVar2);
-        }
-        if (dVar6 == 36.0) {
-          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-          OnlineVault_FeederSelection(iVar3,uVar2);
-          __restgprlr_29();
-          return;
-        }
+      if ((-1 < (int)uVar1) && (iVar2 = CustomGameTypes_GetGametypeCount(), (int)uVar1 < iVar2)) {
+        pcVar3 = CustomGameTypes_GetGametypeInternalName(uVar1);
+        Dvar_SetStringByName("ui_gametype",pcVar3);
+        pcVar3 = CustomGameTypes_GetGametypeLocalizedName(uVar1);
+        Dvar_SetStringByName("ui_gametype_text",pcVar3);
+        Dvar_SetStringByName("ui_custommodeName","");
+        return;
       }
-      goto LAB_825af1a0;
+      iVar4 = CustomGameTypes_GetGametypeCount();
+      iVar2 = sharedUiInfo.numCustomGameTypes;
+      if ((longlong)(in_r5 - (longlong)iVar4) < 0) {
+        return;
+      }
+      iVar4 = CustomGameTypes_GetGametypeCount();
+      if (iVar2 <= (int)(uVar1 - iVar4)) {
+        return;
+      }
+      iVar2 = CustomGameTypes_GetGametypeCount();
+      Dvar_SetStringByName
+                ("ui_gametype_text",(char *)((int)&sharedUiInfo + (uVar1 - iVar2) * 0x6c + 0x12b8));
+      iVar2 = CustomGameTypes_GetGametypeCount();
+      Dvar_SetStringByName
+                ("ui_custommodeName",(char *)((int)&sharedUiInfo + (uVar1 - iVar2) * 0x6c + 0x12b8))
+      ;
+      return;
     }
-    if (-1 < (int)uVar2) goto LAB_825af1a0;
-    iVar3 = 0x1d1c;
+    if (-1 < (int)uVar1) {
+      return;
+    }
+    iVar2 = 0x1d1c;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",iVar3,0,
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",iVar2,0,
                   "%s\n\t(index) = %i");
-LAB_825af1a0:
-  __restgprlr_29();
   return;
 }
 
 
 // 825A9EF0  UI_GetGameTypesList_FastFile  (ui_mp/ui_main_mp.cpp:7623)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_GetGameTypesList_FastFile(void)
@@ -7068,7 +6551,6 @@ void UI_GetGameTypesList_FastFile(void)
   char *local_4c;
   LargeLocal aLStack_48 [9];
   
-  __savegprlr_26();
   LargeLocal::LargeLocal(aLStack_48,0x18000);
   pcVar3 = LargeLocal::GetBuf(aLStack_48);
   pcVar3 = DB_ReadRawFile("maps/mp/gametypes/_gametypes.txt",pcVar3,0x18000);
@@ -7104,14 +6586,12 @@ void UI_GetGameTypesList_FastFile(void)
       pcVar3 = Com_Parse(&local_50);
       if (local_50 == (char *)0x0) {
         LargeLocal::~LargeLocal(aLStack_48);
-        __restgprlr_26();
         return;
       }
     }
     Com_Printf(0xd,"Too many game type scripts found! Only loading the first %i\n");
   }
   LargeLocal::~LargeLocal(aLStack_48);
-  __restgprlr_26();
   return;
 }
 
@@ -7370,6 +6850,8 @@ void UI_LoadMenuLists(LocalClientNum_t param_1)
 
 // 825AA690  UI_Init  (ui_mp/ui_main_mp.cpp:7933)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7379,51 +6861,49 @@ void UI_Init(LocalClientNum_t param_1)
 {
   int iVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  uint uVar4;
-  uiInfo_s *puVar5;
-  double dVar6;
-  float fVar7;
+  uint uVar3;
+  uiInfo_s *puVar4;
+  double dVar5;
+  float fVar6;
   
-  LVar3 = __savegprlr_27(param_1);
   Expressions_LogicTableInit();
-  if (LOCAL_CLIENT_3 < LVar3) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar5 = uiInfoArray + LVar3;
+  puVar4 = uiInfoArray + param_1;
   memset();
-  (puVar5->uiDC).localClientNum = LVar3;
-  g_ingameMenusLoaded[LVar3] = false;
+  (puVar4->uiDC).localClientNum = param_1;
+  g_ingameMenusLoaded[param_1] = false;
   DB_ResetZoneSize(0,1);
   UI_RegisterDvars();
-  uiInfoArray[LVar3].allowScriptMenuResponse = true;
-  Menu_Setup(&puVar5->uiDC);
+  uiInfoArray[param_1].allowScriptMenuResponse = true;
+  Menu_Setup(&puVar4->uiDC);
   CL_GetScreenDimensions
-            (&uiInfoArray[LVar3].uiDC.screenWidth,&uiInfoArray[LVar3].uiDC.screenHeight,
-             &uiInfoArray[LVar3].uiDC.screenAspect);
-  iVar1 = uiInfoArray[LVar3].uiDC.screenHeight;
-  iVar2 = uiInfoArray[LVar3].uiDC.screenWidth;
-  dVar6 = 0.0;
+            (&uiInfoArray[param_1].uiDC.screenWidth,&uiInfoArray[param_1].uiDC.screenHeight,
+             &uiInfoArray[param_1].uiDC.screenAspect);
+  iVar1 = uiInfoArray[param_1].uiDC.screenHeight;
+  iVar2 = uiInfoArray[param_1].uiDC.screenWidth;
+  dVar5 = 0.0;
   if (iVar1 * 0x280 < iVar2 * 0x1e0) {
-    uiInfoArray[LVar3].uiDC.bias =
+    uiInfoArray[param_1].uiDC.bias =
          -((float)(longlong)iVar1 * 1.3333334 - (float)(longlong)iVar2) * 0.5;
   }
   else {
-    uiInfoArray[LVar3].uiDC.bias = 0.0;
+    uiInfoArray[param_1].uiDC.bias = 0.0;
   }
-  uVar4 = DB_GetLoadedFlags();
-  if ((uVar4 & 2) != 0) {
+  uVar3 = DB_GetLoadedFlags();
+  if ((uVar3 & 2) != 0) {
     sharedUiInfo.updateGameTypeList = 1;
   }
   UI_LoadArenas();
-  if (uiInfoArray[LVar3].uiDC.menuCount != 0) {
+  if (uiInfoArray[param_1].uiDC.menuCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1f38,0
                     ,"%s");
   }
-  UI_LoadMenuLists(LVar3);
+  UI_LoadMenuLists(param_1);
   UI_AssetCache();
-  Menus_CloseAll(&puVar5->uiDC);
+  Menus_CloseAll(&puVar4->uiDC);
   sharedUiInfo.talkingIcons[0] = Material_RegisterHandle("nottalkingicon",3);
   sharedUiInfo.talkingIcons[1] = Material_RegisterHandle("talkingicon",3);
   LAN_LoadCachedServers();
@@ -7432,19 +6912,20 @@ void UI_Init(LocalClientNum_t param_1)
     qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4,
           UI_ServersQsortCompare);
   }
-  fVar7 = Dvar_GetFloat("m_pitch");
-  Dvar_SetBoolByName("ui_mousePitch",(double)fVar7 < dVar6);
+  fVar6 = Dvar_GetFloat("m_pitch");
+  Dvar_SetBoolByName("ui_mousePitch",(double)fVar6 < dVar5);
   sharedUiInfo.partyMemberXuid = 0;
   sharedUiInfo.savedPartyMemberXuid = 0;
   Dvar_RegisterBool("ui_multiplayer",true,0x2000,"True if the game is multiplayer");
   uiscript_debug = Dvar_RegisterInt("uiscript_debug",0,0,2,0,"spam debug info for the ui script");
-  __restgprlr_27();
   return;
 }
 
 
 // 825AA938  UI_KeyEvent  (ui_mp/ui_main_mp.cpp:8061)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7452,43 +6933,41 @@ void UI_Init(LocalClientNum_t param_1)
 void UI_KeyEvent(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  uiInfo_s *puVar2;
-  int iVar3;
-  bool bVar5;
-  menuDef_t *pmVar4;
+  uiInfo_s *puVar1;
+  int iVar2;
+  bool bVar4;
+  menuDef_t *pmVar3;
   
-  LVar1 = __savegprlr_27(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar2 = uiInfoArray + LVar1;
-  iVar3 = Menu_Count(&puVar2->uiDC);
-  if (((iVar3 != 0) && (bVar5 = Sys_IsMainThread(), bVar5)) &&
-     (iVar3 = R_IsInRemoteScreenUpdate(), iVar3 == 0)) {
-    pmVar4 = Menu_GetFocused(&puVar2->uiDC);
-    if (pmVar4 != (menuDef_t *)0x0) {
+  puVar1 = uiInfoArray + param_1;
+  iVar2 = Menu_Count(&puVar1->uiDC);
+  if (((iVar2 != 0) && (bVar4 = Sys_IsMainThread(), bVar4)) &&
+     (iVar2 = R_IsInRemoteScreenUpdate(), iVar2 == 0)) {
+    pmVar3 = Menu_GetFocused(&puVar1->uiDC);
+    if (pmVar3 != (menuDef_t *)0x0) {
       if (((param_2 == 2) && (param_3 != 0)) &&
-         ((iVar3 = Menus_AnyFullScreenVisible(&puVar2->uiDC), iVar3 == 0 &&
-          (pmVar4->data->onESC == (MenuEventHandlerSet *)0x0)))) {
-        Menus_CloseAll(&puVar2->uiDC);
+         ((iVar2 = Menus_AnyFullScreenVisible(&puVar1->uiDC), iVar2 == 0 &&
+          (pmVar3->data->onESC == (MenuEventHandlerSet *)0x0)))) {
+        Menus_CloseAll(&puVar1->uiDC);
       }
-      bVar5 = Key_IsCatcherActive((puVar2->uiDC).localClientNum,0x10);
-      if (bVar5) {
-        Menu_HandleKey(&puVar2->uiDC,pmVar4,param_2,param_3);
+      bVar4 = Key_IsCatcherActive((puVar1->uiDC).localClientNum,0x10);
+      if (bVar4) {
+        Menu_HandleKey(&puVar1->uiDC,pmVar3,param_2,param_3);
       }
-      pmVar4 = Menu_GetFocused(&puVar2->uiDC);
-      if (pmVar4 != (menuDef_t *)0x0) goto LAB_825aaa74;
+      pmVar3 = Menu_GetFocused(&puVar1->uiDC);
+      if (pmVar3 != (menuDef_t *)0x0) {
+        return;
+      }
     }
-    bVar5 = Key_IsCatcherActive((puVar2->uiDC).localClientNum,0x10);
-    if (bVar5) {
-      Key_RemoveCatcher(LVar1,-0x11);
+    bVar4 = Key_IsCatcherActive((puVar1->uiDC).localClientNum,0x10);
+    if (bVar4) {
+      Key_RemoveCatcher(param_1,-0x11);
       Dvar_SetIntByName("cl_paused",0);
     }
   }
-LAB_825aaa74:
-  __restgprlr_27();
   return;
 }
 
@@ -7512,6 +6991,8 @@ uiMenuCommand_t UI_GetActiveMenu(LocalClientNum_t param_1)
 
 // 825AAAE8  UI_GetTopActiveMenuName  (ui_mp/ui_main_mp.cpp:8161)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7520,36 +7001,31 @@ char * UI_GetTopActiveMenuName(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (3 < uVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar4 = (ulonglong)(uint)uiInfoArray[uVar2].uiDC.openMenuCount;
-  lVar5 = uVar4 - 1;
-  if ((-1 < lVar5) && ((int)lVar5 < uiInfoArray[uVar2].uiDC.menuCount)) {
-    iVar1 = (int)((uVar4 + 0x28d & 0xffffffff) << 2);
-    if (*(int *)((int)uiInfoArray[uVar2].uiDC.Menus + iVar1 + -0x34) == 0) {
+  uVar2 = (ulonglong)(uint)uiInfoArray[param_1].uiDC.openMenuCount;
+  lVar3 = uVar2 - 1;
+  if ((-1 < lVar3) && ((int)lVar3 < uiInfoArray[param_1].uiDC.menuCount)) {
+    iVar1 = (int)((uVar2 + 0x28d & 0xffffffff) << 2);
+    if (*(int *)((int)uiInfoArray[param_1].uiDC.Menus + iVar1 + -0x34) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1fea
                       ,0,"%s");
     }
-    pcVar3 = (char *)__restgprlr_29(*(undefined4 *)
-                                     (*(int *)((int)uiInfoArray[uVar2].uiDC.Menus + iVar1 + -0x34) +
-                                     4));
-    return pcVar3;
+    return *(char **)(*(int *)((int)uiInfoArray[param_1].uiDC.Menus + iVar1 + -0x34) + 4);
   }
-  pcVar3 = (char *)__restgprlr_29(0);
-  return pcVar3;
+  return (char *)0x0;
 }
 
 
 // 825AABA0  UI_SetActiveMenu  (ui_mp/ui_main_mp.cpp:8214)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7559,66 +7035,65 @@ int UI_SetActiveMenu(LocalClientNum_t param_1,int param_2)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
-  uiInfo_s *puVar3;
-  int iVar4;
-  LocalClientNum_t LVar5;
-  bool bVar12;
-  PartyHostData *pPVar6;
-  PartyData *pPVar7;
-  SessionData *pSVar8;
-  char *pcVar9;
-  ClientDemoPlayingFlag CVar10;
-  char *pcVar11;
+  uiInfo_s *puVar2;
+  int iVar3;
+  LocalClientNum_t LVar4;
+  bool bVar11;
+  PartyHostData *pPVar5;
+  PartyData *pPVar6;
+  SessionData *pSVar7;
+  char *pcVar8;
+  ClientDemoPlayingFlag CVar9;
+  char *pcVar10;
   
-  LVar2 = __savegprlr_26(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar3 = uiInfoArray + LVar2;
-  iVar4 = Menu_Count(&puVar3->uiDC);
-  if (iVar4 < 1) goto switchD_825aac50_caseD_4;
-  if (param_2 == UIMENU_SCRIPT_POPUP) {
+  puVar2 = uiInfoArray + param_1;
+  iVar3 = Menu_Count(&puVar2->uiDC);
+  if (iVar3 < 1) {
+    return 0;
+  }
+  if (param_2 == 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2024,0
                     ,"%s");
   }
-  uiInfoArray[LVar2].currentMenuType = param_2;
+  uiInfoArray[param_1].currentMenuType = param_2;
   switch(param_2) {
   case 0:
-    Key_RemoveCatcher(LVar2,-0x11);
+    Key_RemoveCatcher(param_1,-0x11);
     Dvar_SetIntByName("cl_paused",0);
-    Menus_CloseAll(&puVar3->uiDC);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    Menus_CloseAll(&puVar2->uiDC);
+    return 1;
   case 1:
-    if (LVar2 != LOCAL_CLIENT_0) {
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2031
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(LVar2,0x10);
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Key_SetCatcher(param_1,0x10);
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu");
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu");
     }
     Dvar_SetBool(onlinegame,false);
     Dvar_SetBool(systemlink,false);
-    bVar12 = Live_HasAcceptedInvitation();
-    if (!bVar12) {
+    bVar11 = Live_HasAcceptedInvitation();
+    if (!bVar11) {
       Dvar_SetBool(splitscreen,false);
     }
-    pPVar7 = Lobby_GetPartyData();
-    Party_StopParty(pPVar7);
+    pPVar6 = Lobby_GetPartyData();
+    Party_StopParty(pPVar6);
     Party_StopParty(&g_partyData);
-    bVar12 = Lobby_IsInLobby();
-    if (bVar12) {
+    bVar11 = Lobby_IsInLobby();
+    if (bVar11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x204e
                       ,0,"%s");
     }
@@ -7626,11 +7101,11 @@ int UI_SetActiveMenu(LocalClientNum_t param_1,int param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x204f
                       ,0,"%s");
     }
-    pPVar7 = Lobby_GetPartyData();
-    Party_Sleep(pPVar7);
+    pPVar6 = Lobby_GetPartyData();
+    Party_Sleep(pPVar6);
     Party_Sleep(&g_partyData);
-    pPVar7 = Lobby_GetPartyData();
-    if (pPVar7->party_systemActive != 0) {
+    pPVar6 = Lobby_GetPartyData();
+    if (pPVar6->party_systemActive != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2053
                       ,0,"%s");
     }
@@ -7638,300 +7113,287 @@ int UI_SetActiveMenu(LocalClientNum_t param_1,int param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2054
                       ,0,"%s");
     }
-    bVar12 = Live_HasAcceptedInvitation();
-    if (!bVar12) {
+    bVar11 = Live_HasAcceptedInvitation();
+    if (!bVar11) {
       Dvar_SetBool(splitscreen,false);
     }
     if ((onlinegame->current).enabled != false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x205e
                       ,0,"%s");
     }
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcesplitscreencontrol UI_SetActiveMenu_MAIN\n");
-    SND_FadeAllSounds(1.0,LVar2);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
+    Cmd_ExecuteSingleCommand(param_1,iVar3,"forcesplitscreencontrol UI_SetActiveMenu_MAIN\n");
+    SND_FadeAllSounds(1.0,param_1);
+    return 1;
   case 2:
-    bVar12 = CL_AllLocalClientsDisconnected();
-    if (bVar12) {
+    bVar11 = CL_AllLocalClientsDisconnected();
+    if (bVar11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2069
                       ,0,"%s\n\t%s");
     }
-    Key_SetCatcher(LVar2,0x10);
-    Menus_CloseAll(&puVar3->uiDC);
-    bVar12 = CL_Demo_IsPlaying(LVar2);
-    if (!bVar12) {
-      pcVar9 = CG_ScriptMainMenu((puVar3->uiDC).localClientNum);
-      iVar4 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
-      if (iVar4 == 0) {
-        Menus_OpenByName(&puVar3->uiDC,"main");
-        Menus_CloseAllBehindMain(&puVar3->uiDC);
+    Key_SetCatcher(param_1,0x10);
+    Menus_CloseAll(&puVar2->uiDC);
+    bVar11 = CL_Demo_IsPlaying(param_1);
+    if (!bVar11) {
+      pcVar8 = CG_ScriptMainMenu((puVar2->uiDC).localClientNum);
+      iVar3 = Menus_OpenByName(&puVar2->uiDC,pcVar8);
+      if (iVar3 == 0) {
+        Menus_OpenByName(&puVar2->uiDC,"main");
+        Menus_CloseAllBehindMain(&puVar2->uiDC);
       }
-      iVar4 = __restgprlr_26(1);
-      return iVar4;
+      return 1;
     }
-    iVar4 = CL_Demo_IsCapturingScreenshot(LVar2);
-    if (iVar4 == 0) {
-      iVar4 = CL_Demo_IsRenderingMovie(LVar2);
-      if (iVar4 != 0) {
-        CL_Demo_CancelRendering(true);
-        Cbuf_AddText(LVar2,"disconnect");
-        iVar4 = __restgprlr_26(1);
-        return iVar4;
-      }
-      bVar12 = CL_Demo_IsClipPreviewRunning();
-      if (bVar12) {
-        CL_Demo_CancelPreview();
-        iVar4 = __restgprlr_26(1);
-        return iVar4;
-      }
-      Menus_OpenByName(&puVar3->uiDC,"demo_ingame");
-      bVar12 = CL_Demo_IsPaused();
-      if (!bVar12) {
-        CL_Demo_Pause();
-      }
-      iVar4 = __restgprlr_26(1);
-      return iVar4;
+    iVar3 = CL_Demo_IsCapturingScreenshot(param_1);
+    if (iVar3 != 0) {
+      return 0;
     }
-  default:
-switchD_825aac50_caseD_4:
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    iVar3 = CL_Demo_IsRenderingMovie(param_1);
+    if (iVar3 == 0) {
+      bVar11 = CL_Demo_IsClipPreviewRunning();
+      if (!bVar11) {
+        Menus_OpenByName(&puVar2->uiDC,"demo_ingame");
+        bVar11 = CL_Demo_IsPaused();
+        if (!bVar11) {
+          CL_Demo_Pause();
+        }
+        return 1;
+      }
+      CL_Demo_CancelPreview();
+      return 1;
+    }
+    CL_Demo_CancelRendering(true);
+    Cbuf_AddText(param_1,"disconnect");
+    return 1;
   case 3:
-    pcVar9 = Dvar_GetString("com_errorMessage");
-    if (*pcVar9 == '\0') {
+    pcVar8 = Dvar_GetString("com_errorMessage");
+    if (*pcVar8 == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2183
                       ,0,"%s");
     }
-    Key_SetCatcher(LVar2,0x10);
-    Menus_CloseAll(&puVar3->uiDC);
-    Menus_OpenByName(&puVar3->uiDC,"pregame_loaderror_mp");
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    Key_SetCatcher(param_1,0x10);
+    Menus_CloseAll(&puVar2->uiDC);
+    Menus_OpenByName(&puVar2->uiDC,"pregame_loaderror_mp");
+    return 1;
+  default:
+    return 0;
   case 6:
-    Key_SetCatcher(LVar2,0x10);
-    Menus_CloseAll(&puVar3->uiDC);
-    Menus_OpenByName(&puVar3->uiDC,"scoreboard");
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Key_SetCatcher(param_1,0x10);
+    Menus_CloseAll(&puVar2->uiDC);
+    Menus_OpenByName(&puVar2->uiDC,"scoreboard");
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu");
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu");
     }
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    return 1;
   case 7:
-    if (LVar2 != LOCAL_CLIENT_0) {
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20a4
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(LVar2,0x10);
-    Key_ClearStates(LVar2);
+    Key_SetCatcher(param_1,0x10);
+    Key_ClearStates(param_1);
     Dvar_SetBool(splitscreen_ingame,false);
     CL_EnsureUnpluggedSplitscreenControllersAreInactive();
     if (cl_multi_gamepads_enabled != 0) {
       GPad_UpdateAll();
-      iVar4 = 0;
+      iVar3 = 0;
       do {
-        bVar12 = CL_IsSplitscreenControllerActive(iVar4);
-        if (bVar12) {
-          LVar2 = CL_LocalClientNumFromControllerIndex(iVar4);
-          CL_SetLocalClientActive(LVar2,true);
+        bVar11 = CL_IsSplitscreenControllerActive(iVar3);
+        if (bVar11) {
+          LVar4 = CL_LocalClientNumFromControllerIndex(iVar3);
+          CL_SetLocalClientActive(LVar4,true);
         }
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < 4);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < 4);
     }
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_SetFocusToItem(&puVar3->uiDC,"main","splitscreen");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_SetFocusToItem(&puVar2->uiDC,"main","splitscreen");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 == 1) || (iVar4 = I_stricmp(pcVar11,";"), iVar4 == 0)) {
-      pcVar9 = "menu_gamesetup_splitscreen";
+    if (((int)pcVar8 - (int)pcVar10 == 1) || (iVar3 = I_stricmp(pcVar10,";"), iVar3 == 0)) {
+      pcVar8 = "menu_gamesetup_splitscreen";
     }
     else {
-      pcVar9 = "error_popmenu_submenu";
+      pcVar8 = "error_popmenu_submenu";
     }
-    iVar4 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
-    SND_FadeAllSounds(1.0,iVar4);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    iVar3 = Menus_OpenByName(&puVar2->uiDC,pcVar8);
+    SND_FadeAllSounds(1.0,iVar3);
+    return 1;
   case 8:
-    if (LVar2 != LOCAL_CLIENT_0) {
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20c8
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(LVar2,0x10);
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_SetFocusToItem(&puVar3->uiDC,"main","system_link");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Key_SetCatcher(param_1,0x10);
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_SetFocusToItem(&puVar2->uiDC,"main","system_link");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 == 1) || (iVar4 = I_stricmp(pcVar11,";"), iVar4 == 0)) {
-      pcVar9 = "menu_systemlink";
+    if (((int)pcVar8 - (int)pcVar10 == 1) || (iVar3 = I_stricmp(pcVar10,";"), iVar3 == 0)) {
+      pcVar8 = "menu_systemlink";
     }
     else {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      bVar12 = Live_IsSignedIn(iVar4);
-      if (bVar12) {
-        Menus_OpenByName(&puVar3->uiDC,"menu_systemlink");
-        pcVar9 = "error_popmenu_submenu";
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      bVar11 = Live_IsSignedIn(iVar3);
+      if (bVar11) {
+        Menus_OpenByName(&puVar2->uiDC,"menu_systemlink");
+        pcVar8 = "error_popmenu_submenu";
       }
       else {
-        pcVar9 = "error_popmenu";
+        pcVar8 = "error_popmenu";
       }
     }
-    LVar5 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
+    LVar4 = Menus_OpenByName(&puVar2->uiDC,pcVar8);
     if ((splitscreen->current).enabled == false) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      LVar5 = LVar2;
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      LVar4 = param_1;
       Cmd_ExecuteSingleCommand
-                (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_SYSTEMLINKJOINGAME\n");
+                (param_1,iVar3,"forcenosplitscreencontrol UI_SetActiveMenu_SYSTEMLINKJOINGAME\n");
     }
-    SND_FadeAllSounds(1.0,LVar5);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    SND_FadeAllSounds(1.0,LVar4);
+    return 1;
   case 9:
-    if (LVar2 != LOCAL_CLIENT_0) {
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2155
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    LVar5 = LVar2;
-    Key_SetCatcher(LVar2,0x10);
+    LVar4 = param_1;
+    Key_SetCatcher(param_1,0x10);
     if ((splitscreen->current).enabled == false) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      LVar5 = LVar2;
-      Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_PARTY\n");
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      LVar4 = param_1;
+      Cmd_ExecuteSingleCommand(param_1,iVar3,"forcenosplitscreencontrol UI_SetActiveMenu_PARTY\n");
     }
-    SND_FadeAllSounds(1.0,LVar5);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    Cbuf_ExecuteBuffer(LVar2,iVar4,"exec default_xboxlive.cfg");
+    SND_FadeAllSounds(1.0,LVar4);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
+    Cbuf_ExecuteBuffer(param_1,iVar3,"exec default_xboxlive.cfg");
     Dvar_SetBool(systemlink,false);
     Dvar_SetBool(xblive_privatematch,false);
     Dvar_SetBool(onlinegame,true);
-    pPVar7 = Lobby_GetPartyData();
-    Party_Sleep(pPVar7);
-    pSVar8 = Lobby_GetSession();
-    if ((pSVar8->dyn).sessionHandle != (void *)0x0) {
-      pPVar7 = Lobby_GetPartyData();
-      Party_StopParty(pPVar7);
+    pPVar6 = Lobby_GetPartyData();
+    Party_Sleep(pPVar6);
+    pSVar7 = Lobby_GetSession();
+    if ((pSVar7->dyn).sessionHandle != (void *)0x0) {
+      pPVar6 = Lobby_GetPartyData();
+      Party_StopParty(pPVar6);
     }
-    Party_Awake(&g_partyData,iVar4,0);
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Party_Awake(&g_partyData,iVar3,0);
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_OpenByName(&puVar2->uiDC,"menu_xboxlive");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_party");
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu_party");
     }
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    return 1;
   case 10:
-    bVar12 = (xblive_privatematch->current).enabled;
-    if (LVar2 != LOCAL_CLIENT_0) {
+    bVar11 = (xblive_privatematch->current).enabled;
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20f2
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    LVar5 = LVar2;
-    Key_SetCatcher(LVar2,0x10);
+    LVar4 = param_1;
+    Key_SetCatcher(param_1,0x10);
     if ((splitscreen->current).enabled == false) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      LVar5 = LVar2;
-      Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_GAMELOBBY\n")
-      ;
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      LVar4 = param_1;
+      Cmd_ExecuteSingleCommand
+                (param_1,iVar3,"forcenosplitscreencontrol UI_SetActiveMenu_GAMELOBBY\n");
     }
-    SND_FadeAllSounds(1.0,LVar5);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    SND_FadeAllSounds(1.0,LVar4);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
     Dvar_SetBool(systemlink,false);
     Dvar_SetBool(onlinegame,true);
-    Cbuf_ExecuteBuffer(LVar2,iVar4,"exec default_xboxlive.cfg");
-    Dvar_SetBool(xblive_privatematch,bVar12);
-    pPVar7 = Lobby_GetPartyData();
-    Party_Awake(pPVar7,iVar4,0);
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
-    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive_lobby");
-    bVar12 = Lobby_AreWeHost();
-    if (bVar12) {
-      pPVar6 = Lobby_GetHostData();
-      pPVar6->firstLobby = true;
-      pPVar6 = Lobby_GetHostData();
-      pPVar6->lastFindBestTime = 0;
+    Cbuf_ExecuteBuffer(param_1,iVar3,"exec default_xboxlive.cfg");
+    Dvar_SetBool(xblive_privatematch,bVar11);
+    pPVar6 = Lobby_GetPartyData();
+    Party_Awake(pPVar6,iVar3,0);
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_OpenByName(&puVar2->uiDC,"menu_xboxlive");
+    Menus_OpenByName(&puVar2->uiDC,"menu_xboxlive_lobby");
+    bVar11 = Lobby_AreWeHost();
+    if (bVar11) {
+      pPVar5 = Lobby_GetHostData();
+      pPVar5->firstLobby = true;
+      pPVar5 = Lobby_GetHostData();
+      pPVar5->lastFindBestTime = 0;
     }
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_lobby");
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu_lobby");
     }
     break;
   case 0xb:
-    bVar12 = (xblive_privatematch->current).enabled;
-    if (LVar2 != LOCAL_CLIENT_0) {
+    bVar11 = (xblive_privatematch->current).enabled;
+    if (param_1 != LOCAL_CLIENT_0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x212a
                       ,0,"%s\n\t(localClientNum) = %i");
     }
-    LVar5 = LVar2;
-    Key_SetCatcher(LVar2,0x10);
+    LVar4 = param_1;
+    Key_SetCatcher(param_1,0x10);
     if ((splitscreen->current).enabled == false) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      LVar5 = LVar2;
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      LVar4 = param_1;
       Cmd_ExecuteSingleCommand
-                (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_PRIVATELOBBY\n");
+                (param_1,iVar3,"forcenosplitscreencontrol UI_SetActiveMenu_PRIVATELOBBY\n");
     }
-    SND_FadeAllSounds(1.0,LVar5);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    SND_FadeAllSounds(1.0,LVar4);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
     Dvar_SetBool(systemlink,false);
     Dvar_SetBool(onlinegame,true);
-    Dvar_SetBool(xblive_privatematch,bVar12);
+    Dvar_SetBool(xblive_privatematch,bVar11);
     Party_Sleep(&g_partyData);
-    pPVar7 = Lobby_GetPartyData();
-    Party_Awake(pPVar7,iVar4,0);
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
-    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive_privatelobby");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+    pPVar6 = Lobby_GetPartyData();
+    Party_Awake(pPVar6,iVar3,0);
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_OpenByName(&puVar2->uiDC,"menu_xboxlive");
+    Menus_OpenByName(&puVar2->uiDC,"menu_xboxlive_privatelobby");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_lobby");
-      iVar4 = __restgprlr_26(1);
-      return iVar4;
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu_lobby");
+      return 1;
     }
     break;
   case 0xd:
-    Key_SetCatcher(LVar2,0x10);
-    Menus_CloseAll(&puVar3->uiDC);
-    Menus_OpenByName(&puVar3->uiDC,"ingame_migration");
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    Key_SetCatcher(param_1,0x10);
+    Menus_CloseAll(&puVar2->uiDC);
+    Menus_OpenByName(&puVar2->uiDC,"ingame_migration");
+    return 1;
   case 0xe:
-    CVar10 = CL_Demo_GetPlayingFlag();
-    if (CVar10 == CLIENT_DEMO_PLAYING_FLAG_NONE) {
+    CVar9 = CL_Demo_GetPlayingFlag();
+    if (CVar9 == CLIENT_DEMO_PLAYING_FLAG_NONE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2193
                       ,0,"%s");
     }
@@ -7939,33 +7401,31 @@ switchD_825aac50_caseD_4:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2195
                       ,0,"%s");
     }
-    Key_SetCatcher(LVar2,0x10);
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Key_SetCatcher(param_1,0x10);
+    iVar3 = CL_ControllerIndexFromClientNum(param_1);
     Cmd_ExecuteSingleCommand
-              (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_UIMENU_VAULT\n");
-    Menus_OpenByName(&puVar3->uiDC,"main");
-    Menus_OpenByName(&puVar3->uiDC,"popup_vault");
-    Menus_CloseAllBehindMain(&puVar3->uiDC);
-    pcVar11 = Dvar_GetString("com_errorMessage");
-    pcVar9 = pcVar11;
+              (param_1,iVar3,"forcenosplitscreencontrol UI_SetActiveMenu_UIMENU_VAULT\n");
+    Menus_OpenByName(&puVar2->uiDC,"main");
+    Menus_OpenByName(&puVar2->uiDC,"popup_vault");
+    Menus_CloseAllBehindMain(&puVar2->uiDC);
+    pcVar10 = Dvar_GetString("com_errorMessage");
+    pcVar8 = pcVar10;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
-      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_party");
+    if (((int)pcVar8 - (int)pcVar10 != 1) && (iVar3 = I_stricmp(pcVar10,";"), iVar3 != 0)) {
+      Menus_OpenByName(&puVar2->uiDC,"error_popmenu_party");
     }
-    CVar10 = CL_Demo_GetPlayingFlag();
-    if (CVar10 == CLIENT_DEMO_PLAYING_FLAG_RENDER) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-      CL_Demo_SaveRenderedMovie(iVar4);
+    CVar9 = CL_Demo_GetPlayingFlag();
+    if (CVar9 == CLIENT_DEMO_PLAYING_FLAG_RENDER) {
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      CL_Demo_SaveRenderedMovie(iVar3);
     }
     CL_Demo_SetPlayingFlag(CLIENT_DEMO_PLAYING_FLAG_NONE);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+    return 1;
   }
-  iVar4 = __restgprlr_26(1);
-  return iVar4;
+  return 1;
 }
 
 
@@ -8010,20 +7470,19 @@ void UI_ShowAcceptInviteWarning(LocalClientNum_t param_1)
 
 // 825ABAA0  Text_PaintCenter  (ui_mp/ui_main_mp.cpp:8647)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Text_PaintCenter(ScreenPlacement *param_1,float param_2,float param_3,Font_s *param_4,
                      float param_5,float *param_6,char *param_7,float *param_8)
 
 {
-  ScreenPlacement *pSVar1;
-  uint uVar2;
-  Font_s *pFVar3;
-  longlong lVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
   char *in_r9;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   float *in_stack_ffffff08;
   undefined1 in_stack_ffffff0f;
   undefined1 in_stack_ffffff13;
@@ -8034,46 +7493,40 @@ void Text_PaintCenter(ScreenPlacement *param_1,float param_2,float param_3,Font_
   int in_stack_ffffff24;
   int in_stack_ffffff28;
   
-  dVar7 = (double)param_5;
-  dVar6 = (double)param_3;
-  lVar4 = (longlong)(int)param_7;
-  pSVar1 = (ScreenPlacement *)__savegprlr_27((double)param_2,param_1,param_4,param_6,lVar4,param_8);
-  iVar5 = 0;
-  pFVar3 = (Font_s *)lVar4;
-  dVar8 = extraout_f1;
-  uVar2 = UI_TextWidthModCase(in_r9,0,pFVar3,(float)dVar7,(int)pFVar3);
-  UI_DrawTextWithGlow(pSVar1,in_r9,0x7fffffff,pFVar3,
-                      (float)(dVar8 - (double)(longlong)
-                                              (int)(((int)uVar2 >> 1) +
-                                                   (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0))),
-                      (float)dVar6,iVar5,6,(float)dVar7,(float *)0x0,0,in_stack_ffffff08,
+  dVar5 = (double)param_5;
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  iVar2 = 0;
+  uVar1 = UI_TextWidthModCase(in_r9,0,(Font_s *)param_7,param_5,(int)param_7);
+  UI_DrawTextWithGlow(param_1,in_r9,0x7fffffff,(Font_s *)param_7,
+                      (float)(dVar3 - (double)(longlong)
+                                              (int)(((int)uVar1 >> 1) +
+                                                   (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))),
+                      (float)dVar4,iVar2,6,(float)dVar5,(float *)0x0,0,in_stack_ffffff08,
                       (bool)in_stack_ffffff0f,(bool)in_stack_ffffff13,in_stack_ffffff14,
                       in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20,in_stack_ffffff24,
                       in_stack_ffffff28);
-  __restgprlr_27();
   return;
 }
 
 
 // 825ABB80  Text_PaintCenterWithDots  (ui_mp/ui_main_mp.cpp:8657)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Text_PaintCenterWithDots
                (ScreenPlacement *param_1,float param_2,float param_3,Font_s *param_4,float param_5,
                float *param_6,char *param_7,float *param_8)
 
 {
-  ScreenPlacement *pSVar1;
-  uint uVar2;
-  char *pcVar3;
-  longlong lVar4;
-  Font_s *pFVar5;
-  Font_s *pFVar6;
+  uint uVar1;
+  char *pcVar2;
   char *in_r9;
-  int iVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   float *in_stack_fffffef8;
   undefined1 in_stack_fffffeff;
   undefined1 in_stack_ffffff03;
@@ -8084,23 +7537,19 @@ void Text_PaintCenterWithDots
   int in_stack_ffffff14;
   int in_stack_ffffff18;
   
-  dVar9 = (double)param_5;
-  dVar8 = (double)param_3;
-  lVar4 = (longlong)(int)param_7;
-  pSVar1 = (ScreenPlacement *)__savegprlr_25((double)param_2,param_1,param_4,param_6,lVar4,param_8);
-  pFVar5 = (Font_s *)lVar4;
-  dVar10 = extraout_f1;
-  pFVar6 = pFVar5;
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  pcVar2 = param_7;
   Sys_Milliseconds();
-  uVar2 = UI_TextWidthModCase(in_r9,0,pFVar5,(float)dVar9,(int)pFVar6);
-  pcVar3 = va("%s%s");
-  iVar7 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-  UI_DrawTextWithGlow(pSVar1,pcVar3,0x7fffffff,pFVar5,(float)(dVar10 - (double)(longlong)iVar7),
-                      (float)dVar8,6,iVar7,(float)dVar9,(float *)0x0,0,in_stack_fffffef8,
-                      (bool)in_stack_fffffeff,(bool)in_stack_ffffff03,in_stack_ffffff04,
-                      in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14,
-                      in_stack_ffffff18);
-  __restgprlr_25();
+  uVar1 = UI_TextWidthModCase(in_r9,0,(Font_s *)param_7,(float)dVar6,(int)pcVar2);
+  pcVar2 = va("%s%s");
+  iVar3 = ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  UI_DrawTextWithGlow(param_1,pcVar2,0x7fffffff,(Font_s *)param_7,
+                      (float)(dVar4 - (double)(longlong)iVar3),(float)dVar5,6,iVar3,(float)dVar6,
+                      (float *)0x0,0,in_stack_fffffef8,(bool)in_stack_fffffeff,
+                      (bool)in_stack_ffffff03,in_stack_ffffff04,in_stack_ffffff08,in_stack_ffffff0c,
+                      in_stack_ffffff10,in_stack_ffffff14,in_stack_ffffff18);
   return;
 }
 
@@ -8183,110 +7632,108 @@ LAB_825b33fc:
 
 // 825B3418  UI_DrawConnectScreen  (ui_mp/ui_main_mp.cpp:8778)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawConnectScreen(LocalClientNum_t param_1)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  Font_s *pFVar4;
-  ulonglong uVar5;
-  ScreenPlacement *pSVar6;
-  char *pcVar7;
-  char *pcVar8;
-  longlong lVar9;
-  Font_s *pFVar10;
+  bool bVar2;
+  Font_s *pFVar3;
+  ScreenPlacement *pSVar4;
+  char *pcVar5;
+  char *pcVar6;
+  longlong lVar7;
+  Font_s *pFVar8;
   undefined8 in_r5;
-  float *pfVar11;
-  ulonglong in_r7;
-  float *pfVar12;
-  char *pcVar13;
-  int iVar14;
+  float *pfVar9;
+  longlong in_r7;
+  float *pfVar10;
+  char *pcVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
   char local_8c0 [64];
   uiClientState_s local_880;
   
-  __savegprlr_23(param_1);
-  uVar5 = __savefpr_28();
-  if (3 < (uVar5 & 0xffffffff)) {
+  lVar7 = (longlong)(int)param_1;
+  if (LOCAL_CLIENT_3 < param_1) {
     in_r5 = 0;
-    in_r7 = uVar5;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\../client_mp/client_mp.h"
                     ,0x4c5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+    in_r7 = lVar7;
   }
-  LVar2 = (LocalClientNum_t)uVar5;
-  if (clientUIActives[LVar2].migrationState == CMSTATE_INACTIVE) {
-    CG_DrawInformation(LVar2);
-    pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-    pFVar4 = sharedUiInfo.assets.objectiveFont;
+  if (clientUIActives[param_1].migrationState == CMSTATE_INACTIVE) {
+    CG_DrawInformation(param_1);
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    pFVar3 = sharedUiInfo.assets.objectiveFont;
     if (sharedUiInfo.assets.objectiveFont == (Font_s *)0x0) {
-      in_r7 = 0xffffffff82058ccc;
+      in_r7 = -0x7dfa7334;
       in_r5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2274
                       ,0,"%s");
     }
-    lVar9 = ZEXT48(&stack0x00000000) - 0x880;
-    CL_GetClientState(LVar2,(uiClientState_s *)lVar9);
-    pfVar12 = (float *)in_r7;
-    pfVar11 = (float *)in_r5;
-    pFVar10 = (Font_s *)lVar9;
-    dVar16 = 0.5;
-    dVar17 = 320.0;
+    lVar7 = ZEXT48(&stack0x00000000) - 0x880;
+    CL_GetClientState(param_1,(uiClientState_s *)lVar7);
+    pfVar10 = (float *)in_r7;
+    pfVar9 = (float *)in_r5;
+    pFVar8 = (Font_s *)lVar7;
+    dVar14 = 0.5;
+    dVar15 = 320.0;
     if ((int)local_880.connState < 5) {
-      iVar14 = 0;
-      bVar3 = false;
-      dVar18 = 299.0;
-      pcVar7 = UI_SafeTranslateString(local_880.messageString);
-      pfVar12 = (float *)in_r7;
-      pfVar11 = (float *)in_r5;
-      pFVar10 = (Font_s *)lVar9;
-      pcVar8 = pcVar7;
+      iVar12 = 0;
+      bVar2 = false;
+      dVar16 = 299.0;
+      pcVar5 = UI_SafeTranslateString(local_880.messageString);
+      pfVar10 = (float *)in_r7;
+      pfVar9 = (float *)in_r5;
+      pFVar8 = (Font_s *)lVar7;
+      pcVar6 = pcVar5;
       do {
-        cVar1 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 != '\0');
-      pcVar13 = (char *)0x0;
-      if (0 < (int)(pcVar8 + (-1 - (int)pcVar7))) {
-        dVar15 = 22.0;
+      pcVar11 = (char *)0x0;
+      if (0 < (int)(pcVar6 + (-1 - (int)pcVar5))) {
+        dVar13 = 22.0;
         do {
-          local_8c0[iVar14] = pcVar7[(int)pcVar13];
-          if ((0x28 < iVar14) && (0 < (int)pcVar13)) {
-            bVar3 = true;
+          local_8c0[iVar12] = pcVar5[(int)pcVar11];
+          if ((0x28 < iVar12) && (0 < (int)pcVar11)) {
+            bVar2 = true;
           }
-          if (((0x39 < iVar14) || (pcVar13 == pcVar8 + (-2 - (int)pcVar7))) ||
-             ((bVar3 && (pcVar7[(int)pcVar13] == ' ')))) {
-            local_8c0[iVar14 + 1] = '\0';
-            Text_PaintCenter(pSVar6,(float)dVar17,(float)dVar18,(Font_s *)lVar9,(float)dVar16,
-                             (float *)in_r5,(char *)pFVar4,(float *)in_r7);
-            bVar3 = false;
-            dVar18 = (double)(float)(dVar18 + dVar15);
-            iVar14 = -1;
+          if (((0x39 < iVar12) || (pcVar11 == pcVar6 + (-2 - (int)pcVar5))) ||
+             ((bVar2 && (pcVar5[(int)pcVar11] == ' ')))) {
+            local_8c0[iVar12 + 1] = '\0';
+            Text_PaintCenter(pSVar4,(float)dVar15,(float)dVar16,(Font_s *)lVar7,(float)dVar14,
+                             (float *)in_r5,(char *)pFVar3,(float *)in_r7);
+            bVar2 = false;
+            dVar16 = (double)(float)(dVar16 + dVar13);
+            iVar12 = -1;
           }
-          pfVar12 = (float *)in_r7;
-          pfVar11 = (float *)in_r5;
-          pFVar10 = (Font_s *)lVar9;
-          pcVar13 = pcVar13 + 1;
-          iVar14 = iVar14 + 1;
-        } while ((int)pcVar13 < (int)(pcVar8 + (-1 - (int)pcVar7)));
+          pfVar10 = (float *)in_r7;
+          pfVar9 = (float *)in_r5;
+          pFVar8 = (Font_s *)lVar7;
+          pcVar11 = pcVar11 + 1;
+          iVar12 = iVar12 + 1;
+        } while ((int)pcVar11 < (int)(pcVar6 + (-1 - (int)pcVar5)));
       }
     }
     if (((((systemlink->current).enabled != false) && (2 < (int)local_880.connState)) &&
         ((int)local_880.connState < 8)) &&
-       ((pcVar8 = UI_GetConnectInfoString(&local_880), pcVar8 != (char *)0x0 &&
+       ((pcVar6 = UI_GetConnectInfoString(&local_880), pcVar6 != (char *)0x0 &&
         (((systemlink_host->current).enabled == false || (local_880.connState == CA_CONNECTING))))))
     {
       Text_PaintCenterWithDots
-                (pSVar6,(float)dVar17,145.0,pFVar10,(float)dVar16,pfVar11,(char *)pFVar4,pfVar12);
+                (pSVar4,(float)dVar15,145.0,pFVar8,(float)dVar14,pfVar9,(char *)pFVar3,pfVar10);
     }
   }
-  __restfpr_28();
-  __restgprlr_23();
   return;
 }
 
@@ -8344,6 +7791,8 @@ void UI_StopServerRefresh(void)
 
 // 825B3670  UI_DoServerRefresh  (ui_mp/ui_main_mp.cpp:8942)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8352,42 +7801,41 @@ void UI_DoServerRefresh(uiInfo_s *param_1)
 
 {
   bool bVar1;
-  uiInfo_s *puVar2;
-  int iVar3;
+  int iVar2;
   
-  puVar2 = (uiInfo_s *)__savegprlr_29(param_1);
   bVar1 = false;
-  if (sharedUiInfo.serverStatus.refreshActive == 0) goto LAB_825b3728;
-  iVar3 = (ui_netSource->current).integer;
-  if (iVar3 != 2) {
-    if (iVar3 == 0) {
-      iVar3 = LAN_GetServerCount(0);
-      if (iVar3 == 0) {
-LAB_825b36d8:
-        bVar1 = true;
-      }
+  if (sharedUiInfo.serverStatus.refreshActive == 0) {
+    return;
+  }
+  iVar2 = (ui_netSource->current).integer;
+  if (iVar2 != 2) {
+    if (iVar2 == 0) {
+      iVar2 = LAN_GetServerCount(0);
+      if (iVar2 != 0) goto LAB_825b36dc;
     }
     else {
-      iVar3 = LAN_WaitServerResponse(iVar3);
-      if (iVar3 != 0) goto LAB_825b36d8;
+      iVar2 = LAN_WaitServerResponse(iVar2);
+      if (iVar2 == 0) goto LAB_825b36dc;
     }
+    bVar1 = true;
   }
-  if ((sharedUiInfo.serverStatus.refreshtime <= (puVar2->uiDC).realTime) || (!bVar1)) {
-    UI_UpdateDisplayServers(puVar2);
+LAB_825b36dc:
+  if ((sharedUiInfo.serverStatus.refreshtime <= (param_1->uiDC).realTime) || (!bVar1)) {
+    UI_UpdateDisplayServers(param_1);
     if (!bVar1) {
-      UI_BuildServerDisplayList(puVar2,2);
+      UI_BuildServerDisplayList(param_1,2);
       UI_StopServerRefresh();
     }
-    UI_BuildServerDisplayList(puVar2,0);
+    UI_BuildServerDisplayList(param_1,0);
   }
-LAB_825b3728:
-  __restgprlr_29();
   return;
 }
 
 
 // 825AF1B0  UI_StartServerRefresh  (ui_mp/ui_main_mp.cpp:9005)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8395,48 +7843,43 @@ LAB_825b3728:
 void UI_StartServerRefresh(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
   char acStack_80 [32];
   qtime_s aqStack_60 [2];
   
-  LVar1 = __savegprlr_27(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   Com_RealTime(0,aqStack_60);
   _snprintf(acStack_80,0x18,"ui_lastServerRefresh_%i");
-  pcVar3 = MonthAbbrev[aqStack_60[0].tm_mon];
-  if (*pcVar3 == '\x15') {
-    pcVar3 = pcVar3 + 1;
-    pcVar2 = (char *)0x0;
+  pcVar2 = MonthAbbrev[aqStack_60[0].tm_mon];
+  if (*pcVar2 == '\x15') {
+    pcVar2 = pcVar2 + 1;
+    pcVar1 = (char *)0x0;
   }
   else {
-    pcVar2 = SEH_StringEd_GetString(pcVar3);
+    pcVar1 = SEH_StringEd_GetString(pcVar2);
   }
-  UI_CheckStringTranslation(pcVar3,pcVar2);
-  pcVar3 = va("%s %i, %i   %i:%02i");
-  Dvar_SetStringByName(acStack_80,pcVar3);
+  UI_CheckStringTranslation(pcVar2,pcVar1);
+  pcVar2 = va("%s %i, %i   %i:%02i");
+  Dvar_SetStringByName(acStack_80,pcVar2);
   if (param_2 == 0) {
-    UI_UpdatePendingPings(uiInfoArray + LVar1);
-    __restgprlr_27();
+    UI_UpdatePendingPings(uiInfoArray + param_1);
     return;
   }
-  sharedUiInfo.serverStatus.nextDisplayRefresh = uiInfoArray[LVar1].uiDC.realTime + 1000;
+  sharedUiInfo.serverStatus.nextDisplayRefresh = uiInfoArray[param_1].uiDC.realTime + 1000;
   sharedUiInfo.serverStatus.refreshActive = 1;
   UI_ClearDisplayedServers();
   LAN_MarkServerDirty((ui_netSource->current).integer,-1,1);
   LAN_ResetPings((ui_netSource->current).integer);
   if ((ui_netSource->current).integer == 0) {
-    CL_LocalServers(LVar1);
-    sharedUiInfo.serverStatus.refreshtime = uiInfoArray[LVar1].uiDC.realTime + 1000;
-    __restgprlr_27();
+    CL_LocalServers(param_1);
+    sharedUiInfo.serverStatus.refreshtime = uiInfoArray[param_1].uiDC.realTime + 1000;
     return;
   }
-  sharedUiInfo.serverStatus.refreshtime = uiInfoArray[LVar1].uiDC.realTime + 5000;
-  __restgprlr_27();
+  sharedUiInfo.serverStatus.refreshtime = uiInfoArray[param_1].uiDC.realTime + 5000;
   return;
 }
 
@@ -8618,6 +8061,9 @@ char * UI_ReplaceConversionInt(char *param_1,int param_2)
 
 // 825AF450  UI_ReplaceConversionInts  (ui_mp/ui_main_mp.cpp:9179)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 char * UI_ReplaceConversionInts(char *param_1,int param_2,int *param_3)
 
 {
@@ -8626,15 +8072,14 @@ char * UI_ReplaceConversionInts(char *param_1,int param_2,int *param_3)
   undefined4 uVar3;
   char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  int iVar7;
-  char *pcVar8;
-  ulonglong uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  char *pcVar12;
-  undefined4 *puVar13;
-  char *pcVar14;
+  int iVar6;
+  char *pcVar7;
+  int iVar8;
+  longlong lVar9;
+  char *pcVar10;
+  undefined4 *puVar11;
+  ulonglong uVar12;
+  char *pcVar13;
   undefined4 uStack_6ac;
   undefined8 local_6a8;
   undefined8 local_6a0;
@@ -8643,8 +8088,7 @@ char * UI_ReplaceConversionInts(char *param_1,int param_2,int *param_3)
   char acStack_681 [1025];
   char acStack_280 [640];
   
-  uVar9 = (ulonglong)param_2;
-  pcVar4 = (char *)__savegprlr_17(param_1);
+  lVar9 = (longlong)param_2;
   local_6a8 = 0;
   local_6a0 = 0;
   local_698 = 0;
@@ -8652,104 +8096,100 @@ char * UI_ReplaceConversionInts(char *param_1,int param_2,int *param_3)
   uStack_6ac = 0;
   uVar3 = uStack_6ac;
   uStack_6ac = 0;
-  if (0 < (int)uVar9) {
-    puVar13 = &uStack_6ac;
-    pcVar5 = acStack_280;
-    uVar11 = uVar9;
+  if (0 < param_2) {
+    puVar11 = &uStack_6ac;
+    pcVar4 = acStack_280;
     do {
-      sprintf(pcVar5,"%d");
-      *puVar13 = pcVar5;
-      uVar11 = uVar11 - 1;
-      pcVar5 = pcVar5 + 0x20;
-      puVar13 = puVar13 + 1;
-    } while (uVar11 != 0);
-    uVar9 = uVar9 & 0xffffffff;
-    uVar3 = uStack_6ac;
+      sprintf(pcVar4,"%d");
+      *puVar11 = pcVar4;
+      lVar9 = lVar9 + -1;
+      pcVar4 = pcVar4 + 0x20;
+      puVar11 = puVar11 + 1;
+      uVar3 = uStack_6ac;
+    } while (lVar9 != 0);
   }
   uStack_6ac = uVar3;
-  if (pcVar4 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2418,0
                     ,"%s");
   }
-  pcVar5 = strstr(pcVar4,"&&");
-  if (pcVar5 == (char *)0x0) {
-    I_strncpyz(acStack_681 + 1,pcVar4,0x400);
+  pcVar4 = strstr(param_1,"&&");
+  if (pcVar4 == (char *)0x0) {
+    I_strncpyz(acStack_681 + 1,param_1,0x400);
     pcVar4 = va("%s");
-    pcVar4 = (char *)__restgprlr_17(pcVar4);
     return pcVar4;
   }
-  pcVar5 = pcVar4;
-  if (9 < (int)uVar9) {
+  pcVar4 = param_1;
+  if (9 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2421,0
                     ,"%s\n\t(arguments->argCount) = %i");
   }
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  pcVar5 = pcVar5 + (-1 - (int)pcVar4);
-  if ((int)pcVar5 < 1) {
+  pcVar4 = pcVar4 + (-1 - (int)param_1);
+  if ((int)pcVar4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2425,0
                     ,"%s\n\t(sourceStringLength) = %i");
   }
   memset();
-  pcVar8 = (char *)0x0;
-  iVar10 = 0;
-  if (0 < (int)pcVar5) {
+  pcVar7 = (char *)0x0;
+  iVar8 = 0;
+  if (0 < (int)pcVar4) {
     do {
-      pcVar14 = pcVar4 + iVar10;
-      pcVar6 = pcVar14;
+      pcVar13 = param_1 + iVar8;
+      pcVar5 = pcVar13;
       strncmp();
-      if (pcVar6 == (char *)0x0) {
-        iVar7 = isdigit((int)(pcVar4 + iVar10)[2]);
-        if (iVar7 == 0) goto LAB_825af70c;
-        uVar11 = (longlong)(pcVar4 + iVar10)[2] - 0x31;
-        if (((longlong)uVar11 < 0) || ((int)uVar9 <= (int)uVar11)) {
+      if (pcVar5 == (char *)0x0) {
+        iVar6 = isdigit((int)param_1[iVar8 + 2]);
+        if (iVar6 == 0) goto LAB_825af70c;
+        uVar12 = (longlong)param_1[iVar8 + 2] - 0x31;
+        if (((longlong)uVar12 < 0) || (param_2 <= (int)uVar12)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2433,0,"%s\n\t(argIndex) = %i");
         }
-        if (8 < (int)uVar11) {
+        if (8 < (int)uVar12) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2434,0,"%s\n\t(argIndex) = %i");
         }
-        pcVar6 = *(char **)((int)&uStack_6ac + (int)((uVar11 & 0xffffffff) << 2));
-        pcVar14 = pcVar6;
-        if (pcVar6 == (char *)0x0) {
+        pcVar5 = *(char **)((int)&uStack_6ac + (int)((uVar12 & 0xffffffff) << 2));
+        pcVar13 = pcVar5;
+        if (pcVar5 == (char *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2436,0,"%s");
         }
         do {
-          cVar1 = *pcVar14;
-          pcVar14 = pcVar14 + 1;
+          cVar1 = *pcVar13;
+          pcVar13 = pcVar13 + 1;
         } while (cVar1 != '\0');
-        iVar7 = 0;
-        pcVar14 = pcVar14 + (-1 - (int)pcVar6);
-        pcVar12 = pcVar8;
-        if (0 < (int)pcVar14) {
-          pcVar12 = pcVar14 + (int)pcVar8;
-          pcVar8 = acStack_681 + (int)pcVar8;
+        iVar6 = 0;
+        pcVar13 = pcVar13 + (-1 - (int)pcVar5);
+        pcVar10 = pcVar7;
+        if (0 < (int)pcVar13) {
+          pcVar10 = pcVar13 + (int)pcVar7;
+          pcVar7 = acStack_681 + (int)pcVar7;
           do {
-            pcVar2 = pcVar6 + iVar7;
-            iVar7 = iVar7 + 1;
-            pcVar8 = pcVar8 + 1;
-            *pcVar8 = *pcVar2;
-            pcVar14 = pcVar14 + -1;
-          } while (pcVar14 != (char *)0x0);
+            pcVar2 = pcVar5 + iVar6;
+            iVar6 = iVar6 + 1;
+            pcVar7 = pcVar7 + 1;
+            *pcVar7 = *pcVar2;
+            pcVar13 = pcVar13 + -1;
+          } while (pcVar13 != (char *)0x0);
         }
-        iVar10 = iVar10 + 3;
-        pcVar8 = pcVar12;
+        iVar8 = iVar8 + 3;
+        pcVar7 = pcVar10;
       }
       else {
 LAB_825af70c:
-        iVar10 = iVar10 + 1;
-        acStack_681[(int)(pcVar8 + 1)] = *pcVar14;
-        pcVar8 = pcVar8 + 1;
+        iVar8 = iVar8 + 1;
+        acStack_681[(int)(pcVar7 + 1)] = *pcVar13;
+        pcVar7 = pcVar7 + 1;
       }
-    } while (iVar10 < (int)pcVar5);
+    } while (iVar8 < (int)pcVar4);
   }
   UI_FilterStringForButtonAnimation(acStack_681 + 1,0x400);
   pcVar4 = va("%s");
-  pcVar4 = (char *)__restgprlr_17(pcVar4);
   return pcVar4;
 }
 
@@ -8784,6 +8224,9 @@ void UI_FilterStringForButtonAnimation(char *param_1,uint param_2)
 
 // 825AC180  UI_ReplaceConversions  (ui_mp/ui_main_mp.cpp:9232)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void UI_ReplaceConversions(char *param_1,ConversionArguments *param_2,char *param_3,int param_4)
 
 {
@@ -8791,62 +8234,54 @@ void UI_ReplaceConversions(char *param_1,ConversionArguments *param_2,char *para
   char *pcVar2;
   char *pcVar3;
   int iVar4;
-  ulonglong uVar5;
-  int *piVar6;
-  longlong lVar7;
-  char *pcVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  char *pcVar13;
-  longlong lVar12;
+  char *pcVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  longlong lVar9;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_16(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2418,0
                     ,"%s");
   }
-  pcVar3 = strstr(pcVar2,"&&");
-  if (pcVar3 == (char *)0x0) {
-    I_strncpyz(param_3,pcVar2,param_4);
-    __restgprlr_16();
+  pcVar2 = strstr(param_1,"&&");
+  if (pcVar2 == (char *)0x0) {
+    I_strncpyz(param_3,param_1,param_4);
     return;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (ConversionArguments *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2420,0
                     ,"%s");
   }
-  piVar6 = (int *)uVar5;
-  pcVar3 = pcVar2;
-  if (9 < *piVar6) {
+  pcVar2 = param_1;
+  if (9 < param_2->argCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2421,0
                     ,"%s\n\t(arguments->argCount) = %i");
   }
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  pcVar3 = pcVar3 + (-1 - (int)pcVar2);
-  if ((int)pcVar3 < 1) {
+  pcVar2 = pcVar2 + (-1 - (int)param_1);
+  if ((int)pcVar2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2425,0
                     ,"%s\n\t(sourceStringLength) = %i");
   }
   memset();
-  iVar11 = 0;
-  iVar10 = 0;
-  if (0 < (int)pcVar3) {
+  iVar8 = 0;
+  iVar7 = 0;
+  if (0 < (int)pcVar2) {
     do {
-      pcVar13 = pcVar2 + iVar10;
-      pcVar8 = pcVar13;
+      pcVar5 = param_1 + iVar7;
+      pcVar3 = pcVar5;
       strncmp();
-      if (pcVar8 == (char *)0x0) {
-        iVar4 = isdigit((int)(pcVar2 + iVar10)[2]);
+      if (pcVar3 == (char *)0x0) {
+        iVar4 = isdigit((int)param_1[iVar7 + 2]);
         if (iVar4 == 0) goto LAB_825ac3f0;
-        lVar7 = (longlong)(pcVar2 + iVar10)[2];
-        lVar12 = lVar7 + -0x31;
-        iVar4 = (int)lVar12;
-        if ((lVar12 < 0) || (*piVar6 <= iVar4)) {
+        cVar1 = param_1[iVar7 + 2];
+        lVar9 = (longlong)cVar1 + -0x31;
+        iVar4 = (int)lVar9;
+        if ((lVar9 < 0) || (param_2->argCount <= iVar4)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2433,0,"%s\n\t(argIndex) = %i");
         }
@@ -8854,39 +8289,39 @@ void UI_ReplaceConversions(char *param_1,ConversionArguments *param_2,char *para
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2434,0,"%s\n\t(argIndex) = %i");
         }
-        iVar4 = (int)((lVar7 - 0x30U & 0x3fffffff) << 2);
-        if (*(int *)(iVar4 + (int)piVar6) == 0) {
+        iVar4 = (int)(((longlong)cVar1 - 0x30U & 0x3fffffff) << 2);
+        if (*(int *)((int)param_2->args + iVar4 + -4) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
                           0x2436,0,"%s");
         }
-        pcVar8 = *(char **)(iVar4 + (int)piVar6);
+        pcVar3 = *(char **)((int)param_2->args + iVar4 + -4);
+        pcVar5 = pcVar3;
         do {
-          cVar1 = *pcVar8;
-          pcVar8 = pcVar8 + 1;
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        iVar9 = 0;
-        pcVar8 = pcVar8 + (-1 - (int)*(char **)(iVar4 + (int)piVar6));
-        if (0 < (int)pcVar8) {
+        iVar6 = 0;
+        pcVar5 = pcVar5 + (-1 - (int)pcVar3);
+        if (0 < (int)pcVar5) {
           do {
-            pcVar13 = (char *)(*(int *)(iVar4 + (int)piVar6) + iVar9);
-            iVar9 = iVar9 + 1;
-            param_3[iVar11] = *pcVar13;
-            iVar11 = iVar11 + 1;
-            pcVar8 = pcVar8 + -1;
-          } while (pcVar8 != (char *)0x0);
+            pcVar3 = (char *)(*(int *)((int)param_2->args + iVar4 + -4) + iVar6);
+            iVar6 = iVar6 + 1;
+            param_3[iVar8] = *pcVar3;
+            iVar8 = iVar8 + 1;
+            pcVar5 = pcVar5 + -1;
+          } while (pcVar5 != (char *)0x0);
         }
-        iVar10 = iVar10 + 3;
+        iVar7 = iVar7 + 3;
       }
       else {
 LAB_825ac3f0:
-        iVar10 = iVar10 + 1;
-        param_3[iVar11] = *pcVar13;
-        iVar11 = iVar11 + 1;
+        iVar7 = iVar7 + 1;
+        param_3[iVar8] = *pcVar5;
+        iVar8 = iVar8 + 1;
       }
-    } while (iVar10 < (int)pcVar3);
+    } while (iVar7 < (int)pcVar2);
   }
   UI_FilterStringForButtonAnimation(param_3,param_4);
-  __restgprlr_16();
   return;
 }
 
@@ -8969,6 +8404,8 @@ int UI_Popup(LocalClientNum_t param_1,char *param_2)
 
 // 825AC5B8  UI_PopupScriptMenu  (ui_mp/ui_main_mp.cpp:9345)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8976,45 +8413,42 @@ int UI_Popup(LocalClientNum_t param_1,char *param_2)
 int UI_PopupScriptMenu(LocalClientNum_t param_1,char *param_2,bool param_3)
 
 {
-  LocalClientNum_t LVar1;
-  uiInfo_s *puVar2;
-  menuDef_t *pmVar3;
-  int iVar4;
-  ulonglong uVar5;
+  menuDef_t *pmVar1;
+  int iVar2;
+  uiInfo_s *puVar3;
   
-  uVar5 = (ulonglong)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar2 = uiInfoArray + LVar1;
-  pmVar3 = Menu_GetFocused(&puVar2->uiDC);
-  if (pmVar3 != (menuDef_t *)0x0) {
-    if ((uiInfoArray[LVar1].currentMenuType != UIMENU_SCRIPT_POPUP) &&
-       (uiInfoArray[LVar1].currentMenuType != UIMENU_SCOREBOARD)) {
-      iVar4 = __restgprlr_28(0);
-      return iVar4;
+  puVar3 = uiInfoArray + param_1;
+  pmVar1 = Menu_GetFocused(&puVar3->uiDC);
+  if (pmVar1 != (menuDef_t *)0x0) {
+    if ((uiInfoArray[param_1].currentMenuType != UIMENU_SCRIPT_POPUP) &&
+       (uiInfoArray[param_1].currentMenuType != UIMENU_SCOREBOARD)) {
+      return 0;
     }
-    iVar4 = I_stricmp((pmVar3->window).name,param_2);
-    if (iVar4 == 0) goto LAB_825ac69c;
+    iVar2 = I_stricmp((pmVar1->window).name,param_2);
+    if (iVar2 == 0) {
+      return 1;
+    }
   }
-  uiInfoArray[LVar1].currentMenuType = UIMENU_SCRIPT_POPUP;
-  if ((uVar5 & 0xff) == 0) {
-    uiInfoArray[LVar1].uiDC.cursor.x = 639.0;
-    uiInfoArray[LVar1].uiDC.cursor.y = 479.0;
+  uiInfoArray[param_1].currentMenuType = UIMENU_SCRIPT_POPUP;
+  if (!param_3) {
+    uiInfoArray[param_1].uiDC.cursor.x = 639.0;
+    uiInfoArray[param_1].uiDC.cursor.y = 479.0;
   }
-  Key_SetCatcher(LVar1,0x10);
-  Menus_CloseAll(&puVar2->uiDC);
-  Menus_OpenByName(&puVar2->uiDC,param_2);
-LAB_825ac69c:
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  Key_SetCatcher(param_1,0x10);
+  Menus_CloseAll(&puVar3->uiDC);
+  Menus_OpenByName(&puVar3->uiDC,param_2);
+  return 1;
 }
 
 
 // 825AC6A8  UI_ClosePopupScriptMenu  (ui_mp/ui_main_mp.cpp:9376)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -9022,19 +8456,15 @@ LAB_825ac69c:
 void UI_ClosePopupScriptMenu(LocalClientNum_t param_1,bool param_2)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = __savegprlr_29(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (uiInfoArray[LVar1].currentMenuType == UIMENU_SCRIPT_POPUP) {
-    uiInfoArray[LVar1].allowScriptMenuResponse = param_2;
-    UI_CloseFocusedMenu(LVar1);
-    uiInfoArray[LVar1].allowScriptMenuResponse = true;
+  if (uiInfoArray[param_1].currentMenuType == UIMENU_SCRIPT_POPUP) {
+    *(bool *)(param_1 * 0x22ac + -0x7c08be80) = param_2;
+    UI_CloseFocusedMenu(param_1);
+    uiInfoArray[param_1].allowScriptMenuResponse = true;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -9082,6 +8512,8 @@ void UI_CloseInGameMenu(LocalClientNum_t param_1)
 
 // 825AF748  UI_ReturnToSplitScreenMenu  (ui_mp/ui_main_mp.cpp:9404)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -9089,35 +8521,32 @@ void UI_CloseInGameMenu(LocalClientNum_t param_1)
 void UI_ReturnToSplitScreenMenu(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar7;
-  uiInfo_s *puVar2;
+  bool bVar6;
+  uiInfo_s *puVar1;
+  menuDef_t *pmVar2;
   menuDef_t *pmVar3;
   menuDef_t *pmVar4;
   menuDef_t *pmVar5;
-  menuDef_t *pmVar6;
-  int iVar8;
+  int iVar7;
   
-  LVar1 = __savegprlr_27(param_1);
-  bVar7 = Menu_IsMenuOpenAndVisible(LVar1,"menu_gamesetup_splitscreen");
-  if (bVar7) {
-    puVar2 = UI_GetClientInfo(LVar1);
-    pmVar3 = Menus_FindByName(&puVar2->uiDC,"menu_gamesetup_splitscreen");
-    pmVar4 = Menus_FindByName(&puVar2->uiDC,"readingsavedevice");
-    pmVar5 = Menus_FindByName(&puVar2->uiDC,"popup_gettingdata");
-    iVar8 = 0;
-    pmVar6 = Menu_GetTopOfStack(&puVar2->uiDC,0);
-    while ((pmVar6 != (menuDef_t *)0x0 && (pmVar6 != pmVar3))) {
-      if ((pmVar6 == pmVar4) || (pmVar6 == pmVar5)) {
-        iVar8 = iVar8 + 1;
+  bVar6 = Menu_IsMenuOpenAndVisible(param_1,"menu_gamesetup_splitscreen");
+  if (bVar6) {
+    puVar1 = UI_GetClientInfo(param_1);
+    pmVar2 = Menus_FindByName(&puVar1->uiDC,"menu_gamesetup_splitscreen");
+    pmVar3 = Menus_FindByName(&puVar1->uiDC,"readingsavedevice");
+    pmVar4 = Menus_FindByName(&puVar1->uiDC,"popup_gettingdata");
+    iVar7 = 0;
+    pmVar5 = Menu_GetTopOfStack(&puVar1->uiDC,0);
+    while ((pmVar5 != (menuDef_t *)0x0 && (pmVar5 != pmVar2))) {
+      if ((pmVar5 == pmVar3) || (pmVar5 == pmVar4)) {
+        iVar7 = iVar7 + 1;
       }
       else {
-        Menus_ForceClose(&puVar2->uiDC,pmVar6);
+        Menus_ForceClose(&puVar1->uiDC,pmVar5);
       }
-      pmVar6 = Menu_GetTopOfStack(&puVar2->uiDC,iVar8);
+      pmVar5 = Menu_GetTopOfStack(&puVar1->uiDC,iVar7);
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -9425,6 +8854,8 @@ ulong64 UI_GetSavedPartyMemberXUID(LocalClientNum_t param_1)
 
 // 825ACD30  UI_MyChangesSaveDynamicFlags  (ui_mp/ui_main_mp.cpp:9709)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -9436,7 +8867,6 @@ void UI_MyChangesSaveDynamicFlags(void)
   uiInfo_s *puVar1;
   LocalClientNum_t LVar2;
   
-  __savegprlr_25();
   puVar1 = uiInfoArray;
   LVar2 = LOCAL_CLIENT_0;
   do {
@@ -9454,13 +8884,14 @@ void UI_MyChangesSaveDynamicFlags(void)
     puVar1 = puVar1 + 1;
     LVar2 = LVar2 + LOCAL_CLIENT_1;
   } while ((int)puVar1 < -0x7c085678);
-  __restgprlr_25();
   return;
 }
 
 
 // 825ACDE0  UI_MyChangesRestoreDynamicFlags  (ui_mp/ui_main_mp.cpp:9726)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -9472,7 +8903,6 @@ void UI_MyChangesRestoreDynamicFlags(void)
   uiInfo_s *puVar1;
   LocalClientNum_t LVar2;
   
-  __savegprlr_25();
   puVar1 = uiInfoArray;
   LVar2 = LOCAL_CLIENT_0;
   do {
@@ -9490,13 +8920,14 @@ void UI_MyChangesRestoreDynamicFlags(void)
     puVar1 = puVar1 + 1;
     LVar2 = LVar2 + LOCAL_CLIENT_1;
   } while ((int)puVar1 < -0x7c085678);
-  __restgprlr_25();
   return;
 }
 
 
 // 825ACE90  UI_ErrorCleanup  (ui_mp/ui_main_mp.cpp:9744)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -9508,7 +8939,6 @@ void UI_ErrorCleanup(void)
   uint uVar1;
   uiInfo_s *puVar2;
   
-  __savegprlr_25();
   Sys_AbortUIOwnership();
   UI_ClearCompletionResolve();
   puVar2 = uiInfoArray;
@@ -9528,7 +8958,6 @@ void UI_ErrorCleanup(void)
     puVar2 = puVar2 + 1;
     uVar1 = uVar1 + 1;
   } while ((int)puVar2 < -0x7c085678);
-  __restgprlr_25();
   return;
 }
 

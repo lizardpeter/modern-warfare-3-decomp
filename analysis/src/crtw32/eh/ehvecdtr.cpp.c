@@ -2,60 +2,59 @@
 
 // 8291D968  __ArrayUnwind  (<external>/bt/278379/vctools/crt/src/crtw32/eh/ehvecdtr.cpp:131)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __ArrayUnwind(void *param_1,uint param_2,int param_3,_func___cdecl_void_void_ptr *param_4)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  longlong lVar3;
+  void *pvStack00000014;
   undefined4 uStack00000024;
   
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_27(param_1);
+  lVar1 = (longlong)param_3;
   while( true ) {
-    lVar3 = lVar3 + -1;
-    uStack00000024 = (undefined4)lVar3;
-    if (lVar3 < 0) break;
-    lVar1 = lVar1 - lVar2;
-    (*param_4)((void *)lVar1);
+    lVar1 = lVar1 + -1;
+    uStack00000024 = (undefined4)lVar1;
+    if (lVar1 < 0) break;
+    param_1 = (void *)((int)param_1 - param_2);
+    pvStack00000014 = param_1;
+    (*param_4)(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8291DA40  `eh_vector_destructor_iterator'  (line unknown)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void _eh_vector_destructor_iterator_
                (void *param_1,uint param_2,int param_3,_func___cdecl_void_void_ptr *param_4)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  longlong lVar3;
+  void *pvVar2;
   void *pvStack00000014;
-  int iStack0000001c;
+  uint uStack0000001c;
   undefined4 uStack00000024;
   _func___cdecl_void_void_ptr *p_Stack0000002c;
   
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  iStack0000001c = (int)lVar2;
-  lVar1 = (longlong)iStack0000001c * (longlong)(int)lVar3 + lVar1;
-  pvStack00000014 = (void *)lVar1;
+  lVar1 = (longlong)param_3;
+  pvStack00000014 = (void *)(param_2 * param_3 + (int)param_1);
+  uStack0000001c = param_2;
   p_Stack0000002c = param_4;
+  pvVar2 = pvStack00000014;
   while( true ) {
-    lVar3 = lVar3 + -1;
-    uStack00000024 = (undefined4)lVar3;
-    if (lVar3 < 0) break;
-    lVar1 = lVar1 - lVar2;
-    pvStack00000014 = (void *)lVar1;
-    (*param_4)(pvStack00000014);
+    lVar1 = lVar1 + -1;
+    uStack00000024 = (undefined4)lVar1;
+    if (lVar1 < 0) break;
+    pvVar2 = (void *)((int)pvVar2 - param_2);
+    pvStack00000014 = pvVar2;
+    (*param_4)(pvVar2);
   }
   FUN_8291dafc();
-  __restgprlr_27();
   return;
 }
 

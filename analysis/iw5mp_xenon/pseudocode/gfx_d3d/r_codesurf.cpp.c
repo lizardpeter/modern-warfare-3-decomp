@@ -2,6 +2,8 @@
 
 // 827229F0  R_BeginCodeSurfs  (gfx_d3d/r_codesurf.cpp:62)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -10,62 +12,52 @@ int R_BeginCodeSurfs(GfxCodeSurfUser param_1,GfxCodeSurfListType param_2,GfxCode
 {
   uint uVar1;
   uint uVar2;
-  GfxCodeSurfListType GVar3;
-  GfxBackEndData *pGVar4;
-  undefined8 uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  uint *puVar10;
+  GfxBackEndData *pGVar3;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_25(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (GfxCodeSurfGlob **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x48,0
                     ,"%s");
   }
-  *(int *)uVar8 = 0;
-  if (1 < (uVar7 & 0xffffffff)) {
+  *param_3 = (GfxCodeSurfGlob *)0x0;
+  if (GFX_CODE_SURFLIST_EMISSIVE < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x4b,0
                     ,"surfList doesn\'t index GFX_CODE_SURFLIST_TYPE_COUNT\n\t%i not in [0, %i)");
   }
-  if ((int)uVar5 == 0) {
+  if (param_1 == GFX_CODE_SURF_USER_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x4c,0
                     ,"%s");
   }
-  lVar9 = (uVar7 & 0x3fffffff) * 4 + -0x7b846988;
+  lVar4 = ((ulonglong)param_2 & 0x3fffffff) * 4 + -0x7b846988;
   do {
-    puVar10 = (uint *)lVar9;
-    uVar1 = *puVar10;
+    puVar5 = (uint *)lVar4;
+    uVar1 = *puVar5;
     if (uVar1 != 0) {
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar9);
-        *puVar10 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar4);
+        *puVar5 = uVar2;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed(uVar5,0,lVar9);
-      *puVar10 = uVar2;
+      uVar2 = storeWordConditionalIndexed((longlong)(int)param_1,0,lVar4);
+      *puVar5 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (uVar1 == 0) {
-    GVar3 = (GfxCodeSurfListType)uVar7;
     if (frontEndDataOut == (GfxBackEndData *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x5b
                       ,0,"%s");
     }
-    pGVar4 = frontEndDataOut;
-    uVar1 = *(uint *)(frontEndDataOut->sceneLightTechType[0] +
-                     (int)((uVar7 + 0x556 & 0xffffffff) << 2));
-    g_codeSurfGlob[GVar3].surfList = GVar3;
-    g_codeSurfGlob[GVar3].argsCount = uVar1;
-    if (GVar3 == GFX_CODE_SURFLIST_TRANS) {
+    pGVar3 = frontEndDataOut;
+    uVar1 = frontEndDataOut->codeSurfArgsCount[param_2];
+    g_codeSurfGlob[param_2].surfList = param_2;
+    g_codeSurfGlob[param_2].argsCount = uVar1;
+    if (param_2 == GFX_CODE_SURFLIST_TRANS) {
       g_codeSurfGlob[0].surfLimit = 0x280;
       g_codeSurfGlob[0].codeSurfCountMain = &scene.codeTransSurfCount;
       g_codeSurfGlob[0].codeSurfsMain = scene.codeTransSurfs;
@@ -74,35 +66,33 @@ int R_BeginCodeSurfs(GfxCodeSurfUser param_1,GfxCodeSurfListType param_2,GfxCode
       g_codeSurfGlob[0].argsLimit = 0x20;
       g_codeSurfGlob[0].surfLimitWarn = R_WARN_GFX_CODE_TRANS_SURF_LIMIT;
       g_codeSurfGlob[0].vertLimitWarn = R_WARN_MAX_CODE_TRANS_VERTS;
-      g_codeSurfGlob[0].outCodeSurfArgsMain = pGVar4->codeSurfArgs + 0x100;
+      g_codeSurfGlob[0].outCodeSurfArgsMain = pGVar3->codeSurfArgs + 0x100;
       g_codeSurfGlob[0].indexLimitWarn = R_WARN_MAX_CODE_TRANS_INDS;
       g_codeSurfGlob[0].argsLimitWarn = R_WARN_MAX_CODE_TRANS_ARGS;
     }
     else {
-      g_codeSurfGlob[GVar3].codeSurfsMain = scene.codeEmissiveSurfs;
-      g_codeSurfGlob[GVar3].codeSurfCountMain = (uint *)0x847b9684;
-      g_codeSurfGlob[GVar3].surfLimit = 0x800;
-      g_codeSurfGlob[GVar3].vertLimit = 0x4000;
-      g_codeSurfGlob[GVar3].indexLimit = 0x6000;
-      g_codeSurfGlob[GVar3].argsLimit = 0x100;
-      g_codeSurfGlob[GVar3].surfLimitWarn = R_WARN_GFX_CODE_EMISSIVE_SURF_LIMIT;
-      g_codeSurfGlob[GVar3].vertLimitWarn = R_WARN_MAX_CODE_EMISSIVE_VERTS;
-      g_codeSurfGlob[GVar3].indexLimitWarn = R_WARN_MAX_CODE_EMISSIVE_INDS;
-      g_codeSurfGlob[GVar3].argsLimitWarn = R_WARN_MAX_CODE_EMISSIVE_ARGS;
-      g_codeSurfGlob[GVar3].outCodeSurfArgsMain = pGVar4->codeSurfArgs;
+      g_codeSurfGlob[param_2].codeSurfsMain = scene.codeEmissiveSurfs;
+      g_codeSurfGlob[param_2].codeSurfCountMain = (uint *)0x847b9684;
+      g_codeSurfGlob[param_2].surfLimit = 0x800;
+      g_codeSurfGlob[param_2].vertLimit = 0x4000;
+      g_codeSurfGlob[param_2].indexLimit = 0x6000;
+      g_codeSurfGlob[param_2].argsLimit = 0x100;
+      g_codeSurfGlob[param_2].surfLimitWarn = R_WARN_GFX_CODE_EMISSIVE_SURF_LIMIT;
+      g_codeSurfGlob[param_2].vertLimitWarn = R_WARN_MAX_CODE_EMISSIVE_VERTS;
+      g_codeSurfGlob[param_2].indexLimitWarn = R_WARN_MAX_CODE_EMISSIVE_INDS;
+      g_codeSurfGlob[param_2].argsLimitWarn = R_WARN_MAX_CODE_EMISSIVE_ARGS;
+      g_codeSurfGlob[param_2].outCodeSurfArgsMain = pGVar3->codeSurfArgs;
     }
-    g_codeSurfGlob[GVar3].surfCount = *g_codeSurfGlob[GVar3].codeSurfCountMain;
-    g_codeSurfGlob[GVar3].vertCount = (uint)pGVar4->mesh[GVar3].vb.used >> 5;
-    g_codeSurfGlob[GVar3].indexCount = pGVar4->mesh[GVar3].indexCount;
-    g_codeSurfGlob[GVar3].verts = (GfxPackedVertex *)pGVar4->mesh[GVar3].vb.verts;
-    g_codeSurfGlob[GVar3].indices = pGVar4->mesh[GVar3].indices;
-    g_codeSurfGlob[GVar3].allowProcess = 1;
-    *(int *)uVar8 = (int)(g_codeSurfGlob + GVar3);
-    iVar6 = __restgprlr_25(1);
-    return iVar6;
+    g_codeSurfGlob[param_2].surfCount = *g_codeSurfGlob[param_2].codeSurfCountMain;
+    g_codeSurfGlob[param_2].vertCount = (uint)pGVar3->mesh[param_2].vb.used >> 5;
+    g_codeSurfGlob[param_2].indexCount = pGVar3->mesh[param_2].indexCount;
+    g_codeSurfGlob[param_2].verts = (GfxPackedVertex *)pGVar3->mesh[param_2].vb.verts;
+    g_codeSurfGlob[param_2].indices = pGVar3->mesh[param_2].indices;
+    g_codeSurfGlob[param_2].allowProcess = 1;
+    *param_3 = g_codeSurfGlob + param_2;
+    return 1;
   }
-  iVar6 = __restgprlr_25(0);
-  return iVar6;
+  return 0;
 }
 
 
@@ -140,70 +130,59 @@ __vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 // 827231F0  R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
                (GfxCodeSurf *param_1,uint param_2,uint param_3,uint param_4,GfxCodeSurf *param_5,
                uint param_6)
 
 {
   uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint *puVar16;
-  longlong lVar15;
-  longlong lVar17;
+  ushort *puVar2;
+  uint uVar3;
+  GfxCodeSurf *pGVar4;
+  uint uVar5;
+  ushort uVar6;
+  ushort uVar7;
+  longlong lVar8;
+  GfxCodeSurf *pGVar9;
   
-  uVar13 = (ulonglong)(int)param_6;
-  lVar12 = (longlong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  puVar7 = (uint *)__savegprlr_26(param_1);
-  if ((uVar9 & 0xffffffff) != 0) {
-    lVar17 = (uVar13 & 0xfffffff) * 0x10 + lVar12 + -0x10;
+  lVar8 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pGVar9 = param_5 + (param_6 - 1);
     do {
-      uVar3 = (ulonglong)(*puVar7 >> 0x12);
-      if (((uVar10 & 0xffffffff) <= uVar3) && (uVar3 < (uVar11 & 0xffffffff))) {
-        uVar14 = uVar13;
-        lVar15 = lVar17;
-        uVar6 = uVar13 & 0xffffffff;
-        while ((uVar6 != 0 && (puVar16 = (uint *)lVar15, uVar3 < *puVar16 >> 0x12))) {
-          uVar14 = uVar14 - 1;
-          lVar15 = lVar15 + -0x10;
-          puVar16[4] = *puVar16;
-          puVar16[5] = puVar16[1];
-          puVar16[6] = puVar16[2];
-          puVar16[7] = puVar16[3];
-          uVar6 = uVar14;
+      uVar3 = (param_1->drawGroup).packed >> 0x12;
+      if ((param_3 <= uVar3) && (pGVar4 = pGVar9, uVar5 = param_6, uVar3 < param_4)) {
+        for (; (uVar5 != 0 && (uVar3 < (pGVar4->drawGroup).packed >> 0x12)); pGVar4 = pGVar4 + -1) {
+          uVar1 = pGVar4->triCount;
+          puVar2 = pGVar4->indices;
+          uVar6 = pGVar4->argOffset;
+          uVar7 = pGVar4->argCount;
+          pGVar4[1].drawGroup = pGVar4->drawGroup;
+          pGVar4[1].triCount = uVar1;
+          pGVar4[1].indices = puVar2;
+          pGVar4[1].argOffset = uVar6;
+          pGVar4[1].argCount = uVar7;
+          uVar5 = uVar5 - 1;
         }
-        iVar5 = (int)uVar14 * 0x10;
-        uVar8 = puVar7[1];
-        uVar13 = uVar13 + 1;
-        uVar1 = puVar7[2];
-        iVar4 = iVar5 + (int)lVar12;
-        uVar2 = puVar7[3];
-        lVar17 = lVar17 + 0x10;
-        *(uint *)(iVar5 + (int)lVar12) = *puVar7;
-        *(uint *)(iVar4 + 4) = uVar8;
-        *(uint *)(iVar4 + 8) = uVar1;
-        *(uint *)(iVar4 + 0xc) = uVar2;
+        uVar3 = param_1->triCount;
+        param_6 = param_6 + 1;
+        puVar2 = param_1->indices;
+        uVar6 = param_1->argOffset;
+        uVar7 = param_1->argCount;
+        pGVar9 = pGVar9 + 1;
+        param_5[uVar5].drawGroup = param_1->drawGroup;
+        param_5[uVar5].triCount = uVar3;
+        param_5[uVar5].indices = puVar2;
+        param_5[uVar5].argOffset = uVar6;
+        param_5[uVar5].argCount = uVar7;
       }
-      uVar9 = uVar9 - 1;
-      puVar7 = puVar7 + 4;
-    } while (uVar9 != 0);
+      lVar8 = lVar8 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar8 != 0);
   }
-  uVar8 = __restgprlr_26(uVar13);
-  return uVar8;
+  return param_6;
 }
 
 
@@ -285,197 +264,167 @@ bool Material_HasTechnique(Material *param_1,MaterialTechniqueType param_2)
 
 // 82723D68  R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
                (GfxCodeSurf *param_1,uint param_2,uint param_3,GfxCodeSurf *param_4)
 
 {
   ushort uVar1;
   ushort uVar2;
-  int iVar3;
+  uint uVar3;
   GfxCodeSurf *pGVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  GfxCodeSurf *pGVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pGVar4 = (GfxCodeSurf *)__savegprlr_27(param_1);
-  iVar3 = (int)((uVar6 & 0xffffffff) << 1);
-  uVar1 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3);
-  uVar2 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3 + 2);
-  pGVar7 = param_4;
-  uVar5 = R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
-                    (pGVar4,param_2,0,(uint)uVar1,param_4,0);
-  uVar5 = R_CopySortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
-                    (pGVar4,param_2,(uint)uVar1,(uint)uVar2,pGVar7,uVar5);
-  uVar5 = R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
-                    (pGVar4,param_2,(uint)uVar2,0x1660,param_4,uVar5);
-  uVar5 = __restgprlr_27(uVar5);
-  return uVar5;
+  uVar1 = rgp.mtlSortIndexBeginKey[param_3];
+  uVar2 = rgp.mtlSortIndexBeginKey[param_3 + 1];
+  pGVar4 = param_4;
+  uVar3 = R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+                    (param_1,param_2,0,(uint)uVar1,param_4,0);
+  uVar3 = R_CopySortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+                    (param_1,param_2,(uint)uVar1,(uint)uVar2,pGVar4,uVar3);
+  uVar3 = R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+                    (param_1,param_2,(uint)uVar2,0x1660,param_4,uVar3);
+  return uVar3;
 }
 
 
 // 82722C60  R_EndCodeSurfs  (gfx_d3d/r_codesurf.cpp:158)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_EndCodeSurfs(GfxCodeSurfGlob *param_1,GfxCodeSurfUser param_2)
 
 {
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)__savegprlr_26(param_1);
-  puVar1[0x12] = 0;
+  param_1->allowProcess = 0;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xa8,0
                     ,"%s");
   }
-  *(undefined4 *)puVar1[7] = *puVar1;
-  frontEndDataOut->mesh[puVar1[0x11]].vb.used = puVar1[1] << 5;
-  frontEndDataOut->mesh[puVar1[0x11]].indexCount = puVar1[2];
-  frontEndDataOut->codeSurfArgsCount[puVar1[0x11]] = puVar1[3];
-  if (scene.codeSurfUser[puVar1[0x11]] != param_2) {
+  *param_1->codeSurfCountMain = param_1->surfCount;
+  frontEndDataOut->mesh[param_1->surfList].vb.used = param_1->vertCount << 5;
+  frontEndDataOut->mesh[param_1->surfList].indexCount = param_1->indexCount;
+  frontEndDataOut->codeSurfArgsCount[param_1->surfList] = param_1->argsCount;
+  if (scene.codeSurfUser[param_1->surfList] != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xbc,0
                     ,"scene_glob->codeSurfUser[codeSurfGlob->surfList] == user\n\t%i, %i");
   }
-  scene.codeSurfUser[puVar1[0x11]] = 0;
-  __restgprlr_26();
+  scene.codeSurfUser[param_1->surfList] = 0;
   return;
 }
 
 
 // 82722D70  R_ReserveCodeSurfVerts  (gfx_d3d/r_codesurf.cpp:195)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool R_ReserveCodeSurfVerts(GfxCodeSurfGlob *param_1,uint param_2,ushort *param_3)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (*(int *)(iVar1 + 0x48) == 0) {
+  if (param_1->allowProcess == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xc4,0
                     ,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x28) < ((ulonglong)*(uint *)(iVar1 + 4) + lVar3 & 0xffffffff)) {
-    R_WarnOncePerFrame(*(GfxWarningType *)(iVar1 + 0x38));
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+  if (param_1->vertLimit < param_1->vertCount + param_2) {
+    R_WarnOncePerFrame(param_1->vertLimitWarn);
+    return false;
   }
-  *param_3 = (ushort)*(uint *)(iVar1 + 4);
-  *(int *)(iVar1 + 4) = (int)lVar3 + *(int *)(iVar1 + 4);
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  *param_3 = (ushort)param_1->vertCount;
+  param_1->vertCount = param_2 + param_1->vertCount;
+  return true;
 }
 
 
 // 82722E00  R_ReturnCodeSurfVerts  (gfx_d3d/r_codesurf.cpp:215)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_ReturnCodeSurfVerts(GfxCodeSurfGlob *param_1,uint param_2,GfxPackedVertex *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1,uVar2,param_3);
-  if (*(int *)(iVar1 + 0x48) == 0) {
+  if (param_1->allowProcess == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xd8,0
                     ,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 4) < (uVar2 & 0xffffffff)) {
+  if (param_1->vertCount < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xd9,0
                     ,"codeSurfGlob->vertCount >= vertCount\n\t%i, %i");
   }
-  *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) - (int)uVar2;
-  __restgprlr_29();
+  param_1->vertCount = param_1->vertCount - param_2;
   return;
 }
 
 
 // 82722E88  R_ReserveCodeSurfIndices  (gfx_d3d/r_codesurf.cpp:226)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_ReserveCodeSurfIndices(GfxCodeSurfGlob *param_1,uint param_2,r_double_index_t **param_3)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (*(int *)(iVar1 + 0x48) == 0) {
+  if (param_1->allowProcess == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xe3,0
                     ,"%s");
   }
-  if ((uVar3 & 1) != 0) {
+  if ((param_2 & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xe4,0
                     ,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x2c) < (*(uint *)(iVar1 + 8) + uVar3 & 0xffffffff)) {
-    R_WarnOncePerFrame(*(GfxWarningType *)(iVar1 + 0x3c));
-    uVar2 = __restgprlr_27(0);
-    return (bool)uVar2;
+  if (param_1->indexLimit < param_1->indexCount + param_2) {
+    R_WarnOncePerFrame(param_1->indexLimitWarn);
+    return false;
   }
-  *param_3 = (r_double_index_t *)(*(uint *)(iVar1 + 8) * 2 + *(int *)(iVar1 + 0x14));
-  *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + (int)uVar3;
-  uVar2 = __restgprlr_27(1);
-  return (bool)uVar2;
+  *param_3 = (r_double_index_t *)(param_1->indices + param_1->indexCount);
+  param_1->indexCount = param_1->indexCount + param_2;
+  return true;
 }
 
 
 // 82722F50  R_ReserveCodeSurfBuffers  (gfx_d3d/r_codesurf.cpp:243)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bool R_ReserveCodeSurfBuffers
                (GfxCodeSurfGlob *param_1,uint param_2,uint param_3,uint param_4,ushort *param_5,
                r_double_index_t **param_6,uint *param_7)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if (*(int *)(iVar1 + 0x48) == 0) {
+  if (param_1->allowProcess == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xf4,0
                     ,"%s");
   }
-  if ((uVar4 & 1) != 0) {
+  if ((param_3 & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0xf5,0
                     ,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x28) < ((ulonglong)*(uint *)(iVar1 + 4) + lVar3 & 0xffffffff)) {
-    R_WarnOncePerFrame(*(GfxWarningType *)(iVar1 + 0x38));
-    uVar2 = __restgprlr_23(0);
-    return (bool)uVar2;
+  if (param_1->vertLimit < param_1->vertCount + param_2) {
+    R_WarnOncePerFrame(param_1->vertLimitWarn);
+    return false;
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x2c) < (*(uint *)(iVar1 + 8) + uVar4 & 0xffffffff)) {
-    R_WarnOncePerFrame(*(GfxWarningType *)(iVar1 + 0x3c));
-    uVar2 = __restgprlr_23(0);
-    return (bool)uVar2;
+  if (param_1->indexLimit < param_1->indexCount + param_3) {
+    R_WarnOncePerFrame(param_1->indexLimitWarn);
+    return false;
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x30) < (uVar5 + *(uint *)(iVar1 + 0xc) & 0xffffffff)) {
-    R_WarnOncePerFrame(*(GfxWarningType *)(iVar1 + 0x40));
-    uVar2 = __restgprlr_23(0);
-    return (bool)uVar2;
+  if (param_1->argsLimit < param_4 + param_1->argsCount) {
+    R_WarnOncePerFrame(param_1->argsLimitWarn);
+    return false;
   }
-  *param_5 = (ushort)*(uint *)(iVar1 + 4);
-  *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) + (int)lVar3;
-  *param_6 = (r_double_index_t *)(*(int *)(iVar1 + 8) * 2 + *(int *)(iVar1 + 0x14));
-  *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + (int)uVar4;
-  if ((uVar5 & 0xffffffff) != 0) {
-    *param_7 = *(uint *)(iVar1 + 0xc) & 0xffff;
-    *(int *)(iVar1 + 0xc) = (int)uVar5 + *(int *)(iVar1 + 0xc);
+  *param_5 = (ushort)param_1->vertCount;
+  param_1->vertCount = param_1->vertCount + param_2;
+  *param_6 = (r_double_index_t *)(param_1->indices + param_1->indexCount);
+  param_1->indexCount = param_1->indexCount + param_3;
+  if (param_4 != 0) {
+    *param_7 = param_1->argsCount & 0xffff;
+    param_1->argsCount = param_4 + param_1->argsCount;
   }
-  uVar2 = __restgprlr_23(1);
-  return (bool)uVar2;
+  return true;
 }
 
 
@@ -507,6 +456,8 @@ void R_AddCodeSurfWithOffset
 
 // 82723330  R_AddCodeSurf  (gfx_d3d/r_codesurf.cpp:297)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_AddCodeSurf(GfxCodeSurfGlob *param_1,Material *param_2,r_double_index_t *param_3,uint param_4
@@ -517,56 +468,48 @@ void R_AddCodeSurf(GfxCodeSurfGlob *param_1,Material *param_2,r_double_index_t *
   char cVar2;
   char cVar3;
   uint uVar4;
-  uint *puVar5;
+  Material *pMVar5;
   Material *pMVar6;
-  Material *pMVar7;
-  bool bVar9;
-  ushort uVar8;
-  ulonglong uVar10;
+  bool bVar8;
+  ushort uVar7;
+  char *pcVar9;
+  char *pcVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
-  char *pcVar13;
-  char *pcVar14;
-  ulonglong uVar15;
-  uint *puVar16;
+  GfxCodeSurf *pGVar12;
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  puVar5 = (uint *)__savegprlr_22(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x132,
                     0,"%s");
   }
-  if (puVar5[0x12] == 0) {
+  if (param_1->allowProcess == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x133,
                     0,"%s");
   }
-  pMVar6 = Material_FromHandle(param_2);
-  pMVar7 = R_GetSortedMaterial((uint)((pMVar6->info).drawSurf.packed >> 0x1d) & 0xfff);
-  if (pMVar7 != pMVar6) {
+  pMVar5 = Material_FromHandle(param_2);
+  pMVar6 = R_GetSortedMaterial((uint)((pMVar5->info).drawSurf.packed >> 0x1d) & 0xfff);
+  if (pMVar6 != pMVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x138,
                     0,"%s");
   }
-  uVar1 = pMVar6->cameraRegion;
+  uVar1 = pMVar5->cameraRegion;
   if (uVar1 == '\x05') goto LAB_82723494;
   if (uVar1 == '\x02') {
-    bVar9 = puVar5[0x11] == 1;
+    bVar8 = param_1->surfList == GFX_CODE_SURFLIST_EMISSIVE;
 LAB_82723424:
-    if (bVar9) goto LAB_82723494;
+    if (bVar8) goto LAB_82723494;
   }
   else if (uVar1 == '\x01') {
-    bVar9 = puVar5[0x11] == 0;
+    bVar8 = param_1->surfList == GFX_CODE_SURFLIST_TRANS;
     goto LAB_82723424;
   }
-  pcVar14 = (pMVar6->info).name;
-  pcVar13 = "$default3d";
+  pcVar10 = (pMVar5->info).name;
+  pcVar9 = "$default3d";
   do {
-    cVar2 = *pcVar14;
-    cVar3 = *pcVar13;
+    cVar2 = *pcVar10;
+    cVar3 = *pcVar9;
     if (cVar2 == '\0') break;
-    pcVar14 = pcVar14 + 1;
-    pcVar13 = pcVar13 + 1;
+    pcVar10 = pcVar10 + 1;
+    pcVar9 = pcVar9 + 1;
   } while (cVar2 == cVar3);
   if (cVar2 != cVar3) {
     va("Material [%s]");
@@ -574,40 +517,41 @@ LAB_82723424:
                     0,"%s\n\t%s");
   }
 LAB_82723494:
-  if ((puVar5[0x11] != 1) ||
-     ((bVar9 = Material_HasTechnique(pMVar6,gfxDrawMethod.emissiveTechType), bVar9 &&
-      (((pMVar6->info).gameFlags & 2) == 0)))) {
-    uVar4 = *puVar5;
-    if (puVar5[9] <= uVar4) {
-      R_WarnOncePerFrame(puVar5[0xd]);
-      __restgprlr_22();
+  if ((param_1->surfList != GFX_CODE_SURFLIST_EMISSIVE) ||
+     ((bVar8 = Material_HasTechnique(pMVar5,gfxDrawMethod.emissiveTechType), bVar8 &&
+      (((pMVar5->info).gameFlags & 2) == 0)))) {
+    uVar4 = param_1->surfCount;
+    if (param_1->surfLimit <= uVar4) {
+      R_WarnOncePerFrame(param_1->surfLimitWarn);
       return;
     }
-    *puVar5 = uVar4 + 1;
-    uVar15 = (pMVar6->info).drawSurf.packed;
-    puVar16 = (uint *)(uVar4 * 0x10 + puVar5[6]);
-    if ((uVar15 >> 0x29 & 3) != 3) {
+    param_1->surfCount = uVar4 + 1;
+    uVar11 = (pMVar5->info).drawSurf.packed;
+    pGVar12 = param_1->codeSurfsMain + uVar4;
+    if ((uVar11 >> 0x29 & 3) != 3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",
                       0x15c,1,"%s");
     }
-    puVar16[2] = (uint)param_3;
-    *puVar16 = (uint)((uVar15 >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 | *puVar16 & 0x3ffff;
-    *(undefined1 *)((int)puVar16 + 2) = 0;
-    puVar16[1] = (uint)((uVar10 & 0xffffffff) / 3);
-    *puVar16 = *puVar16 & 0xfffcff00 | 0xe;
-    if (((uVar12 & 0xffffffff) == 0) && ((uVar11 & 0xffffffff) != 0)) {
+    pGVar12->indices = param_3->value;
+    (pGVar12->drawGroup).packed =
+         (uint)((uVar11 >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 |
+         (pGVar12->drawGroup).packed & 0x3ffff;
+    (pGVar12->drawGroup).fields.sceneLightIndex = 0;
+    pGVar12->triCount = param_4 / 3;
+    (pGVar12->drawGroup).packed = (pGVar12->drawGroup).packed & 0xfffcff00 | 0xe;
+    if ((param_6 == 0) && (param_5 != 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",
                       0x168,0,"%s");
     }
-    if ((ulonglong)puVar5[0xc] <= (uVar11 & 0xffffffff)) {
+    if (param_1->argsLimit <= param_5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",
                       0x169,0,
                       "argOffset doesn\'t index codeSurfGlob->argsLimit\n\t%i not in [0, %i)");
     }
-    uVar8 = truncate_cast<unsigned_short>((int)uVar12);
-    *(ushort *)((int)puVar16 + 0xe) = uVar8;
-    uVar8 = truncate_cast<unsigned_short>((int)uVar11);
-    *(ushort *)(puVar16 + 3) = uVar8;
+    uVar7 = truncate_cast<unsigned_short>(param_6);
+    pGVar12->argCount = uVar7;
+    uVar7 = truncate_cast<unsigned_short>(param_5);
+    pGVar12->argOffset = uVar7;
   }
   else {
     if (r_fullbright == (dvar_t *)0x0) {
@@ -616,18 +560,19 @@ LAB_82723494:
     }
     if ((r_fullbright->current).enabled == false) {
       R_WarnOncePerFrame(R_WARN_NONEMISSIVE_FX_MATERIAL);
-      __restgprlr_22();
       return;
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82723640  R_AddCode3DQuadSurf  (gfx_d3d/r_codesurf.cpp:370)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void R_AddCode3DQuadSurf(GfxCodeSurfGlob *param_1,ushort param_2,r_double_index_t *param_3,
                         float *param_4,float (*param_5) [3],float param_6,float param_7,
@@ -636,29 +581,21 @@ void R_AddCode3DQuadSurf(GfxCodeSurfGlob *param_1,ushort param_2,r_double_index_
 
 {
   float fVar1;
-  short sVar2;
+  PackedTexCoords PVar2;
   PackedTexCoords PVar3;
-  PackedTexCoords PVar4;
-  ulonglong uVar5;
-  GfxCodeSurfGlob *pGVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  r_double_index_t *prVar9;
-  GfxPackedVertex *pGVar10;
-  double extraout_f1;
+  ulonglong uVar4;
+  GfxPackedVertex *pGVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  undefined1 auVar19 [16];
+  undefined1 auVar12 [16];
   float *in_stack_0000006c;
   Material *in_stack_00000074;
   PackedTexCoords local_d0;
-  float local_cc;
+  GfxColor local_cc;
   float local_c8;
   float local_c4;
   float local_c0;
@@ -667,107 +604,94 @@ void R_AddCode3DQuadSurf(GfxCodeSurfGlob *param_1,ushort param_2,r_double_index_
   float local_b0;
   undefined1 local_a0 [16];
   
-  dVar12 = (double)param_11;
-  dVar11 = (double)param_8;
-  dVar14 = (double)param_7;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (uint)(short)param_2;
-  uVar5 = ZEXT48(&stack0x00000000);
-  __savegprlr_26((double)param_6,param_1);
-  pGVar6 = (GfxCodeSurfGlob *)__savefpr_21();
-  prVar9 = (r_double_index_t *)uVar8;
-  dVar13 = extraout_f1;
-  if ((uVar8 & 0xffffffff) == 0) {
+  dVar7 = (double)param_7;
+  dVar6 = (double)param_6;
+  uVar4 = ZEXT48(&stack0x00000000);
+  if (param_3 == (r_double_index_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x17c,
-                    (int)prVar9,"%s");
+                    0,"%s");
   }
-  sVar2 = (short)uVar7;
-  local_d0.packed._0_2_ = sVar2;
-  local_d0.packed._2_2_ = sVar2 + 1;
+  local_d0.packed._0_2_ = param_2;
+  local_d0.packed._2_2_ = param_2 + 1;
+  PVar2 = local_d0;
+  local_d0.packed._0_2_ = param_2 + 3;
+  local_d0.packed._2_2_ = param_2 + 3;
   PVar3 = local_d0;
-  local_d0.packed._0_2_ = sVar2 + 3;
-  local_d0.packed._2_2_ = sVar2 + 3;
-  PVar4 = local_d0;
-  local_d0.packed._0_2_ = sVar2 + 1;
-  local_d0.packed._2_2_ = sVar2 + 2;
-  *(PackedTexCoords *)prVar9->value = PVar3;
-  *(PackedTexCoords *)(prVar9 + 2) = local_d0;
-  *(PackedTexCoords *)prVar9[1].value = PVar4;
-  R_AddCodeSurf(pGVar6,in_stack_00000074,prVar9,6,0,0,"(code)");
-  dVar13 = (double)(float)(dVar13 * 0.5);
-  dVar15 = (double)(float)(dVar14 * 0.5);
-  dVar14 = (double)(float)(dVar14 * -0.5);
-  R_ConvertColorToBytes(in_stack_0000006c,(uchar *)&local_cc);
-  local_c4 = (float)dVar13;
-  local_c0 = (float)dVar15;
-  dVar17 = 0.0;
+  local_d0.packed._0_2_ = param_2 + 1;
+  local_d0.packed._2_2_ = param_2 + 2;
+  *(PackedTexCoords *)param_3->value = PVar2;
+  *(PackedTexCoords *)(param_3 + 2) = local_d0;
+  *(PackedTexCoords *)param_3[1].value = PVar3;
+  R_AddCodeSurf(param_1,in_stack_00000074,param_3,6,0,0,"(code)");
+  dVar6 = (double)(float)(dVar6 * 0.5);
+  dVar8 = (double)(float)(dVar7 * 0.5);
+  dVar7 = (double)(float)(dVar7 * -0.5);
+  R_ConvertColorToBytes(in_stack_0000006c,local_cc.array);
+  local_c4 = (float)dVar6;
+  local_c0 = (float)dVar8;
+  dVar10 = 0.0;
   local_c8 = 0.0;
-  pGVar10 = pGVar6->verts + (uVar7 & 0xffff);
+  pGVar5 = param_1->verts + param_2;
   MatrixTransformVector(&local_c8,param_5,&local_b8);
-  pGVar10->xyz[0] = *param_4 + local_b8;
-  pGVar10->xyz[1] = param_4[1] + local_b4;
-  auVar19 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
-  dVar18 = 1.0;
-  pGVar10->xyz[2] = param_4[2] + local_b0;
-  pGVar10->binormalSign = 1.0;
-  auVar19 = vectorSplatWord(auVar19,0);
-  (pGVar10->color).packed = (uint)local_cc;
-  storeVectorElementWordIndexed(auVar19,uVar5 - 0xd0);
-  local_c4 = (float)-dVar13;
-  local_c0 = (float)-dVar14;
-  (pGVar10->normal).packed = 0;
-  dVar16 = -0.0;
-  (pGVar10->tangent).packed = 0;
-  pGVar10->texCoord = local_d0;
+  pGVar5->xyz[0] = *param_4 + local_b8;
+  pGVar5->xyz[1] = param_4[1] + local_b4;
+  auVar12 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
+  dVar11 = 1.0;
+  pGVar5->xyz[2] = param_4[2] + local_b0;
+  pGVar5->binormalSign = 1.0;
+  auVar12 = vectorSplatWord(auVar12,0);
+  pGVar5->color = local_cc;
+  storeVectorElementWordIndexed(auVar12,uVar4 - 0xd0);
+  local_c4 = (float)-dVar6;
+  local_c0 = (float)-dVar7;
+  (pGVar5->normal).packed = 0;
+  dVar9 = -0.0;
+  (pGVar5->tangent).packed = 0;
+  pGVar5->texCoord = local_d0;
   local_c8 = -0.0;
   MatrixTransformVector(&local_c8,param_5,&local_b8);
-  pGVar10[1].xyz[0] = *param_4 + local_b8;
-  auVar19 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
-  pGVar10[1].xyz[1] = param_4[1] + local_b4;
+  pGVar5[1].xyz[0] = *param_4 + local_b8;
+  auVar12 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
+  pGVar5[1].xyz[1] = param_4[1] + local_b4;
   fVar1 = param_4[2];
-  pGVar10[1].binormalSign = (float)dVar18;
-  auVar19 = vectorSplatWord(auVar19,0);
-  pGVar10[1].xyz[2] = fVar1 + local_b0;
-  pGVar10[1].color.packed = (uint)local_cc;
-  storeVectorElementWordIndexed(auVar19,uVar5 - 0xd0);
-  local_c4 = (float)-dVar13;
-  local_c0 = (float)-dVar15;
-  pGVar10[1].normal.packed = 0;
-  local_c8 = (float)dVar16;
-  pGVar10[1].tangent.packed = 0;
-  pGVar10[1].texCoord = local_d0;
+  pGVar5[1].binormalSign = (float)dVar11;
+  auVar12 = vectorSplatWord(auVar12,0);
+  pGVar5[1].xyz[2] = fVar1 + local_b0;
+  pGVar5[1].color = local_cc;
+  storeVectorElementWordIndexed(auVar12,uVar4 - 0xd0);
+  local_c4 = (float)-dVar6;
+  local_c0 = (float)-dVar8;
+  pGVar5[1].normal.packed = 0;
+  local_c8 = (float)dVar9;
+  pGVar5[1].tangent.packed = 0;
+  pGVar5[1].texCoord = local_d0;
   MatrixTransformVector(&local_c8,param_5,&local_b8);
-  pGVar10[2].xyz[0] = *param_4 + local_b8;
-  pGVar10[2].xyz[1] = param_4[1] + local_b4;
-  pGVar10[2].xyz[2] = param_4[2] + local_b0;
-  pGVar10[2].binormalSign = (float)dVar18;
-  pGVar10[2].color.packed = (uint)local_cc;
-  auVar19 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
-  auVar19 = vectorSplatWord(auVar19,0);
-  storeVectorElementWordIndexed(auVar19,uVar5 - 0xd0);
-  local_c4 = (float)dVar13;
-  local_c0 = (float)dVar14;
-  local_c8 = (float)dVar17;
-  pGVar10[2].normal.packed = 0;
-  pGVar10[2].tangent.packed = 0;
-  pGVar10[2].texCoord = local_d0;
+  pGVar5[2].xyz[0] = *param_4 + local_b8;
+  pGVar5[2].xyz[1] = param_4[1] + local_b4;
+  pGVar5[2].xyz[2] = param_4[2] + local_b0;
+  pGVar5[2].binormalSign = (float)dVar11;
+  pGVar5[2].color = local_cc;
+  auVar12 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
+  auVar12 = vectorSplatWord(auVar12,0);
+  storeVectorElementWordIndexed(auVar12,uVar4 - 0xd0);
+  local_c4 = (float)dVar6;
+  local_c0 = (float)dVar7;
+  local_c8 = (float)dVar10;
+  pGVar5[2].normal.packed = 0;
+  pGVar5[2].tangent.packed = 0;
+  pGVar5[2].texCoord = local_d0;
   MatrixTransformVector(&local_c8,param_5,&local_b8);
-  auVar19._0_4_ = (float)dVar11;
-  auVar19._4_4_ = (float)dVar12;
-  auVar19._8_8_ = local_a0._8_8_;
-  pGVar10[3].xyz[0] = *param_4 + local_b8;
-  pGVar10[3].xyz[1] = param_4[1] + local_b4;
-  auVar19 = vectorPackD3Dtype(auVar19,auVar19,0xd,3);
-  auVar19 = vectorSplatWord(auVar19,0);
-  pGVar10[3].xyz[2] = param_4[2] + local_b0;
-  pGVar10[3].binormalSign = (float)dVar18;
-  pGVar10[3].color.packed = (uint)local_cc;
-  storeVectorElementWordIndexed(auVar19,uVar5 - 0xd0);
-  pGVar10[3].normal.packed = 0;
-  pGVar10[3].tangent.packed = 0;
-  pGVar10[3].texCoord = local_d0;
-  __restfpr_21(local_cc,uVar5 - 0xd0);
-  __restgprlr_26();
+  pGVar5[3].xyz[0] = *param_4 + local_b8;
+  pGVar5[3].xyz[1] = param_4[1] + local_b4;
+  auVar12 = vectorPackD3Dtype(local_a0,local_a0,0xd,3);
+  auVar12 = vectorSplatWord(auVar12,0);
+  pGVar5[3].xyz[2] = param_4[2] + local_b0;
+  pGVar5[3].binormalSign = (float)dVar11;
+  pGVar5[3].color = local_cc;
+  storeVectorElementWordIndexed(auVar12,uVar4 - 0xd0);
+  pGVar5[3].normal.packed = 0;
+  pGVar5[3].tangent.packed = 0;
+  pGVar5[3].texCoord = local_d0;
   return;
 }
 
@@ -792,31 +716,24 @@ float (*) [4] R_CodeSurfArgsIter_Begin(GfxCodeSurfGlob *param_1,uint param_2)
 
 // 82723140  R_CodeSurfAssertLimits  (gfx_d3d/r_codesurf.cpp:469)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_CodeSurfAssertLimits(GfxCodeSurfGlob *param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((ulonglong)*(uint *)(iVar1 + 0x2c) != (uVar4 & 0xffffffff)) {
+  if (param_1->indexLimit != param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1d6,
                     0,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x28) != (uVar3 & 0xffffffff)) {
+  if (param_1->vertLimit != param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1d7,
                     0,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x24) != (uVar2 & 0xffffffff)) {
+  if (param_1->surfLimit != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1d8,
                     0,"%s");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -832,62 +749,56 @@ r_double_index_t * R_CodeSurfIndexStart(GfxCodeSurfGlob *param_1)
 
 // 827239D8  R_EmitCodeSurfs  (gfx_d3d/r_codesurf.cpp:501)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_EmitCodeSurfs(GfxCodeSurfList *param_1,uint param_2,GfxCodeSurfListType param_3)
 
 {
-  int *piVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1[1] != 0) {
+  if (param_1->count != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1f6,
                     0,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->surfs == (GfxCodeSurf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1f7,
                     0,"%s");
   }
-  if (1 < (uVar4 & 0xffffffff)) {
+  if (GFX_CODE_SURFLIST_EMISSIVE < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x1f8,
                     0,"surfList doesn\'t index GFX_CODE_SURFLIST_TYPE_COUNT\n\t%i not in [0, %i)");
   }
-  if ((int)uVar4 == 0) {
-    if ((uVar3 & 0xffffffff) < (ulonglong)scene.codeTransSurfCount) {
+  if (param_3 == GFX_CODE_SURFLIST_TRANS) {
+    if (param_2 < scene.codeTransSurfCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",
                       0x1fc,0,"scene.codeTransSurfCount <= codeSurfLimit\n\t%i, %i");
     }
-    uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
+    uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
                       (scene.codeTransSurfs,scene.codeTransSurfCount,(rgp.world)->sortKeyEffectAuto,
-                       (GfxCodeSurf *)*piVar1);
-    piVar1[1] = uVar2;
-    if (uVar2 != scene.codeTransSurfCount) {
+                       param_1->surfs);
+    param_1->count = uVar1;
+    if (uVar1 != scene.codeTransSurfCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",
                       0x1fe,0,"codeSurfList->count == scene.codeTransSurfCount\n\t%i, %i");
     }
     scene.codeTransSurfCount = 0;
-    __restgprlr_27();
     return;
   }
-  if ((uVar3 & 0xffffffff) < (ulonglong)scene.codeEmissiveSurfCount) {
+  if (param_2 < scene.codeEmissiveSurfCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x203,
                     0,"scene.codeEmissiveSurfCount <= codeSurfLimit\n\t%i, %i");
   }
-  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
+  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
                     (scene.codeEmissiveSurfs,scene.codeEmissiveSurfCount,
-                     (rgp.world)->sortKeyEffectAuto,(GfxCodeSurf *)*piVar1);
-  piVar1[1] = uVar2;
-  if (uVar2 != scene.codeEmissiveSurfCount) {
+                     (rgp.world)->sortKeyEffectAuto,param_1->surfs);
+  param_1->count = uVar1;
+  if (uVar1 != scene.codeEmissiveSurfCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurf.cpp",0x205,
                     0,"codeSurfList->count == scene.codeEmissiveSurfCount\n\t%i, %i");
   }
   scene.codeEmissiveSurfCount = 0;
-  __restgprlr_27();
   return;
 }
 

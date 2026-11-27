@@ -2,16 +2,18 @@
 
 // 82257CB0  mp_prime_is_prime  (line unknown)
 
-void mp_prime_is_prime(undefined8 param_1,int param_2,undefined4 *param_3)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+undefined8 mp_prime_is_prime(int *param_1,int param_2,undefined4 *param_3)
 
 {
   uint uVar1;
-  int *piVar3;
   undefined8 uVar2;
-  uint *puVar4;
-  ulonglong uVar5;
-  int iVar6;
-  uint *puVar7;
+  uint *puVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint *puVar6;
   int local_60;
   int local_5c [3];
   uint local_50;
@@ -19,62 +21,58 @@ void mp_prime_is_prime(undefined8 param_1,int param_2,undefined4 *param_3)
   undefined4 local_48;
   uint *local_44;
   
-  piVar3 = (int *)__savegprlr_25();
   if (0x100 < param_2) {
-    __restgprlr_25(0xfffffffffffffffd);
-    return;
+    return 0xfffffffffffffffd;
   }
-  puVar7 = &ltm_prime_tab;
-  puVar4 = puVar7;
+  puVar6 = &ltm_prime_tab;
+  puVar3 = puVar6;
   do {
-    if ((((piVar3[2] != 1) && (*piVar3 < 2)) && (*(uint *)piVar3[3] <= *puVar4)) &&
-       (*puVar4 <= *(uint *)piVar3[3])) {
+    if ((((param_1[2] != 1) && (*param_1 < 2)) && (*(uint *)param_1[3] <= *puVar3)) &&
+       (*puVar3 <= *(uint *)param_1[3])) {
       *param_3 = 1;
-      __restgprlr_25(0);
-      return;
+      return 0;
     }
-    puVar4 = puVar4 + 1;
-  } while ((int)puVar4 < -0x7dde2e00);
+    puVar3 = puVar3 + 1;
+  } while ((int)puVar3 < -0x7dde2e00);
   local_60 = 0;
-  puVar4 = puVar7;
+  puVar3 = puVar6;
   do {
-    uVar2 = mp_div_d(piVar3,*puVar4,0,local_5c);
-    if ((int)uVar2 != 0) goto LAB_82257e20;
-    if (local_5c[0] == 0) {
-      __restgprlr_25(0);
-      return;
+    uVar2 = mp_div_d(param_1,*puVar3,0,local_5c);
+    if ((int)uVar2 != 0) {
+      return uVar2;
     }
-    puVar4 = puVar4 + 1;
-  } while ((int)puVar4 < -0x7dde2e00);
+    if (local_5c[0] == 0) {
+      return 0;
+    }
+    puVar3 = puVar3 + 1;
+  } while ((int)puVar3 < -0x7dde2e00);
   uVar2 = mp_init(&local_50);
   if ((int)uVar2 == 0) {
-    iVar6 = 0;
+    iVar5 = 0;
     if (0 < param_2) {
       do {
-        uVar5 = (ulonglong)local_4c;
-        uVar1 = *puVar7;
+        uVar4 = (ulonglong)local_4c;
+        uVar1 = *puVar6;
         local_48 = 0;
-        if ((0 < (int)local_4c) && (puVar4 = local_44 + -1, local_4c != 0)) {
+        if ((0 < (int)local_4c) && (puVar3 = local_44 + -1, local_4c != 0)) {
           do {
-            puVar4 = puVar4 + 1;
-            *puVar4 = 0;
-            uVar5 = uVar5 - 1;
-          } while (uVar5 != 0);
+            puVar3 = puVar3 + 1;
+            *puVar3 = 0;
+            uVar4 = uVar4 - 1;
+          } while (uVar4 != 0);
         }
         *local_44 = uVar1 & 0xfffffff;
         local_50 = (uint)((uVar1 & 0xfffffff) != 0);
-        uVar2 = mp_prime_miller_rabin(piVar3,&local_50,&local_60);
+        uVar2 = mp_prime_miller_rabin(param_1,&local_50,&local_60);
         if (((int)uVar2 != 0) || (local_60 == 0)) goto LAB_82257e14;
-        iVar6 = iVar6 + 1;
-        puVar7 = puVar7 + 1;
-      } while (iVar6 < param_2);
+        iVar5 = iVar5 + 1;
+        puVar6 = puVar6 + 1;
+      } while (iVar5 < param_2);
     }
     *param_3 = 1;
 LAB_82257e14:
     mp_clear(&local_50);
   }
-LAB_82257e20:
-  __restgprlr_25(uVar2);
-  return;
+  return uVar2;
 }
 

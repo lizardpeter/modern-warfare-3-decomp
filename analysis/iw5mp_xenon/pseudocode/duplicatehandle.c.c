@@ -2,25 +2,19 @@
 
 // 828A9748  DuplicateHandle  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/duplicatehandle.c:103)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int DuplicateHandle(void *param_1,void *param_2,void *param_3,void **param_4,ulong param_5,
                    int param_6,ulong param_7)
 
 {
   long lVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_7;
-  lVar4 = (longlong)(int)param_4;
-  lVar3 = (longlong)(int)param_2;
-  __savegprlr_29(param_1,lVar3,param_3,lVar4,param_5,param_6,lVar5);
-  lVar1 = NtDuplicateObject(lVar3,lVar4,lVar5);
+  lVar1 = NtDuplicateObject(param_2,param_4,param_7,param_4,param_5,param_6);
   if (lVar1 < 0) {
     RtlSetLastNTError(lVar1);
   }
-  iVar2 = __restgprlr_29(lVar1 >= 0);
-  return iVar2;
+  return (int)(lVar1 >= 0);
 }
 

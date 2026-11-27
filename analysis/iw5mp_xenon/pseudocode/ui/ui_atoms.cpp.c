@@ -118,30 +118,29 @@ float UI_LoadBarProgress(void)
 
 // 8258C848  UI_DrawLoadBar  (ui/ui_atoms.cpp:93)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void UI_DrawLoadBar(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5
                    ,int param_6,int param_7,float *param_8,Material *param_9)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  float fVar6;
+  float fVar5;
   Material *in_stack_00000054;
   
   dVar4 = (double)param_5;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
   dVar3 = (double)param_4;
-  __savegprlr_28((double)param_2,param_1);
-  pSVar1 = (ScreenPlacement *)__savefpr_28();
-  dVar5 = extraout_f1;
-  fVar6 = DB_GetLoadedFraction();
-  CL_DrawStretchPic(pSVar1,(float)dVar5,(float)dVar2,(float)((double)fVar6 * dVar3),(float)dVar4,
-                    param_6,param_7,0.0,0.0,fVar6,1.0,param_8,in_stack_00000054);
-  __restfpr_28();
-  __restgprlr_28();
+  fVar5 = DB_GetLoadedFraction();
+  CL_DrawStretchPic(param_1,(float)dVar1,(float)dVar2,(float)((double)fVar5 * dVar3),(float)dVar4,
+                    param_6,param_7,0.0,0.0,fVar5,1.0,param_8,in_stack_00000054);
   return;
 }
 

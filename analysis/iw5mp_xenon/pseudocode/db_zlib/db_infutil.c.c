@@ -2,69 +2,64 @@
 
 // 827E3320  db_inflate_flush  (db_zlib/db_infutil.c:29)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int db_inflate_flush(db_inflate_blocks_state *param_1,db_z_stream_s *param_2,int param_3)
 
 {
-  uint uVar1;
+  uchar *puVar1;
   uint uVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  int iVar8;
-  uint uVar9;
-  uint uVar10;
+  uchar *puVar3;
+  ulonglong uVar4;
+  uchar *puVar5;
+  uint uVar6;
   
-  uVar7 = (ulonglong)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_26(param_1,lVar5,uVar7);
-  uVar1 = *(uint *)(iVar4 + 0x30);
-  uVar10 = *(uint *)(iVar4 + 0x34);
-  iVar3 = (int)lVar5;
-  iVar8 = *(int *)(iVar3 + 0xc);
-  if (uVar10 < uVar1) {
-    uVar10 = *(uint *)(iVar4 + 0x2c);
+  uVar4 = (ulonglong)param_3;
+  puVar3 = param_1->read;
+  puVar1 = param_1->write;
+  puVar5 = param_2->next_out;
+  if (puVar1 < puVar3) {
+    puVar1 = param_1->end;
   }
-  uVar2 = *(uint *)(iVar3 + 0x10);
-  uVar9 = uVar10 - uVar1;
-  if (uVar2 < uVar10 - uVar1) {
-    uVar9 = uVar2;
+  uVar2 = param_2->avail_out;
+  uVar6 = (int)puVar1 - (int)puVar3;
+  if (uVar2 < (uint)((int)puVar1 - (int)puVar3)) {
+    uVar6 = uVar2;
   }
-  if (uVar9 != 0) {
-    uVar7 = -(ulonglong)(uVar7 != 0xfffffffffffffffb) & uVar7;
+  if (uVar6 != 0) {
+    uVar4 = -(ulonglong)(uVar4 != 0xfffffffffffffffb) & uVar4;
   }
-  *(uint *)(iVar3 + 0x10) = uVar2 - uVar9;
-  *(uint *)(iVar3 + 0x14) = *(int *)(iVar3 + 0x14) + uVar9;
-  if (iVar8 != 0) {
+  param_2->avail_out = uVar2 - uVar6;
+  param_2->total_out = param_2->total_out + uVar6;
+  if (puVar5 != (uchar *)0x0) {
     memcpy();
-    iVar8 = uVar9 + iVar8;
+    puVar5 = puVar5 + uVar6;
   }
-  iVar6 = uVar9 + uVar1;
-  if (iVar6 == *(int *)(iVar4 + 0x2c)) {
-    iVar6 = *(int *)(iVar4 + 0x28);
-    if (*(int *)(iVar4 + 0x34) == *(int *)(iVar4 + 0x2c)) {
-      *(int *)(iVar4 + 0x34) = iVar6;
+  puVar3 = puVar3 + uVar6;
+  if (puVar3 == param_1->end) {
+    puVar3 = param_1->window;
+    if (param_1->write == param_1->end) {
+      param_1->write = puVar3;
     }
-    uVar1 = *(uint *)(iVar3 + 0x10);
-    uVar10 = *(int *)(iVar4 + 0x34) - iVar6;
-    if (uVar1 < uVar10) {
-      uVar10 = uVar1;
+    uVar2 = param_2->avail_out;
+    uVar6 = (int)param_1->write - (int)puVar3;
+    if (uVar2 < uVar6) {
+      uVar6 = uVar2;
     }
-    if (uVar10 != 0) {
-      uVar7 = -(ulonglong)(uVar7 != 0xfffffffffffffffb) & uVar7;
+    if (uVar6 != 0) {
+      uVar4 = -(ulonglong)(uVar4 != 0xfffffffffffffffb) & uVar4;
     }
-    *(uint *)(iVar3 + 0x10) = uVar1 - uVar10;
-    *(uint *)(iVar3 + 0x14) = *(int *)(iVar3 + 0x14) + uVar10;
-    if (iVar8 != 0) {
+    param_2->avail_out = uVar2 - uVar6;
+    param_2->total_out = param_2->total_out + uVar6;
+    if (puVar5 != (uchar *)0x0) {
       memcpy();
-      iVar8 = uVar10 + iVar8;
+      puVar5 = puVar5 + uVar6;
     }
-    iVar6 = uVar10 + iVar6;
+    puVar3 = puVar3 + uVar6;
   }
-  *(int *)(iVar3 + 0xc) = iVar8;
-  *(int *)(iVar4 + 0x30) = iVar6;
-  iVar8 = __restgprlr_26(uVar7);
-  return iVar8;
+  param_2->next_out = puVar5;
+  param_1->read = puVar3;
+  return (int)uVar4;
 }
 

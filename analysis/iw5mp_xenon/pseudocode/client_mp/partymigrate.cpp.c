@@ -46,79 +46,75 @@ int PartyMigrate_IsStatusValidForMigration(PartyData *param_1,uint param_2)
 
 // 82390530  PartyMigrate_GetArbitratorClientNum  (client_mp/partymigrate.cpp:160)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMigrate_GetArbitratorClientNum(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar3;
-  uint uVar4;
-  byte bVar5;
-  byte bVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar1;
+  bool bVar2;
+  byte bVar3;
+  byte bVar4;
+  uint uVar5;
+  uint uVar6;
   
-  pPVar1 = (PartyData *)__savegprlr_24(param_1);
-  uVar4 = (pPVar1->migrateData).arbitratorClientNum;
-  if (-1 < (int)uVar4) {
-    if (0x11 < uVar4) {
+  uVar5 = (param_1->migrateData).arbitratorClientNum;
+  if (-1 < (int)uVar5) {
+    if (0x11 < uVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0xa8,0,
                       "party->migrateData.arbitratorClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                      );
     }
-    iVar2 = __restgprlr_24((pPVar1->migrateData).arbitratorClientNum);
-    return iVar2;
+    return (param_1->migrateData).arbitratorClientNum;
   }
-  bVar6 = 0;
-  lVar7 = -1;
-  lVar8 = 0;
+  bVar4 = 0;
+  uVar5 = 0xffffffff;
+  uVar6 = 0;
   do {
-    uVar4 = (uint)lVar8;
-    iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,uVar4);
-    if (iVar2 != 0) {
-      bVar3 = Session_IsUserRegistered(pPVar1->session,uVar4);
-      if (!bVar3) {
+    iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,uVar6);
+    if (iVar1 != 0) {
+      bVar2 = Session_IsUserRegistered(param_1->session,uVar6);
+      if (!bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xb7,0,"%s");
       }
-      iVar2 = Party_MemberHasHostAddress(pPVar1,uVar4);
-      if (iVar2 == 0) {
-        iVar2 = Party_MemberIsInHostPrivateParty(pPVar1,uVar4);
-        bVar5 = (iVar2 == 0) + 2;
+      iVar1 = Party_MemberHasHostAddress(param_1,uVar6);
+      if (iVar1 == 0) {
+        iVar1 = Party_MemberIsInHostPrivateParty(param_1,uVar6);
+        bVar3 = (iVar1 == 0) + 2;
       }
       else {
-        bVar5 = 1;
+        bVar3 = 1;
       }
-      if (((int)lVar7 < 0) || (bVar6 < bVar5)) {
-        lVar7 = lVar8;
-        bVar6 = bVar5;
+      if (((int)uVar5 < 0) || (bVar4 < bVar3)) {
+        uVar5 = uVar6;
+        bVar4 = bVar3;
       }
     }
-    lVar8 = lVar8 + 1;
-  } while ((int)lVar8 < 0x12);
-  if ((int)lVar7 < 0) {
+    uVar6 = uVar6 + 1;
+  } while ((int)uVar6 < 0x12);
+  if ((int)uVar5 < 0) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0xca,0,
                       "Tried to find the arbitrator, but no one is in the party. We should at least be in it"
                      );
     }
-    lVar7 = 0;
+    uVar5 = 0;
   }
   if (param_2 != 0) {
-    (pPVar1->migrateData).arbitratorClientNum = (int)lVar7;
+    (param_1->migrateData).arbitratorClientNum = uVar5;
   }
-  bVar3 = Session_IsUserRegistered(pPVar1->session,(int)lVar7);
-  if (!bVar3) {
+  bVar2 = Session_IsUserRegistered(param_1->session,uVar5);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd1,0,"%s");
   }
-  iVar2 = __restgprlr_24(lVar7);
-  return iVar2;
+  return uVar5;
 }
 
 
@@ -180,6 +176,8 @@ char * PartyMigrate_NomineeInfoString(NomineeInfo *param_1)
 
 // 82390780  GetOurNomineeXUID  (client_mp/partymigrate.cpp:258)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -187,33 +185,30 @@ ulong64 GetOurNomineeXUID(PartyData *param_1)
 
 {
   uint uVar1;
-  PartyData *pPVar3;
-  int iVar4;
-  ulong64 uVar2;
+  int iVar2;
   
-  pPVar3 = (PartyData *)__savegprlr_29(param_1);
-  uVar1 = (pPVar3->migrateData).bestHost.nominee;
+  uVar1 = (param_1->migrateData).bestHost.nominee;
   if (-1 < (int)uVar1) {
     if (0x11 < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x109,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    iVar4 = Party_IsMemberIndexDataAvailable(pPVar3,uVar1);
-    if (iVar4 == 0) {
+    iVar2 = Party_IsMemberIndexDataAvailable(param_1,uVar1);
+    if (iVar2 == 0) {
       va("clientNum is %i, their status is %i\n");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x10a,0,"%s\n\t%s");
     }
-    uVar2 = __restgprlr_29(pPVar3->partyMembers[uVar1].player);
-    return uVar2;
+    return param_1->partyMembers[uVar1].player;
   }
-  uVar2 = __restgprlr_29(0);
-  return uVar2;
+  return 0;
 }
 
 
 // 82392B10  PartyMigrate_SendNomineeMsg  (client_mp/partymigrate.cpp:278)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -222,60 +217,54 @@ void PartyMigrate_SendNomineeMsg
                ulong64 param_5,NomineeInfo *param_6)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar1;
+  char *pcVar2;
   msg_t local_180;
   uchar auStack_150 [336];
   
-  uVar6 = (ulonglong)(int)param_6;
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_24(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x11a,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x11b,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x11c,0,"%s");
   }
-  if ((pPVar1->migrateData).weAreArbitrating != false) {
+  if ((param_1->migrateData).weAreArbitrating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x11d,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_6 == (NomineeInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x11e,0,"%s");
   }
   MSG_Init(&local_180,auStack_150,0x100);
-  pcVar3 = va("%inominee");
-  MSG_WriteString(&local_180,pcVar3);
-  MSG_WriteBits(&local_180,(pPVar1->migrateData).indexBits,2);
+  pcVar2 = va("%inominee");
+  MSG_WriteString(&local_180,pcVar2);
+  MSG_WriteBits(&local_180,(param_1->migrateData).indexBits,2);
   MSG_WriteBits(&local_180,param_3,5);
   MSG_WriteInt64(&local_180,param_5);
-  MSG_WriteData(&local_180,(void *)uVar6,0x10);
+  MSG_WriteData(&local_180,param_6,0x10);
   if (local_180.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x128,0,"%s");
   }
-  bVar4 = CL_WritePeerToPeerOOBData
-                    (pPVar1->session,*(LocalClientNum_t *)uVar5,param_4,local_180.data,
-                     local_180.cursize,false,1);
-  __restgprlr_24(bVar4);
+  CL_WritePeerToPeerOOBData
+            (param_1->session,param_2->localClientNum,param_4,local_180.data,local_180.cursize,false
+             ,1);
   return;
 }
 
 
 // 82392CC0  PartyMigrate_SendOurNominee  (client_mp/partymigrate.cpp:302)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -283,23 +272,19 @@ void PartyMigrate_SendOurNominee
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4)
 
 {
-  PartyData *pPVar2;
-  int iVar3;
+  int iVar2;
   ulong64 uVar1;
-  ulonglong uVar4;
-  NomineeInfo *pNVar5;
+  NomineeInfo *pNVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_25(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x135,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x136,0,"%s");
   }
-  if ((pPVar2->migrateData).weAreArbitrating != false) {
+  if ((param_1->migrateData).weAreArbitrating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x137,0,"%s");
   }
@@ -307,172 +292,154 @@ void PartyMigrate_SendOurNominee
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x138,0,"%s\n\t(destinationClientNum) = %i");
   }
-  iVar3 = Sys_Milliseconds();
-  (pPVar2->migrateData).bestHost.lastSentTo = iVar3;
-  pNVar5 = &(pPVar2->migrateData).bestHost.info;
+  iVar2 = Sys_Milliseconds();
+  (param_1->migrateData).bestHost.lastSentTo = iVar2;
+  pNVar3 = &(param_1->migrateData).bestHost.info;
   if (param_3 == param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x143,0,"ourClientNum != destinationClientNum\n\t%i, %i");
   }
-  uVar1 = GetOurNomineeXUID(pPVar2);
-  PartyMigrate_SendNomineeMsg(pPVar2,(PartyActiveClient *)uVar4,param_3,param_4,uVar1,pNVar5);
-  PartyMigrate_NomineeInfoString(pNVar5);
+  uVar1 = GetOurNomineeXUID(param_1);
+  PartyMigrate_SendNomineeMsg(param_1,param_2,param_3,param_4,uVar1,pNVar3);
+  PartyMigrate_NomineeInfoString(pNVar3);
   Com_Printf(0x19,
              "PartyMigrate - SendOurNominee - (%i) Telling client %i that our current nominee is client %i, %s\n"
             );
-  __restgprlr_25();
   return;
 }
 
 
 // 82392E20  PartyMigrate_TellNewHost  (client_mp/partymigrate.cpp:331)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_TellNewHost(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  int iVar3;
-  longlong lVar1;
-  char *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulong64 *puVar8;
-  uint uVar9;
+  int iVar1;
+  char *pcVar2;
+  bool bVar3;
+  ulong64 *puVar4;
+  uint uVar5;
   msg_t local_160;
   uchar auStack_130 [304];
   
-  uVar7 = (ulonglong)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x150,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x151,0,"%s");
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar2);
-  if (iVar3 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x152,0,"%s");
   }
-  if ((pPVar2->migrateData).weAreArbitrating == false) {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x153,0,"%s");
   }
-  if (0x11 < (uint)(pPVar2->migrateData).arbitratorClientNum) {
+  if (0x11 < (uint)(param_1->migrateData).arbitratorClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x154,0,
                     "party->migrateData.arbitratorClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x155,0,"newHostClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = Sys_Milliseconds();
-  lVar1 = (longlong)iVar3;
+  iVar1 = Sys_Milliseconds();
   if ((partymigrate_broadcast_interval->current).integer <=
-      iVar3 - (pPVar2->migrateData).lastBroadcastTime) {
+      iVar1 - (param_1->migrateData).lastBroadcastTime) {
     Com_Printf(0x19,"[%i] PartyMigrate - TellNewHost - Telling everyone about the new host %i!\n");
     MSG_Init(&local_160,auStack_130,0x100);
-    pcVar4 = va("%imigrateto");
-    MSG_WriteString(&local_160,pcVar4);
-    MSG_WriteBits(&local_160,(pPVar2->migrateData).indexBits,2);
-    MSG_WriteBits(&local_160,(pPVar2->migrateData).arbitratorClientNum,5);
-    MSG_WriteBits(&local_160,(int)uVar7,5);
+    pcVar2 = va("%imigrateto");
+    MSG_WriteString(&local_160,pcVar2);
+    MSG_WriteBits(&local_160,(param_1->migrateData).indexBits,2);
+    MSG_WriteBits(&local_160,(param_1->migrateData).arbitratorClientNum,5);
+    MSG_WriteBits(&local_160,param_3,5);
     MSG_WriteBits(&local_160,0,2);
     MSG_WriteBits(&local_160,0,1);
-    MSG_WriteInt64(&local_160,pPVar2->partyMembers[(int)uVar7].player);
+    MSG_WriteInt64(&local_160,param_1->partyMembers[param_3].player);
     if (local_160.overflowed != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x165,0,"%s");
     }
-    iVar3 = Sys_Milliseconds();
-    lVar1 = (longlong)iVar3;
-    (pPVar2->migrateData).lastBroadcastTime = iVar3;
-    uVar9 = 0;
-    puVar8 = &pPVar2->partyMembers[0].player;
+    iVar1 = Sys_Milliseconds();
+    (param_1->migrateData).lastBroadcastTime = iVar1;
+    uVar5 = 0;
+    puVar4 = &param_1->partyMembers[0].player;
     do {
-      if (((PartyMember *)(puVar8 + -0x25))->status != '\x06') {
-        iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar9);
-        lVar1 = (longlong)iVar3;
-        if ((iVar3 != 0) && (uVar9 != (pPVar2->migrateData).arbitratorClientNum)) {
-          bVar5 = Live_XUIDIsLocalPlayer(*puVar8);
-          lVar1 = (longlong)bVar5;
-          if (lVar1 == 0) {
-            bVar5 = CL_WritePeerToPeerOOBData
-                              (pPVar2->session,*(LocalClientNum_t *)uVar6,uVar9,local_160.data,
-                               local_160.cursize,false,1);
-            lVar1 = (longlong)bVar5;
-          }
-        }
+      if ((((((PartyMember *)(puVar4 + -0x25))->status != '\x06') &&
+           (iVar1 = Party_IsMemberIndexDataAvailable(param_1,uVar5), iVar1 != 0)) &&
+          (uVar5 != (param_1->migrateData).arbitratorClientNum)) &&
+         (bVar3 = Live_XUIDIsLocalPlayer(*puVar4), !bVar3)) {
+        CL_WritePeerToPeerOOBData
+                  (param_1->session,param_2->localClientNum,uVar5,local_160.data,local_160.cursize,
+                   false,1);
       }
-      uVar9 = uVar9 + 1;
-      puVar8 = puVar8 + 0x2a;
-    } while ((int)uVar9 < 0x12);
+      uVar5 = uVar5 + 1;
+      puVar4 = puVar4 + 0x2a;
+    } while ((int)uVar5 < 0x12);
   }
-  __restgprlr_27(lVar1);
   return;
 }
 
 
 // 82390840  PartyMigrate_TellNoNewHost  (client_mp/partymigrate.cpp:383)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_TellNoNewHost(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  char *pcVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulong64 *puVar6;
-  uint uVar7;
+  char *pcVar1;
+  int iVar2;
+  bool bVar3;
+  ulong64 *puVar4;
+  uint uVar5;
   msg_t mStack_160;
   uchar auStack_130 [304];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x184,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x185,0,"%s");
   }
-  if ((pPVar1->migrateData).weAreArbitrating == false) {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x186,0,"%s");
   }
   MSG_Init(&mStack_160,auStack_130,0x100);
-  pcVar2 = va("%inomigrate %i");
-  MSG_WriteString(&mStack_160,pcVar2);
+  pcVar1 = va("%inomigrate %i");
+  MSG_WriteString(&mStack_160,pcVar1);
   Com_Printf(0x19,"Telling everyone there will be no migration. :(\n");
-  uVar7 = 0;
-  puVar6 = &pPVar1->partyMembers[0].player;
+  uVar5 = 0;
+  puVar4 = &param_1->partyMembers[0].player;
   do {
-    if ((((((PartyMember *)(puVar6 + -0x25))->status != '\x06') &&
-         (iVar3 = Party_IsMemberIndexDataAvailable(pPVar1,uVar7), iVar3 != 0)) &&
-        (uVar7 != (pPVar1->migrateData).arbitratorClientNum)) &&
-       (bVar4 = Live_XUIDIsLocalPlayer(*puVar6), !bVar4)) {
+    if ((((((PartyMember *)(puVar4 + -0x25))->status != '\x06') &&
+         (iVar2 = Party_IsMemberIndexDataAvailable(param_1,uVar5), iVar2 != 0)) &&
+        (uVar5 != (param_1->migrateData).arbitratorClientNum)) &&
+       (bVar3 = Live_XUIDIsLocalPlayer(*puVar4), !bVar3)) {
       CL_WritePeerToPeerOOBData
-                (pPVar1->session,*(LocalClientNum_t *)uVar5,uVar7,mStack_160.data,mStack_160.cursize
-                 ,false,1);
+                (param_1->session,param_2->localClientNum,uVar5,mStack_160.data,mStack_160.cursize,
+                 false,1);
     }
-    uVar7 = uVar7 + 1;
-    puVar6 = puVar6 + 0x2a;
-  } while ((int)uVar7 < 0x12);
-  __restgprlr_28();
+    uVar5 = uVar5 + 1;
+    puVar4 = puVar4 + 0x2a;
+  } while ((int)uVar5 < 0x12);
   return;
 }
 
@@ -508,6 +475,8 @@ int PartyMigrate_IsGameServerHostMigration(PartyData *param_1)
 
 // 82393188  PartyMigrate_AnnounceOurNominee  (client_mp/partymigrate.cpp:434)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -516,110 +485,102 @@ void PartyMigrate_AnnounceOurNominee(PartyData *param_1,PartyActiveClient *param
 {
   bool bVar1;
   undefined3 uVar2;
-  PartyData *pPVar3;
-  int iVar4;
+  int iVar3;
+  uint uVar4;
+  bool bVar6;
   uint uVar5;
-  bool bVar7;
-  uint uVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
   PartyActiveClient aPStack_50 [10];
   
-  uVar9 = (ulonglong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pPVar3 = (PartyData *)__savegprlr_25(param_1);
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1b9,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1ba,0,"%s");
   }
-  if ((pPVar3->migrateData).decidedOurNominee == false) {
+  if ((param_1->migrateData).decidedOurNominee == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1bb,0,"%s");
   }
-  iVar4 = PartyMigrate_MigrateActive(pPVar3);
-  if (iVar4 == 0) {
+  iVar3 = PartyMigrate_MigrateActive(param_1);
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1bc,0,"%s");
   }
-  iVar4 = PartyMigrate_IsGameServerHostMigration(pPVar3);
-  if (iVar4 != 0) {
+  iVar3 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar3 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1bd,0,"%s");
   }
-  uVar5 = PartyMigrate_GetArbitratorClientNum(pPVar3,1);
-  if (0x11 < uVar5) {
+  uVar4 = PartyMigrate_GetArbitratorClientNum(param_1,1);
+  if (0x11 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1c0,0,
                     "arbitratorClientNum doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  uVar6 = (uint)uVar9;
-  if (uVar6 != uVar5) {
-    bVar7 = Session_PlayerHasLoopbackAddr(pPVar3->session,uVar5);
+  if (param_3 != uVar4) {
+    bVar6 = Session_PlayerHasLoopbackAddr(param_1->session,uVar4);
     bVar1 = false;
-    if (!bVar7) goto LAB_823932dc;
+    if (!bVar6) goto LAB_823932dc;
   }
   bVar1 = true;
 LAB_823932dc:
-  (pPVar3->migrateData).weAreArbitrating = bVar1;
+  (param_1->migrateData).weAreArbitrating = bVar1;
   if (bVar1) {
-    if (0x11 < (uVar9 & 0xffffffff)) {
+    if (0x11 < (uint)param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x1c6,0,"mainClientNum doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)")
       ;
     }
-    pPVar3->partyMembers[uVar6].migrateHeardFrom = true;
-    iVar4 = Party_GetSecondaryActiveClient(pPVar3,aPStack_50);
-    if (iVar4 != 0) {
-      iVar4 = Live_GetOurClientNum(aPStack_50[0].localControllerIndex,pPVar3->session);
-      if (iVar4 < 0) {
+    param_1->partyMembers[param_3].migrateHeardFrom = true;
+    iVar3 = Party_GetSecondaryActiveClient(param_1,aPStack_50);
+    if (iVar3 != 0) {
+      iVar3 = Live_GetOurClientNum(aPStack_50[0].localControllerIndex,param_1->session);
+      if (iVar3 < 0) {
         Com_PrintError(0x19,
                        "PartyMigrate - AnnounceOurNominee - Second client with controller %i is not in the session!\n"
                       );
       }
       else {
-        pPVar3->partyMembers[iVar4].migrateHeardFrom = true;
+        param_1->partyMembers[iVar3].migrateHeardFrom = true;
       }
     }
-    uVar5 = (pPVar3->migrateData).bestHost.nominee;
-    if (-1 < (int)uVar5) {
-      if (uVar5 != uVar6) {
+    iVar3 = (param_1->migrateData).bestHost.nominee;
+    if (-1 < iVar3) {
+      if (iVar3 != param_3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x1d7,0,"%s");
       }
-      pPVar3->partyMembers[uVar5].migrateNominated = true;
-      pPVar3->partyMembers[uVar5].migrateNomineeInfo.upload =
-           (pPVar3->migrateData).bestHost.info.upload;
-      pPVar3->partyMembers[uVar5].migrateNomineeInfo.NAT = (pPVar3->migrateData).bestHost.info.NAT;
-      uVar2 = *(undefined3 *)&(pPVar3->migrateData).bestHost.info.field_0x9;
-      pPVar3->partyMembers[uVar5].migrateNomineeInfo.onLSP =
-           (pPVar3->migrateData).bestHost.info.onLSP;
-      *(undefined3 *)&pPVar3->partyMembers[uVar5].migrateNomineeInfo.field_0x9 = uVar2;
-      pPVar3->partyMembers[uVar5].migrateNomineeInfo.connectivity =
-           (pPVar3->migrateData).bestHost.info.connectivity;
-      __restgprlr_25();
+      param_1->partyMembers[iVar3].migrateNominated = true;
+      param_1->partyMembers[iVar3].migrateNomineeInfo.upload =
+           (param_1->migrateData).bestHost.info.upload;
+      param_1->partyMembers[iVar3].migrateNomineeInfo.NAT = (param_1->migrateData).bestHost.info.NAT
+      ;
+      uVar2 = *(undefined3 *)&(param_1->migrateData).bestHost.info.field_0x9;
+      param_1->partyMembers[iVar3].migrateNomineeInfo.onLSP =
+           (param_1->migrateData).bestHost.info.onLSP;
+      *(undefined3 *)&param_1->partyMembers[iVar3].migrateNomineeInfo.field_0x9 = uVar2;
+      param_1->partyMembers[iVar3].migrateNomineeInfo.connectivity =
+           (param_1->migrateData).bestHost.info.connectivity;
       return;
     }
   }
   else {
-    if (uVar5 == uVar6) {
+    if (uVar4 == param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x1de,0,"arbitratorClientNum != mainClientNum\n\t%i, %i");
     }
-    PartyMigrate_SendOurNominee(pPVar3,(PartyActiveClient *)uVar8,uVar6,uVar5);
-    iVar4 = Party_GetSecondaryActiveClient(pPVar3,aPStack_50);
-    if (iVar4 != 0) {
-      uVar6 = Live_GetOurClientNum(aPStack_50[0].localControllerIndex,pPVar3->session);
-      if (-1 < (int)uVar6) {
-        if (uVar5 == uVar6) {
+    PartyMigrate_SendOurNominee(param_1,param_2,param_3,uVar4);
+    iVar3 = Party_GetSecondaryActiveClient(param_1,aPStack_50);
+    if (iVar3 != 0) {
+      uVar5 = Live_GetOurClientNum(aPStack_50[0].localControllerIndex,param_1->session);
+      if (-1 < (int)uVar5) {
+        if (uVar4 == uVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                           ,0x1e8,0,"arbitratorClientNum != secondaryClientNum\n\t%i, %i");
         }
-        PartyMigrate_SendOurNominee(pPVar3,aPStack_50,uVar6,uVar5);
-        __restgprlr_25();
+        PartyMigrate_SendOurNominee(param_1,aPStack_50,uVar5,uVar4);
         return;
       }
       Com_PrintError(0x19,
@@ -627,80 +588,78 @@ LAB_823932dc:
                     );
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82390998  PartyMigrate_SetOurNominee  (client_mp/partymigrate.cpp:502)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_SetOurNominee(PartyData *param_1,int param_2,int param_3,NomineeInfo *param_4)
 
 {
-  int iVar1;
+  undefined3 uVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (0x11 < (uVar3 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x1f7,0,"ourClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
   PartyMigrate_NomineeInfoString(param_4);
   Com_Printf(0x19,"Changing our current nominee for party %i to client %i %s\n");
-  *(int *)(iVar1 + 0x30) = param_3;
-  *(undefined1 *)(iVar1 + 0xe) = 1;
-  *(int *)(iVar1 + 0x34) = param_4->upload;
-  *(int *)(iVar1 + 0x38) = param_4->NAT;
-  *(undefined4 *)(iVar1 + 0x3c) = *(undefined4 *)&param_4->onLSP;
-  *(int *)(iVar1 + 0x40) = param_4->connectivity;
+  (param_1->migrateData).bestHost.nominee = param_3;
+  (param_1->migrateData).decidedOurNominee = true;
+  (param_1->migrateData).bestHost.info.upload = param_4->upload;
+  (param_1->migrateData).bestHost.info.NAT = param_4->NAT;
+  uVar1 = *(undefined3 *)&param_4->field_0x9;
+  (param_1->migrateData).bestHost.info.onLSP = param_4->onLSP;
+  *(undefined3 *)&(param_1->migrateData).bestHost.info.field_0x9 = uVar1;
+  (param_1->migrateData).bestHost.info.connectivity = param_4->connectivity;
   iVar2 = Sys_Milliseconds();
-  *(int *)(iVar1 + 0x44) = iVar2;
+  (param_1->migrateData).bestHost.lastHeardFrom = iVar2;
   iVar2 = Sys_Milliseconds();
-  *(int *)(iVar1 + 0x48) = iVar2;
-  __restgprlr_29();
+  (param_1->migrateData).bestHost.lastSentTo = iVar2;
   return;
 }
 
 
 // 82390A48  PartyMigrate_CanAnyoneTalkToThisGuy  (client_mp/partymigrate.cpp:516)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool PartyMigrate_CanAnyoneTalkToThisGuy(SessionData *param_1,int param_2)
 
 {
-  SessionData *pSVar1;
-  bool bVar3;
-  uint uVar2;
-  undefined1 uVar4;
-  uint uVar5;
+  bool bVar2;
+  uint uVar1;
+  uint uVar3;
   
-  pSVar1 = (SessionData *)__savegprlr_28(param_1);
-  bVar3 = Session_IsUserRegistered(pSVar1,param_2);
-  if (bVar3) {
-    uVar2 = Session_GetClientVoiceConnectivity(pSVar1,param_2);
-    uVar5 = 0;
+  bVar2 = Session_IsUserRegistered(param_1,param_2);
+  if (bVar2) {
+    uVar1 = Session_GetClientVoiceConnectivity(param_1,param_2);
+    uVar3 = 0;
     do {
-      bVar3 = Session_IsUserRegistered(pSVar1,uVar5);
-      if ((bVar3) && ((1 << (uVar5 & 0x3f) & uVar2) != 0)) {
-        uVar4 = __restgprlr_28(1);
-        return (bool)uVar4;
+      bVar2 = Session_IsUserRegistered(param_1,uVar3);
+      if ((bVar2) && ((1 << (uVar3 & 0x3f) & uVar1) != 0)) {
+        return true;
       }
-      uVar5 = uVar5 + 1;
-    } while ((int)uVar5 < 0x12);
+      uVar3 = uVar3 + 1;
+    } while ((int)uVar3 < 0x12);
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 82390AD0  PartyMigrate_CanWeTalkToAllClients  (client_mp/partymigrate.cpp:538)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -708,52 +667,47 @@ bool PartyMigrate_CanWeTalkToAllClients(PartyData *param_1,int param_2)
 
 {
   bool bVar1;
-  PartyData *pPVar2;
-  uint uVar3;
-  undefined1 uVar5;
-  int iVar4;
-  bool bVar6;
-  char *pcVar7;
-  uint uVar8;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  char *pcVar5;
+  uint uVar6;
   
-  pPVar2 = (PartyData *)__savegprlr_25(param_1);
-  uVar3 = Live_GetOurClientNum(param_2,pPVar2->session);
-  if ((int)uVar3 < 0) {
+  uVar2 = Live_GetOurClientNum(param_2,param_1->session);
+  if ((int)uVar2 < 0) {
     Com_PrintWarning(0x19,
                      "We can\'t find our own clientNum (there are %i players in the session), so we aren\'t a good host\n"
                     );
-    uVar5 = __restgprlr_25(0);
-    return (bool)uVar5;
+    return false;
   }
   bVar1 = false;
-  uVar8 = 0;
+  uVar6 = 0;
   do {
-    if (((uVar8 != uVar3) &&
-        (iVar4 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar8), iVar4 != 0)) &&
-       (iVar4 = CL_CanWeConnectToClient(pPVar2->session,uVar3,uVar8), iVar4 == 0)) {
-      bVar6 = PartyMigrate_CanAnyoneTalkToThisGuy(pPVar2->session,uVar8);
-      if (bVar6) {
+    if (((uVar6 != uVar2) &&
+        (iVar3 = PartyMigrate_IsStatusValidForMigration(param_1,uVar6), iVar3 != 0)) &&
+       (iVar3 = CL_CanWeConnectToClient(param_1->session,uVar2,uVar6), iVar3 == 0)) {
+      bVar4 = PartyMigrate_CanAnyoneTalkToThisGuy(param_1->session,uVar6);
+      if (bVar4) {
         bVar1 = true;
         if ((party_debug->current).enabled != false) {
-          Party_GetMemberName(pPVar2,uVar8);
-          pcVar7 = 
+          Party_GetMemberName(param_1,uVar6);
+          pcVar5 = 
           "We can\'t talk to clientNum %i (%s) and others can, so we wouldn\'t be a good host\n";
 LAB_82390bbc:
-          Com_Printf(0x19,pcVar7);
+          Com_Printf(0x19,pcVar5);
         }
       }
       else if ((party_debug->current).enabled != false) {
-        Party_GetMemberName(pPVar2,uVar8);
-        pcVar7 = 
+        Party_GetMemberName(param_1,uVar6);
+        pcVar5 = 
         "We can\'t talk to clientNum %i (%s), but nobody else can either.  Hopefully it works out\n"
         ;
         goto LAB_82390bbc;
       }
     }
-    uVar8 = uVar8 + 1;
-    if (0x11 < (int)uVar8) {
-      uVar5 = __restgprlr_25(!bVar1);
-      return (bool)uVar5;
+    uVar6 = uVar6 + 1;
+    if (0x11 < (int)uVar6) {
+      return !bVar1;
     }
   } while( true );
 }
@@ -761,64 +715,59 @@ LAB_82390bbc:
 
 // 82390BF0  PartyMigrate_GetClientConnectivity  (client_mp/partymigrate.cpp:581)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint PartyMigrate_GetClientConnectivity(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
-  uint uVar3;
+  int iVar1;
+  bool bVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  char *pcVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar6;
   
-  uVar5 = (ulonglong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_24(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x249,0,"%s");
   }
-  if (0x11 < (uVar5 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x24a,0,"ourClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar7 = 0xffffffffffffffff;
-  uVar3 = 0;
-  uVar8 = 1;
+  uVar4 = 0xffffffffffffffff;
+  uVar6 = 0;
+  uVar5 = 1;
   do {
-    if (uVar3 != (uint)uVar5) {
-      iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,uVar3);
-      if ((iVar2 != 0) &&
-         (iVar2 = CL_CanWeConnectToClient(pPVar1->session,(uint)uVar5,uVar3), iVar2 == 0)) {
-        bVar4 = PartyMigrate_CanAnyoneTalkToThisGuy(pPVar1->session,uVar3);
-        if (bVar4) {
-          uVar7 = uVar7 & ~uVar8;
-          if ((party_debug->current).enabled != false) {
-            Party_GetMemberName(pPVar1,uVar3);
-            pcVar6 = 
-            "We can\'t talk to clientNum %i (%s) and others can, so we wouldn\'t be a good host\n";
+    if (((uVar6 != param_2) &&
+        (iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,uVar6), iVar1 != 0)) &&
+       (iVar1 = CL_CanWeConnectToClient(param_1->session,param_2,uVar6), iVar1 == 0)) {
+      bVar2 = PartyMigrate_CanAnyoneTalkToThisGuy(param_1->session,uVar6);
+      if (bVar2) {
+        uVar4 = uVar4 & ~uVar5;
+        if ((party_debug->current).enabled != false) {
+          Party_GetMemberName(param_1,uVar6);
+          pcVar3 = 
+          "We can\'t talk to clientNum %i (%s) and others can, so we wouldn\'t be a good host\n";
 LAB_82390d08:
-            Com_Printf(0x19,pcVar6);
-          }
-        }
-        else if ((party_debug->current).enabled != false) {
-          Party_GetMemberName(pPVar1,uVar3);
-          pcVar6 = 
-          "We can\'t talk to clientNum %i (%s), but nobody else can either.  Hopefully it works out\n"
-          ;
-          goto LAB_82390d08;
+          Com_Printf(0x19,pcVar3);
         }
       }
+      else if ((party_debug->current).enabled != false) {
+        Party_GetMemberName(param_1,uVar6);
+        pcVar3 = 
+        "We can\'t talk to clientNum %i (%s), but nobody else can either.  Hopefully it works out\n"
+        ;
+        goto LAB_82390d08;
+      }
     }
-    uVar3 = uVar3 + 1;
-    uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
-    if (0x11 < (int)uVar3) {
-      uVar3 = __restgprlr_24(uVar7);
-      return uVar3;
+    uVar6 = uVar6 + 1;
+    uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+    if (0x11 < (int)uVar6) {
+      return (uint)uVar4;
     }
   } while( true );
 }
@@ -826,45 +775,44 @@ LAB_82390d08:
 
 // 82390D38  PartyMigrate_PrintCanWeTalkToAllClients  (client_mp/partymigrate.cpp:621)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_PrintCanWeTalkToAllClients(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar4;
-  char *pcVar5;
-  uint uVar6;
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
+  char *pcVar4;
+  uint uVar5;
   
-  pPVar1 = (PartyData *)__savegprlr_26(param_1);
-  uVar2 = Live_GetOurClientNum(param_2,pPVar1->session);
-  if (-1 < (int)uVar2) {
-    uVar6 = 0;
+  uVar1 = Live_GetOurClientNum(param_2,param_1->session);
+  if (-1 < (int)uVar1) {
+    uVar5 = 0;
     do {
-      if (((uVar6 != uVar2) &&
-          (iVar3 = PartyMigrate_IsStatusValidForMigration(pPVar1,uVar6), iVar3 != 0)) &&
-         (iVar3 = CL_CanWeConnectToClient(pPVar1->session,uVar2,uVar6), iVar3 == 0)) {
-        bVar4 = PartyMigrate_CanAnyoneTalkToThisGuy(pPVar1->session,uVar6);
-        if (bVar4) {
-          Party_GetMemberName(pPVar1,uVar6);
-          pcVar5 = 
+      if (((uVar5 != uVar1) &&
+          (iVar2 = PartyMigrate_IsStatusValidForMigration(param_1,uVar5), iVar2 != 0)) &&
+         (iVar2 = CL_CanWeConnectToClient(param_1->session,uVar1,uVar5), iVar2 == 0)) {
+        bVar3 = PartyMigrate_CanAnyoneTalkToThisGuy(param_1->session,uVar5);
+        if (bVar3) {
+          Party_GetMemberName(param_1,uVar5);
+          pcVar4 = 
           "We can\'t talk to clientNum %i (%s) and others can, so we wouldn\'t be a good host.\n";
         }
         else {
           if ((party_debug->current).enabled == false) goto LAB_82390e08;
-          Party_GetMemberName(pPVar1,uVar6);
-          pcVar5 = "We can\'t talk to clientNum %i (%s), but nobody else can either.\n";
+          Party_GetMemberName(param_1,uVar5);
+          pcVar4 = "We can\'t talk to clientNum %i (%s), but nobody else can either.\n";
         }
-        Com_Printf(0x19,pcVar5);
+        Com_Printf(0x19,pcVar4);
       }
 LAB_82390e08:
-      uVar6 = uVar6 + 1;
-    } while ((int)uVar6 < 0x12);
+      uVar5 = uVar5 + 1;
+    } while ((int)uVar5 < 0x12);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -889,6 +837,8 @@ bool PartyMigrate_DoWeHavePartyData(PartyData *param_1,int param_2)
 
 // 82390E90  PartyMigrate_DoWeHaveNecessaryMapPacks  (client_mp/partymigrate.cpp:666)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -896,27 +846,22 @@ bool PartyMigrate_DoWeHaveNecessaryMapPacks(PartyData *param_1,int param_2)
 
 {
   PartyData *pPVar1;
-  undefined1 uVar6;
-  PartyData *pPVar2;
-  uint uVar3;
-  int iVar4;
-  uint uVar5;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
   
-  pPVar1 = (PartyData *)__savegprlr_29(param_1);
-  if (pPVar1 == &g_partyData) {
-    uVar6 = __restgprlr_29(1);
-    return (bool)uVar6;
+  if (param_1 == &g_partyData) {
+    return true;
   }
-  pPVar2 = Lobby_GetPartyData();
-  if (pPVar1 != pPVar2) {
+  pPVar1 = Lobby_GetPartyData();
+  if (param_1 != pPVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x29d,0,"%s");
   }
-  uVar3 = Content_GetAvailableContentPacks();
-  iVar4 = Playlist_GetPlaylistIdForNum(param_2,(playlist->current).integer);
-  uVar5 = Playlist_GetMapPacksUsedByPlaylist(iVar4);
-  uVar6 = __restgprlr_29((pPVar1->mapPackFlags & uVar5 & ~uVar3) == 0);
-  return (bool)uVar6;
+  uVar2 = Content_GetAvailableContentPacks();
+  iVar3 = Playlist_GetPlaylistIdForNum(param_2,(playlist->current).integer);
+  uVar4 = Playlist_GetMapPacksUsedByPlaylist(iVar3);
+  return (param_1->mapPackFlags & uVar4 & ~uVar2) == 0;
 }
 
 
@@ -941,199 +886,165 @@ int PartyMigrate_MigrateActive(PartyData *param_1)
 
 // 82390F30  PartyMigrate_ShouldWeHostPrivateParty  (client_mp/partymigrate.cpp:702)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMigrate_ShouldWeHostPrivateParty(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  int iVar1;
+  bool bVar2;
   PartyActiveClient aPStack_40 [8];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x2bf,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x2c0,0,"%s");
   }
-  iVar2 = Party_GetSecondaryActiveClient(pPVar1,aPStack_40);
-  iVar3 = (int)uVar5;
-  if ((((iVar2 == 0) || (aPStack_40[0].localControllerIndex != *(uint *)(iVar3 + 4))) &&
-      ((ulonglong)(uint)(pPVar1->session->dyn).publicSlots +
-       (ulonglong)(uint)(pPVar1->session->dyn).privateSlots != 0)) &&
+  iVar1 = Party_GetSecondaryActiveClient(param_1,aPStack_40);
+  if ((((iVar1 == 0) || (aPStack_40[0].localControllerIndex != param_2->localControllerIndex)) &&
+      ((ulonglong)(uint)(param_1->session->dyn).publicSlots +
+       (ulonglong)(uint)(param_1->session->dyn).privateSlots != 0)) &&
      ((param_3 == 0 ||
-      (bVar4 = PartyMigrate_CanWeTalkToAllClients(pPVar1,*(int *)(iVar3 + 4)), bVar4)))) {
-    bVar4 = PartyMigrate_DoWeHavePartyData(pPVar1,*(int *)(iVar3 + 4));
-    iVar3 = __restgprlr_27(bVar4);
-    return iVar3;
+      (bVar2 = PartyMigrate_CanWeTalkToAllClients(param_1,param_2->localControllerIndex), bVar2))))
+  {
+    bVar2 = PartyMigrate_DoWeHavePartyData(param_1,param_2->localControllerIndex);
+    return (int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1));
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 82391028  PartyMigrate_CanWeHostLobby  (client_mp/partymigrate.cpp:738)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PartyMigrate_CanWeHostLobby(PartyData *param_1,int param_2,bool param_3)
 
 {
-  PartyData *pPVar2;
-  int iVar3;
-  undefined1 uVar4;
+  int iVar2;
   longlong lVar1;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar3;
   PartyActiveClient aPStack_30 [6];
   
-  uVar7 = (ulonglong)param_3;
-  uVar6 = (ulonglong)param_2;
-  pPVar2 = (PartyData *)__savegprlr_29(param_1);
-  iVar3 = Party_GetSecondaryActiveClient(pPVar2,aPStack_30);
-  if ((((iVar3 == 0) || ((ulonglong)aPStack_30[0].localControllerIndex != (uVar6 & 0xffffffff))) &&
-      (lVar1 = (ulonglong)(uint)(pPVar2->session->dyn).publicSlots +
-               (ulonglong)(uint)(pPVar2->session->dyn).privateSlots, lVar1 != 0)) &&
-     (bVar5 = Live_CanHostServer((int)lVar1), bVar5)) {
-    iVar3 = (int)uVar6;
-    bVar5 = PartyMigrate_DoWeHavePartyData(pPVar2,iVar3);
-    if ((bVar5) &&
-       (((uVar7 & 0xff) == 0 || (bVar5 = PartyMigrate_CanWeTalkToAllClients(pPVar2,iVar3), bVar5))))
-    {
-      bVar5 = PartyMigrate_DoWeHaveNecessaryMapPacks(pPVar2,iVar3);
-      uVar4 = __restgprlr_29(bVar5);
-      return (bool)uVar4;
-    }
+  iVar2 = Party_GetSecondaryActiveClient(param_1,aPStack_30);
+  if ((((iVar2 == 0) || (aPStack_30[0].localControllerIndex != param_2)) &&
+      (lVar1 = (ulonglong)(uint)(param_1->session->dyn).publicSlots +
+               (ulonglong)(uint)(param_1->session->dyn).privateSlots, lVar1 != 0)) &&
+     (((bVar3 = Live_CanHostServer((int)lVar1), bVar3 &&
+       (bVar3 = PartyMigrate_DoWeHavePartyData(param_1,param_2), bVar3)) &&
+      ((!param_3 || (bVar3 = PartyMigrate_CanWeTalkToAllClients(param_1,param_2), bVar3)))))) {
+    bVar3 = PartyMigrate_DoWeHaveNecessaryMapPacks(param_1,param_2);
+    return (bool)('\x01' - !bVar3);
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 823910E8  PartyMigrate_PrintCantHost  (client_mp/partymigrate.cpp:776)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_PrintCantHost(PartyData *param_1,int param_2,bool param_3)
 
 {
-  PartyData *pPVar1;
+  int iVar1;
+  bool bVar3;
   int iVar2;
-  bool bVar4;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  longlong lVar4;
   PartyActiveClient aPStack_30 [6];
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  iVar2 = Party_GetSecondaryActiveClient(pPVar1,aPStack_30);
-  if ((iVar2 != 0) && ((ulonglong)aPStack_30[0].localControllerIndex == (uVar5 & 0xffffffff))) {
+  iVar1 = Party_GetSecondaryActiveClient(param_1,aPStack_30);
+  if ((iVar1 != 0) && (aPStack_30[0].localControllerIndex == param_2)) {
     Com_Printf(0x19,
                "party->splitscreenData.active && localControllerIndex (%i) != party->splitscreenData.mainControllerIndex (%i)\n"
               );
-    __restgprlr_28();
     return;
   }
-  lVar7 = (ulonglong)(uint)(pPVar1->session->dyn).publicSlots +
-          (ulonglong)(uint)(pPVar1->session->dyn).privateSlots;
-  if (lVar7 == 0) {
+  lVar4 = (ulonglong)(uint)(param_1->session->dyn).publicSlots +
+          (ulonglong)(uint)(param_1->session->dyn).privateSlots;
+  if (lVar4 == 0) {
     Com_Printf(0x19,"privateSlots + publicSlots == 0, so we\'re not going to host\n");
-    __restgprlr_28();
     return;
   }
-  iVar2 = (int)lVar7;
-  bVar4 = Live_CanHostServer(iVar2);
-  if (!bVar4) {
-    iVar3 = Live_GetLocalNatType();
-    if ((iVar3 != 3) && (g_shouldWeHost != false)) {
-      Live_GetNecessaryBandwidth(iVar2);
+  iVar1 = (int)lVar4;
+  bVar3 = Live_CanHostServer(iVar1);
+  if (!bVar3) {
+    iVar2 = Live_GetLocalNatType();
+    if ((iVar2 != 3) && (g_shouldWeHost != false)) {
+      Live_GetNecessaryBandwidth(iVar1);
       Live_GetUploadSpeed();
       Com_Printf(0x19,
                  "We don\'t have enough bandwidth (%i) to host a %i player game (requires %i), so we\'re not going to host\n"
                 );
-      __restgprlr_28();
       return;
     }
     Live_GetLocalNatType();
     Com_Printf(0x19,
                "We aren\'t allowed to host due to our network setup (NAT type=%d g_shouldWeHost=%s), so we\'re not going to host\n"
               );
-    __restgprlr_28();
     return;
   }
-  iVar2 = (int)uVar5;
-  bVar4 = PartyMigrate_DoWeHavePartyData(pPVar1,iVar2);
-  if (!bVar4) {
+  bVar3 = PartyMigrate_DoWeHavePartyData(param_1,param_2);
+  if (!bVar3) {
     Com_Printf(0x19,"We don\'t have party data, so we\'re not going to host\n");
-    __restgprlr_28();
     return;
   }
-  bVar4 = PartyMigrate_DoWeHaveNecessaryMapPacks(pPVar1,iVar2);
-  if (!bVar4) {
+  bVar3 = PartyMigrate_DoWeHaveNecessaryMapPacks(param_1,param_2);
+  if (!bVar3) {
     Com_Printf(0x19,"We don\'t have all the necessary map packs, so we\'re not going to host\n");
-    __restgprlr_28();
     return;
   }
-  if ((uVar6 & 0xff) == 0) {
+  if (!param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x336,0,"%s");
   }
-  bVar4 = PartyMigrate_CanWeTalkToAllClients(pPVar1,iVar2);
-  if (bVar4) {
+  bVar3 = PartyMigrate_CanWeTalkToAllClients(param_1,param_2);
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x337,0,"%s");
   }
-  PartyMigrate_PrintCanWeTalkToAllClients(pPVar1,iVar2);
+  PartyMigrate_PrintCanWeTalkToAllClients(param_1,param_2);
   Com_Printf(0x19,"We can\'t talk to all the clients, so we\'re not going to host\n");
-  __restgprlr_28();
   return;
 }
 
 
 // 82391308  PartyMigrate_ClearMemberData  (client_mp/partymigrate.cpp:832)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_ClearMemberData(PartyData *param_1,int param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (0x11 < (uVar3 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x341,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (*(char *)(iVar2 + 0xd) == '\0') {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x342,0,"%s");
   }
-  iVar1 = (int)uVar3 * 0x150 + iVar2;
-  *(undefined4 *)(iVar2 + 0x48) = 0;
-  *(undefined4 *)(iVar2 + 0x30) = 0xffffffff;
-  *(undefined1 *)(iVar1 + 0x188) = 0;
-  *(undefined4 *)(iVar1 + 0x18c) = 0;
-  *(undefined4 *)(iVar1 + 400) = 0xffffffff;
-  *(undefined1 *)(iVar1 + 0x194) = 0;
-  __restgprlr_29();
+  (param_1->migrateData).bestHost.lastSentTo = 0;
+  (param_1->migrateData).bestHost.nominee = -1;
+  param_1->partyMembers[param_2].migrateHeardFrom = false;
+  param_1->partyMembers[param_2].migratePingTime = 0;
+  param_1->partyMembers[param_2].migratePing = -1;
+  param_1->partyMembers[param_2].migrateNominated = false;
   return;
 }
 
@@ -1233,73 +1144,68 @@ void PartyMigrate_StopMigration(PartyData *param_1)
 
 // 823934A0  PartyMigrate_CheckNegotiationDisconnect  (client_mp/partymigrate.cpp:1064)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_CheckNegotiationDisconnect(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  char *pcVar5;
+  int iVar1;
+  bool bVar2;
+  char *pcVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x429,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x42a,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (((iVar2 == 0) && (iVar2 = Party_InParty(pPVar1), iVar2 != 0)) &&
-     (iVar2 = Party_AreWeHost(pPVar1), iVar2 == 0)) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (((iVar1 == 0) && (iVar1 = Party_InParty(param_1), iVar1 != 0)) &&
+     (iVar1 = Party_AreWeHost(param_1), iVar1 == 0)) {
     Com_PrintError(0x19,"Since we can\'t migrate, we\'ll disconnect from running party %i\n");
-    iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-    if (iVar2 != 0) {
+    iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+    if (iVar1 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x43c,0,"%s");
     }
-    bVar3 = Party_IsGameLobby(pPVar1);
-    if (bVar3) {
-      pcVar5 = "@XBOXLIVE_LOBBYENDED";
+    bVar2 = Party_IsGameLobby(param_1);
+    if (bVar2) {
+      pcVar3 = "@XBOXLIVE_LOBBYENDED";
     }
     else {
-      pcVar5 = "@XBOXLIVE_PARTYENDED";
+      pcVar3 = "@XBOXLIVE_PARTYENDED";
     }
-    PartyClient_DisconnectFromHost(pPVar1,(PartyActiveClient *)uVar4,pcVar5,1,0);
+    PartyClient_DisconnectFromHost(param_1,param_2,pcVar3,1,0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 823935C0  PartyMigrate_SetupMigration  (client_mp/partymigrate.cpp:1092)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyMigrate_SetupMigration(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
-  uint uVar3;
-  ulonglong uVar5;
-  PartyMember *pPVar6;
+  int iVar1;
+  bool bVar3;
+  uint uVar2;
+  PartyMember *pPVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x448,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x449,0,"%s");
   }
@@ -1309,188 +1215,183 @@ LAB_82393668:
                     0x44a,0,"%s");
   }
   else {
-    iVar2 = 0;
-    pPVar6 = pPVar1->partyMembers;
+    iVar1 = 0;
+    pPVar4 = param_1->partyMembers;
     do {
-      if (pPVar6->status == '\x06') goto LAB_82393668;
-      iVar2 = iVar2 + 1;
-      pPVar6 = pPVar6 + 1;
-    } while (iVar2 < 0x12);
+      if (pPVar4->status == '\x06') goto LAB_82393668;
+      iVar1 = iVar1 + 1;
+      pPVar4 = pPVar4 + 1;
+    } while (iVar1 < 0x12);
   }
   Com_Printf(0x19,"PartyMigrate_StartNegotiation() called for party %i.\n");
-  PartyAtomic_AbortJoinAttemptForParty(&g_partyJoinInfo,pPVar1);
-  (pPVar1->migrateData).migrateActive = false;
-  PartyMigrate_ClearInternalData(pPVar1);
-  if ((pPVar1->migrateData).migrateActive != false) {
+  PartyAtomic_AbortJoinAttemptForParty(&g_partyJoinInfo,param_1);
+  (param_1->migrateData).migrateActive = false;
+  PartyMigrate_ClearInternalData(param_1);
+  if ((param_1->migrateData).migrateActive != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x453,0,"%s");
   }
-  iVar2 = Live_GetOurClientNum(*(int *)((int)uVar5 + 4),pPVar1->session);
-  if (-1 < iVar2) {
-    bVar4 = Party_IsGameLobby(pPVar1);
-    if (bVar4) {
-      iVar2 = Party_IsRunning(pPVar1);
-      if (iVar2 == 0) {
+  iVar1 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (-1 < iVar1) {
+    bVar3 = Party_IsGameLobby(param_1);
+    if (bVar3) {
+      iVar1 = Party_IsRunning(param_1);
+      if (iVar1 == 0) {
         Com_Printf(0x19,
                    "PartyMigrate - SetupMigration - Lobby migration is not supported when the lobby is not active.\n"
                   );
-        iVar2 = __restgprlr_28(0);
-        return iVar2;
+        return 0;
       }
-      bVar4 = CL_AllLocalClientsDisconnected();
-      if (!bVar4) {
+      bVar3 = CL_AllLocalClientsDisconnected();
+      if (!bVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x464,0,"%s\n\t%s");
       }
     }
-    (pPVar1->migrateData).migrateActive = true;
-    iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-    if (iVar2 != 0) {
+    (param_1->migrateData).migrateActive = true;
+    iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+    if (iVar1 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x468,0,"%s");
     }
-    uVar3 = PartyMigrate_GetArbitratorClientNum(pPVar1,1);
-    if (0x11 < uVar3) {
+    uVar2 = PartyMigrate_GetArbitratorClientNum(param_1,1);
+    if (0x11 < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x46b,0,"arbitratorClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)")
       ;
     }
-    bVar4 = Session_PlayerHasLoopbackAddr(pPVar1->session,uVar3);
-    (pPVar1->migrateData).weAreArbitrating = bVar4;
-    Party_GetMemberName(pPVar1,uVar3);
+    bVar3 = Session_PlayerHasLoopbackAddr(param_1->session,uVar2);
+    (param_1->migrateData).weAreArbitrating = bVar3;
+    Party_GetMemberName(param_1,uVar2);
     Com_Printf(0x19,
                "PartyMigrate - SetupMigration - The arbitrator for party %i is client %i (%s). We are client %i\n"
               );
-    iVar2 = __restgprlr_28(1);
-    return iVar2;
+    return 1;
   }
   Com_PrintError(0x19,
                  "PartyMigrate - SetupMigration - We don\'t know our client num, won\'t be able to migrate, aborting.\n"
                 );
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 823955D0  PartyMigrate_StartNegotiation  (client_mp/partymigrate.cpp:1141)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_StartNegotiation(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x476,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x477,0,"%s");
   }
-  iVar2 = PartyMigrate_SetupMigration(pPVar1,(PartyActiveClient *)uVar3);
-  if (iVar2 != 0) {
-    iVar2 = PartyMigrate_MigrateActive(pPVar1);
-    if (iVar2 == 0) {
+  iVar1 = PartyMigrate_SetupMigration(param_1,param_2);
+  if (iVar1 != 0) {
+    iVar1 = PartyMigrate_MigrateActive(param_1);
+    if (iVar1 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x47c,0,"%s");
     }
-    PartyMigrate_SelectOurNominee(pPVar1,(PartyActiveClient *)uVar3);
+    PartyMigrate_SelectOurNominee(param_1,param_2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82393840  PartyMigrate_SelectOurNominee  (client_mp/partymigrate.cpp:1154)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_SelectOurNominee(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar5;
-  uint uVar3;
-  int iVar4;
+  int iVar1;
+  bool bVar4;
+  uint uVar2;
+  int iVar3;
   NomineeInfo local_40 [4];
   
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x487,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x488,0,"%s");
   }
-  iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x489,0,"%s");
   }
-  iVar2 = Live_GetOurClientNum(param_2->localControllerIndex,pPVar1->session);
-  if (-1 < iVar2) {
-    bVar5 = Party_IsPrivateParty(pPVar1);
-    if (bVar5) {
-      uVar3 = PartyMigrate_ShouldWeHostPrivateParty
-                        (pPVar1,param_2,
-                         (uint)(pPVar1->migrateData).migrateToRequestedHost >> 0x1f ^ 1);
+  iVar1 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (-1 < iVar1) {
+    bVar4 = Party_IsPrivateParty(param_1);
+    if (bVar4) {
+      uVar2 = PartyMigrate_ShouldWeHostPrivateParty
+                        (param_1,param_2,
+                         (uint)(param_1->migrateData).migrateToRequestedHost >> 0x1f ^ 1);
     }
     else {
-      bVar5 = PartyMigrate_CanWeHostLobby(pPVar1,param_2->localControllerIndex,false);
-      uVar3 = (uint)bVar5;
+      bVar4 = PartyMigrate_CanWeHostLobby(param_1,param_2->localControllerIndex,false);
+      uVar2 = (uint)bVar4;
     }
-    if (uVar3 == 0) {
+    if (uVar2 == 0) {
       local_40[0].onLSP = false;
       local_40[0]._9_3_ = 0;
       local_40[0].connectivity = 0;
       local_40[0].upload = 0;
       local_40[0].NAT = 3;
-      bVar5 = Party_IsGameLobby(pPVar1);
-      if (bVar5) {
-        PartyMigrate_PrintCantHost(pPVar1,param_2->localControllerIndex,true);
+      bVar4 = Party_IsGameLobby(param_1);
+      if (bVar4) {
+        PartyMigrate_PrintCantHost(param_1,param_2->localControllerIndex,true);
       }
       Com_Printf(0x19,"Due to a call to PartyMigrate_SelectOurNominee(), ");
-      iVar4 = -1;
+      iVar3 = -1;
     }
     else {
-      iVar4 = Live_GetUploadSpeed();
+      iVar3 = Live_GetUploadSpeed();
       local_40[0].upload = 2000000;
-      if (iVar4 < 2000000) {
-        local_40[0].upload = iVar4;
+      if (iVar3 < 2000000) {
+        local_40[0].upload = iVar3;
       }
       local_40[0].NAT = Live_GetLocalNatType();
-      bVar5 = LSP_Connected();
-      local_40[0].onLSP = bVar5;
-      uVar3 = PartyMigrate_GetClientConnectivity(pPVar1,iVar2);
-      local_40[0].connectivity = uVar3;
+      bVar4 = LSP_Connected();
+      local_40[0].onLSP = bVar4;
+      uVar2 = PartyMigrate_GetClientConnectivity(param_1,iVar1);
+      local_40[0].connectivity = uVar2;
       Com_Printf(0x19,"Due to a call to PartyMigrate_SelectOurNominee(), ");
-      iVar4 = iVar2;
+      iVar3 = iVar1;
     }
-    PartyMigrate_SetOurNominee(pPVar1,iVar2,iVar4,local_40);
-    if ((pPVar1->migrateData).decidedOurNominee == false) {
+    PartyMigrate_SetOurNominee(param_1,iVar1,iVar3,local_40);
+    if ((param_1->migrateData).decidedOurNominee == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x4c1,0,"%s");
     }
-    PartyMigrate_AnnounceOurNominee(pPVar1,param_2,iVar2);
+    PartyMigrate_AnnounceOurNominee(param_1,param_2,iVar1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82391438  IsTheirNomineeBetter  (client_mp/partymigrate.cpp:1223)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1499,42 +1400,42 @@ bool IsTheirNomineeBetter
                )
 
 {
-  NomineeInfo *pNVar2;
-  undefined1 uVar5;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar1;
+  int iVar1;
+  int iVar2;
   
-  pNVar2 = (NomineeInfo *)__savegprlr_27(param_1);
-  if ((pNVar2 != param_3) && (-1 < (int)param_3)) {
-    if ((int)pNVar2 < 0) {
-LAB_8239146c:
-      uVar5 = __restgprlr_27(1);
-      return (bool)uVar5;
+  if ((param_1 != (PartyData *)param_3) && (-1 < (int)param_3)) {
+    if ((int)param_1 < 0) {
+      return true;
     }
     if ((*(char *)(param_2 + 8) == '\0') || (*(char *)(param_4 + 8) != '\0')) {
-      if (((*(char *)(param_4 + 8) != '\0') && (*(char *)(param_2 + 8) == '\0')) ||
-         (*(int *)(param_4 + 4) < *(int *)(param_2 + 4))) goto LAB_8239146c;
+      if ((*(char *)(param_4 + 8) != '\0') && (*(char *)(param_2 + 8) == '\0')) {
+        return true;
+      }
+      if (*(int *)(param_4 + 4) < *(int *)(param_2 + 4)) {
+        return true;
+      }
       if (*(int *)(param_4 + 4) <= *(int *)(param_2 + 4)) {
-        iVar3 = CountBitsEnabled(*(uint *)(param_2 + 0xc));
-        iVar4 = CountBitsEnabled(*(uint *)(param_4 + 0xc));
-        if (iVar3 <= iVar4) {
-          if (*(int *)param_2 < *(int *)param_4) goto LAB_8239146c;
-          if ((*(int *)param_2 <= *(int *)param_4) && (uVar1 = 1, (int)param_3 < (int)pNVar2))
-          goto LAB_823914f8;
+        iVar1 = CountBitsEnabled(*(uint *)(param_2 + 0xc));
+        iVar2 = CountBitsEnabled(*(uint *)(param_4 + 0xc));
+        if (iVar1 <= iVar2) {
+          if (*(int *)param_2 < *(int *)param_4) {
+            return true;
+          }
+          if ((*(int *)param_2 <= *(int *)param_4) && ((int)param_3 < (int)param_1)) {
+            return true;
+          }
         }
       }
     }
   }
-  uVar1 = 0;
-LAB_823914f8:
-  uVar5 = __restgprlr_27(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82395690  PartyMigrate_HandleNomineeMsg  (client_mp/partymigrate.cpp:1296)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1542,149 +1443,133 @@ void PartyMigrate_HandleNomineeMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyData *pPVar2;
-  int iVar3;
-  uint uVar4;
+  int iVar2;
+  uint uVar3;
   ulong64 uVar1;
-  int iVar5;
-  bool bVar7;
-  uint uVar6;
-  longlong lVar8;
+  int iVar4;
+  bool bVar6;
+  uint uVar5;
   msg_t *in_r7;
   netadr_t in_stack_ffffff48;
   NomineeInfo local_70 [7];
   
-  lVar8 = (longlong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_22(param_1,lVar8,param_4);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x517,0,"%s");
   }
-  if (pPVar2->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_PrintError(0x19,"Received party nominee msg for a party type that we\'re not in (%i)\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = PartyMigrate_HostMigrationEnabled(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = PartyMigrate_HostMigrationEnabled(param_1);
+  if (iVar2 == 0) {
     Com_Printf(0x19,"Received party nominee msg but host migration is not enabled.\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = Party_FindFirstMemberAtAddr(pPVar2,in_stack_ffffff48);
-  if (iVar3 < 0) {
+  iVar2 = Party_FindFirstMemberAtAddr(param_1,in_stack_ffffff48);
+  if (iVar2 < 0) {
     Com_Printf(0x19,"Received party nominee msg but we don\'t know who it\'s from.\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = MSG_ReadBits(in_r7,2);
-  uVar4 = MSG_ReadBits(in_r7,5);
+  iVar2 = MSG_ReadBits(in_r7,2);
+  uVar3 = MSG_ReadBits(in_r7,5);
   uVar1 = MSG_ReadInt64(in_r7);
   MSG_ReadData(in_r7,local_70,0x10);
   if ((in_r7->overflowed == 0) && (in_r7->readcount == in_r7->splitSize + in_r7->cursize)) {
-    if (((int)uVar4 < 0) || (0x11 < (int)uVar4)) {
+    if (((int)uVar3 < 0) || (0x11 < (int)uVar3)) {
       NET_AdrToString(in_stack_ffffff48);
       Com_Printf(0x19,"Received party nominee msg from invalid clientNum %i. (%s)\n");
-      __restgprlr_22();
       return;
     }
-    iVar5 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar4);
-    if (iVar5 == 0) {
+    iVar4 = PartyMigrate_IsStatusValidForMigration(param_1,uVar3);
+    if (iVar4 == 0) {
       NET_AdrToString(in_stack_ffffff48);
       Com_Printf(0x19,
                  "Received party nominee msg from party %i clientNum %i but client %i is not in a valid state for migration (%s)\n"
                 );
-      __restgprlr_22();
       return;
     }
-    bVar7 = Session_PlayerHasLoopbackAddr(pPVar2->session,uVar4);
-    if (bVar7) {
+    bVar6 = Session_PlayerHasLoopbackAddr(param_1->session,uVar3);
+    if (bVar6) {
       NET_AdrToString(in_stack_ffffff48);
       Com_PrintWarning(0x19,
                        "We got a nominee msg from clientNum %i, which is a local client. Ignoring. (%s)\n"
                       );
-      __restgprlr_22();
       return;
     }
-    if (iVar3 != (pPVar2->migrateData).indexBits) {
+    if (iVar2 != (param_1->migrateData).indexBits) {
       Com_Printf(0x19,
                  "Received stale nominee msg (index %i) from client %i - current indexBits are %i\n"
                 );
-      __restgprlr_22();
       return;
     }
-    iVar3 = PartyMigrate_MigrateActive(pPVar2);
-    if (iVar3 == 0) {
-      bVar7 = Party_IsGameLobby(pPVar2);
-      if ((bVar7) && (iVar3 = Party_IsRunning(pPVar2), iVar3 == 0)) {
+    iVar2 = PartyMigrate_MigrateActive(param_1);
+    if (iVar2 == 0) {
+      bVar6 = Party_IsGameLobby(param_1);
+      if ((bVar6) && (iVar2 = Party_IsRunning(param_1), iVar2 == 0)) {
         Com_Printf(0x19,"Received stray nominee for game lobby while it is inactive.\n");
-        __restgprlr_22();
         return;
       }
       Com_Printf(0x19,
                  "We\'re not currently migrating but we got a migration message from client %i with index %i, which is the valid next index\n"
                 );
-      iVar3 = Sys_Milliseconds();
-      (pPVar2->migrateData).startTime = iVar3;
-      (pPVar2->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
-      (pPVar2->migrateData).partyTime = iVar3;
-      PartyMigrate_StartNegotiation(pPVar2,(PartyActiveClient *)lVar8);
-      PartyMigrate_CheckNegotiationDisconnect(pPVar2,(PartyActiveClient *)lVar8);
+      iVar2 = Sys_Milliseconds();
+      (param_1->migrateData).startTime = iVar2;
+      (param_1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
+      (param_1->migrateData).partyTime = iVar2;
+      PartyMigrate_StartNegotiation(param_1,param_2);
+      PartyMigrate_CheckNegotiationDisconnect(param_1,param_2);
     }
-    if ((pPVar2->migrateData).weAreArbitrating == false) {
+    if ((param_1->migrateData).weAreArbitrating == false) {
       Com_Printf(0x19,
                  "Received party %i nominee msg from clientNum %i, but we are not arbitrating.\n");
-      __restgprlr_22();
       return;
     }
-    if (0x11 < uVar4) {
+    if (0x11 < uVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x562,0,"fromWhom doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
     }
-    pPVar2->partyMembers[uVar4].migrateHeardFrom = true;
-    uVar6 = Party_FindMemberByXUID_AllowNotPresent(pPVar2,uVar1);
-    if ((uVar1 != 0) && ((int)uVar6 < 0)) {
-      Party_GetMemberName(pPVar2,uVar4);
+    param_1->partyMembers[uVar3].migrateHeardFrom = true;
+    uVar5 = Party_FindMemberByXUID_AllowNotPresent(param_1,uVar1);
+    if ((uVar1 != 0) && ((int)uVar5 < 0)) {
+      Party_GetMemberName(param_1,uVar3);
       Com_PrintError(0x19,
                      "Client %i (%s) wants the host to be client with XUID %llx, but we can\'t find that XUID in the party!\n"
                     );
     }
-    if (uVar6 != 0xffffffff) {
-      if (uVar6 != uVar4) {
+    if (uVar5 != 0xffffffff) {
+      if (uVar5 != uVar3) {
         Com_PrintWarning(0x19,
                          "Received nomination from client %i for client %i - XUID/client mismatch - clients can only nominate themselves\n"
                         );
-        __restgprlr_22();
         return;
       }
-      if ((int)uVar6 < -1) goto LAB_82395b0c;
+      if ((int)uVar5 < -1) goto LAB_82395b0c;
     }
-    if (0x11 < (int)uVar6) {
+    if (0x11 < (int)uVar5) {
 LAB_82395b0c:
       Com_Printf(0x19,"Received party nominee msg for invalid clientNum %i!\n");
-      __restgprlr_22();
       return;
     }
-    if (-1 < (int)uVar6) {
-      Party_GetMemberName(pPVar2,uVar6);
+    if (-1 < (int)uVar5) {
+      Party_GetMemberName(param_1,uVar5);
       PartyMigrate_NomineeInfoString(local_70);
       Com_Printf(0x19,"Client %i wants the host to be client %i (%s - xuid %llx) %s\n");
-      if (uVar6 != uVar4) {
+      if (uVar5 != uVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x57e,0,"%s");
       }
-      iVar3 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar6);
-      if (iVar3 == 0) {
+      iVar2 = PartyMigrate_IsStatusValidForMigration(param_1,uVar5);
+      if (iVar2 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x57f,0,"%s");
       }
-      pPVar2->partyMembers[uVar6].migrateNominated = true;
-      pPVar2->partyMembers[uVar6].migrateNomineeInfo.upload = local_70[0].upload;
-      pPVar2->partyMembers[uVar6].migrateNomineeInfo.NAT = local_70[0].NAT;
-      pPVar2->partyMembers[uVar6].migrateNomineeInfo.onLSP = local_70[0].onLSP;
-      *(undefined3 *)&pPVar2->partyMembers[uVar6].migrateNomineeInfo.field_0x9 = local_70[0]._9_3_;
-      pPVar2->partyMembers[uVar6].migrateNomineeInfo.connectivity = local_70[0].connectivity;
-      __restgprlr_22();
+      param_1->partyMembers[uVar5].migrateNominated = true;
+      param_1->partyMembers[uVar5].migrateNomineeInfo.upload = local_70[0].upload;
+      param_1->partyMembers[uVar5].migrateNomineeInfo.NAT = local_70[0].NAT;
+      param_1->partyMembers[uVar5].migrateNomineeInfo.onLSP = local_70[0].onLSP;
+      *(undefined3 *)&param_1->partyMembers[uVar5].migrateNomineeInfo.field_0x9 = local_70[0]._9_3_;
+      param_1->partyMembers[uVar5].migrateNomineeInfo.connectivity = local_70[0].connectivity;
       return;
     }
     Com_Printf(0x19,"Client %i doesn\'t have a nominee\n");
@@ -1693,13 +1578,14 @@ LAB_82395b0c:
     NET_AdrToString(in_stack_ffffff48);
     Com_PrintError(0x19,"Received party nominee msg with invalid payload from %s\n");
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82393A38  PartyMigrate_AskForPredeterminedHostNominee  (client_mp/partymigrate.cpp:1416)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1707,103 +1593,92 @@ void PartyMigrate_AskForPredeterminedHostNominee
                (PartyData *param_1,int param_2,PartyActiveClient *param_3)
 
 {
-  PartyActiveClient *pPVar1;
-  PartyData *pPVar3;
+  int iVar2;
+  ulong64 uVar1;
+  int iVar3;
   int iVar4;
-  uint uVar5;
-  ulong64 uVar2;
-  int iVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  ulonglong uVar10;
+  char *pcVar5;
   msg_t local_b0;
   uchar auStack_80 [128];
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)param_2;
-  pPVar3 = (PartyData *)__savegprlr_25(param_1);
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x58e,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x58f,0,"%s");
   }
-  if (pPVar3->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x590,0,"%s");
   }
-  iVar4 = PartyMigrate_MigrateActive(pPVar3);
-  if (iVar4 == 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x591,0,"%s");
   }
-  if (0x11 < (uVar8 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x592,0,"hostMemberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)")
     ;
   }
-  uVar9 = (uint)uVar8;
-  iVar4 = Party_MemberHasHostAddress(pPVar3,uVar9);
-  if (iVar4 != 0) {
+  iVar2 = Party_MemberHasHostAddress(param_1,param_2);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x593,0,"%s");
   }
-  pPVar1 = (PartyActiveClient *)uVar10;
-  uVar5 = Live_GetOurClientNum(pPVar1->localControllerIndex,pPVar3->session);
-  uVar2 = Live_GetXuid(pPVar1->localControllerIndex);
-  if (uVar5 == uVar9) {
-    PartyMigrate_SelectOurNominee(pPVar3,pPVar1);
-    if ((pPVar3->migrateData).decidedOurNominee == false) {
+  iVar2 = Live_GetOurClientNum(param_3->localControllerIndex,param_1->session);
+  uVar1 = Live_GetXuid(param_3->localControllerIndex);
+  if (iVar2 == param_2) {
+    PartyMigrate_SelectOurNominee(param_1,param_3);
+    if ((param_1->migrateData).decidedOurNominee == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x59b,0,"%s");
-      __restgprlr_25();
       return;
     }
   }
   else {
-    iVar4 = Party_IsMemberLocalPlayer(pPVar3,uVar9);
-    if (iVar4 != 0) {
+    iVar3 = Party_IsMemberLocalPlayer(param_1,param_2);
+    if (iVar3 != 0) {
       Com_PrintError(0x19,
                      "PartyMigrate - AskForPredeterminedHostNominee - Could not migrate, requested host is another local splitscreen client\n"
                     );
-      PartyMigrate_SendMakeHostError(pPVar3,pPVar1,uVar9);
-      PartyMigrate_StopMigration(pPVar3);
-      __restgprlr_25();
+      PartyMigrate_SendMakeHostError(param_1,param_3,param_2);
+      PartyMigrate_StopMigration(param_1);
       return;
     }
-    iVar6 = Sys_Milliseconds();
-    iVar4 = (pPVar3->migrateData).bestHost.lastSentTo;
-    if ((iVar4 < 1) || ((partymigrate_broadcast_interval->current).integer <= iVar6 - iVar4)) {
-      (pPVar3->migrateData).bestHost.lastSentTo = iVar6;
+    iVar4 = Sys_Milliseconds();
+    iVar3 = (param_1->migrateData).bestHost.lastSentTo;
+    if ((iVar3 < 1) || ((partymigrate_broadcast_interval->current).integer <= iVar4 - iVar3)) {
+      (param_1->migrateData).bestHost.lastSentTo = iVar4;
       MSG_Init(&local_b0,auStack_80,0x40);
-      pcVar7 = va("%imakehosttest");
-      MSG_WriteString(&local_b0,pcVar7);
-      MSG_WriteBits(&local_b0,(pPVar3->migrateData).indexBits,2);
-      MSG_WriteBits(&local_b0,uVar9,5);
-      MSG_WriteBits(&local_b0,uVar5,5);
-      MSG_WriteInt64(&local_b0,uVar2);
+      pcVar5 = va("%imakehosttest");
+      MSG_WriteString(&local_b0,pcVar5);
+      MSG_WriteBits(&local_b0,(param_1->migrateData).indexBits,2);
+      MSG_WriteBits(&local_b0,param_2,5);
+      MSG_WriteBits(&local_b0,iVar2,5);
+      MSG_WriteInt64(&local_b0,uVar1);
       if (local_b0.overflowed != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x5b5,0,"%s");
       }
       CL_WritePeerToPeerOOBData
-                (pPVar3->session,pPVar1->localClientNum,uVar9,local_b0.data,local_b0.cursize,false,1
-                );
+                (param_1->session,param_3->localClientNum,param_2,local_b0.data,local_b0.cursize,
+                 false,1);
       CL_WritePeerToPeerOOBData
-                (pPVar3->session,pPVar1->localClientNum,uVar9,local_b0.data,local_b0.cursize,false,1
-                );
+                (param_1->session,param_3->localClientNum,param_2,local_b0.data,local_b0.cursize,
+                 false,1);
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82393CF8  PartyMigrate_HandleMakeHostMsg  (client_mp/partymigrate.cpp:1473)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1811,148 +1686,131 @@ void PartyMigrate_HandleMakeHostMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyData *pPVar2;
-  bool bVar6;
-  int iVar3;
-  uint uVar4;
+  bool bVar5;
+  int iVar2;
+  uint uVar3;
   ulong64 uVar1;
-  uint uVar5;
-  longlong lVar7;
-  char *pcVar8;
+  uint uVar4;
+  char *pcVar6;
   msg_t *in_r7;
   netadr_t in_stack_ffffff58;
   
-  lVar7 = (longlong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_22(param_1,lVar7,param_4);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x5c7,0,"%s");
   }
-  if (pPVar2->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_PrintError(0x19,"Received invalid makeHost msg for a party we aren\'t in\n");
-    __restgprlr_22();
     return;
   }
-  bVar6 = Party_IsPrivateParty(pPVar2);
-  if (!bVar6) {
+  bVar5 = Party_IsPrivateParty(param_1);
+  if (!bVar5) {
     Com_PrintError(0x19,"Received invalid makeHost msg - can only be done on the private party\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = Party_IsRunning(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = Party_IsRunning(param_1);
+  if (iVar2 == 0) {
     Com_PrintError(0x19,
                    "Received invalid makeHost msg - can only be done while the party is running\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = Party_FindFirstMemberAtAddr(pPVar2,in_stack_ffffff58);
-  if (iVar3 < 0) {
+  iVar2 = Party_FindFirstMemberAtAddr(param_1,in_stack_ffffff58);
+  if (iVar2 < 0) {
     NET_AdrToString(in_stack_ffffff58);
     Com_Printf(0x19,"Received invalid makeHost msg from unknown client (%s).\n");
-    __restgprlr_22();
     return;
   }
-  if (pPVar2->areWeHost != 0) {
+  if (param_1->areWeHost != 0) {
     Com_PrintError(0x19,"Received invalid makeHost msg as a host\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = Party_PacketIsFromHost(pPVar2,in_stack_ffffff58);
-  if (iVar3 == 0) {
+  iVar2 = Party_PacketIsFromHost(param_1,in_stack_ffffff58);
+  if (iVar2 == 0) {
     Com_PrintWarning(0x19,"Received invalid makeHost msg from someone other than the host\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = PartyMigrate_HostMigrationEnabled(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = PartyMigrate_HostMigrationEnabled(param_1);
+  if (iVar2 == 0) {
     Com_Printf(0x19,"Received invalid makeHost msg - host migration is not enabled.\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar2);
-  if (iVar3 != 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 != 0) {
     Com_Printf(0x19,"Received invalid makeHost msg - we\'re already migrating.\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = PartyMigrate_GetArbitratorClientNum(pPVar2,0);
-  bVar6 = Session_PlayerHasLoopbackAddr(pPVar2->session,iVar3);
-  if (!bVar6) {
+  iVar2 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+  bVar5 = Session_PlayerHasLoopbackAddr(param_1->session,iVar2);
+  if (!bVar5) {
     Com_Printf(0x19,"Received invalid makeHost msg - we are not the arbitrator.\n");
-    __restgprlr_22();
     return;
   }
-  iVar3 = MSG_ReadBits(in_r7,2);
-  uVar4 = MSG_ReadBits(in_r7,5);
+  iVar2 = MSG_ReadBits(in_r7,2);
+  uVar3 = MSG_ReadBits(in_r7,5);
   uVar1 = MSG_ReadInt64(in_r7);
-  if (iVar3 != (pPVar2->migrateData).indexBits) {
+  if (iVar2 != (param_1->migrateData).indexBits) {
     NET_AdrToString(in_stack_ffffff58);
     Com_Printf(0x19,
                "Received invalid makeHost msg (index %i) from host at %s - current indexBits are %i\n"
               );
-    __restgprlr_22();
     return;
   }
-  if ((((int)uVar4 < 0) || (0x11 < (int)uVar4)) || (uVar1 == 0)) {
-    pcVar8 = "Received invalid makeHost msg - new host num %i and xuid %llx invalid.\n";
+  if ((((int)uVar3 < 0) || (0x11 < (int)uVar3)) || (uVar1 == 0)) {
+    pcVar6 = "Received invalid makeHost msg - new host num %i and xuid %llx invalid.\n";
   }
   else {
-    uVar5 = Party_FindMemberByXUID(pPVar2,uVar1);
-    if (uVar5 == uVar4) {
-      iVar3 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar4);
-      if (iVar3 == 0) {
+    uVar4 = Party_FindMemberByXUID(param_1,uVar1);
+    if (uVar4 == uVar3) {
+      iVar2 = PartyMigrate_IsStatusValidForMigration(param_1,uVar3);
+      if (iVar2 == 0) {
         Com_Printf(0x19,"Received invalid makeHost msg - new host num %i not valid for migration.\n"
                   );
-        __restgprlr_22();
         return;
       }
-      iVar3 = Party_MemberHasHostAddress(pPVar2,uVar4);
-      if (iVar3 != 0) {
+      iVar2 = Party_MemberHasHostAddress(param_1,uVar3);
+      if (iVar2 != 0) {
         Com_Printf(0x19,"Received invalid makeHost msg - new host num %i is the host machine.\n");
-        __restgprlr_22();
         return;
       }
       Com_Printf(0x19,
                  "Host told us to make someone else the host. Index bits are %i. New host is client %i.\n"
                 );
-      iVar3 = PartyMigrate_SetupMigration(pPVar2,(PartyActiveClient *)lVar7);
-      if (iVar3 == 0) {
+      iVar2 = PartyMigrate_SetupMigration(param_1,param_2);
+      if (iVar2 == 0) {
         Com_PrintError(0x19,"Could not setup migration for makeHost as planned\n");
-        __restgprlr_22();
         return;
       }
       Com_Printf(0x19,"Setting migrateToRequestedHost to %i.\n");
-      if ((pPVar2->migrateData).weAreArbitrating == false) {
+      if ((param_1->migrateData).weAreArbitrating == false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x623,0,"%s");
       }
-      if ((pPVar2->migrateData).migrateToRequestedHost != -1) {
+      if ((param_1->migrateData).migrateToRequestedHost != -1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x624,0,"%s");
       }
-      (pPVar2->migrateData).migrateToRequestedHost = uVar4;
-      (pPVar2->migrateData).bestHost.lastSentTo = -1;
-      iVar3 = Sys_Milliseconds();
-      (pPVar2->migrateData).startTime = iVar3;
-      (pPVar2->migrateData).timeoutDuration = (partymigrate_makeHostTimeout->current).integer;
-      (pPVar2->migrateData).partyTime = iVar3;
-      PartyMigrate_AskForPredeterminedHostNominee(pPVar2,uVar4,(PartyActiveClient *)lVar7);
-      __restgprlr_22();
+      (param_1->migrateData).migrateToRequestedHost = uVar3;
+      (param_1->migrateData).bestHost.lastSentTo = -1;
+      iVar2 = Sys_Milliseconds();
+      (param_1->migrateData).startTime = iVar2;
+      (param_1->migrateData).timeoutDuration = (partymigrate_makeHostTimeout->current).integer;
+      (param_1->migrateData).partyTime = iVar2;
+      PartyMigrate_AskForPredeterminedHostNominee(param_1,uVar3,param_2);
       return;
     }
-    pcVar8 = 
+    pcVar6 = 
     "Received invalid makeHost msg - new host num %i and xuid %llx don\'t match our party information.\n"
     ;
   }
-  Com_Printf(0x19,pcVar8);
-  __restgprlr_22();
+  Com_Printf(0x19,pcVar6);
   return;
 }
 
 
 // 823940E8  PartyMigrate_HandleMakeHostTestMsg  (client_mp/partymigrate.cpp:1584)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1960,149 +1818,130 @@ void PartyMigrate_HandleMakeHostTestMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyActiveClient *pPVar1;
-  PartyData *pPVar3;
+  int iVar2;
+  bool bVar6;
+  int iVar3;
   int iVar4;
-  bool bVar8;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  ulong64 uVar2;
-  longlong lVar9;
+  ulong64 uVar1;
   msg_t *in_r7;
   netadr_t in_stack_ffffff48;
   
-  lVar9 = (longlong)(int)param_2;
-  pPVar3 = (PartyData *)__savegprlr_20(param_1,lVar9,param_4);
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x638,0,"%s");
   }
-  iVar4 = NET_IsLocalAddress(in_stack_ffffff48);
-  if (iVar4 != 0) {
+  iVar2 = NET_IsLocalAddress(in_stack_ffffff48);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x639,0,"%s\n\t%s");
   }
-  if (pPVar3->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_PrintError(0x19,"Received invalid hostTest msg for a party we aren\'t in\n");
-    __restgprlr_20();
     return;
   }
-  if (pPVar3->areWeHost != 0) {
+  if (param_1->areWeHost != 0) {
     Com_PrintError(0x19,
                    "Received invalid hostTest msg - we are the host, it shouldn\'t try to migrate to us\n"
                   );
-    __restgprlr_20();
     return;
   }
-  bVar8 = Party_IsPrivateParty(pPVar3);
-  if (!bVar8) {
+  bVar6 = Party_IsPrivateParty(param_1);
+  if (!bVar6) {
     Com_PrintError(0x19,"Received invalid hostTest msg - can only be done on the private party\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = Party_IsRunning(pPVar3);
-  if (iVar4 == 0) {
+  iVar2 = Party_IsRunning(param_1);
+  if (iVar2 == 0) {
     Com_PrintError(0x19,
                    "Received invalid hostTest msg - can only be done while the party is running\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = Party_FindFirstMemberAtAddr(pPVar3,in_stack_ffffff48);
-  if (iVar4 < 0) {
+  iVar2 = Party_FindFirstMemberAtAddr(param_1,in_stack_ffffff48);
+  if (iVar2 < 0) {
     Com_Printf(0x19,"Received invalid hostTest msg from unknown client.\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = PartyMigrate_HostMigrationEnabled(pPVar3);
-  if (iVar4 == 0) {
+  iVar2 = PartyMigrate_HostMigrationEnabled(param_1);
+  if (iVar2 == 0) {
     Com_Printf(0x19,"Received invalid hostTest msg - host migration is not enabled.\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = PartyMigrate_MigrateActive(pPVar3);
-  if (iVar4 != 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 != 0) {
     Com_Printf(0x19,"Received invalid hostTest msg - we\'re already migrating.\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = PartyMigrate_GetArbitratorClientNum(pPVar3,0);
-  bVar8 = Session_PlayerHasLoopbackAddr(pPVar3->session,iVar4);
-  if (bVar8) {
+  iVar2 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+  bVar6 = Session_PlayerHasLoopbackAddr(param_1->session,iVar2);
+  if (bVar6) {
     Com_Printf(0x19,"Received invalid hostTest msg - we are the arbitrator.\n");
-    __restgprlr_20();
     return;
   }
-  iVar5 = MSG_ReadBits(in_r7,2);
-  iVar6 = MSG_ReadBits(in_r7,5);
-  iVar7 = MSG_ReadBits(in_r7,5);
-  uVar2 = MSG_ReadInt64(in_r7);
-  if (iVar5 != (pPVar3->migrateData).indexBits) {
+  iVar3 = MSG_ReadBits(in_r7,2);
+  iVar4 = MSG_ReadBits(in_r7,5);
+  iVar5 = MSG_ReadBits(in_r7,5);
+  uVar1 = MSG_ReadInt64(in_r7);
+  if (iVar3 != (param_1->migrateData).indexBits) {
     NET_AdrToString(in_stack_ffffff48);
     Com_Printf(0x19,
                "Received invalid hostTest msg (index %i) from host at %s - current indexBits are %i\n"
               );
-    __restgprlr_20();
     return;
   }
-  if ((iVar6 < 0) || (0x11 < iVar6)) {
+  if ((iVar4 < 0) || (0x11 < iVar4)) {
     Com_Printf(0x19,"Received invalid hostTest msg  with invalid newHostNum %i\n");
-    __restgprlr_20();
     return;
   }
-  if (iVar7 != iVar4) {
+  if (iVar5 != iVar2) {
     Com_Printf(0x19,"Received invalid hostTest msg - not from the arbitrator (%i vs %i).\n");
-    __restgprlr_20();
     return;
   }
-  iVar4 = Party_FindMemberByXUID(pPVar3,uVar2);
-  if (iVar4 != iVar7) {
+  iVar2 = Party_FindMemberByXUID(param_1,uVar1);
+  if (iVar2 != iVar5) {
     Com_Printf(0x19,
                "Received invalid hostTest msg - requester client num %i and xuid %llx don\'t match our party information.\n"
               );
-    __restgprlr_20();
     return;
   }
-  pPVar1 = (PartyActiveClient *)lVar9;
-  iVar4 = Live_GetOurClientNum(pPVar1->localControllerIndex,pPVar3->session);
-  if (iVar6 != iVar4) {
+  iVar2 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (iVar4 != iVar2) {
     Com_Printf(0x19,
                "Received invalid hostTest msg - requester host num %i is not our client num (%i).\n"
               );
-    __restgprlr_20();
     return;
   }
   Com_Printf(0x19,
              "We got a hostTest message from the arbitrator, sending our nominee info. Indexbits %i, from %i\n"
             );
-  iVar4 = Sys_Milliseconds();
-  (pPVar3->migrateData).startTime = iVar4;
-  (pPVar3->migrateData).timeoutDuration = (partymigrate_makeHostTimeout->current).integer;
-  (pPVar3->migrateData).partyTime = iVar4;
-  iVar4 = PartyMigrate_SetupMigration(pPVar3,pPVar1);
-  if (iVar4 == 0) {
+  iVar2 = Sys_Milliseconds();
+  (param_1->migrateData).startTime = iVar2;
+  (param_1->migrateData).timeoutDuration = (partymigrate_makeHostTimeout->current).integer;
+  (param_1->migrateData).partyTime = iVar2;
+  iVar2 = PartyMigrate_SetupMigration(param_1,param_2);
+  if (iVar2 == 0) {
     Com_PrintError(0x19,"Could not setup migration for makeHost as planned\n");
-    __restgprlr_20();
     return;
   }
-  if ((pPVar3->migrateData).weAreArbitrating != false) {
+  if ((param_1->migrateData).weAreArbitrating != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x69a,0,"%s");
   }
-  if ((pPVar3->migrateData).migrateToRequestedHost != -1) {
+  if ((param_1->migrateData).migrateToRequestedHost != -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x69b,0,"%s");
   }
-  (pPVar3->migrateData).migrateToRequestedHost = iVar6;
-  PartyMigrate_SelectOurNominee(pPVar3,pPVar1);
-  PartyMigrate_StopMigration(pPVar3);
-  __restgprlr_20();
+  (param_1->migrateData).migrateToRequestedHost = iVar4;
+  PartyMigrate_SelectOurNominee(param_1,param_2);
+  PartyMigrate_StopMigration(param_1);
   return;
 }
 
 
 // 82392010  PartyMigrate_HandleMakeHostErrorMsg  (client_mp/partymigrate.cpp:1703)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2110,104 +1949,87 @@ void PartyMigrate_HandleMakeHostErrorMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyData *pPVar2;
-  bool bVar6;
+  bool bVar5;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
   ulong64 uVar1;
-  longlong lVar7;
   msg_t *in_r7;
   netadr_t in_stack_ffffff68;
   
-  lVar7 = (longlong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_24(param_1,lVar7,param_4);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x6ae,0,"%s");
   }
-  if (pPVar2->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_PrintError(0x19,"Received invalid makeHostError msg for a party we aren\'t in\n");
-    __restgprlr_24();
     return;
   }
-  if (pPVar2->areWeHost == 0) {
+  if (param_1->areWeHost == 0) {
     Com_PrintError(0x19,"Received invalid makeHostError msg - we are not the host\n");
-    __restgprlr_24();
     return;
   }
-  bVar6 = Party_IsPrivateParty(pPVar2);
-  if (!bVar6) {
+  bVar5 = Party_IsPrivateParty(param_1);
+  if (!bVar5) {
     Com_PrintError(0x19,
                    "Received invalid makeHostError msg - can only be done on the private party\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = Party_IsRunning(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = Party_IsRunning(param_1);
+  if (iVar2 == 0) {
     Com_PrintError(0x19,
                    "Received invalid makeHostError msg - can only be done while the party is running\n"
                   );
-    __restgprlr_24();
     return;
   }
-  iVar3 = Party_FindFirstMemberAtAddr(pPVar2,in_stack_ffffff68);
-  if (iVar3 < 0) {
+  iVar2 = Party_FindFirstMemberAtAddr(param_1,in_stack_ffffff68);
+  if (iVar2 < 0) {
     Com_Printf(0x19,"Received invalid makeHostError msg from unknown client.\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = PartyMigrate_HostMigrationEnabled(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = PartyMigrate_HostMigrationEnabled(param_1);
+  if (iVar2 == 0) {
     Com_Printf(0x19,"Received invalid makeHostError msg - host migration is not enabled.\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar2);
-  if (iVar3 != 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 != 0) {
     Com_Printf(0x19,"Received invalid makeHostError msg - we\'re already migrating.\n");
-    __restgprlr_24();
     return;
   }
-  if ((pPVar2->migrateData).migrateToRequestedHost < 0) {
+  if ((param_1->migrateData).migrateToRequestedHost < 0) {
     Com_Printf(0x19,"Received invalid makeHostError msg - migrateToRequestedHost is not set.\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = Live_GetOurClientNum(*(int *)((int)lVar7 + 4),pPVar2->session);
-  if (iVar3 < 0) {
+  iVar2 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (iVar2 < 0) {
     Com_PrintError(0x19,"Received invalid makeHostError msg but we don\'t know our client num.\n");
-    __restgprlr_24();
     return;
   }
-  iVar4 = PartyMigrate_GetArbitratorClientNum(pPVar2,0);
-  if (iVar4 == iVar3) {
+  iVar3 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+  if (iVar3 == iVar2) {
     Com_Printf(0x19,"Received invalid makeHostError msg - we are the arbitrator.\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = MSG_ReadBits(in_r7,2);
-  iVar5 = MSG_ReadBits(in_r7,5);
+  iVar2 = MSG_ReadBits(in_r7,2);
+  iVar4 = MSG_ReadBits(in_r7,5);
   uVar1 = MSG_ReadInt64(in_r7);
-  if (iVar3 != (pPVar2->migrateData).indexBits) {
+  if (iVar2 != (param_1->migrateData).indexBits) {
     NET_AdrToString(in_stack_ffffff68);
     Com_Printf(0x19,
                "Received invalid makeHostError msg (index %i) from host at %s - current indexBits are %i\n"
               );
-    __restgprlr_24();
     return;
   }
-  if (iVar5 != iVar4) {
+  if (iVar4 != iVar3) {
     Com_Printf(0x19,"Received invalid makeHostError msg - not from the arbitrator (%i vs %i).\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = Party_FindMemberByXUID(pPVar2,uVar1);
-  if (iVar3 != iVar5) {
+  iVar2 = Party_FindMemberByXUID(param_1,uVar1);
+  if (iVar2 != iVar4) {
     Com_Printf(0x19,
                "Received invalid makeHostError msg - requester client num %i and xuid %llx don\'t match our party information.\n"
               );
-    __restgprlr_24();
     return;
   }
   Com_Printf(0x19,
@@ -2215,90 +2037,86 @@ void PartyMigrate_HandleMakeHostErrorMsg
             );
   Dvar_SetStringByName("party_makehosterrormsg","@MPUI_MAKEHOSTFAILED");
   UI_OpenMenu(LOCAL_CLIENT_0,"makehostfailed");
-  PartyMigrate_StopMigration(pPVar2);
-  __restgprlr_24();
+  PartyMigrate_StopMigration(param_1);
   return;
 }
 
 
 // 82392308  PartyMigrate_UpdateMakeHost  (client_mp/partymigrate.cpp:1799)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_UpdateMakeHost(PartyData *param_1)
 
 {
-  PartyData *pPVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   
-  pPVar1 = (PartyData *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x708,0,"%s");
   }
-  if (pPVar1->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x709,0,"%s");
   }
-  bVar3 = Party_IsPrivateParty(pPVar1);
-  if (!bVar3) {
+  bVar2 = Party_IsPrivateParty(param_1);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x70a,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (((iVar2 == 0) && (-1 < (pPVar1->migrateData).migrateToRequestedHost)) &&
-     (iVar2 = Sys_Milliseconds(),
-     (pPVar1->migrateData).timeoutDuration + 1000 <= iVar2 - (pPVar1->migrateData).startTime)) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (((iVar1 == 0) && (-1 < (param_1->migrateData).migrateToRequestedHost)) &&
+     (iVar1 = Sys_Milliseconds(),
+     (param_1->migrateData).timeoutDuration + 1000 <= iVar1 - (param_1->migrateData).startTime)) {
     Com_Printf(0x19,"Timed out executing the makeHost request, didn\'t hear back from arbitrator\n")
     ;
     Dvar_SetStringByName("party_makehosterrormsg","@MPUI_MAKEHOSTTIMEOUT");
     UI_OpenMenu(LOCAL_CLIENT_0,"makehostfailed");
-    PartyMigrate_StopMigration(pPVar1);
+    PartyMigrate_StopMigration(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82392420  PartyMigrate_AskArbitratorToChangeHost  (client_mp/partymigrate.cpp:1825)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_AskArbitratorToChangeHost(PartyData *param_1,int param_2,ulong64 param_3)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar6;
-  netadr_t *pnVar3;
-  char *pcVar4;
-  int iVar5;
-  ulonglong uVar7;
+  int iVar1;
+  bool bVar5;
+  netadr_t *pnVar2;
+  char *pcVar3;
+  int iVar4;
   netadr_t in_stack_fffffee8;
   netadr_t local_d0;
   msg_t local_c0;
   netadr_t nStack_90;
   uchar auStack_80 [128];
   
-  uVar7 = (ulonglong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_26(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x727,0,"%s");
   }
-  if (pPVar1->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x728,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x729,0,"%s");
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x72a,0,"newHostClientNum doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)"
                    );
@@ -2307,33 +2125,31 @@ void PartyMigrate_AskArbitratorToChangeHost(PartyData *param_1,int param_2,ulong
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x72b,0,"%s");
   }
-  if (-1 < (pPVar1->migrateData).migrateToRequestedHost) {
+  if (-1 < (param_1->migrateData).migrateToRequestedHost) {
     Com_PrintWarning(0xe,
                      "PartyMigrate - AskArbitratorToChangeHost - Can\'t ask to change host, we are already trying to change to %i\n"
                     );
-    __restgprlr_26();
     return;
   }
-  iVar2 = PartyMigrate_GetArbitratorClientNum(pPVar1,1);
-  bVar6 = Session_IsUserRegistered(pPVar1->session,iVar2);
-  if (!bVar6) {
+  iVar1 = PartyMigrate_GetArbitratorClientNum(param_1,1);
+  bVar5 = Session_IsUserRegistered(param_1->session,iVar1);
+  if (!bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x734,0,"%s\n\t%s");
   }
-  pnVar3 = Session_GetPlayerAddr(&nStack_90,pPVar1->session,iVar2);
-  local_d0.type = pnVar3->type;
-  local_d0.ip = *&pnVar3->ip;
-  local_d0.port = pnVar3->port;
-  local_d0._10_2_ = *(undefined2 *)&pnVar3->field_0xa;
-  local_d0.localNetID = pnVar3->localNetID;
-  iVar2 = NET_IsLocalAddress(in_stack_fffffee8);
-  if (iVar2 != 0) {
+  pnVar2 = Session_GetPlayerAddr(&nStack_90,param_1->session,iVar1);
+  local_d0.type = pnVar2->type;
+  local_d0.ip = *&pnVar2->ip;
+  local_d0.port = pnVar2->port;
+  local_d0._10_2_ = *(undefined2 *)&pnVar2->field_0xa;
+  local_d0.localNetID = pnVar2->localNetID;
+  iVar1 = NET_IsLocalAddress(in_stack_fffffee8);
+  if (iVar1 != 0) {
     Com_Printf(0xe,
                "PartyMigrate - AskArbitratorToChangeHost - Arbitrator at index %i is a local client, won\'t be able to proceed.\n"
               );
     Dvar_SetStringByName("party_makehosterrormsg","@MPUI_MAKEHOSTFAILED");
     UI_OpenMenu(LOCAL_CLIENT_0,"makehostfailed");
-    __restgprlr_26();
     return;
   }
   NET_AdrToString(in_stack_fffffee8);
@@ -2341,24 +2157,23 @@ void PartyMigrate_AskArbitratorToChangeHost(PartyData *param_1,int param_2,ulong
              "PartyMigrate - AskArbitratorToChangeHost - Asking arbitrator client %i at %s to change the host\n"
             );
   MSG_Init(&local_c0,auStack_80,0x40);
-  pcVar4 = va("%imakehost");
-  MSG_WriteString(&local_c0,pcVar4);
-  MSG_WriteBits(&local_c0,(pPVar1->migrateData).indexBits,2);
-  MSG_WriteBits(&local_c0,(int)uVar7,5);
+  pcVar3 = va("%imakehost");
+  MSG_WriteString(&local_c0,pcVar3);
+  MSG_WriteBits(&local_c0,(param_1->migrateData).indexBits,2);
+  MSG_WriteBits(&local_c0,param_2,5);
   MSG_WriteInt64(&local_c0,param_3);
   if (local_c0.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x746,0,"%s");
   }
   RMsg_AddMessage(&local_d0,&local_c0,NS_MAXCLIENTS);
-  iVar5 = Sys_Milliseconds();
-  (pPVar1->migrateData).startTime = iVar5;
-  iVar2 = (partymigrate_makeHostTimeout->current).integer;
-  (pPVar1->migrateData).partyTime = iVar5;
-  (pPVar1->migrateData).timeoutDuration = iVar2;
-  iVar2 = Party_FindMemberByXUID(pPVar1,param_3);
-  (pPVar1->migrateData).migrateToRequestedHost = iVar2;
-  __restgprlr_26();
+  iVar4 = Sys_Milliseconds();
+  (param_1->migrateData).startTime = iVar4;
+  iVar1 = (partymigrate_makeHostTimeout->current).integer;
+  (param_1->migrateData).partyTime = iVar4;
+  (param_1->migrateData).timeoutDuration = iVar1;
+  iVar1 = Party_FindMemberByXUID(param_1,param_3);
+  (param_1->migrateData).migrateToRequestedHost = iVar1;
   return;
 }
 
@@ -2381,6 +2196,8 @@ void PartyMigrate_AbortMakeHost(PartyData *param_1)
 
 // 82395B80  PartyMigrate_HandleFindBestCommand  (client_mp/partymigrate.cpp:1879)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2388,70 +2205,62 @@ void PartyMigrate_HandleFindBestCommand
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  int iVar1;
+  char *pcVar2;
   netadr_t in_stack_ffffff78;
   
-  lVar4 = (longlong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_26(param_1,lVar4,param_4);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x75a,0,"%s");
   }
-  iVar2 = NET_IsLocalAddress(in_stack_ffffff78);
-  if (iVar2 != 0) {
+  iVar1 = NET_IsLocalAddress(in_stack_ffffff78);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x75b,0,"%s\n\t%s");
   }
-  if (pPVar1->areWeHost != 0) {
+  if (param_1->areWeHost != 0) {
     Com_PrintError(0x19,"Received a findBest message as a host\n");
-    __restgprlr_26();
     return;
   }
-  iVar2 = Party_PacketIsFromHost(pPVar1,in_stack_ffffff78);
-  if (iVar2 == 0) {
+  iVar1 = Party_PacketIsFromHost(param_1,in_stack_ffffff78);
+  if (iVar1 == 0) {
     Com_PrintWarning(0x19,"Received a findBest message from someone other than the host\n");
-    __restgprlr_26();
     return;
   }
-  iVar2 = PartyMigrate_HostMigrationEnabled(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_HostMigrationEnabled(param_1);
+  if (iVar1 == 0) {
     Com_Printf(0x19,"Host told us to find the best host but host migration is not enabled.\n");
-    __restgprlr_26();
     return;
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 != 0) {
     Com_Printf(0x19,"Host told us to find the best host but we\'re already migrating.\n");
-    __restgprlr_26();
     return;
   }
-  pcVar3 = Cmd_Argv(1);
-  iVar2 = atoi(pcVar3);
-  if (iVar2 != (pPVar1->migrateData).indexBits) {
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  if (iVar1 != (param_1->migrateData).indexBits) {
     NET_AdrToString(in_stack_ffffff78);
     Com_Printf(0x19,
                "Received stale findBest msg (index %i) from host at %s - current indexBits are %i\n"
               );
-    __restgprlr_26();
     return;
   }
   Com_Printf(0x19,"Host told us to find the best host. Index bits are %i\n");
-  iVar2 = Sys_Milliseconds();
-  (pPVar1->migrateData).startTime = iVar2;
-  (pPVar1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
-  (pPVar1->migrateData).partyTime = iVar2;
-  PartyMigrate_StartNegotiation(pPVar1,(PartyActiveClient *)lVar4);
-  PartyMigrate_CheckNegotiationDisconnect(pPVar1,(PartyActiveClient *)lVar4);
-  __restgprlr_26();
+  iVar1 = Sys_Milliseconds();
+  (param_1->migrateData).startTime = iVar1;
+  (param_1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
+  (param_1->migrateData).partyTime = iVar1;
+  PartyMigrate_StartNegotiation(param_1,param_2);
+  PartyMigrate_CheckNegotiationDisconnect(param_1,param_2);
   return;
 }
 
 
 // 82395D50  PartyMigrate_HandleToMsg  (client_mp/partymigrate.cpp:1924)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2460,302 +2269,278 @@ void PartyMigrate_HandleToMsg
 
 {
   uint uVar1;
-  PartyData *pPVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  int iVar8;
+  int iVar7;
   ulong64 uVar2;
-  bool bVar10;
-  clientMigState_t cVar9;
-  longlong lVar11;
-  PartyActiveClient *pPVar12;
+  bool bVar9;
+  clientMigState_t cVar8;
   msg_t *in_r7;
-  LocalClientNum_t LVar13;
+  LocalClientNum_t LVar10;
   netadr_t in_stack_ffffff58;
   
-  lVar11 = (longlong)(int)param_2;
-  pPVar3 = (PartyData *)__savegprlr_21(param_1,lVar11,param_4);
-  if (pPVar3->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_Printf(0x19,"Got migrateto request for a party type that we\'re not in (%i)\n");
-    __restgprlr_21();
     return;
   }
-  iVar4 = MSG_ReadBits(in_r7,2);
-  iVar5 = MSG_ReadBits(in_r7,5);
-  uVar6 = MSG_ReadBits(in_r7,5);
-  uVar7 = MSG_ReadBits(in_r7,2);
-  iVar8 = MSG_ReadBits(in_r7,1);
-  uVar1 = (uint)LZCOUNT(iVar8 + -1) >> 5;
+  iVar3 = MSG_ReadBits(in_r7,2);
+  iVar4 = MSG_ReadBits(in_r7,5);
+  uVar5 = MSG_ReadBits(in_r7,5);
+  uVar6 = MSG_ReadBits(in_r7,2);
+  iVar7 = MSG_ReadBits(in_r7,1);
+  uVar1 = (uint)LZCOUNT(iVar7 + -1) >> 5;
   uVar2 = MSG_ReadInt64(in_r7);
   if ((in_r7->overflowed != 0) || (in_r7->readcount != in_r7->splitSize + in_r7->cursize)) {
     NET_AdrToString(in_stack_ffffff58);
     Com_PrintError(0x19,"Got migrateto msg with invalid payload from %s\n");
-    __restgprlr_21();
     return;
   }
-  iVar8 = Party_FindFirstMemberAtAddr(pPVar3,in_stack_ffffff58);
-  if (iVar8 < 0) {
+  iVar7 = Party_FindFirstMemberAtAddr(param_1,in_stack_ffffff58);
+  if (iVar7 < 0) {
     NET_AdrToString(in_stack_ffffff58);
     Com_Printf(0x19,
                "Got migrateto msg but we don\'t know who it\'s from. They claim to be client %i from %s\n"
               );
-    __restgprlr_21();
     return;
   }
-  if (iVar5 < 0) {
+  if (iVar4 < 0) {
     NET_AdrToString(in_stack_ffffff58);
     Com_PrintError(0x19,"Got stray migrateto msg with invalid sender client num from %s.\n");
-    __restgprlr_21();
     return;
   }
   if (uVar1 == 0) {
-    iVar8 = PartyMigrate_GetArbitratorClientNum(pPVar3,0);
-    if (iVar8 != iVar5) {
+    iVar7 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+    if (iVar7 != iVar4) {
       NET_AdrToString(in_stack_ffffff58);
       Com_PrintWarning(0x19,
                        "Received a lobby migrateto msg from someone other than the arbitrator (arb %i (cached %i) != sender %i) from %s\n"
                       );
-      __restgprlr_21();
       return;
     }
   }
-  else if (pPVar3->areWeHost == 0) {
-    iVar5 = Party_PacketIsFromHost(pPVar3,in_stack_ffffff58);
-    if (iVar5 == 0) {
+  else if (param_1->areWeHost == 0) {
+    iVar4 = Party_PacketIsFromHost(param_1,in_stack_ffffff58);
+    if (iVar4 == 0) {
       NET_AdrToString(in_stack_ffffff58);
       Com_PrintWarning(0x19,
                        "Received an ingame migrateto msg from someone other than the host (%s)\n");
-      __restgprlr_21();
       return;
     }
   }
-  else if ((uVar7 & 1) != 0) {
+  else if ((uVar6 & 1) != 0) {
     Com_PrintError(0x19,
                    "Received an ingame migrateTo message as a host and we\'re supposed to leave\n");
-    __restgprlr_21();
     return;
   }
-  if (iVar4 != (pPVar3->migrateData).indexBits) {
+  if (iVar3 != (param_1->migrateData).indexBits) {
     Com_PrintWarning(0x19,"Got migrateto for old migrate index %i - current is %i\n");
-    __restgprlr_21();
     return;
   }
-  if (((int)uVar6 < 0) || (0x11 < (int)uVar6)) {
+  if (((int)uVar5 < 0) || (0x11 < (int)uVar5)) {
     Com_PrintError(0x19,"Got migrateto for invalid clientNum %i\n");
-    __restgprlr_21();
     return;
   }
-  iVar4 = Party_IsMemberIndexDataAvailable(pPVar3,uVar6);
-  if (iVar4 == 0) {
+  iVar3 = Party_IsMemberIndexDataAvailable(param_1,uVar5);
+  if (iVar3 == 0) {
     Com_PrintError(0x19,
                    "Got migrateto for invalid clientNum %i - there isn\'t an active player with that clientNum\n"
                   );
-    __restgprlr_21();
     return;
   }
-  if (pPVar3->partyMembers[uVar6].player != uVar2) {
+  if (param_1->partyMembers[uVar5].player != uVar2) {
     Com_PrintError(0x19,
                    "Got migrateto for clientNum %i, XUID %llx - but clientNum %i has XUID %llx\n");
-    __restgprlr_21();
     return;
   }
   NET_AdrToString(in_stack_ffffff58);
   Com_Printf(0x19,"PartyMigrate - Host/arbitrator told us to migrate party %i to client %i (%s)\n");
-  pPVar12 = (PartyActiveClient *)lVar11;
   if (uVar1 == 0) {
-    bVar10 = Lobby_IsInRunningLobby();
-    if ((!bVar10) && (bVar10 = Party_IsPrivateParty(pPVar3), !bVar10)) {
+    bVar9 = Lobby_IsInRunningLobby();
+    if ((!bVar9) && (bVar9 = Party_IsPrivateParty(param_1), !bVar9)) {
       Com_PrintError(0x19,
                      "Got migrateto request for an out-of-game migration that was not for a private party, and we are not in a running lobby.\n"
                     );
-      __restgprlr_21();
       return;
     }
   }
   else {
-    bVar10 = Party_IsGameLobby(pPVar3);
-    if (!bVar10) {
+    bVar9 = Party_IsGameLobby(param_1);
+    if (!bVar9) {
       Com_PrintError(0x19,
                      "Got migrateto request for an in-game migration that was not the game lobby\n")
       ;
-      __restgprlr_21();
       return;
     }
-    iVar4 = Party_IsRunning(pPVar3);
-    if (iVar4 != 0) {
-      bVar10 = IsServerRunning();
-      if (bVar10) {
+    iVar3 = Party_IsRunning(param_1);
+    if (iVar3 != 0) {
+      bVar9 = IsServerRunning();
+      if (bVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x7ed,0,"%s\n\t%s");
       }
       Com_PrintError(0x19,
                      "Got migrateto request for an in-game migration but the lobby is running\n");
-      __restgprlr_21();
       return;
     }
-    cVar9 = CL_GetLocalClientMigrationState(pPVar12->localClientNum);
-    if (cVar9 != CMSTATE_OLDHOSTLEAVING) {
-      CL_GetLocalClientMigrationState(pPVar12->localClientNum);
+    cVar8 = CL_GetLocalClientMigrationState(param_2->localClientNum);
+    if (cVar8 != CMSTATE_OLDHOSTLEAVING) {
+      CL_GetLocalClientMigrationState(param_2->localClientNum);
       Com_Printf(0x19,"Received migrateto message.  Wrong migration state %i.\n");
-      __restgprlr_21();
       return;
     }
-    LVar13 = LOCAL_CLIENT_0;
+    LVar10 = LOCAL_CLIENT_0;
     do {
-      bVar10 = CL_IsLocalClientActive(LVar13);
-      if (bVar10) {
-        Migration_SendMigrateToAck(LVar13);
-        CL_SetVerboseMigrationState(LVar13,MVSTATE_MIGRATING,uVar6);
+      bVar9 = CL_IsLocalClientActive(LVar10);
+      if (bVar9) {
+        Migration_SendMigrateToAck(LVar10);
+        CL_SetVerboseMigrationState(LVar10,MVSTATE_MIGRATING,uVar5);
       }
-      LVar13 = LVar13 + LOCAL_CLIENT_1;
-    } while ((int)LVar13 < 4);
+      LVar10 = LVar10 + LOCAL_CLIENT_1;
+    } while ((int)LVar10 < 4);
   }
   Com_Printf(0x19,"PartyMigrate - Processing newHost type %i\n");
-  PartyMigrate_StartMigrationFromMessage(pPVar3,pPVar12,uVar6,uVar7,uVar1);
-  __restgprlr_21();
+  PartyMigrate_StartMigrationFromMessage(param_1,param_2,uVar5,uVar6,uVar1);
   return;
 }
 
 
 // 82391500  PartyMigrate_HandleMigrationFailure  (client_mp/partymigrate.cpp:2074)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_HandleMigrationFailure(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
-  LocalClientNum_t LVar3;
+  int iVar1;
+  bool bVar3;
+  LocalClientNum_t LVar2;
   PartyActiveClient local_40 [8];
   
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x81d,0,"%s");
   }
-  local_40[0] = Party_GetMainActiveClient(pPVar1,param_2);
-  iVar2 = Party_IsRunning(pPVar1);
-  if (iVar2 == 0) {
-    LVar3 = CL_LocalClientNumFromControllerIndex(param_2);
-    bVar4 = Party_IsGameLobby(pPVar1);
-    if (bVar4) {
-      bVar4 = CL_IsLocalClientActive(LVar3);
-      if (!bVar4) {
+  local_40[0] = Party_GetMainActiveClient(param_1,param_2);
+  iVar1 = Party_IsRunning(param_1);
+  if (iVar1 == 0) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(param_2);
+    bVar3 = Party_IsGameLobby(param_1);
+    if (bVar3) {
+      bVar3 = CL_IsLocalClientActive(LVar2);
+      if (!bVar3) {
         Com_PrintError(0x19,
                        "Party - HandleMigrationFailure - Local client %i linked to controller %i is not active, shutting down party.\n"
                       );
         Live_ThrowError(ERR_DISCONNECT,"@MP_ENDED_GAME_MIGRATION_FAILED");
       }
-      iVar2 = CL_IsLocalClientDisconnected(LVar3);
-      if (iVar2 == 0) {
+      iVar1 = CL_IsLocalClientDisconnected(LVar2);
+      if (iVar1 == 0) {
         Com_PrintError(0x19,
                        "Party - HandleMigrationFailure - Since we\'re in-game, kicking back to the main menu\n"
                       );
         Live_ThrowError(ERR_DISCONNECT,"@MP_ENDED_GAME_MIGRATION_FAILED");
-        Party_StopParty(pPVar1);
-        __restgprlr_27();
+        Party_StopParty(param_1);
         return;
       }
     }
     else {
-      bVar4 = CL_IsLocalClientActive(LVar3);
-      if ((bVar4) && (iVar2 = CL_IsLocalClientDisconnected(LVar3), iVar2 != 0)) {
+      bVar3 = CL_IsLocalClientActive(LVar2);
+      if ((bVar3) && (iVar1 = CL_IsLocalClientDisconnected(LVar2), iVar1 != 0)) {
         UI_OpenMenu(LOCAL_CLIENT_0,"youarehost");
       }
     }
-    Party_StopParty(pPVar1);
+    Party_StopParty(param_1);
   }
   else {
-    bVar4 = CL_AllLocalClientsDisconnected();
-    if (!bVar4) {
+    bVar3 = CL_AllLocalClientsDisconnected();
+    if (!bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x823,0,"%s\n\t%s");
     }
-    if (pPVar1->areWeHost == 0) {
-      PartyClient_DisconnectFromHost(pPVar1,local_40,"@MP_NOGOODHOST",1,1);
-      bVar4 = Party_IsPrivateParty(pPVar1);
-      if (bVar4) {
+    if (param_1->areWeHost == 0) {
+      PartyClient_DisconnectFromHost(param_1,local_40,"@MP_NOGOODHOST",1,1);
+      bVar3 = Party_IsPrivateParty(param_1);
+      if (bVar3) {
         UI_OpenMenu(LOCAL_CLIENT_0,"youarehost");
       }
     }
     else {
-      Party_ClosePartyUI(pPVar1,"@MP_NOGOODHOST");
+      Party_ClosePartyUI(param_1,"@MP_NOGOODHOST");
       if (((onlinegame->current).enabled != false) && (g_partyData.inParty == 0)) {
-        bVar4 = Lobby_IsInLobby();
-        if (bVar4) {
+        bVar3 = Lobby_IsInLobby();
+        if (bVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                           ,0x82d,0,"%s\n\t%s");
         }
-        LVar3 = LOCAL_CLIENT_0;
+        LVar2 = LOCAL_CLIENT_0;
         if (local_40[0].localClientNum != LOCAL_CLIENT_0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                           ,0x82e,0,"%s\n\t(mainActiveClient.localClientNum) = %i");
-          LVar3 = local_40[0].localClientNum;
+          LVar2 = local_40[0].localClientNum;
         }
-        Cbuf_ExecuteBuffer(LVar3,local_40[0].localControllerIndex,"xstartprivateparty");
+        Cbuf_ExecuteBuffer(LVar2,local_40[0].localControllerIndex,"xstartprivateparty");
       }
     }
     if (((onlinegame->current).enabled != false) && (g_partyData.inParty == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x83b,0,"%s\n\t%s");
-      __restgprlr_27();
       return;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 823944D8  PartyMigrate_CancelMigration  (client_mp/partymigrate.cpp:2141)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_CancelMigration(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  uint uVar3;
+  int iVar1;
+  uint uVar2;
   
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x85e,0,"%s");
   }
-  iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x860,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x861,0,"%s");
   }
-  (pPVar1->migrateData).migrateActive = false;
-  PartyMigrate_ClearInternalData(pPVar1);
-  uVar3 = Party_HostNum(pPVar1);
-  iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,uVar3);
-  if (iVar2 == 0) {
+  (param_1->migrateData).migrateActive = false;
+  PartyMigrate_ClearInternalData(param_1);
+  uVar2 = Party_HostNum(param_1);
+  iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,uVar2);
+  if (iVar1 == 0) {
     Com_Printf(0x19,
                "PartyMigrate - CancelMigrate - Migration failed, and host is gone, handling the error.\n"
               );
-    PartyMigrate_HandleMigrationFailure(pPVar1,param_2->localControllerIndex);
+    PartyMigrate_HandleMigrationFailure(param_1,param_2->localControllerIndex);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 823945C8  PartyMigrate_HandleNoMigrateMsg  (client_mp/partymigrate.cpp:2159)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2763,47 +2548,41 @@ void PartyMigrate_HandleNoMigrateMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  PartyData *pPVar1;
-  char *pcVar2;
+  char *pcVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_29(param_1,lVar5,param_4);
-  pcVar2 = Cmd_Argv(1);
-  iVar3 = atoi(pcVar2);
-  iVar4 = Party_InParty(pPVar1);
-  if (iVar4 == 0) {
+  pcVar1 = Cmd_Argv(1);
+  iVar2 = atoi(pcVar1);
+  iVar3 = Party_InParty(param_1);
+  if (iVar3 == 0) {
     Com_PrintError(0x19,"Got stray nomigrate msg\n");
-    __restgprlr_29();
     return;
   }
-  iVar4 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar4 == 0) {
+  iVar3 = PartyMigrate_MigrateActive(param_1);
+  if (iVar3 == 0) {
     Com_DPrintf(0x19,"Got stray nomigrate msg, not currently migrating.\n");
-    __restgprlr_29();
     return;
   }
-  if (iVar3 != (pPVar1->migrateData).indexBits) {
+  if (iVar2 != (param_1->migrateData).indexBits) {
     Com_PrintError(0x19,"Got nomigrate for old migrate index %i - current is %i\n");
-    __restgprlr_29();
     return;
   }
-  iVar3 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar3 != 0) {
+  iVar2 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x886,0,"%s");
   }
   Com_Printf(0x19,"Got nomigrate message. Canceling migration.\n");
-  PartyMigrate_CancelMigration(pPVar1,(PartyActiveClient *)lVar5);
-  __restgprlr_29();
+  PartyMigrate_CancelMigration(param_1,param_2);
   return;
 }
 
 
 // 823961E0  PartyMigrate_HandleSessionInfoMsg  (client_mp/partymigrate.cpp:2190)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2813,76 +2592,72 @@ void PartyMigrate_HandleSessionInfoMsg
 {
   uint uVar1;
   undefined8 *puVar2;
-  PartyData *pPVar3;
-  uint uVar4;
+  uint uVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  bool bVar11;
-  uint uVar8;
-  clientMigState_t cVar9;
-  char *pcVar10;
-  undefined8 uVar12;
-  undefined4 uVar13;
+  bool bVar10;
+  uint uVar7;
+  clientMigState_t cVar8;
+  char *pcVar9;
+  undefined8 uVar11;
+  undefined4 uVar12;
   msg_t *in_r7;
-  longlong lVar14;
-  byte *pbVar15;
-  undefined8 *puVar16;
+  longlong lVar13;
+  byte *pbVar14;
+  undefined8 *puVar15;
+  _XSESSION_INFO *p_Var16;
   _XSESSION_INFO *p_Var17;
-  _XSESSION_INFO *p_Var18;
-  LocalClientNum_t LVar19;
+  LocalClientNum_t LVar18;
   netadr_t in_stack_fffffea8;
   ulong64 local_110;
   byte local_108 [8];
   undefined1 auStack_100 [64];
   _XSESSION_INFO local_c0 [3];
   
-  pPVar3 = (PartyData *)__savegprlr_18(param_1);
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x89b,0,"%s");
   }
-  if (pPVar3->inParty == 0) {
+  if (param_1->inParty == 0) {
     Com_Printf(0x19,
                "[%i] PartyMigrate - Received session info but we don\'t have a party to migrate.\n")
     ;
-    __restgprlr_18();
     return;
   }
-  if ((pPVar3->session->dyn).sessionHandle == (void *)0x0) {
+  if ((param_1->session->dyn).sessionHandle == (void *)0x0) {
     Com_Printf(0x19,
                "[%i] PartyMigrate - Received session info but we don\'t have a session to migrate.\n"
               );
-    __restgprlr_18();
     return;
   }
-  uVar4 = MSG_ReadBits(in_r7,5);
+  uVar3 = MSG_ReadBits(in_r7,5);
   MSG_ReadData(in_r7,&local_110,8);
   MSG_ReadData(in_r7,auStack_100,0x3c);
-  iVar5 = MSG_ReadByte(in_r7);
-  uVar1 = (uint)LZCOUNT(iVar5 + -1) >> 5;
+  iVar4 = MSG_ReadByte(in_r7);
+  uVar1 = (uint)LZCOUNT(iVar4 + -1) >> 5;
   if (uVar1 == 0) {
-    iVar5 = MSG_ReadBits(in_r7,2);
-    iVar6 = MSG_ReadBits(in_r7,5);
-    iVar7 = MSG_ReadBit(in_r7);
-    if (iVar7 == 0) {
-      lVar14 = 7;
+    iVar4 = MSG_ReadBits(in_r7,2);
+    iVar5 = MSG_ReadBits(in_r7,5);
+    iVar6 = MSG_ReadBit(in_r7);
+    if (iVar6 == 0) {
+      lVar13 = 7;
       puVar2 = (undefined8 *)(auStack_100 + 0x38);
       do {
-        puVar16 = puVar2;
-        puVar2 = puVar16 + 1;
+        puVar15 = puVar2;
+        puVar2 = puVar15 + 1;
         *puVar2 = 0;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      *(undefined4 *)(puVar16 + 2) = 0;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      *(undefined4 *)(puVar15 + 2) = 0;
     }
     else {
-      bVar11 = Party_IsPrivateParty(pPVar3);
-      if (!bVar11) {
+      bVar10 = Party_IsPrivateParty(param_1);
+      if (!bVar10) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x8b6,0,"%s\n\t%s");
       }
-      if (pPVar3->presenceSession == (SessionData *)0x0) {
+      if (param_1->presenceSession == (SessionData *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x8b7,0,"%s\n\t%s");
       }
@@ -2890,97 +2665,90 @@ void PartyMigrate_HandleSessionInfoMsg
     }
   }
   else {
-    iVar5 = 0;
-    iVar6 = -1;
+    iVar4 = 0;
+    iVar5 = -1;
   }
   if (in_r7->overflowed != 0) {
     Com_Printf(0x19,"[%i] PartyMigrate - Ignoring badly formatted sessInfo message\n");
-    __restgprlr_18();
     return;
   }
   NET_AdrToString(in_stack_fffffea8);
   Com_Printf(0x19,"[%i] PartyMigrate - Received sessinfo message from %s. (%i / %llx)\n");
-  uVar8 = Party_FindMemberByXUID_AllowNotPresent(pPVar3,local_110);
-  if (uVar8 != uVar4) {
+  uVar7 = Party_FindMemberByXUID_AllowNotPresent(param_1,local_110);
+  if (uVar7 != uVar3) {
     Com_Printf(0x19,
                "Ignoring new session info because newHost %i (xuid %llx) does not match the claimed host index %i\n"
               );
-    __restgprlr_18();
     return;
   }
-  if (0x11 < uVar8) {
+  if (0x11 < uVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x8d6,0,"newHostNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar11 = Party_IsHost(pPVar3,uVar8);
-  if (bVar11) {
-    Party_GetMemberName(pPVar3,uVar8);
+  bVar10 = Party_IsHost(param_1,uVar7);
+  if (bVar10) {
+    Party_GetMemberName(param_1,uVar7);
     Com_Printf(0x19,
                "Ignoring new session info because newHost is %i (%s), which is already the host (probably duplicate)\n"
               );
-    __restgprlr_18();
     return;
   }
-  iVar7 = Party_IsMemberLocalPlayer(pPVar3,uVar8);
-  if (iVar7 != 0) {
+  iVar6 = Party_IsMemberLocalPlayer(param_1,uVar7);
+  if (iVar6 != 0) {
     Com_Printf(0x19,
                "[%i] PartyMigrate - Ignoring new session info because the new host number is a local player (%i)\n"
               );
-    __restgprlr_18();
     return;
   }
   if (uVar1 == 0) {
-    iVar7 = PartyMigrate_MigrateActive(pPVar3);
-    if (iVar7 == 0) {
-      bVar11 = Party_IsGameLobby(pPVar3);
-      if ((bVar11) && (iVar7 = Party_IsRunning(pPVar3), iVar7 == 0)) {
+    iVar6 = PartyMigrate_MigrateActive(param_1);
+    if (iVar6 == 0) {
+      bVar10 = Party_IsGameLobby(param_1);
+      if ((bVar10) && (iVar6 = Party_IsRunning(param_1), iVar6 == 0)) {
         Com_Printf(0x19,
                    "[%i] PartyMigrate - Ignoring new party/lobby session info because a party migration is not active and the game is running.\n"
                   );
-        __restgprlr_18();
         return;
       }
-      if (iVar5 != (pPVar3->migrateData).indexBits) {
+      if (iVar4 != (param_1->migrateData).indexBits) {
         Com_Printf(0x19,
                    "[%i] PartyMigrate - Ignoring new party/lobby session info because a party migration is not active and the index bits don\'t match (theirs %i vs ours %i)\n"
                   );
-        __restgprlr_18();
         return;
       }
-      iVar5 = PartyMigrate_GetArbitratorClientNum(pPVar3,0);
-      if (iVar5 != iVar6) {
+      iVar4 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+      if (iVar4 != iVar5) {
         Com_Printf(0x19,
                    "[%i] PartyMigrate - Ignoring new party/lobby session info because a party migration is not active and their arbitrator does not match ours (theirs %i vs ours %i).\n"
                   );
-        __restgprlr_18();
         return;
       }
-      if (-1 < (pPVar3->migrateData).expectedNewHost) {
+      if (-1 < (param_1->migrateData).expectedNewHost) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x916,0,"%s\n\t(party->migrateData.expectedNewHost) = %i");
       }
       Com_Printf(0x19,
                  "[%i] PartyMigrate - Received sessInfo message while the migration is inactive, will start a new migration (we may have missed the migrateTo message).\n"
                 );
-      PartyMigrate_StartMigrationFromMessage(pPVar3,param_2,uVar8,0,0);
-      if ((pPVar3->migrateData).expectedNewHost != uVar8) {
+      PartyMigrate_StartMigrationFromMessage(param_1,param_2,uVar7,0,0);
+      if ((param_1->migrateData).expectedNewHost != uVar7) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x91a,0,"party->migrateData.expectedNewHost == newHostNum\n\t%i, %i");
       }
     }
-    iVar5 = PartyMigrate_IsGameServerHostMigration(pPVar3);
-    if (iVar5 != 0) {
+    iVar4 = PartyMigrate_IsGameServerHostMigration(param_1);
+    if (iVar4 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x91d,0,"%s");
     }
-    uVar4 = (pPVar3->migrateData).expectedNewHost;
-    if ((int)uVar4 < 0) {
+    uVar3 = (param_1->migrateData).expectedNewHost;
+    if ((int)uVar3 < 0) {
       Com_Printf(0x19,
                  "Received session info but the expected new host has not been set; it is probably the arbitrator and we didn\'t get the HostTo message yet. Proceeding anyway.\n"
                 );
     }
-    else if (uVar4 != uVar8) {
-      if (0x11 < uVar4) {
+    else if (uVar3 != uVar7) {
+      if (0x11 < uVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x925,0,
                         "party->migrateData.expectedNewHost doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
@@ -2989,51 +2757,46 @@ void PartyMigrate_HandleSessionInfoMsg
       Com_Printf(0x19,
                  "Ignoring new party/lobby session info because newHost %i (xuid %llx) does not match expected new host %i\n"
                 );
-      __restgprlr_18();
       return;
     }
   }
   else {
-    iVar5 = PartyMigrate_IsGameServerHostMigration(pPVar3);
-    if (iVar5 == 0) {
+    iVar4 = PartyMigrate_IsGameServerHostMigration(param_1);
+    if (iVar4 == 0) {
       Com_Printf(0x19,
                  "[%i] PartyMigrate - Ignoring new game session info because we are currently processing an out-of-game migration.\n"
                 );
-      __restgprlr_18();
       return;
     }
-    cVar9 = CL_GetLocalClientMigrationState(param_2->localClientNum);
-    if (cVar9 != CMSTATE_LIMBO) {
+    cVar8 = CL_GetLocalClientMigrationState(param_2->localClientNum);
+    if (cVar8 != CMSTATE_LIMBO) {
       CL_GetLocalClientMigrationState(param_2->localClientNum);
       Com_Printf(0x19,"Received stray session info.  Wrong migration state %i.\n");
-      __restgprlr_18();
       return;
     }
-    iVar5 = CL_MigrationBackout();
-    if (iVar5 != 0) {
+    iVar4 = CL_MigrationBackout();
+    if (iVar4 != 0) {
       Com_Printf(0x19,
                  "[%i] PartyMigrate - Ignoring new game session info because we were asked to backout.\n"
                 );
-      __restgprlr_18();
       return;
     }
-    if (0x11 < (uint)(pPVar3->migrateData).expectedNewHost) {
+    if (0x11 < (uint)(param_1->migrateData).expectedNewHost) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0x8f7,0,
                       "party->migrateData.expectedNewHost doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                      );
     }
-    if ((pPVar3->migrateData).expectedNewHost != uVar8) {
+    if ((param_1->migrateData).expectedNewHost != uVar7) {
       Com_Printf(0x19,
                  "Ignoring new game session info because newHost %i (xuid %llx) does not match expected new host %i\n"
                 );
-      __restgprlr_18();
       return;
     }
   }
-  PartyClient_CommitPartyHostMigration(pPVar3,in_stack_fffffea8,(int)param_4);
-  p_Var18 = &(pPVar3->currentHost).sessionInfo;
-  pbVar15 = local_108;
+  PartyClient_CommitPartyHostMigration(param_1,in_stack_fffffea8,(int)param_4);
+  p_Var17 = &(param_1->currentHost).sessionInfo;
+  pbVar14 = local_108;
   local_108[0] = 0;
   local_108[1] = 0;
   local_108[2] = 0;
@@ -3042,79 +2805,79 @@ void PartyMigrate_HandleSessionInfoMsg
   local_108[5] = 0;
   local_108[6] = 0;
   local_108[7] = 0;
-  p_Var17 = p_Var18;
+  p_Var16 = p_Var17;
   do {
-    lVar14 = (ulonglong)(p_Var17->sessionID).ab[0] - (ulonglong)*pbVar15;
-    if (lVar14 != 0) break;
-    p_Var17 = (_XSESSION_INFO *)((p_Var17->sessionID).ab + 1);
-    pbVar15 = pbVar15 + 1;
-  } while (p_Var17 != (_XSESSION_INFO *)&(pPVar3->currentHost).sessionInfo.hostAddress);
-  if ((int)lVar14 == 0) {
+    lVar13 = (ulonglong)(p_Var16->sessionID).ab[0] - (ulonglong)*pbVar14;
+    if (lVar13 != 0) break;
+    p_Var16 = (_XSESSION_INFO *)((p_Var16->sessionID).ab + 1);
+    pbVar14 = pbVar14 + 1;
+  } while (p_Var16 != (_XSESSION_INFO *)&(param_1->currentHost).sessionInfo.hostAddress);
+  if ((int)lVar13 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x930,0,"%s");
   }
   memcpy();
-  bVar11 = Session_Migrate(pPVar3->session,(_XSESSION_INFO *)auStack_100,0xfe);
-  if (!bVar11) {
-    PartyMigrate_HandleMigrationFailure(pPVar3,param_2->localControllerIndex);
-    __restgprlr_18();
+  bVar10 = Session_Migrate(param_1->session,(_XSESSION_INFO *)auStack_100,0xfe);
+  if (!bVar10) {
+    PartyMigrate_HandleMigrationFailure(param_1,param_2->localControllerIndex);
     return;
   }
   Com_Printf(0x19,"Migration index bits going from %i");
-  uVar4 = (pPVar3->migrateData).indexBits + 1;
-  (pPVar3->migrateData).indexBits =
-       uVar4 + (((int)uVar4 >> 2) + (uint)((int)uVar4 < 0 && (uVar4 & 3) != 0)) * -4;
+  uVar3 = (param_1->migrateData).indexBits + 1;
+  (param_1->migrateData).indexBits =
+       uVar3 + (((int)uVar3 >> 2) + (uint)((int)uVar3 < 0 && (uVar3 & 3) != 0)) * -4;
   Com_Printf(0x19," to %i\n");
-  if (((pPVar3->session->dyn).flags & 1U) != 0) {
+  if (((param_1->session->dyn).flags & 1U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x942,0,"%s\n\t%s");
   }
   if (uVar1 == 0) {
-    if ((pPVar3->presenceSession != (SessionData *)0x0) &&
-       (bVar11 = Session_Migrate(pPVar3->presenceSession,local_c0,0xfe), !bVar11)) {
+    if ((param_1->presenceSession != (SessionData *)0x0) &&
+       (bVar10 = Session_Migrate(param_1->presenceSession,local_c0,0xfe), !bVar10)) {
       Com_PrintWarning(0xe,
                        "PartyMigrate - Failed to migrate presence session, will not be advertising properly.\n"
                       );
     }
-    bVar11 = Party_IsGameLobby(pPVar3);
-    if (bVar11) {
-      Party_RandomizeParty(pPVar3);
+    bVar10 = Party_IsGameLobby(param_1);
+    if (bVar10) {
+      Party_RandomizeParty(param_1);
     }
-    PartyMigrate_StopMigration(pPVar3);
+    PartyMigrate_StopMigration(param_1);
   }
   else {
-    pcVar10 = Party_GetMemberName(pPVar3,uVar8);
-    Dvar_SetString(party_hostname,pcVar10);
-    LVar19 = LOCAL_CLIENT_0;
+    pcVar9 = Party_GetMemberName(param_1,uVar7);
+    Dvar_SetString(party_hostname,pcVar9);
+    LVar18 = LOCAL_CLIENT_0;
     do {
-      bVar11 = CL_IsLocalClientActive(LVar19);
-      if (bVar11) {
-        uVar12._0_4_ = (pPVar3->currentHost).addr.type;
-        uVar12._4_1_ = (pPVar3->currentHost).addr.ip[0];
-        uVar12._5_1_ = (pPVar3->currentHost).addr.ip[1];
-        uVar12._6_1_ = (pPVar3->currentHost).addr.ip[2];
-        uVar12._7_1_ = (pPVar3->currentHost).addr.ip[3];
-        uVar13 = (pPVar3->currentHost).addr.localNetID;
-        CL_Migrate(LVar19,p_Var18,in_stack_fffffea8,(int)uVar12,uVar13);
+      bVar10 = CL_IsLocalClientActive(LVar18);
+      if (bVar10) {
+        uVar11._0_4_ = (param_1->currentHost).addr.type;
+        uVar11._4_1_ = (param_1->currentHost).addr.ip[0];
+        uVar11._5_1_ = (param_1->currentHost).addr.ip[1];
+        uVar11._6_1_ = (param_1->currentHost).addr.ip[2];
+        uVar11._7_1_ = (param_1->currentHost).addr.ip[3];
+        uVar12 = (param_1->currentHost).addr.localNetID;
+        CL_Migrate(LVar18,p_Var17,in_stack_fffffea8,(int)uVar11,uVar12);
       }
-      LVar19 = LVar19 + LOCAL_CLIENT_1;
-    } while ((int)LVar19 < 4);
-    (pPVar3->migrateData).expectedNewHost = -1;
+      LVar18 = LVar18 + LOCAL_CLIENT_1;
+    } while ((int)LVar18 < 4);
+    (param_1->migrateData).expectedNewHost = -1;
   }
-  bVar11 = Party_IsHost(pPVar3,uVar8);
-  if (!bVar11) {
-    Party_HostNum(pPVar3);
+  bVar10 = Party_IsHost(param_1,uVar7);
+  if (!bVar10) {
+    Party_HostNum(param_1);
     va("Migration did not work properly, the new host num is not the known host (%i vs %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x971,1,"%s\n\t%s");
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 823917C0  PartyMigrate_HandlePacket  (client_mp/partymigrate.cpp:2498)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -3123,30 +2886,22 @@ int PartyMigrate_HandlePacket
               msg_t *param_5)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar1;
   undefined8 in_r7;
   undefined8 in_r8;
-  PartyMessages *pPVar7;
-  int iVar8;
+  PartyMessages *pPVar2;
+  int iVar3;
+  int iVar4;
   PartyActiveClient local_60 [12];
   
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_22(param_1,lVar4,lVar5,lVar6);
-  iVar8 = 0;
-  Session_EndNonSkillSessionTasks(pPVar1->session);
-  pPVar7 = messageHandlers;
+  iVar4 = 0;
+  Session_EndNonSkillSessionTasks(param_1->session);
+  pPVar2 = messageHandlers;
   iVar3 = 0;
   do {
-    iVar2 = I_stricmp((char *)((int)lVar4 + 1),pPVar7->string);
-    if (iVar2 == 0) {
-      local_60[0] = Party_GetMainActiveClient(pPVar1,*(uint *)((int)lVar5 + 4));
+    iVar1 = I_stricmp(param_2 + 1,pPVar2->string);
+    if (iVar1 == 0) {
+      local_60[0] = Party_GetMainActiveClient(param_1,param_3->localControllerIndex);
       if ((party_debug->current).enabled != false) {
         Com_Printf(0x19,"oob: %s\n");
       }
@@ -3154,111 +2909,105 @@ int PartyMigrate_HandlePacket
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0x9d6,0,"%s");
       }
-      (**(code **)((int)&messageHandlers[0].func + iVar3))(pPVar1,local_60,lVar6,in_r7,in_r8);
-      iVar3 = __restgprlr_22(1);
-      return iVar3;
+      (**(code **)((int)&messageHandlers[0].func + iVar3))(param_1,local_60,param_5,in_r7,in_r8);
+      return 1;
     }
-    iVar8 = iVar8 + 1;
-    iVar3 = iVar8 * 8;
-    pPVar7 = messageHandlers + iVar8;
-  } while (*messageHandlers[iVar8].string != '\0');
-  iVar3 = __restgprlr_22(0);
-  return iVar3;
+    iVar4 = iVar4 + 1;
+    iVar3 = iVar4 * 8;
+    pPVar2 = messageHandlers + iVar4;
+  } while (*messageHandlers[iVar4].string != '\0');
+  return 0;
 }
 
 
 // 823918E8  PartyMigrate_SwapHostAndClient  (client_mp/partymigrate.cpp:2529)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_SwapHostAndClient(PartyData *param_1,uint param_2)
 
 {
-  PartyData *pPVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  bVar3 = Party_IsHost(pPVar1,param_2);
-  if ((bVar3) && (iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,param_2), iVar2 != 0)) {
+  bVar2 = Party_IsHost(param_1,param_2);
+  if ((bVar2) && (iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,param_2), iVar1 != 0)) {
     Com_Printf(0x19,"Not swaping host and client, host is still valid!\n");
-    __restgprlr_27();
     return;
   }
-  iVar2 = Party_HostNum(pPVar1);
-  Party_GetMemberStatus(pPVar1,param_2);
-  Party_GetMemberName(pPVar1,param_2);
-  Party_GetMemberName(pPVar1,iVar2);
+  iVar1 = Party_HostNum(param_1);
+  Party_GetMemberStatus(param_1,param_2);
+  Party_GetMemberName(param_1,param_2);
+  Party_GetMemberName(param_1,iVar1);
   Com_Printf(0x19,"Swapping party %i clients %s (old host) and %s (new host). Status %s\n");
-  iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,param_2);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,param_2);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x9f1,0,"%s");
   }
-  (pPVar1->currentHost).hostNum = param_2;
-  iVar2 = Session_AddLocalVoiceConnectivity(pPVar1->session,1 << (param_2 & 0x3f));
-  __restgprlr_27(iVar2);
+  (param_1->currentHost).hostNum = param_2;
+  Session_AddLocalVoiceConnectivity(param_1->session,1 << (param_2 & 0x3f));
   return;
 }
 
 
 // 823919E8  PartyMigrate_CheckBeforeContinuingToHost  (client_mp/partymigrate.cpp:2555)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_CheckBeforeContinuingToHost(PartyData *param_1,PartyActiveClient *param_2)
 
 {
-  PartyData *pPVar1;
-  bool bVar3;
-  uint uVar2;
-  ulonglong uVar4;
+  bool bVar2;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x9fe,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0x9ff,0,"%s");
   }
-  if (pPVar1->areWeHost != 0) {
-    bVar3 = Party_IsPrivateParty(pPVar1);
-    if (bVar3) {
-      uVar2 = PartyMigrate_ShouldWeHostPrivateParty(pPVar1,(PartyActiveClient *)uVar4,0);
+  if (param_1->areWeHost != 0) {
+    bVar2 = Party_IsPrivateParty(param_1);
+    if (bVar2) {
+      uVar1 = PartyMigrate_ShouldWeHostPrivateParty(param_1,param_2,0);
     }
     else {
-      bVar3 = Live_CanHostServer((pPVar1->session->dyn).publicSlots +
-                                 (pPVar1->session->dyn).privateSlots);
-      uVar2 = (uint)bVar3;
+      bVar2 = Live_CanHostServer((param_1->session->dyn).publicSlots +
+                                 (param_1->session->dyn).privateSlots);
+      uVar1 = (uint)bVar2;
     }
-    if (uVar2 != 0) {
+    if (uVar1 != 0) {
       Com_Printf(0x19,"We can continue to host. migration index bits going from %i");
-      uVar2 = (pPVar1->migrateData).indexBits + 1;
-      (pPVar1->migrateData).indexBits =
-           uVar2 + (((int)uVar2 >> 2) + (uint)((int)uVar2 < 0 && (uVar2 & 3) != 0)) * -4;
+      uVar1 = (param_1->migrateData).indexBits + 1;
+      (param_1->migrateData).indexBits =
+           uVar1 + (((int)uVar1 >> 2) + (uint)((int)uVar1 < 0 && (uVar1 & 3) != 0)) * -4;
       Com_Printf(0x19," to %i\n");
       Com_Printf(0xf,"Gamestate changing due to us deciding to keep hosting\n");
-      PartyHost_GamestateChanged(pPVar1);
-      __restgprlr_28();
+      PartyHost_GamestateChanged(param_1);
       return;
     }
     Com_Printf(0x19,
                "CheckBeforeContinuingToHost failed, could not migrate hosts. Stopping related party %i.\n"
               );
-    PartyMigrate_HandleMigrationFailure(pPVar1,((PartyActiveClient *)uVar4)->localControllerIndex);
+    PartyMigrate_HandleMigrationFailure(param_1,param_2->localControllerIndex);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 823946C0  PartyMigrate_BuildSessionInfoMessage  (client_mp/partymigrate.cpp:2587)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3267,44 +3016,42 @@ void PartyMigrate_BuildSessionInfoMessage
                msg_t *param_6)
 
 {
-  PartyData *pPVar1;
-  char *pcVar2;
-  int iVar3;
-  bool bVar4;
+  char *pcVar1;
+  int iVar2;
+  bool bVar3;
   ulong64 uStack00000018;
   
-  pPVar1 = (PartyData *)__savegprlr_25(param_1);
   uStack00000018 = param_2;
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa1c,0,"%s");
   }
-  if (pPVar1->areWeHost == 0) {
+  if (param_1->areWeHost == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa1d,0,"%s");
   }
-  pcVar2 = va("%isessinfo");
-  MSG_WriteString(param_6,pcVar2);
+  pcVar1 = va("%isessinfo");
+  MSG_WriteString(param_6,pcVar1);
   MSG_WriteBits(param_6,param_3,5);
   MSG_WriteData(param_6,&stack0x00000018,8);
-  MSG_WriteData(param_6,&(pPVar1->session->dyn).sessionInfo,0x3c);
-  iVar3 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar3 == 0) {
+  MSG_WriteData(param_6,&(param_1->session->dyn).sessionInfo,0x3c);
+  iVar2 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar2 == 0) {
     MSG_WriteByte(param_6,0);
     MSG_WriteBits(param_6,param_4,2);
     MSG_WriteBits(param_6,param_5,5);
-    if ((pPVar1->presenceSession == (SessionData *)0x0) ||
-       ((pPVar1->presenceSession->dyn).keysGenerated == false)) {
+    if ((param_1->presenceSession == (SessionData *)0x0) ||
+       ((param_1->presenceSession->dyn).keysGenerated == false)) {
       MSG_WriteBool(param_6,false);
     }
     else {
-      bVar4 = Party_IsPrivateParty(pPVar1);
-      if (!bVar4) {
+      bVar3 = Party_IsPrivateParty(param_1);
+      if (!bVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xa32,0,"%s\n\t%s");
       }
       MSG_WriteBool(param_6,true);
-      MSG_WriteData(param_6,&(pPVar1->presenceSession->dyn).sessionInfo,0x3c);
+      MSG_WriteData(param_6,&(param_1->presenceSession->dyn).sessionInfo,0x3c);
     }
   }
   else {
@@ -3314,13 +3061,14 @@ void PartyMigrate_BuildSessionInfoMessage
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa3d,0,"%s");
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82394890  PartyMigrate_BroadcastNewSessionInfo  (client_mp/partymigrate.cpp:2626)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3328,96 +3076,89 @@ void PartyMigrate_BroadcastNewSessionInfo
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,int param_5)
 
 {
-  PartyData *pPVar2;
   ulong64 uVar1;
-  int iVar3;
-  bool bVar5;
-  netadr_t *pnVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulong64 *puVar8;
-  uint uVar9;
+  int iVar2;
+  bool bVar4;
+  netadr_t *pnVar3;
+  ulong64 *puVar5;
+  uint uVar6;
   netadr_t in_stack_fffffe28;
   netadr_t local_190;
   msg_t mStack_180;
   netadr_t nStack_150;
   uchar auStack_140 [320];
   
-  uVar7 = (ulonglong)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_25(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa48,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa49,0,"%s");
   }
-  if (pPVar2->session == (SessionData *)0x0) {
+  if (param_1->session == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa4a,0,"%s");
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa4b,0,"ourClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = Live_GetXuid(*(int *)((int)uVar6 + 4));
+  uVar1 = Live_GetXuid(param_2->localControllerIndex);
   Com_Printf(0x19,
              "PartyMigrate - BroadcastNewSessionInfo (We are client %i, controller %i, xuid %llx)\n"
             );
   MSG_Init(&mStack_180,auStack_140,0x100);
-  PartyMigrate_BuildSessionInfoMessage(pPVar2,uVar1,(int)uVar7,param_4,param_5,&mStack_180);
-  uVar9 = 0;
-  puVar8 = &pPVar2->partyMembers[0].player;
+  PartyMigrate_BuildSessionInfoMessage(param_1,uVar1,param_3,param_4,param_5,&mStack_180);
+  uVar6 = 0;
+  puVar5 = &param_1->partyMembers[0].player;
   do {
-    iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar9);
-    if (((iVar3 != 0) && (bVar5 = Session_IsUserRegistered(pPVar2->session,uVar9), bVar5)) &&
-       (bVar5 = Live_XUIDIsLocalPlayer(*puVar8), !bVar5)) {
-      pnVar4 = Session_GetPlayerAddr(&nStack_150,pPVar2->session,uVar9);
-      local_190.type = pnVar4->type;
-      local_190.ip = *&pnVar4->ip;
-      local_190.port = pnVar4->port;
-      local_190._10_2_ = *(undefined2 *)&pnVar4->field_0xa;
-      local_190.localNetID = pnVar4->localNetID;
+    iVar2 = Party_IsMemberIndexDataAvailable(param_1,uVar6);
+    if (((iVar2 != 0) && (bVar4 = Session_IsUserRegistered(param_1->session,uVar6), bVar4)) &&
+       (bVar4 = Live_XUIDIsLocalPlayer(*puVar5), !bVar4)) {
+      pnVar3 = Session_GetPlayerAddr(&nStack_150,param_1->session,uVar6);
+      local_190.type = pnVar3->type;
+      local_190.ip = *&pnVar3->ip;
+      local_190.port = pnVar3->port;
+      local_190._10_2_ = *(undefined2 *)&pnVar3->field_0xa;
+      local_190.localNetID = pnVar3->localNetID;
       RMsg_AddMessage(&local_190,&mStack_180,NS_MAXCLIENTS);
       NET_AdrToString(in_stack_fffffe28);
       Com_Printf(0x19,"Sending new sessioninfo to member %i (%s)\n");
     }
-    uVar9 = uVar9 + 1;
-    puVar8 = puVar8 + 0x2a;
-  } while ((int)uVar9 < 0x12);
+    uVar6 = uVar6 + 1;
+    puVar5 = puVar5 + 0x2a;
+  } while ((int)uVar6 < 0x12);
   RMsg_SendMessages();
-  __restgprlr_25();
   return;
 }
 
 
 // 82391B30  PartyMigrate_Map  (client_mp/partymigrate.cpp:2669)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_Map(LocalClientNum_t param_1)
 
 {
   char *pcVar1;
-  LocalClientNum_t LVar2;
-  PartyHostData *pPVar3;
+  PartyHostData *pPVar2;
   
-  LVar2 = __savegprlr_29(param_1);
   pcVar1 = (sv_mapname->current).string;
   if (pcVar1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa71,0,"%s");
   }
   if (*pcVar1 != '\0') {
-    SV_StartMapForParty(LVar2,pcVar1,true,true);
-    pPVar3 = Lobby_GetHostData();
-    if (pPVar3->preloadingMapStage != PRELOAD_MAP_STARTED) {
+    SV_StartMapForParty(param_1,pcVar1,true,true);
+    pPVar2 = Lobby_GetHostData();
+    if (pPVar2->preloadingMapStage != PRELOAD_MAP_STARTED) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0xa78,0,"hostData->preloadingMapStage == PRELOAD_MAP_STARTED\n\t%i, %i");
     }
-    pPVar3->preloadingMapStage = PRELOAD_MAP_IDLE;
+    pPVar2->preloadingMapStage = PRELOAD_MAP_IDLE;
     if ((((DAT_82b5c508 & 1) != 0) &&
         (SV_KickClientNum(g_oldHost,"EXE_PLAYERKICKED"),
         (partytweak_kickoldhostsplitscreenclient->current).enabled != false)) &&
@@ -3425,13 +3166,14 @@ void PartyMigrate_Map(LocalClientNum_t param_1)
       SV_KickClientNum(DAT_82b5c504,"EXE_PLAYERKICKED");
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82394A80  PartyMigrate_RestartServer  (client_mp/partymigrate.cpp:2697)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -3440,109 +3182,103 @@ void PartyMigrate_RestartServer
                int param_6,int param_7)
 
 {
-  PartyData *pPVar1;
-  bool bVar4;
+  bool bVar3;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  undefined4 uVar7;
-  LocalClientNum_t LVar8;
+  undefined8 uVar4;
+  undefined4 uVar5;
+  LocalClientNum_t LVar6;
   netadr_t in_stack_ffffff08;
   netadr_t in_stack_ffffff18;
   netadr_t anStack_a0 [10];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_16(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa8c,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa8d,0,"%s");
   }
-  if (pPVar1->areWeHost == 0) {
+  if (param_1->areWeHost == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa8e,0,"%s");
   }
-  bVar4 = Party_IsGameLobby(pPVar1);
-  if (!bVar4) {
+  bVar3 = Party_IsGameLobby(param_1);
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa8f,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa90,0,"%s\n\t%s");
   }
-  iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xa91,0,"%s");
   }
-  pPVar1->lobbyFlags = pPVar1->lobbyFlags & 0xffffff83 | 0x20;
+  param_1->lobbyFlags = param_1->lobbyFlags & 0xffffff83 | 0x20;
   DAT_82b5c504 = -1;
   g_oldHost = param_3;
   DAT_82b5c508 = param_4;
-  if ((partytweak_kickoldhostsplitscreenclient->current).enabled != false) {
-    bVar4 = Session_IsUserRegistered(pPVar1->session,param_3);
-    if (bVar4) {
-      Session_GetPlayerAddr(anStack_a0,pPVar1->session,param_3);
-      iVar2 = NET_IsLocalAddress(in_stack_ffffff08);
-      if (iVar2 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
-                        ,0xaa3,0,"%s");
-      }
-      iVar2 = 0;
-      do {
-        if ((param_3 != iVar2) && (bVar4 = Session_IsUserRegistered(pPVar1->session,iVar2), bVar4))
-        {
-          Session_GetPlayerAddr(anStack_a0,pPVar1->session,iVar2);
-          iVar3 = NET_CompareIPAdr(in_stack_ffffff08,in_stack_ffffff18);
-          if (iVar3 != 0) {
-            if (DAT_82b5c504 != -1) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
-                              ,0xab1,0,"%s\n\t%s");
-            }
-            Com_Printf(0x19,
-                       "PartyMigrate_RestartServer - Old host has a splitscreen client, make sure we kick them too. Old host clientNum: %i, Splitscreen clientNum: %i\n"
-                      );
-            DAT_82b5c504 = iVar2;
-          }
-        }
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < 0x12);
+  if (((partytweak_kickoldhostsplitscreenclient->current).enabled != false) &&
+     (bVar3 = Session_IsUserRegistered(param_1->session,param_3), bVar3)) {
+    Session_GetPlayerAddr(anStack_a0,param_1->session,param_3);
+    iVar1 = NET_IsLocalAddress(in_stack_ffffff08);
+    if (iVar1 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
+                      0xaa3,0,"%s");
     }
+    iVar1 = 0;
+    do {
+      if ((param_3 != iVar1) && (bVar3 = Session_IsUserRegistered(param_1->session,iVar1), bVar3)) {
+        Session_GetPlayerAddr(anStack_a0,param_1->session,iVar1);
+        iVar2 = NET_CompareIPAdr(in_stack_ffffff08,in_stack_ffffff18);
+        if (iVar2 != 0) {
+          if (DAT_82b5c504 != -1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
+                            ,0xab1,0,"%s\n\t%s");
+          }
+          Com_Printf(0x19,
+                     "PartyMigrate_RestartServer - Old host has a splitscreen client, make sure we kick them too. Old host clientNum: %i, Splitscreen clientNum: %i\n"
+                    );
+          DAT_82b5c504 = iVar1;
+        }
+      }
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 0x12);
   }
   Cbuf_AddCall(LOCAL_CLIENT_0,PartyMigrate_Map);
-  (pPVar1->specificData).hostData.preloadingMapStage = PRELOAD_MAP_STARTED;
-  PartyMigrate_BroadcastNewSessionInfo(pPVar1,(PartyActiveClient *)uVar5,param_5,param_6,param_7);
-  LVar8 = LOCAL_CLIENT_0;
+  (param_1->specificData).hostData.preloadingMapStage = PRELOAD_MAP_STARTED;
+  PartyMigrate_BroadcastNewSessionInfo(param_1,param_2,param_5,param_6,param_7);
+  LVar6 = LOCAL_CLIENT_0;
   do {
-    bVar4 = CL_IsLocalClientActive(LVar8);
-    if (bVar4) {
-      if ((pPVar1->session->dyn).sessionHandle == (void *)0x0) {
+    bVar3 = CL_IsLocalClientActive(LVar6);
+    if (bVar3) {
+      if ((param_1->session->dyn).sessionHandle == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xac4,0,"%s");
       }
-      uVar6._0_4_ = (pPVar1->currentHost).addr.type;
-      uVar6._4_1_ = (pPVar1->currentHost).addr.ip[0];
-      uVar6._5_1_ = (pPVar1->currentHost).addr.ip[1];
-      uVar6._6_1_ = (pPVar1->currentHost).addr.ip[2];
-      uVar6._7_1_ = (pPVar1->currentHost).addr.ip[3];
-      uVar7 = (pPVar1->currentHost).addr.localNetID;
-      CL_Migrate(LVar8,&(pPVar1->currentHost).sessionInfo,in_stack_ffffff08,(int)uVar6,uVar7);
+      uVar4._0_4_ = (param_1->currentHost).addr.type;
+      uVar4._4_1_ = (param_1->currentHost).addr.ip[0];
+      uVar4._5_1_ = (param_1->currentHost).addr.ip[1];
+      uVar4._6_1_ = (param_1->currentHost).addr.ip[2];
+      uVar4._7_1_ = (param_1->currentHost).addr.ip[3];
+      uVar5 = (param_1->currentHost).addr.localNetID;
+      CL_Migrate(LVar6,&(param_1->currentHost).sessionInfo,in_stack_ffffff08,(int)uVar4,uVar5);
     }
-    LVar8 = LVar8 + LOCAL_CLIENT_1;
-  } while ((int)LVar8 < 4);
-  __restgprlr_16();
+    LVar6 = LVar6 + LOCAL_CLIENT_1;
+  } while ((int)LVar6 < 4);
   return;
 }
 
 
 // 82394DE8  PartyMigrate_To  (client_mp/partymigrate.cpp:2764)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3551,180 +3287,168 @@ void PartyMigrate_RestartServer
 void PartyMigrate_To(PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4)
 
 {
-  PartyActiveClient *pPVar1;
-  PartyData *pPVar2;
-  uint uVar3;
-  bool bVar8;
+  int iVar1;
+  int iVar2;
+  bool bVar6;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar9;
-  longlong lVar10;
-  netadr_t *pnVar11;
-  _XSESSION_INFO *p_Var12;
-  uint uVar13;
-  int *piVar14;
-  LocalClientNum_t LVar15;
+  longlong lVar7;
+  netadr_t *pnVar8;
+  _XSESSION_INFO *p_Var9;
+  uint uVar10;
+  int *piVar11;
+  LocalClientNum_t LVar12;
   netadr_t in_stack_ffffff38;
   netadr_t local_80 [8];
   
-  uVar9 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_20(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xad1,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xad2,0,"%s");
   }
-  pPVar1 = (PartyActiveClient *)uVar9;
-  uVar3 = Live_GetOurClientNum(pPVar1->localControllerIndex,pPVar2->session);
-  if ((int)uVar3 < 0) {
+  iVar2 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (iVar2 < 0) {
     Com_PrintError(0x19,
                    "PartyMigrate - To - We don\'t know what our ClientNum is for controller %i.\n");
-    __restgprlr_20();
     return;
   }
-  bVar8 = Session_IsUserRegistered(pPVar2->session,param_3);
-  if (!bVar8) {
+  bVar6 = Session_IsUserRegistered(param_1->session,param_3);
+  if (!bVar6) {
     Com_PrintError(0x19,"PartyMigrate - To - Newhost (%i) is not session-registered.\n");
-    __restgprlr_20();
     return;
   }
-  bVar8 = Party_IsHost(pPVar2,param_3);
-  if (bVar8) {
-    iVar7 = pPVar2->areWeHost;
-    if (iVar7 != 0) {
-      if ((pPVar2->session->dyn).allowJoining != false) {
-        (pPVar2->specificData).hostData.firstLobby = false;
+  bVar6 = Party_IsHost(param_1,param_3);
+  if (bVar6) {
+    iVar2 = param_1->areWeHost;
+    if (iVar2 != 0) {
+      if ((param_1->session->dyn).allowJoining != false) {
+        (param_1->specificData).hostData.firstLobby = false;
       }
-      if (iVar7 != 0) {
-        (pPVar2->migrateData).migrateActive = false;
+      if (iVar2 != 0) {
+        (param_1->migrateData).migrateActive = false;
       }
     }
-    PartyMigrate_CheckBeforeContinuingToHost(pPVar2,pPVar1);
-    __restgprlr_20();
+    PartyMigrate_CheckBeforeContinuingToHost(param_1,param_2);
     return;
   }
-  if (param_3 != uVar3) {
-    bVar8 = Session_PlayerHasLoopbackAddr(pPVar2->session,param_3);
-    if (bVar8) {
+  if (param_3 != iVar2) {
+    bVar6 = Session_PlayerHasLoopbackAddr(param_1->session,param_3);
+    if (bVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                       0xb2b,0,"%s\n\t%s");
     }
     Com_Printf(0x19,"PartyMigrate - To - Setting expectedNewHost to %i\n");
-    (pPVar2->migrateData).expectedNewHost = param_3;
-    iVar7 = Party_IsRunning(pPVar2);
-    if (iVar7 == 0) {
-      iVar7 = PartyMigrate_IsGameServerHostMigration(pPVar2);
-      if (iVar7 != 0) {
-        LVar15 = LOCAL_CLIENT_0;
+    (param_1->migrateData).expectedNewHost = param_3;
+    iVar2 = Party_IsRunning(param_1);
+    if (iVar2 == 0) {
+      iVar2 = PartyMigrate_IsGameServerHostMigration(param_1);
+      if (iVar2 != 0) {
+        LVar12 = LOCAL_CLIENT_0;
         do {
-          bVar8 = CL_IsLocalClientActive(LVar15);
-          if (bVar8) {
-            CL_MigrationHostChosen(LVar15);
+          bVar6 = CL_IsLocalClientActive(LVar12);
+          if (bVar6) {
+            CL_MigrationHostChosen(LVar12);
           }
-          LVar15 = LVar15 + LOCAL_CLIENT_1;
-        } while ((int)LVar15 < 4);
+          LVar12 = LVar12 + LOCAL_CLIENT_1;
+        } while ((int)LVar12 < 4);
         cls.mapPreloaded = true;
-        __restgprlr_20();
         return;
       }
-      bVar8 = Party_IsPrivateParty(pPVar2);
-      if (!bVar8) {
+      bVar6 = Party_IsPrivateParty(param_1);
+      if (!bVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xb41,0,"%s");
       }
-      if (pPVar2->presenceSession == (SessionData *)0x0) {
+      if (param_1->presenceSession == (SessionData *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xb43,0,"%s");
       }
-      if ((pPVar2->presenceSession->dyn).sessionHandle != (void *)0x0) {
+      if ((param_1->presenceSession->dyn).sessionHandle != (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xb44,0,"%s");
       }
     }
-    __restgprlr_20();
     return;
   }
-  bVar8 = Session_PlayerHasLoopbackAddr(pPVar2->session,param_3);
-  if (!bVar8) {
+  bVar6 = Session_PlayerHasLoopbackAddr(param_1->session,param_3);
+  if (!bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xaf0,0,"%s");
   }
-  iVar7 = (pPVar2->migrateData).indexBits;
-  iVar4 = PartyMigrate_GetArbitratorClientNum(pPVar2,0);
-  iVar5 = Party_HostNum(pPVar2);
-  PartyMigrate_CheckBeforeContinuingToHost(pPVar2,pPVar1);
-  bVar8 = Party_IsHost(pPVar2,uVar3);
-  if (bVar8) {
+  iVar1 = (param_1->migrateData).indexBits;
+  iVar3 = PartyMigrate_GetArbitratorClientNum(param_1,0);
+  iVar4 = Party_HostNum(param_1);
+  PartyMigrate_CheckBeforeContinuingToHost(param_1,param_2);
+  bVar6 = Party_IsHost(param_1,iVar2);
+  if (bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xaf9,0,"%s");
   }
   memcpy();
-  p_Var12 = &(pPVar2->currentHost).sessionInfo;
-  pnVar11 = local_80;
+  p_Var9 = &(param_1->currentHost).sessionInfo;
+  pnVar8 = local_80;
   local_80[0].type = NA_BOT;
   local_80[0].ip[0] = '\0';
   local_80[0].ip[1] = '\0';
   local_80[0].ip[2] = '\0';
   local_80[0].ip[3] = '\0';
   do {
-    lVar10 = (ulonglong)(p_Var12->sessionID).ab[0] - (ulonglong)(byte)*(undefined1 *)&pnVar11->type;
-    if (lVar10 != 0) break;
-    p_Var12 = (_XSESSION_INFO *)((p_Var12->sessionID).ab + 1);
-    pnVar11 = (netadr_t *)((int)&pnVar11->type + 1);
-  } while (p_Var12 != (_XSESSION_INFO *)&(pPVar2->currentHost).sessionInfo.hostAddress);
-  if ((int)lVar10 == 0) {
+    lVar7 = (ulonglong)(p_Var9->sessionID).ab[0] - (ulonglong)(byte)*(undefined1 *)&pnVar8->type;
+    if (lVar7 != 0) break;
+    p_Var9 = (_XSESSION_INFO *)((p_Var9->sessionID).ab + 1);
+    pnVar8 = (netadr_t *)((int)&pnVar8->type + 1);
+  } while (p_Var9 != (_XSESSION_INFO *)&(param_1->currentHost).sessionInfo.hostAddress);
+  if ((int)lVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xb00,0,"%s");
   }
-  Session_GetPlayerAddr(local_80,pPVar2->session,param_3);
-  Party_UpdateHostAddr(pPVar2,in_stack_ffffff38);
-  PartyMigrate_SwapHostAndClient(pPVar2,param_3);
-  iVar6 = PartyClient_BecomePartyHost(pPVar2,pPVar1);
-  if (iVar6 == 0) {
-    PartyMigrate_HandleMigrationFailure(pPVar2,pPVar1->localControllerIndex);
-    __restgprlr_20();
+  Session_GetPlayerAddr(local_80,param_1->session,param_3);
+  Party_UpdateHostAddr(param_1,in_stack_ffffff38);
+  PartyMigrate_SwapHostAndClient(param_1,param_3);
+  iVar5 = PartyClient_BecomePartyHost(param_1,param_2);
+  if (iVar5 == 0) {
+    PartyMigrate_HandleMigrationFailure(param_1,param_2->localControllerIndex);
     return;
   }
-  uVar13 = 0;
-  piVar14 = &pPVar2->partyMembers[0].ackedMembers;
+  uVar10 = 0;
+  piVar11 = &param_1->partyMembers[0].ackedMembers;
   do {
-    iVar6 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar13);
-    if ((iVar6 == 0) || (bVar8 = Live_XUIDIsLocalPlayer(*(ulong64 *)(piVar14 + 9)), !bVar8)) {
-      *piVar14 = 0;
-      piVar14[-0xc] = 0;
+    iVar5 = PartyMigrate_IsStatusValidForMigration(param_1,uVar10);
+    if ((iVar5 == 0) || (bVar6 = Live_XUIDIsLocalPlayer(*(ulong64 *)(piVar11 + 9)), !bVar6)) {
+      *piVar11 = 0;
+      piVar11[-0xc] = 0;
     }
-    uVar13 = uVar13 + 1;
-    piVar14 = piVar14 + 0x54;
-  } while ((int)uVar13 < 0x12);
-  PartyMigrate_ClearInternalData(pPVar2);
-  if (pPVar2->areWeHost != 0) {
-    iVar6 = PartyMigrate_IsGameServerHostMigration(pPVar2);
-    if (iVar6 != 0) {
-      iVar6 = Party_IsRunning(pPVar2);
-      if (iVar6 != 0) {
+    uVar10 = uVar10 + 1;
+    piVar11 = piVar11 + 0x54;
+  } while ((int)uVar10 < 0x12);
+  PartyMigrate_ClearInternalData(param_1);
+  if (param_1->areWeHost != 0) {
+    iVar5 = PartyMigrate_IsGameServerHostMigration(param_1);
+    if (iVar5 != 0) {
+      iVar5 = Party_IsRunning(param_1);
+      if (iVar5 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                         ,0xb1e,0,"%s");
       }
-      PartyMigrate_RestartServer(pPVar2,pPVar1,iVar5,param_4,uVar3,iVar7,iVar4);
-      (pPVar2->migrateData).migrateActive = false;
-      __restgprlr_20();
+      PartyMigrate_RestartServer(param_1,param_2,iVar4,param_4,iVar2,iVar1,iVar3);
+      (param_1->migrateData).migrateActive = false;
       return;
     }
-    PartyMigrate_BroadcastNewSessionInfo(pPVar2,pPVar1,uVar3,iVar7,iVar4);
+    PartyMigrate_BroadcastNewSessionInfo(param_1,param_2,iVar2,iVar1,iVar3);
   }
-  (pPVar2->migrateData).migrateActive = false;
-  __restgprlr_20();
+  (param_1->migrateData).migrateActive = false;
   return;
 }
 
 
 // 823952B0  PartyMigrate_StartMigrationFromMessage  (client_mp/partymigrate.cpp:2898)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3732,40 +3456,35 @@ void PartyMigrate_StartMigrationFromMessage
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,int param_5)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_25(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xb53,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xb54,0,"%s");
   }
-  PartyMigrate_ClearInternalData(pPVar1);
-  iVar2 = Sys_Milliseconds();
-  (pPVar1->migrateData).startTime = iVar2;
-  (pPVar1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
-  (pPVar1->migrateData).partyTime = iVar2;
+  PartyMigrate_ClearInternalData(param_1);
+  iVar1 = Sys_Milliseconds();
+  (param_1->migrateData).startTime = iVar1;
+  (param_1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
+  (param_1->migrateData).partyTime = iVar1;
   if (param_5 == 0) {
-    (pPVar1->migrateData).migrateActive = true;
+    (param_1->migrateData).migrateActive = true;
   }
-  iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (param_5 != iVar2) {
-    PartyMigrate_IsGameServerHostMigration(pPVar1);
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (param_5 != iVar1) {
+    PartyMigrate_IsGameServerHostMigration(param_1);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xb5f,0,
                     "isInGameMigration == PartyMigrate_IsGameServerHostMigration( party )\n\t%i, %i"
                    );
   }
-  iVar2 = Sys_Milliseconds();
-  (pPVar1->currentHost).lastPacketTime = iVar2;
-  PartyMigrate_To(pPVar1,(PartyActiveClient *)uVar3,param_3,param_4);
-  __restgprlr_25();
+  iVar1 = Sys_Milliseconds();
+  (param_1->currentHost).lastPacketTime = iVar1;
+  PartyMigrate_To(param_1,param_2,param_3,param_4);
   return;
 }
 
@@ -3785,45 +3504,40 @@ void PartyMigrate_ClearExpectedNewHost(PartyData *param_1)
 
 // 82392710  PartyMigrate_SendMakeHostError  (client_mp/partymigrate.cpp:3165)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_SendMakeHostError(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  PartyData *pPVar3;
-  int iVar4;
-  uint uVar5;
-  ulong64 uVar2;
-  char *pcVar6;
-  netsrc_t nVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  int iVar2;
+  uint uVar3;
+  ulong64 uVar1;
+  char *pcVar4;
+  netsrc_t nVar5;
   msg_t local_b0;
   uchar auStack_80 [128];
   
-  uVar9 = (ulonglong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pPVar3 = (PartyData *)__savegprlr_26(param_1);
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc63,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc64,0,"%s");
   }
-  if (pPVar3->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc65,0,"%s");
   }
-  iVar4 = PartyMigrate_MigrateActive(pPVar3);
-  if (iVar4 == 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc66,0,"%s");
   }
-  if (0x11 < (uVar9 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc67,0,"hostMemberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)")
     ;
@@ -3831,63 +3545,58 @@ void PartyMigrate_SendMakeHostError(PartyData *param_1,PartyActiveClient *param_
   Com_PrintError(0x19,
                  "PartyMigrate - SendMakeHostError - Could not migrate to the player the host requested, letting him know.\n"
                 );
-  pLVar1 = (LocalClientNum_t *)uVar8;
-  uVar5 = Live_GetOurClientNum(pLVar1[1],pPVar3->session);
-  if (0x11 < uVar5) {
+  uVar3 = Live_GetOurClientNum(param_2->localControllerIndex,param_1->session);
+  if (0x11 < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc6c,0,"ourClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar2 = Live_GetXuid(pLVar1[1]);
+  uVar1 = Live_GetXuid(param_2->localControllerIndex);
   MSG_Init(&local_b0,auStack_80,0x40);
-  pcVar6 = va("%imakehosterror");
-  MSG_WriteString(&local_b0,pcVar6);
-  MSG_WriteBits(&local_b0,(pPVar3->migrateData).indexBits,2);
-  MSG_WriteBits(&local_b0,uVar5,5);
-  MSG_WriteInt64(&local_b0,uVar2);
+  pcVar4 = va("%imakehosterror");
+  MSG_WriteString(&local_b0,pcVar4);
+  MSG_WriteBits(&local_b0,(param_1->migrateData).indexBits,2);
+  MSG_WriteBits(&local_b0,uVar3,5);
+  MSG_WriteInt64(&local_b0,uVar1);
   if (local_b0.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc74,0,"%s");
   }
-  nVar7 = NET_GetLocalNetIDFromLocalClientNum(*pLVar1);
-  RMsg_AddMessage(&(pPVar3->currentHost).addr,&local_b0,nVar7);
-  __restgprlr_26();
+  nVar5 = NET_GetLocalNetIDFromLocalClientNum(param_2->localClientNum);
+  RMsg_AddMessage(&(param_1->currentHost).addr,&local_b0,nVar5);
   return;
 }
 
 
 // 823969D8  PartyMigrate_SelectPredeterminedHost  (client_mp/partymigrate.cpp:3195)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_SelectPredeterminedHost(PartyData *param_1,int param_2,PartyActiveClient *param_3)
 
 {
-  PartyData *pPVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  PartyActiveClient *pPVar4;
+  bool bVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc7c,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc7d,0,"%s");
   }
-  if ((pPVar1->migrateData).migrateActive == false) {
+  if ((param_1->migrateData).migrateActive == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc7e,0,"%s");
   }
-  if ((pPVar1->migrateData).weAreArbitrating == false) {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc7f,0,"%s");
   }
-  bVar2 = Party_IsPrivateParty(pPVar1);
-  if (!bVar2) {
+  bVar1 = Party_IsPrivateParty(param_1);
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc80,0,"%s");
   }
@@ -3895,26 +3604,22 @@ void PartyMigrate_SelectPredeterminedHost(PartyData *param_1,int param_2,PartyAc
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xc81,0,"%s");
   }
-  pPVar4 = (PartyActiveClient *)uVar3;
-  if (pPVar1->partyMembers[param_2].migrateHeardFrom == false) {
-    PartyMigrate_AskForPredeterminedHostNominee(pPVar1,param_2,pPVar4);
-    __restgprlr_27();
+  if (param_1->partyMembers[param_2].migrateHeardFrom == false) {
+    PartyMigrate_AskForPredeterminedHostNominee(param_1,param_2,param_3);
     return;
   }
-  if (pPVar1->partyMembers[param_2].migrateNominated == false) {
+  if (param_1->partyMembers[param_2].migrateNominated == false) {
     Com_PrintError(0x19,
                    "PartyMigrate - SelectPredeterminedHost - Could not migrate, requested host said he can\'t be the host\n"
                   );
-    PartyMigrate_SendMakeHostError(pPVar1,pPVar4,param_2);
-    PartyMigrate_StopMigration(pPVar1);
-    __restgprlr_27();
+    PartyMigrate_SendMakeHostError(param_1,param_3,param_2);
+    PartyMigrate_StopMigration(param_1);
     return;
   }
   Com_Printf(0x19,
              "PartyMigrate - SelectPredeterminedHost - Requested host said he can host, moving to the new host.\n"
             );
-  PartyMigrate_NewHostDecided(pPVar1,pPVar4,param_2);
-  __restgprlr_27();
+  PartyMigrate_NewHostDecided(param_1,param_3,param_2);
   return;
 }
 
@@ -3939,122 +3644,118 @@ void PartyMigrate_ExtendMigrationTimeForOtherParty(PartyData *param_1)
 
 // 823928F0  PartyMigrate_InactiveWaitForLobbyMigration  (client_mp/partymigrate.cpp:3235)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMigrate_InactiveWaitForLobbyMigration(PartyData *param_1)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
-  PartyData *pPVar3;
+  int iVar1;
+  bool bVar3;
+  PartyData *pPVar2;
   
-  pPVar1 = (PartyData *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xca4,0,"%s");
   }
-  if (pPVar1->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xca5,0,"%s");
   }
-  iVar2 = Party_IsRunning(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = Party_IsRunning(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xca6,0,"%s");
   }
-  bVar4 = Party_IsPrivateParty(pPVar1);
-  if (!bVar4) {
+  bVar3 = Party_IsPrivateParty(param_1);
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xca7,0,"%s\n\t%s");
   }
-  bVar4 = Lobby_IsInRunningLobby();
-  if (bVar4) {
-    pPVar3 = Lobby_GetPartyData();
-    iVar2 = PartyMigrate_MigrateActive(pPVar3);
-    if (iVar2 != 0) {
-      iVar2 = Sys_Milliseconds();
-      (pPVar1->migrateData).startTime = iVar2;
-      (pPVar1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
-      (pPVar1->migrateData).partyTime = iVar2;
-      iVar2 = __restgprlr_29(1);
-      return iVar2;
+  bVar3 = Lobby_IsInRunningLobby();
+  if (bVar3) {
+    pPVar2 = Lobby_GetPartyData();
+    iVar1 = PartyMigrate_MigrateActive(pPVar2);
+    if (iVar1 != 0) {
+      iVar1 = Sys_Milliseconds();
+      (param_1->migrateData).startTime = iVar1;
+      (param_1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
+      (param_1->migrateData).partyTime = iVar1;
+      return 1;
     }
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82391C88  PartyMigrate_UseLobbyHostForInactiveParty  (client_mp/partymigrate.cpp:3254)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMigrate_UseLobbyHostForInactiveParty(PartyData *param_1,int *param_2)
 
 {
-  PartyData *pPVar2;
-  int iVar3;
-  bool bVar6;
-  PartyData *pPVar4;
-  uint uVar5;
+  int iVar2;
+  bool bVar5;
+  PartyData *pPVar3;
+  uint uVar4;
   ulong64 uVar1;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcbb,0,"%s");
   }
-  if (pPVar2->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcbc,0,"%s");
   }
-  iVar3 = Party_IsRunning(pPVar2);
-  if (iVar3 != 0) {
+  iVar2 = Party_IsRunning(param_1);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcbd,0,"%s");
   }
-  bVar6 = Party_IsPrivateParty(pPVar2);
-  if (!bVar6) {
+  bVar5 = Party_IsPrivateParty(param_1);
+  if (!bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcbe,0,"%s\n\t%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcbf,0,"%s");
   }
-  bVar6 = Lobby_IsInRunningLobby();
-  if (bVar6) {
-    pPVar4 = Lobby_GetPartyData();
-    uVar5 = Party_HostNum(pPVar4);
-    pPVar4 = Lobby_GetPartyData();
-    iVar3 = Party_IsMemberIndexDataAvailable(pPVar4,uVar5);
-    if (iVar3 != 0) {
-      pPVar4 = Lobby_GetPartyData();
-      uVar1 = Party_GetXuid(pPVar4,uVar5);
-      iVar3 = Party_FindMemberByXUID_AllowNotPresent(pPVar2,uVar1);
-      if (-1 < iVar3) {
+  bVar5 = Lobby_IsInRunningLobby();
+  if (bVar5) {
+    pPVar3 = Lobby_GetPartyData();
+    uVar4 = Party_HostNum(pPVar3);
+    pPVar3 = Lobby_GetPartyData();
+    iVar2 = Party_IsMemberIndexDataAvailable(pPVar3,uVar4);
+    if (iVar2 != 0) {
+      pPVar3 = Lobby_GetPartyData();
+      uVar1 = Party_GetXuid(pPVar3,uVar4);
+      iVar2 = Party_FindMemberByXUID_AllowNotPresent(param_1,uVar1);
+      if (-1 < iVar2) {
         Com_Printf(0x19,
                    "We\'re migrating an inactive private party, and the lobby host is in our private party. We\'ll use him as our private party host\n"
                   );
-        *(int *)uVar7 = iVar3;
-        iVar3 = __restgprlr_28(1);
-        return iVar3;
+        *param_2 = iVar2;
+        return 1;
       }
     }
   }
-  *(int *)uVar7 = -1;
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  *param_2 = -1;
+  return 0;
 }
 
 
 // 82396B78  PartyMigrate_DetermineBestHost  (client_mp/partymigrate.cpp:3295)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -4062,175 +3763,164 @@ void PartyMigrate_DetermineBestHost(PartyData *param_1,PartyActiveClient *param_
 
 {
   uint uVar1;
-  PartyData *pPVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  PartyData *pPVar6;
-  NomineeInfo *pNVar7;
-  ulonglong uVar8;
-  bool *pbVar9;
-  NomineeInfo *pNVar10;
-  uint uVar11;
-  PartyData *pPVar12;
+  int iVar2;
+  bool bVar3;
+  PartyData *pPVar4;
+  NomineeInfo *pNVar5;
+  ulonglong uVar6;
+  bool *pbVar7;
+  NomineeInfo *pNVar8;
+  uint uVar9;
+  PartyData *pPVar10;
   int local_70 [4];
   int local_60;
   int local_5c;
   undefined4 local_58;
   int local_54;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_24(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xce8,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xce9,0,"%s");
   }
-  if ((pPVar2->migrateData).weAreArbitrating == false) {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcea,0,"%s");
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar2);
-  if (iVar3 == 0) {
+  iVar2 = PartyMigrate_MigrateActive(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xceb,0,"%s");
   }
-  iVar3 = PartyMigrate_IsGameServerHostMigration(pPVar2);
-  if (iVar3 != 0) {
+  iVar2 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xcec,0,"%s");
   }
-  pPVar6 = (PartyData *)(pPVar2->migrateData).expectedNewHost;
-  if ((int)pPVar6 < 0) {
-    iVar3 = Party_IsRunning(pPVar2);
-    if (iVar3 == 0) {
-      iVar3 = PartyMigrate_InactiveWaitForLobbyMigration(pPVar2);
-      if (iVar3 != 0) goto LAB_82396e60;
-      iVar3 = PartyMigrate_UseLobbyHostForInactiveParty(pPVar2,local_70);
-      if (iVar3 != 0) {
-        PartyMigrate_NewHostDecided(pPVar2,(PartyActiveClient *)uVar5,local_70[0]);
-        __restgprlr_24();
+  pPVar4 = (PartyData *)(param_1->migrateData).expectedNewHost;
+  if ((int)pPVar4 < 0) {
+    iVar2 = Party_IsRunning(param_1);
+    if (iVar2 == 0) {
+      iVar2 = PartyMigrate_InactiveWaitForLobbyMigration(param_1);
+      if (iVar2 != 0) {
+        return;
+      }
+      iVar2 = PartyMigrate_UseLobbyHostForInactiveParty(param_1,local_70);
+      if (iVar2 != 0) {
+        PartyMigrate_NewHostDecided(param_1,param_2,local_70[0]);
         return;
       }
     }
-    iVar3 = Sys_Milliseconds();
-    uVar11 = 0;
-    pbVar9 = &pPVar2->partyMembers[0].migrateHeardFrom;
-    uVar8 = (longlong)iVar3 - (ulonglong)(uint)(pPVar2->migrateData).startTime;
+    iVar2 = Sys_Milliseconds();
+    uVar9 = 0;
+    pbVar7 = &param_1->partyMembers[0].migrateHeardFrom;
+    uVar6 = (longlong)iVar2 - (ulonglong)(uint)(param_1->migrateData).startTime;
     uVar1 = (partymigrate_selectiontime->current).unsignedInt;
     do {
-      iVar3 = PartyMigrate_IsStatusValidForMigration(pPVar2,uVar11);
-      if (((iVar3 != 0) && (*pbVar9 == false)) &&
-         ((((~(uVar1 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar1 <= uVar8) & 1) != 0))
-      goto LAB_82396e60;
-      uVar11 = uVar11 + 1;
-      pbVar9 = pbVar9 + 0x150;
-    } while ((int)uVar11 < 0x12);
-    pPVar6 = (PartyData *)0xffffffff;
-    pPVar12 = (PartyData *)0x0;
+      iVar2 = PartyMigrate_IsStatusValidForMigration(param_1,uVar9);
+      if (((iVar2 != 0) && (*pbVar7 == false)) &&
+         ((((~(uVar1 ^ uVar6) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar1 <= uVar6) & 1) != 0)) {
+        return;
+      }
+      uVar9 = uVar9 + 1;
+      pbVar7 = pbVar7 + 0x150;
+    } while ((int)uVar9 < 0x12);
+    pPVar4 = (PartyData *)0xffffffff;
+    pPVar10 = (PartyData *)0x0;
     local_60 = -0x55555556;
-    pNVar10 = &pPVar2->partyMembers[0].migrateNomineeInfo;
+    pNVar8 = &param_1->partyMembers[0].migrateNomineeInfo;
     local_5c = -0x55555556;
     local_58 = 0xaaaaaaaa;
     local_54 = -0x55555556;
     do {
-      bVar4 = Session_IsUserRegistered(pPVar2->session,(int)pPVar12);
-      if ((bVar4) &&
-         (((bVar4 = Party_IsUserRegistered(pPVar2,(int)pPVar12), bVar4 ||
-           ((bVar4 = Party_IsPrivateParty(pPVar2), bVar4 &&
-            (iVar3 = Party_IsMemberIndexCommitted(pPVar2,(uint)pPVar12), iVar3 != 0)))) &&
-          (*(char *)&pNVar10[-1].connectivity != '\0')))) {
-        PartyMigrate_NomineeInfoString(pNVar10);
-        pNVar7 = (NomineeInfo *)pPVar2->partyId;
-        Party_GetMemberName(pPVar2,(int)pPVar12);
+      bVar3 = Session_IsUserRegistered(param_1->session,(int)pPVar10);
+      if ((bVar3) &&
+         (((bVar3 = Party_IsUserRegistered(param_1,(int)pPVar10), bVar3 ||
+           ((bVar3 = Party_IsPrivateParty(param_1), bVar3 &&
+            (iVar2 = Party_IsMemberIndexCommitted(param_1,(uint)pPVar10), iVar2 != 0)))) &&
+          (*(char *)&pNVar8[-1].connectivity != '\0')))) {
+        PartyMigrate_NomineeInfoString(pNVar8);
+        pNVar5 = (NomineeInfo *)param_1->partyId;
+        Party_GetMemberName(param_1,(int)pPVar10);
         Com_Printf(0x19,"Considering nominee %i (%s) for party %i %s\n");
-        bVar4 = IsTheirNomineeBetter
-                          (pPVar6,(int)&local_60,(NomineeInfo *)pPVar12,(int)pNVar10,pNVar7);
-        if (bVar4) {
-          local_60 = pNVar10->upload;
-          local_5c = pNVar10->NAT;
-          local_58 = *(undefined4 *)&pNVar10->onLSP;
-          local_54 = pNVar10->connectivity;
-          pPVar6 = pPVar12;
+        bVar3 = IsTheirNomineeBetter
+                          (pPVar4,(int)&local_60,(NomineeInfo *)pPVar10,(int)pNVar8,pNVar5);
+        if (bVar3) {
+          local_60 = pNVar8->upload;
+          local_5c = pNVar8->NAT;
+          local_58 = *(undefined4 *)&pNVar8->onLSP;
+          local_54 = pNVar8->connectivity;
+          pPVar4 = pPVar10;
         }
       }
-      pPVar12 = (PartyData *)((int)&pPVar12->session + 1);
-      pNVar10 = pNVar10 + 0x15;
-    } while ((int)pPVar12 < 0x12);
+      pPVar10 = (PartyData *)((int)&pPVar10->session + 1);
+      pNVar8 = pNVar8 + 0x15;
+    } while ((int)pPVar10 < 0x12);
   }
-  PartyMigrate_NewHostDecided(pPVar2,(PartyActiveClient *)uVar5,(int)pPVar6);
-LAB_82396e60:
-  __restgprlr_24();
+  PartyMigrate_NewHostDecided(param_1,param_2,(int)pPVar4);
   return;
 }
 
 
 // 823953B8  PartyMigrate_NewHostDecided  (client_mp/partymigrate.cpp:3403)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_NewHostDecided(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
 {
-  uint uVar1;
-  PartyData *pPVar2;
-  int iVar3;
-  ulonglong uVar4;
-  PartyActiveClient *pPVar5;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd4c,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd4d,0,"%s");
   }
-  if ((pPVar2->migrateData).weAreArbitrating == false) {
+  if ((param_1->migrateData).weAreArbitrating == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd4e,0,"%s");
   }
-  iVar3 = PartyMigrate_IsGameServerHostMigration(pPVar2);
-  if (iVar3 != 0) {
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd4f,0,"%s");
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar2);
-  if (iVar3 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd50,0,"%s");
   }
-  uVar1 = (pPVar2->migrateData).expectedNewHost;
-  if ((-1 < (int)uVar1) && (uVar1 != param_3)) {
+  iVar1 = (param_1->migrateData).expectedNewHost;
+  if ((-1 < iVar1) && (iVar1 != param_3)) {
     va("Changed our mind about the host! This will confuse clients. %i => %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd51,0,"%s\n\t%s");
   }
-  pPVar5 = (PartyActiveClient *)uVar4;
   if (param_3 < 0) {
     Com_Printf(0x19,"Client %i should be host (disbanding)\n");
-    PartyMigrate_TellNoNewHost(pPVar2,pPVar5);
-    PartyMigrate_CancelMigration(pPVar2,pPVar5);
-    __restgprlr_27();
+    PartyMigrate_TellNoNewHost(param_1,param_2);
+    PartyMigrate_CancelMigration(param_1,param_2);
     return;
   }
-  iVar3 = PartyMigrate_IsStatusValidForMigration(pPVar2,param_3);
-  if (iVar3 == 0) {
+  iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,param_3);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd5c,0,"%s");
   }
-  PartyMigrate_NomineeInfoString(&(pPVar2->migrateData).bestHost.info);
-  Party_GetMemberName(pPVar2,param_3);
+  PartyMigrate_NomineeInfoString(&(param_1->migrateData).bestHost.info);
+  Party_GetMemberName(param_1,param_3);
   Com_Printf(0x19,"Client %i (%s - xuid %llx) should be host %s\n");
-  PartyMigrate_TellNewHost(pPVar2,pPVar5,param_3);
-  PartyMigrate_To(pPVar2,pPVar5,param_3,0);
-  __restgprlr_27();
+  PartyMigrate_TellNewHost(param_1,param_2,param_3);
+  PartyMigrate_To(param_1,param_2,param_3,0);
   return;
 }
 
@@ -4263,181 +3953,174 @@ int PartyMigrate_HostMigrationEnabled(PartyData *param_1)
 
 // 82396E68  PartyMigrate_Frame  (client_mp/partymigrate.cpp:3453)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_Frame(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
-  uint uVar3;
-  ulonglong uVar5;
-  PartyActiveClient *pPVar6;
+  int iVar1;
+  bool bVar3;
+  uint uVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd7e,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd7f,0,"%s");
   }
-  iVar2 = PartyMigrate_MigrateActive(pPVar1);
-  if (iVar2 == 0) {
+  iVar1 = PartyMigrate_MigrateActive(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd80,0,"%s");
   }
-  iVar2 = PartyMigrate_IsGameServerHostMigration(pPVar1);
-  if (iVar2 != 0) {
+  iVar1 = PartyMigrate_IsGameServerHostMigration(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd81,0,"%s");
   }
-  bVar4 = Lobby_IsInLobby();
-  if ((!bVar4) && (g_partyData.inParty == 0)) {
+  bVar3 = Lobby_IsInLobby();
+  if ((!bVar3) && (g_partyData.inParty == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd82,0,"%s");
   }
-  iVar2 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
-  if ((iVar2 != 0) && (g_partyJoinInfo.partyType == pPVar1->partyId)) {
+  iVar1 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
+  if ((iVar1 != 0) && (g_partyJoinInfo.partyType == param_1->partyId)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd85,0,"%s\n\t%s");
   }
-  if ((pPVar1->migrateData).partyTime < (pPVar1->migrateData).startTime) {
+  if ((param_1->migrateData).partyTime < (param_1->migrateData).startTime) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xd88,0,"party->migrateData.startTime <= party->migrateData.partyTime\n\t%i, %i"
                    );
   }
-  (pPVar1->migrateData).partyTime = param_3 + (pPVar1->migrateData).partyTime;
-  pPVar6 = (PartyActiveClient *)uVar5;
-  if ((pPVar1->migrateData).decidedOurNominee == false) {
-    PartyMigrate_SelectOurNominee(pPVar1,pPVar6);
+  (param_1->migrateData).partyTime = param_3 + (param_1->migrateData).partyTime;
+  if ((param_1->migrateData).decidedOurNominee == false) {
+    PartyMigrate_SelectOurNominee(param_1,param_2);
   }
-  if ((pPVar1->migrateData).timeoutDuration <
-      (pPVar1->migrateData).partyTime - (pPVar1->migrateData).startTime) {
+  if ((param_1->migrateData).timeoutDuration <
+      (param_1->migrateData).partyTime - (param_1->migrateData).startTime) {
     Com_Printf(0x19,"Party (%i) migration timed out.\n");
-    bVar4 = Party_IsPrivateParty(pPVar1);
-    if (((bVar4) && (iVar2 = (pPVar1->migrateData).migrateToRequestedHost, -1 < iVar2)) &&
-       ((pPVar1->migrateData).expectedNewHost < 0)) {
-      PartyMigrate_SendMakeHostError(pPVar1,pPVar6,iVar2);
+    bVar3 = Party_IsPrivateParty(param_1);
+    if (((bVar3) && (iVar1 = (param_1->migrateData).migrateToRequestedHost, -1 < iVar1)) &&
+       ((param_1->migrateData).expectedNewHost < 0)) {
+      PartyMigrate_SendMakeHostError(param_1,param_2,iVar1);
     }
-    iVar2 = pPVar1->areWeHost;
-    (pPVar1->migrateData).migrateActive = false;
-    if ((iVar2 != 0) && ((pPVar1->session->dyn).allowJoining != false)) {
-      (pPVar1->specificData).hostData.firstLobby = false;
+    iVar1 = param_1->areWeHost;
+    (param_1->migrateData).migrateActive = false;
+    if ((iVar1 != 0) && ((param_1->session->dyn).allowJoining != false)) {
+      (param_1->specificData).hostData.firstLobby = false;
     }
-    PartyMigrate_ClearInternalData(pPVar1);
-    uVar3 = Party_HostNum(pPVar1);
-    iVar2 = PartyMigrate_IsStatusValidForMigration(pPVar1,uVar3);
-    if (iVar2 == 0) {
+    PartyMigrate_ClearInternalData(param_1);
+    uVar2 = Party_HostNum(param_1);
+    iVar1 = PartyMigrate_IsStatusValidForMigration(param_1,uVar2);
+    if (iVar1 == 0) {
       Com_Printf(0x19,
                  "PartyMigrate - Frame - Migration timed out, and host is gone, handling the error.\n"
                 );
-      PartyMigrate_HandleMigrationFailure(pPVar1,pPVar6->localControllerIndex);
-      __restgprlr_27();
+      PartyMigrate_HandleMigrationFailure(param_1,param_2->localControllerIndex);
       return;
     }
   }
-  else if ((pPVar1->migrateData).weAreArbitrating != false) {
-    bVar4 = Party_IsPrivateParty(pPVar1);
-    if ((bVar4) && (iVar2 = (pPVar1->migrateData).migrateToRequestedHost, -1 < iVar2)) {
-      PartyMigrate_SelectPredeterminedHost(pPVar1,iVar2,pPVar6);
-      __restgprlr_27();
+  else if ((param_1->migrateData).weAreArbitrating != false) {
+    bVar3 = Party_IsPrivateParty(param_1);
+    if ((bVar3) && (iVar1 = (param_1->migrateData).migrateToRequestedHost, -1 < iVar1)) {
+      PartyMigrate_SelectPredeterminedHost(param_1,iVar1,param_2);
       return;
     }
-    PartyMigrate_DetermineBestHost(pPVar1,pPVar6);
+    PartyMigrate_DetermineBestHost(param_1,param_2);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82397138  PartyMigrate_RequestFindBestHost  (client_mp/partymigrate.cpp:3510)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_RequestFindBestHost(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar5;
-  netadr_t *pnVar4;
-  PartyMember *pPVar6;
-  ulong64 *puVar7;
-  uint uVar8;
+  int iVar1;
+  char *pcVar2;
+  bool bVar4;
+  netadr_t *pnVar3;
+  PartyMember *pPVar5;
+  ulong64 *puVar6;
+  uint uVar7;
   PartyActiveClient local_1b0 [2];
   netadr_t local_1a0;
   msg_t mStack_190;
   netadr_t nStack_160;
   uchar auStack_150 [336];
   
-  pPVar1 = (PartyData *)__savegprlr_23(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xdbd,0,"%s");
   }
-  if (pPVar1->areWeHost == 0) {
+  if (param_1->areWeHost == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp",
                     0xdbe,0,"%s");
   }
   if ((party_hostmigration->current).enabled != false) {
-    iVar2 = 0;
-    pPVar6 = pPVar1->partyMembers;
+    iVar1 = 0;
+    pPVar5 = param_1->partyMembers;
     do {
-      if (pPVar6->status == '\x06') goto LAB_823973ac;
-      iVar2 = iVar2 + 1;
-      pPVar6 = pPVar6 + 1;
-    } while (iVar2 < 0x12);
-    iVar2 = Sys_Milliseconds();
-    (pPVar1->specificData).hostData.lastFindBestTime = iVar2;
+      if (pPVar5->status == '\x06') {
+        return;
+      }
+      iVar1 = iVar1 + 1;
+      pPVar5 = pPVar5 + 1;
+    } while (iVar1 < 0x12);
+    iVar1 = Sys_Milliseconds();
+    (param_1->specificData).hostData.lastFindBestTime = iVar1;
     MSG_Init(&mStack_190,auStack_150,0x100);
-    pcVar3 = va("%ifindbest %i");
-    MSG_WriteString(&mStack_190,pcVar3);
-    uVar8 = 0;
-    puVar7 = &pPVar1->partyMembers[0].player;
+    pcVar2 = va("%ifindbest %i");
+    MSG_WriteString(&mStack_190,pcVar2);
+    uVar7 = 0;
+    puVar6 = &param_1->partyMembers[0].player;
     do {
-      iVar2 = Party_IsMemberIndexDataAvailable(pPVar1,uVar8);
-      if (((iVar2 != 0) && (bVar5 = Live_XUIDIsLocalPlayer(*puVar7), !bVar5)) &&
-         (bVar5 = Session_IsUserRegistered(pPVar1->session,uVar8), bVar5)) {
-        bVar5 = Session_PlayerHasLoopbackAddr(pPVar1->session,uVar8);
-        if (bVar5) {
+      iVar1 = Party_IsMemberIndexDataAvailable(param_1,uVar7);
+      if (((iVar1 != 0) && (bVar4 = Live_XUIDIsLocalPlayer(*puVar6), !bVar4)) &&
+         (bVar4 = Session_IsUserRegistered(param_1->session,uVar7), bVar4)) {
+        bVar4 = Session_PlayerHasLoopbackAddr(param_1->session,uVar7);
+        if (bVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                           ,0xdd3,0,"%s");
         }
-        bVar5 = Party_IsHost(pPVar1,uVar8);
-        if (bVar5) {
+        bVar4 = Party_IsHost(param_1,uVar7);
+        if (bVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partymigrate.cpp"
                           ,0xdd4,0,"%s");
         }
-        pnVar4 = Session_GetPlayerAddr(&nStack_160,pPVar1->session,uVar8);
-        local_1a0.type = pnVar4->type;
-        local_1a0.ip = *&pnVar4->ip;
-        local_1a0.port = pnVar4->port;
-        local_1a0._10_2_ = *(undefined2 *)&pnVar4->field_0xa;
-        local_1a0.localNetID = pnVar4->localNetID;
+        pnVar3 = Session_GetPlayerAddr(&nStack_160,param_1->session,uVar7);
+        local_1a0.type = pnVar3->type;
+        local_1a0.ip = *&pnVar3->ip;
+        local_1a0.port = pnVar3->port;
+        local_1a0._10_2_ = *(undefined2 *)&pnVar3->field_0xa;
+        local_1a0.localNetID = pnVar3->localNetID;
         RMsg_AddMessage(&local_1a0,&mStack_190,NS_MAXCLIENTS);
       }
-      uVar8 = uVar8 + 1;
-      puVar7 = puVar7 + 0x2a;
-    } while ((int)uVar8 < 0x12);
-    local_1b0[0] = Party_GetMainActiveClient(pPVar1,param_2);
-    Party_IsGameLobby(pPVar1);
+      uVar7 = uVar7 + 1;
+      puVar6 = puVar6 + 0x2a;
+    } while ((int)uVar7 < 0x12);
+    local_1b0[0] = Party_GetMainActiveClient(param_1,param_2);
+    Party_IsGameLobby(param_1);
     Com_Printf(0x19,"We are the %s host and we\'re asking everyone to find the best host\n");
-    iVar2 = Sys_Milliseconds();
-    (pPVar1->migrateData).startTime = iVar2;
-    (pPVar1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
-    (pPVar1->migrateData).partyTime = iVar2;
-    PartyMigrate_StartNegotiation(pPVar1,local_1b0);
-    PartyMigrate_CheckNegotiationDisconnect(pPVar1,local_1b0);
+    iVar1 = Sys_Milliseconds();
+    (param_1->migrateData).startTime = iVar1;
+    (param_1->migrateData).timeoutDuration = (partymigrate_timeout->current).integer;
+    (param_1->migrateData).partyTime = iVar1;
+    PartyMigrate_StartNegotiation(param_1,local_1b0);
+    PartyMigrate_CheckNegotiationDisconnect(param_1,local_1b0);
   }
-LAB_823973ac:
-  __restgprlr_23();
   return;
 }
 

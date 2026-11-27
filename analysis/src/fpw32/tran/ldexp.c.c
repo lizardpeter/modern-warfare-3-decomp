@@ -2,6 +2,9 @@
 
 // 8291C100  ldexp  (<external>/bt/278379/vctools/crt/src/fpw32/tran/ldexp.c:37)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 double ldexp(double param_1,int param_2)
 
 {
@@ -12,70 +15,63 @@ double ldexp(double param_1,int param_2)
   uint in_r5;
   double dVar4;
   double dVar5;
-  double dVar6;
   double dStack00000010;
   int local_40;
   
-  dVar4 = (double)__savegprlr_29(param_2);
   uVar3 = 0xc007feff;
   piVar2 = (int *)0xf8;
-  dStack00000010 = dVar4;
+  dStack00000010 = param_1;
   _ctrlfp();
   if (((ulonglong)dStack00000010 >> 0x30 & 0x7ff0) == 0x7ff0) {
-    iVar1 = _sptype(dVar4);
+    iVar1 = _sptype(param_1);
     if (0 < iVar1) {
       if (iVar1 < 3) goto LAB_8291c2b4;
       if (iVar1 == 3) {
-        dVar4 = _handle_qnan2(0x19,dVar4,(double)(longlong)in_r4,uVar3);
-        goto LAB_8291c2c4;
+        dVar4 = _handle_qnan2(0x19,param_1,(double)(longlong)in_r4,uVar3);
+        return dVar4;
       }
     }
     iVar1 = 8;
-    dVar5 = dVar4 + 1.0;
+    dVar5 = param_1 + 1.0;
+    goto LAB_8291c1ac;
   }
-  else {
-    dVar6 = 0.0;
-    if (dVar4 == 0.0) {
-LAB_8291c2b4:
-      _ctrlfp();
-      goto LAB_8291c2c4;
-    }
-    dVar5 = _decomp(dVar4,piVar2);
-    if (in_r4 < 0) {
-      if (local_40 < -0x80000000 - in_r4) {
+  dVar4 = 0.0;
+  if (param_1 == 0.0) goto LAB_8291c2b4;
+  dVar5 = _decomp(param_1,piVar2);
+  if (in_r4 < 0) {
+    if (local_40 < -0x80000000 - in_r4) {
 LAB_8291c270:
-        dVar5 = dVar5 * dVar6;
+      dVar5 = dVar5 * dVar4;
+      iVar1 = 0x12;
+      goto LAB_8291c1ac;
+    }
+LAB_8291c210:
+    iVar1 = local_40 + in_r4;
+    if (0xa00 < iVar1) goto LAB_8291c21c;
+    if (iVar1 < 0x401) {
+      if (-0x9fe < iVar1) {
+        if (-0x3fe < iVar1) {
+          param_1 = _set_exp(dVar5,(int)piVar2);
+LAB_8291c2b4:
+          _ctrlfp();
+          return param_1;
+        }
+        dVar5 = _set_exp(dVar5,(int)piVar2);
         iVar1 = 0x12;
         goto LAB_8291c1ac;
       }
-LAB_8291c210:
-      iVar1 = local_40 + in_r4;
-      if (0xa00 < iVar1) goto LAB_8291c21c;
-      if (iVar1 < 0x401) {
-        if (-0x9fe < iVar1) {
-          if (iVar1 < -0x3fd) {
-            dVar5 = _set_exp(dVar5,(int)piVar2);
-            iVar1 = 0x12;
-            goto LAB_8291c1ac;
-          }
-          dVar4 = _set_exp(dVar5,(int)piVar2);
-          goto LAB_8291c2b4;
-        }
-        goto LAB_8291c270;
-      }
-      dVar5 = _set_exp(dVar5,(int)piVar2);
+      goto LAB_8291c270;
     }
-    else {
-      if (local_40 <= 0x7fffffff - in_r4) goto LAB_8291c210;
-LAB_8291c21c:
-      dVar5 = _copysign(_d_inf.dbl,dVar5);
-    }
-    iVar1 = 0x11;
+    dVar5 = _set_exp(dVar5,(int)piVar2);
   }
+  else {
+    if (local_40 <= 0x7fffffff - in_r4) goto LAB_8291c210;
+LAB_8291c21c:
+    dVar5 = _copysign(_d_inf.dbl,dVar5);
+  }
+  iVar1 = 0x11;
 LAB_8291c1ac:
-  dVar4 = _except2(iVar1,0x19,dVar4,(double)(longlong)in_r4,dVar5,in_r5);
-LAB_8291c2c4:
-  dVar4 = (double)__restgprlr_29(dVar4);
+  dVar4 = _except2(iVar1,0x19,param_1,(double)(longlong)in_r4,dVar5,in_r5);
   return dVar4;
 }
 

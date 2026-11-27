@@ -41,40 +41,36 @@ ulong __thiscall XAUDIO::CBatchAllocator::GetFreeHeapSize(CBatchAllocator *this)
 
 // 828EE818  XAudioPrepareBatchAllocator  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:91)
 
-undefined4 XAudioPrepareBatchAllocator(ulong param_1,ulong param_2,IXAudioBatchAllocator **param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int XAudioPrepareBatchAllocator(ulong param_1,ulong param_2,IXAudioBatchAllocator **param_3)
 
 {
   IXAudioBatchAllocator *pIVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
+  int iVar2;
   CBatchAllocator *local_30 [12];
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
   pIVar1 = *param_3;
   if (pIVar1 == (IXAudioBatchAllocator *)0x0) {
     local_30[0] = (CBatchAllocator *)0x0;
-    if ((uVar5 & 0xffffffff) == 0) {
-      iVar3 = XAUDIO::CDynamicBatchAllocator::CreateObject(local_30);
+    if (param_2 == 0) {
+      iVar2 = XAUDIO::CDynamicBatchAllocator::CreateObject(local_30);
     }
     else {
-      iVar3 = XAUDIO::CStaticBatchAllocator::CreateObject((ulong)uVar2,(ulong)uVar5,local_30);
+      iVar2 = XAUDIO::CStaticBatchAllocator::CreateObject(param_1,param_2,local_30);
     }
-    if (-1 < iVar3) {
+    if (-1 < iVar2) {
       *param_3 = (IXAudioBatchAllocator *)local_30[0];
-      uVar4 = __restgprlr_28();
-      return uVar4;
+      return iVar2;
     }
   }
   else {
     (**(code **)*pIVar1)(pIVar1);
-    (**(code **)((int)*pIVar1 + 8))(pIVar1,uVar5);
-    (**(code **)((int)*pIVar1 + 0xc))(pIVar1,uVar2);
+    (**(code **)((int)*pIVar1 + 8))(pIVar1,param_2);
+    iVar2 = (**(code **)((int)*pIVar1 + 0xc))(pIVar1,param_1);
   }
-  uVar4 = __restgprlr_28();
-  return uVar4;
+  return iVar2;
 }
 
 
@@ -169,31 +165,29 @@ undefined4 XAUDIO::CDynamicBatchAllocator::CreateObject(CBatchAllocator **param_
 
 // 828EE778  CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:374)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 XAUDIO::CStaticBatchAllocator::CreateObject(ulong param_1,ulong param_2,CBatchAllocator **param_3)
 
 {
-  ulong uVar1;
-  CBatchAllocator *pCVar2;
-  undefined4 uVar3;
+  CBatchAllocator *pCVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  pCVar2 = CXMemMemoryManager::XMemAlloc(&g_MemoryManager,param_2 + 0x1c,uVar1);
-  if (pCVar2 == (CBatchAllocator *)0x0) {
-    uVar3 = __restgprlr_29(0xffffffff8007000e);
-    return uVar3;
+  pCVar1 = CXMemMemoryManager::XMemAlloc(&g_MemoryManager,param_2 + 0x1c,param_1);
+  if (pCVar1 == (CBatchAllocator *)0x0) {
+    return 0x8007000e;
   }
-  pCVar2->_padding_ = (int)&CObjectRefCount::_vftable_;
-  pCVar2->_padding_ = 1;
-  pCVar2->m_AllocatedSize = 0;
-  pCVar2->_padding_ = (int)&_vftable__for__IXAudioBatchAllocator__;
-  pCVar2->_padding_ = (int)&_vftable__for__XAUDIO__CObjectRefCount__;
-  pCVar2->m_AllocAttributes = uVar1;
-  pCVar2->m_BufferSize = param_2;
-  pCVar2->m_pBuffer = (uchar *)(pCVar2 + 1);
-  *param_3 = pCVar2;
-  uVar3 = __restgprlr_29();
-  return uVar3;
+  pCVar1->_padding_ = (int)&CObjectRefCount::_vftable_;
+  pCVar1->_padding_ = 1;
+  pCVar1->m_AllocatedSize = 0;
+  pCVar1->_padding_ = (int)&_vftable__for__IXAudioBatchAllocator__;
+  pCVar1->_padding_ = (int)&_vftable__for__XAUDIO__CObjectRefCount__;
+  pCVar1->m_AllocAttributes = param_1;
+  pCVar1->m_BufferSize = param_2;
+  pCVar1->m_pBuffer = (uchar *)(pCVar1 + 1);
+  *param_3 = pCVar1;
+  return 0;
 }
 
 

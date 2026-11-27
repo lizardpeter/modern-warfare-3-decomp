@@ -2,36 +2,31 @@
 
 // 828C8350  NellyInitVocalFry  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/decvcfry.c:195)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ushort NellyInitVocalFry(void **param_1)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  void *pvVar4;
-  ushort uVar5;
+  undefined4 *puVar1;
+  void *pvVar2;
   
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar2 != (undefined4 *)0x0) {
-    *puVar2 = 0;
-    puVar3 = (*callocfunc)(1,0xc);
-    if (puVar3 != (undefined4 *)0x0) {
-      *puVar2 = puVar3;
-      pvVar4 = (*callocfunc)(0xd,4);
-      puVar3[2] = pvVar4;
-      if (pvVar4 != (void *)0x0) {
-        puVar3[1] = 0;
-        *puVar3 = 0x447a0000;
-        (*memsetfunc)(pvVar4,0,0x34);
-        uVar1 = 0;
-        goto LAB_828c83f0;
+  if (param_1 != (void **)0x0) {
+    *param_1 = (void *)0x0;
+    puVar1 = (*callocfunc)(1,0xc);
+    if (puVar1 != (undefined4 *)0x0) {
+      *param_1 = puVar1;
+      pvVar2 = (*callocfunc)(0xd,4);
+      puVar1[2] = pvVar2;
+      if (pvVar2 != (void *)0x0) {
+        puVar1[1] = 0;
+        *puVar1 = 0x447a0000;
+        (*memsetfunc)(pvVar2,0,0x34);
+        return 0;
       }
     }
   }
-  uVar1 = 1;
-LAB_828c83f0:
-  uVar5 = __restgprlr_29(uVar1);
-  return uVar5;
+  return 1;
 }
 
 

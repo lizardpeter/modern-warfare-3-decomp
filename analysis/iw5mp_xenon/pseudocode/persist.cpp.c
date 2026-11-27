@@ -2,6 +2,8 @@
 
 // 828757B8  D3DDevice_PersistDisplay  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/persist.cpp:21)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4
@@ -11,18 +13,14 @@ D3DDevice_PersistDisplay
 {
   uint uVar1;
   undefined8 *puVar2;
-  D3DDevice *pDVar5;
-  undefined8 uVar3;
-  longlong lVar4;
-  undefined4 uVar6;
-  ulonglong uVar7;
-  _D3DVIDEO_SCALER_PARAMETERS *p_Var8;
-  undefined8 *puVar9;
-  int iVar10;
-  uint uVar11;
-  uint uVar12;
-  _D3DFORMAT _Var13;
-  longlong lVar14;
+  undefined4 uVar4;
+  longlong lVar3;
+  undefined8 *puVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  _D3DFORMAT _Var9;
+  longlong lVar10;
   ulong in_stack_fffffee8;
   int in_stack_fffffeec;
   uint in_stack_fffffef0;
@@ -40,66 +38,62 @@ D3DDevice_PersistDisplay
   undefined8 uStack_78;
   D3DBaseTexture local_70 [2];
   
-  uVar7 = (ulonglong)(int)param_3;
-  pDVar5 = (D3DDevice *)__savegprlr_26(param_1);
-  p_Var8 = (_D3DVIDEO_SCALER_PARAMETERS *)uVar7;
   D3D__GetTextureSizes
             ((GPUTEXTURE_FETCH_CONSTANT *)&param_2->field_0x1c,auStack_98,&local_a0,&uStack_9c);
-  iVar10 = (*(uint *)&param_2->field_0x28 >> 0x1e & 2) + 1;
-  uVar12 = (*(uint *)&param_2->field_0x24 & 0x1fff) + iVar10;
-  uVar11 = (*(uint *)&param_2->field_0x24 >> 0xd & 0x1fff) + iVar10;
+  iVar6 = (*(uint *)&param_2->field_0x28 >> 0x1e & 2) + 1;
+  uVar8 = (*(uint *)&param_2->field_0x24 & 0x1fff) + iVar6;
+  uVar7 = (*(uint *)&param_2->field_0x24 >> 0xd & 0x1fff) + iVar6;
   if (local_a0 < 0x398001) {
-    lVar4 = MmAllocatePhysicalMemoryEx(1,0x398000,0x404,0,0x7fffffff,0x1000);
-    if (lVar4 == 0) {
-      uVar3 = 0xffffffff8007000e;
+    lVar3 = MmAllocatePhysicalMemoryEx(1,0x398000,0x404,0,0x7fffffff,0x1000);
+    if (lVar3 == 0) {
+      uVar4 = 0x8007000e;
     }
     else {
-      D3DDevice_BlockUntilIdle(pDVar5);
+      D3DDevice_BlockUntilIdle(param_1);
       D3DTexture_LockRect(param_2,0,&_Stack_90,(tagRECT *)0x0,0x10);
       memcpy();
       D3DTexture_UnlockRect(param_2,0);
       sync(0);
       uVar1 = *(uint *)&param_2->field_0x20 & 0x3f;
       if ((uVar1 == 6) || (uVar1 == 0x3e)) {
-        _Var13 = D3DFMT_LE_X8R8G8B8;
+        _Var9 = D3DFMT_LE_X8R8G8B8;
       }
       else {
-        _Var13 = D3DFMT_LE_X2R10G10B10;
+        _Var9 = D3DFMT_LE_X2R10G10B10;
       }
-      lVar14 = 6;
+      lVar10 = 6;
       puVar2 = &uStack_78;
       do {
-        puVar9 = puVar2;
-        puVar2 = puVar9 + 1;
+        puVar5 = puVar2;
+        puVar2 = puVar5 + 1;
         *puVar2 = 0;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      *(undefined4 *)(puVar9 + 2) = 0;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+      *(undefined4 *)(puVar5 + 2) = 0;
       D3D::SetTextureHeader
-                (D3DRTYPE_TEXTURE,uVar12,uVar11,1,1,0,_Var13,MIPPACKING_DEFAULT,in_stack_fffffee8,
+                (D3DRTYPE_TEXTURE,uVar8,uVar7,1,1,0,_Var9,MIPPACKING_DEFAULT,in_stack_fffffee8,
                  in_stack_fffffeec,in_stack_fffffef0,in_stack_fffffef4,in_stack_fffffef8,
                  in_stack_fffffefc);
-      local_88 = (uint)lVar4;
+      local_88 = (uint)lVar3;
       local_70[0].Format._4_4_ = local_70[0].Format.dword[1] & 0xfff | local_88 & 0xfffff000;
-      if ((uVar7 & 0xffffffff) == 0) {
-        p_Var8 = (_D3DVIDEO_SCALER_PARAMETERS *)(pDVar5[1].m_Constants.field1_0x300.Alu + 0x3f);
+      if (param_3 == (_D3DVIDEO_SCALER_PARAMETERS *)0x0) {
+        param_3 = (_D3DVIDEO_SCALER_PARAMETERS *)(param_1[1].m_Constants.field1_0x300.Alu + 0x3f);
       }
-      D3DDevice_SynchronizeToPresentationInterval(pDVar5);
-      D3DDevice_Swap(pDVar5,local_70,p_Var8);
-      D3DDevice_BlockUntilIdle(pDVar5);
-      local_84 = (undefined2)uVar12;
-      local_82 = (undefined2)uVar11;
-      *(byte *)((int)&pDVar5[1].m_ReferenceCount + 1) =
-           *(byte *)((int)&pDVar5[1].m_ReferenceCount + 1) | 8;
-      local_80 = _Var13;
+      D3DDevice_SynchronizeToPresentationInterval(param_1);
+      D3DDevice_Swap(param_1,local_70,param_3);
+      D3DDevice_BlockUntilIdle(param_1);
+      local_84 = (undefined2)uVar8;
+      local_82 = (undefined2)uVar7;
+      *(byte *)((int)&param_1[1].m_ReferenceCount + 1) =
+           *(byte *)((int)&param_1[1].m_ReferenceCount + 1) | 8;
+      local_80 = _Var9;
       VdPersistDisplay(&local_88,0);
-      uVar3 = 0;
+      uVar4 = 0;
     }
   }
   else {
-    uVar3 = 0xffffffff80070057;
+    uVar4 = 0x80070057;
   }
-  uVar6 = __restgprlr_26(uVar3);
-  return uVar6;
+  return uVar4;
 }
 

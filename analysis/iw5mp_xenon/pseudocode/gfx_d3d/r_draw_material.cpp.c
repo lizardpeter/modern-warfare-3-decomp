@@ -13,50 +13,47 @@ Material * R_StandardDepthPrepassMaterial(void)
 
 // 82734D28  R_SetPrepassMaterial  (gfx_d3d/r_draw_material.cpp:80)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int R_SetPrepassMaterial(GfxCmdBufContext param_1,Material *param_2,MaterialTechniqueType param_3)
 
 {
-  int iVar1;
-  MaterialTechnique *pMVar2;
-  ulonglong uVar3;
-  Material *pMVar4;
-  undefined8 uStack00000010;
+  ulonglong uVar1;
+  GfxCmdBufState *pGVar2;
+  MaterialTechnique *pMVar3;
+  GfxCmdBufContext GStack00000010;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uStack00000010 = __savegprlr_26();
-  pMVar4 = (Material *)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
+  GStack00000010 = param_1;
+  if (param_2 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp",
                     0x5d,0,"%s");
   }
-  uVar3 = (pMVar4->info).drawSurf.packed >> 0x29 & 3;
-  if (uVar3 != 3) {
-    if ((uVar3 == 0) && ((pMVar4->stateFlags & 1) != 0)) {
-      pMVar4 = rgp.depthPrepassMaterial;
+  uVar1 = (param_2->info).drawSurf.packed >> 0x29 & 3;
+  if (uVar1 != 3) {
+    if ((uVar1 == 0) && ((param_2->stateFlags & 1) != 0)) {
+      param_2 = rgp.depthPrepassMaterial;
     }
-    pMVar2 = Material_GetTechnique(pMVar4,param_3);
-    iVar1 = uStack00000010._4_4_;
-    *(Material **)(uStack00000010._4_4_ + 0xec) = pMVar4;
-    *(MaterialTechnique **)(uStack00000010._4_4_ + 0xf4) = pMVar2;
-    if (pMVar2 != (MaterialTechnique *)0x0) {
-      if ((pMVar2->flags & 2) != 0) {
+    pMVar3 = Material_GetTechnique(param_2,param_3);
+    pGVar2 = GStack00000010.state;
+    (GStack00000010.state)->material = param_2;
+    (GStack00000010.state)->technique = pMVar3;
+    if (pMVar3 != (MaterialTechnique *)0x0) {
+      if ((pMVar3->flags & 2) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
                         ,0xb7,0,"%s");
       }
-      if ((pMVar2->flags & 1) != 0) {
+      if ((pMVar3->flags & 1) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
                         ,0xb8,0,"%s");
       }
-      *(MaterialTechniqueType *)(iVar1 + 0xf0) = param_3;
-      iVar1 = __restgprlr_26(1);
-      return iVar1;
+      pGVar2->techType = param_3;
+      return 1;
     }
   }
-  iVar1 = __restgprlr_26(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -79,64 +76,55 @@ Material * R_GetMaterialFromIndex(uint param_1)
 
 // 82734EB0  R_SetMaterial  (gfx_d3d/r_draw_material.cpp:239)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int R_SetMaterial(GfxCmdBufContext param_1,Material *param_2,MaterialTechniqueType param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  MaterialTechniqueSet *pMVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  int iVar7;
-  int iStack00000010;
-  int iStack00000014;
+  MaterialTechnique *pMVar1;
+  GfxCmdBufSourceState *pGVar2;
+  GfxCmdBufState *pGVar3;
+  MaterialTechniqueSet *pMVar4;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  _iStack00000010 = __savegprlr_25();
-  pMVar3 = Material_GetTechniqueSet((Material *)uVar5);
-  if (pMVar3 == (MaterialTechniqueSet *)0x0) {
+  _pGStack00000010 = param_1;
+  pMVar4 = Material_GetTechniqueSet(param_2);
+  if (pMVar4 == (MaterialTechniqueSet *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_inline.h",
                     0x76,0,"%s");
   }
-  iVar2 = iStack00000014;
-  iVar4 = *(int *)(pMVar3->unused + (int)((lVar6 + 3U & 0xffffffff) << 2) + -5);
-  *(Material **)(iStack00000014 + 0xec) = (Material *)uVar5;
-  *(int *)(iStack00000014 + 0xf4) = iVar4;
-  if (iVar4 != 0) {
-    if ((*(ushort *)(iVar4 + 4) & 2) != 0) {
+  pGVar3 = pGStack00000014;
+  pMVar1 = pMVar4->techniques[param_3];
+  pGStack00000014->material = param_2;
+  pGStack00000014->technique = pMVar1;
+  if (pMVar1 != (MaterialTechnique *)0x0) {
+    if ((pMVar1->flags & 2) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
                       ,0x152,0,"%s");
     }
-    if (((*(ushort *)(iVar4 + 4) & 1) == 0) || (rg.distortion != false)) {
-      iVar1 = iStack00000010;
-      iVar7 = (int)lVar6;
-      if (((iVar7 != 5) && (iVar7 != 4)) ||
-         (((*(ushort *)(iVar4 + 4) & 0x40) == 0 || (*(short *)(iStack00000010 + 0x1598) != 0)))) {
-        if ((uVar5 & 0xffffffff) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
-                          ,0x167,0,"%s");
-        }
-        if ((*(ushort *)(iVar4 + 4) & 0x400) != 0) {
-          *(undefined1 *)(iVar2 + 0xb11) = 1;
-          *(undefined4 *)(iVar1 + 0x16d4) = 0xffffffff;
-          *(int *)(iVar2 + 0xf0) = iVar7;
-          iVar4 = __restgprlr_25(1);
-          return iVar4;
-        }
-        *(int *)(iVar2 + 0xf0) = iVar7;
-        *(undefined1 *)(iVar2 + 0xb11) = 0;
-        iVar4 = __restgprlr_25(1);
-        return iVar4;
+    if ((((pMVar1->flags & 1) == 0) || (rg.distortion != false)) &&
+       (((pGVar2 = pGStack00000010, param_3 != TECHNIQUE_EMISSIVE && (param_3 != TECHNIQUE_UNLIT))
+        || (((pMVar1->flags & 0x40) == 0 || (pGStack00000010->constVersions[4] != 0)))))) {
+      if (param_2 == (Material *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
+                        ,0x167,0,"%s");
       }
+      if ((pMVar1->flags & 0x400) != 0) {
+        pGVar3->forceNoDepthHack = true;
+        pGVar2->depthHackFlags = 0xffffffff;
+        pGVar3->techType = param_3;
+        return 1;
+      }
+      pGVar3->techType = param_3;
+      pGVar3->forceNoDepthHack = false;
+      return 1;
     }
   }
-  iVar4 = __restgprlr_25(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -166,125 +154,112 @@ int R_SetupMaterialFailed(GfxDrawListArgs *param_1)
 
 // 82735058  R_SetupDrawGroup  (gfx_d3d/r_draw_material.cpp:399)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 int R_SetupDrawGroup(GfxDrawListArgs *param_1,GfxDrawGroupSetup param_2)
 
 {
-  GfxCmdBufState *pGVar1;
+  MaterialTechniqueType MVar1;
   GfxViewInfo *pGVar2;
   uint uVar3;
-  GfxCmdBufContext *pGVar4;
-  Material *pMVar5;
-  int iVar6;
-  ulonglong uVar7;
-  MaterialTechniqueType MVar8;
-  GfxCmdBufState *pGVar9;
-  GfxCmdBufContext GVar10;
-  ulonglong uVar11;
+  Material *pMVar4;
+  int iVar5;
+  MaterialTechniqueType MVar6;
+  GfxCmdBufContext GVar7;
   GfxCmdBufSourceState *local_70;
   GfxCmdBufState *pGStack_6c;
   
-  uVar7 = (ulonglong)(int)param_2.packed;
-  pGVar4 = (GfxCmdBufContext *)__savegprlr_20(param_1);
-  GVar10 = *pGVar4;
-  uVar11 = (uVar7 & 0xffffffff) >> 0x12;
-  if (rgp.materialCount <= uVar11) {
+  GVar7 = param_1->context;
+  if (rgp.materialCount <= param_2.packed >> 0x12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp",
                     0xe8,0,
                     "materialSortedIndex doesn\'t index rgp.materialCount\n\t%i not in [0, %i)");
   }
-  pMVar5 = R_GetSortedMaterial((uint)uVar11);
-  pGVar1 = pGVar4[1].state;
-  if (pGVar1 == (GfxCmdBufState *)0x9) {
-    uVar11 = (uVar7 & 0xffffffff) >> 8 & 0xff;
-    pGVar2 = (GfxViewInfo *)((pGVar4[1].source)->matrices).matrix[0].m[0][1];
-    if (pGVar2->sceneLightCount <= uVar11) {
+  pMVar4 = R_GetSortedMaterial(param_2.packed >> 0x12);
+  MVar1 = param_1->baseTechType;
+  if (MVar1 == TECHNIQUE_LIT) {
+    uVar3 = param_2.packed >> 8 & 0xff;
+    pGVar2 = param_1->listInfo->viewInfo;
+    if (pGVar2->sceneLightCount <= uVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp"
                       ,0x1ac,0,
                       "sceneLightIndex doesn\'t index viewInfo->sceneLightCount\n\t%i not in [0, %i)"
                      );
     }
-    local_70 = GVar10.source;
-    uVar3 = (uint)uVar11;
-    MVar8 = (MaterialTechniqueType)
-            ((local_70->input).data)->sceneLightTechType[0]
-            [uVar3 + (int)(((uVar7 & 0xffffffff) >> 1 & 0x7f) << 8)];
-    if ((uVar7 & 0x10000) != 0) {
-      MVar8 = TECHNIQUE_THERMAL;
+    local_70 = GVar7.source;
+    MVar6 = (MaterialTechniqueType)
+            ((local_70->input).data)->sceneLightTechType[param_2.packed >> 1 & 0x7f][uVar3];
+    if ((param_2.packed & 0x10000) != 0) {
+      MVar6 = TECHNIQUE_THERMAL;
     }
-    iVar6 = R_SetMaterial(GVar10,pMVar5,MVar8);
-    if (iVar6 == 0) {
+    iVar5 = R_SetMaterial(GVar7,pMVar4,MVar6);
+    if (iVar5 == 0) {
 LAB_827351c4:
-      pGVar4->state->material = (Material *)0x0;
-      iVar6 = __restgprlr_20(0);
-      return iVar6;
+      ((param_1->context).state)->material = (Material *)0x0;
+      return 0;
     }
-    R_SetSceneLight(local_70,uVar3,(bool)((byte)((uVar7 & 0xffffffff) >> 0x11) & 1),
-                    (bool)((byte)uVar7 & 1),pGVar2);
+    R_SetSceneLight(local_70,uVar3,(bool)((byte)(param_2.packed >> 0x11) & 1),
+                    (bool)((byte)param_2.packed & 1),pGVar2);
   }
-  else if ((int)pGVar1 < 2) {
-    iVar6 = R_SetPrepassMaterial(GVar10,pMVar5,(MaterialTechniqueType)pGVar1);
-    if (iVar6 == 0) goto LAB_827351c4;
+  else if ((int)MVar1 < 2) {
+    iVar5 = R_SetPrepassMaterial(GVar7,pMVar4,MVar1);
+    if (iVar5 == 0) goto LAB_827351c4;
   }
   else {
-    pGVar9 = pGVar1;
-    if ((uVar7 & 0x10000) != 0) {
-      pGVar9 = (GfxCmdBufState *)0x23;
+    MVar6 = MVar1;
+    if ((param_2.packed & 0x10000) != 0) {
+      MVar6 = TECHNIQUE_THERMAL;
     }
-    iVar6 = R_SetMaterial(GVar10,pMVar5,(MaterialTechniqueType)pGVar9);
-    if (iVar6 == 0) {
-      pGVar4->state->material = (Material *)0x0;
-      iVar6 = __restgprlr_20();
-      return iVar6;
+    iVar5 = R_SetMaterial(GVar7,pMVar4,MVar6);
+    if (iVar5 == 0) {
+      ((param_1->context).state)->material = (Material *)0x0;
+      return 0;
     }
   }
-  pGStack_6c = GVar10.state;
-  if ((pGStack_6c->material != pMVar5) &&
-     ((1 < (int)pGVar1 || (pGStack_6c->material != rgp.depthPrepassMaterial)))) {
+  pGStack_6c = GVar7.state;
+  if ((pGStack_6c->material != pMVar4) &&
+     ((1 < (int)MVar1 || (pGStack_6c->material != rgp.depthPrepassMaterial)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_material.cpp",
                     0x1cf,0,"%s");
   }
-  iVar6 = __restgprlr_20(1);
-  return iVar6;
+  return 1;
 }
 
 
 // 82735218  R_SetGameTime  (gfx_d3d/r_draw_material.cpp:508)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetGameTime(GfxCmdBufSourceState *param_1,float param_2)
 
 {
-  GfxCmdBufSourceState *pGVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
-  pGVar1 = (GfxCmdBufSourceState *)__savefpr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  dVar3 = extraout_f1;
-  dVar2 = floor(extraout_f1);
-  dVar6 = (double)(float)(dVar3 - (double)(float)dVar2);
-  dVar5 = (double)(float)(dVar6 * 6.2831854820251465);
-  dVar3 = sin(dVar5);
+  dVar1 = (double)param_2;
+  dVar3 = dVar1;
+  dVar2 = floor(dVar1);
+  dVar5 = (double)(float)(dVar3 - (double)(float)dVar2);
+  dVar4 = (double)(float)(dVar5 * 6.2831854820251465);
+  dVar3 = sin(dVar4);
   dVar2 = (double)(float)dVar3;
-  dVar3 = cos(dVar5);
-  dVar3 = (double)(float)dVar3;
-  dVar4 = fmod(dVar4,43200.0);
-  (pGVar1->input).consts[7][0] = (float)dVar2;
-  (pGVar1->input).consts[7][1] = (float)dVar3;
-  (pGVar1->input).consts[7][2] = (float)dVar6;
-  (pGVar1->input).consts[7][3] = (float)dVar4;
-  R_DirtyCodeConstant(pGVar1,7);
-  __restfpr_28();
+  dVar3 = cos(dVar4);
+  dVar4 = (double)(float)dVar3;
+  dVar3 = fmod(dVar1,43200.0);
+  (param_1->input).consts[7][0] = (float)dVar2;
+  (param_1->input).consts[7][1] = (float)dVar4;
+  (param_1->input).consts[7][2] = (float)dVar5;
+  (param_1->input).consts[7][3] = (float)dVar3;
+  R_DirtyCodeConstant(param_1,7);
   return;
 }
 

@@ -33,31 +33,32 @@ void SL_InitCheckLeaks(void)
 
 // 82543058  GetRefString  (script/scr_stringlist.h:130)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 RefString * GetRefString(uint param_1)
 
 {
-  ulonglong uVar1;
-  RefString *pRVar2;
+  uint uVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.h",0x83,
                     0,"%s");
   }
-  uVar1 = (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  uVar1 = param_1 * 0xc;
   if (0xbffff < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.h",0x84,
                     0,"%s");
-    pRVar2 = (RefString *)__restgprlr_29(uVar1 + ZEXT48(scrMemTreePub.mt_buffer));
-    return pRVar2;
+    return (RefString *)(scrMemTreePub.mt_buffer + uVar1);
   }
-  pRVar2 = (RefString *)__restgprlr_29(uVar1 + ZEXT48(scrMemTreePub.mt_buffer));
-  return pRVar2;
+  return (RefString *)(scrMemTreePub.mt_buffer + uVar1);
 }
 
 
 // 825457C0  SL_CheckLeaks  (script/scr_stringlist.cpp:138)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SL_CheckLeaks(void)
@@ -67,7 +68,6 @@ void SL_CheckLeaks(void)
   uint uVar2;
   uint uVar3;
   
-  __savegprlr_23();
   if (scrStringDebugGlob != (scrStringDebugGlob_t *)0x0) {
     if (scrStringDebugGlob->ignoreLeaks == 0) {
       uVar3 = 1;
@@ -91,7 +91,6 @@ void SL_CheckLeaks(void)
     }
     scrStringDebugGlob = (scrStringDebugGlob_t *)0x0;
   }
-  __restgprlr_23();
   return;
 }
 
@@ -160,38 +159,38 @@ char * SL_ConvertToStringSafe(uint param_1)
 
 // 825433A8  SL_DebugConvertToString  (script/scr_stringlist.cpp:194)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * SL_DebugConvertToString(uint param_1)
 
 {
   uint uVar1;
-  char *pcVar2;
-  RefString *pRVar3;
-  int iVar4;
+  RefString *pRVar2;
+  int iVar3;
+  char *pcVar4;
   int iVar5;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (uVar1 == 0) {
-    pcVar2 = (char *)__restgprlr_29(0xffffffff821527f8);
-    return pcVar2;
+  if (param_1 == 0) {
+    return "<NULL>";
   }
-  pRVar3 = GetRefString(uVar1);
-  pcVar2 = pRVar3->str;
-  uVar1 = *(byte *)&pRVar3->data - 1 & 0xff;
-  if (pcVar2[uVar1] == '\0') {
-    iVar5 = 0;
-    if (uVar1 != 0) {
-      do {
-        iVar4 = isprint((uint)(byte)pcVar2[iVar5]);
-        if (iVar4 == 0) goto LAB_82543420;
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < (int)uVar1);
-    }
-    pcVar2 = (char *)__restgprlr_29(pcVar2);
-    return pcVar2;
+  pRVar2 = GetRefString(param_1);
+  pcVar4 = pRVar2->str;
+  uVar1 = *(byte *)&pRVar2->data - 1 & 0xff;
+  if (pcVar4[uVar1] != '\0') {
+    return "<BINARY>";
   }
-LAB_82543420:
-  pcVar2 = (char *)__restgprlr_29(0xffffffff821527ec);
-  return pcVar2;
+  iVar5 = 0;
+  if (uVar1 != 0) {
+    do {
+      iVar3 = isprint((uint)(byte)pcVar4[iVar5]);
+      if (iVar3 == 0) {
+        return "<BINARY>";
+      }
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < (int)uVar1);
+  }
+  return pcVar4;
 }
 
 
@@ -252,23 +251,21 @@ uint SL_ConvertFromRefString(RefString *param_1)
 
 // 82543510  SL_ConvertFromString  (script/scr_stringlist.cpp:252)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint SL_ConvertFromString(char *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0xfd,0,"%s");
   }
-  if (0xbffff < (uint)(iVar1 - (int)scrMemTreePub.mt_buffer)) {
+  if (0xbffff < (uint)((int)param_1 - (int)scrMemTreePub.mt_buffer)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0xa9,0,"%s");
   }
-  uVar2 = __restgprlr_28(((iVar1 - (int)scrMemTreePub.mt_buffer) + -4) / 0xc);
-  return uVar2;
+  return (int)(param_1 + (-4 - (int)scrMemTreePub.mt_buffer)) / 0xc;
 }
 
 
@@ -339,6 +336,8 @@ void SL_EndLoadScripts(void)
 
 // 825436F0  SL_Init  (script/scr_stringlist.cpp:365)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SL_Init(void)
@@ -352,8 +351,7 @@ void SL_Init(void)
   <unnamed_type_u> <Var6;
   uint uVar7;
   
-  __savegprlr_22();
-  if (scrStringGlob.inited != false) {
+  if (scrStringGlob.inited) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x177,0,"%s");
   }
@@ -394,7 +392,6 @@ void SL_Init(void)
   scrStringDebugGlob->totalRefCount = 0;
   scrStringGlob.inited = true;
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
-  __restgprlr_22();
   return;
 }
 
@@ -421,131 +418,125 @@ void SL_Shutdown(void)
 
 // 82543870  FindStringOfSize  (script/scr_stringlist.cpp:449)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 uint FindStringOfSize(char *param_1,uint param_2)
 
 {
   <unnamed_type_u> <Var1;
   uint uVar2;
-  byte *pbVar3;
-  uint uVar4;
-  RefString *pRVar5;
+  uint uVar3;
+  RefString *pRVar4;
+  char *pcVar5;
   char *pcVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  char *pcVar9;
-  longlong lVar10;
-  byte *pbVar11;
+  longlong lVar7;
+  byte *pbVar8;
+  HashEntry *pHVar9;
+  uint uVar10;
+  uint uVar11;
   HashEntry *pHVar12;
-  uint uVar13;
-  uint uVar14;
-  HashEntry *pHVar15;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pbVar3 = (byte *)__savegprlr_19(param_1);
   Profile_Begin(0x149);
-  if (pbVar3 == (byte *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x1cd,0,"%s");
   }
-  uVar8 = (uint)uVar7;
-  uVar4 = GetHashCode((char *)pbVar3,uVar8);
-  pHVar12 = scrStringGlob.hashTable + uVar4;
+  uVar3 = GetHashCode(param_1,param_2);
+  pHVar9 = scrStringGlob.hashTable + uVar3;
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
-  if ((pHVar12->status_next & 0x30000) == 0x20000) {
-    pRVar5 = GetRefString(scrStringGlob.hashTable[uVar4].u.prev);
-    if ((ulonglong)*(byte *)&pRVar5->data == (uVar7 & 0xff)) {
-      pcVar6 = pRVar5->str;
-      lVar10 = 0;
-      if ((uVar7 & 0xffffffff) != 0) {
-        pcVar9 = pcVar6 + uVar8;
-        pbVar11 = pbVar3;
+  if ((pHVar9->status_next & 0x30000) == 0x20000) {
+    pRVar4 = GetRefString(scrStringGlob.hashTable[uVar3].u.prev);
+    if ((uint)*(byte *)&pRVar4->data == (param_2 & 0xff)) {
+      pcVar5 = pRVar4->str;
+      lVar7 = 0;
+      if (param_2 != 0) {
+        pcVar6 = pcVar5 + param_2;
+        pbVar8 = (byte *)param_1;
         do {
-          lVar10 = (ulonglong)(byte)*pcVar6 - (ulonglong)*pbVar11;
-          if (lVar10 != 0) break;
-          pcVar6 = pcVar6 + 1;
-          pbVar11 = pbVar11 + 1;
-        } while (pcVar6 != pcVar9);
+          lVar7 = (ulonglong)(byte)*pcVar5 - (ulonglong)*pbVar8;
+          if (lVar7 != 0) break;
+          pcVar5 = pcVar5 + 1;
+          pbVar8 = pbVar8 + 1;
+        } while (pcVar5 != pcVar6);
       }
-      if ((int)lVar10 == 0) {
-        if ((pHVar12->status_next & 0x30000) == 0) {
+      if ((int)lVar7 == 0) {
+        if ((pHVar9->status_next & 0x30000) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x1e0,0,"%s");
         }
-        uVar4 = scrStringGlob.hashTable[uVar4].u.prev;
-        pcVar6 = SL_ConvertToString(uVar4);
-        if (pRVar5->str != pcVar6) {
+        uVar3 = scrStringGlob.hashTable[uVar3].u.prev;
+        pcVar5 = SL_ConvertToString(uVar3);
+        if (pRVar4->str != pcVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x1e3,0,"%s");
         }
         Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
         Profile_EndInternal((double *)0x0);
-        uVar4 = __restgprlr_19(uVar4);
-        return uVar4;
+        return uVar3;
       }
     }
-    uVar13 = (uint)(ushort)scrStringGlob.hashTable[uVar4].status_next;
-    pHVar15 = scrStringGlob.hashTable + uVar13;
-    uVar2 = uVar4;
-    while (pHVar15 != pHVar12) {
-      if ((pHVar15->status_next & 0x30000) != 0x10000) {
+    uVar10 = (uint)(ushort)scrStringGlob.hashTable[uVar3].status_next;
+    pHVar12 = scrStringGlob.hashTable + uVar10;
+    uVar2 = uVar3;
+    while (pHVar12 != pHVar9) {
+      if ((pHVar12->status_next & 0x30000) != 0x10000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x1f1,0,"%s");
       }
-      pRVar5 = GetRefString((pHVar15->u).prev);
-      if ((ulonglong)*(byte *)&pRVar5->data == (uVar7 & 0xff)) {
-        pcVar6 = pRVar5->str;
-        lVar10 = 0;
-        if ((uVar7 & 0xffffffff) != 0) {
-          pcVar9 = pcVar6 + uVar8;
-          pbVar11 = pbVar3;
+      pRVar4 = GetRefString((pHVar12->u).prev);
+      if ((uint)*(byte *)&pRVar4->data == (param_2 & 0xff)) {
+        pcVar5 = pRVar4->str;
+        lVar7 = 0;
+        if (param_2 != 0) {
+          pcVar6 = pcVar5 + param_2;
+          pbVar8 = (byte *)param_1;
           do {
-            lVar10 = (ulonglong)(byte)*pcVar6 - (ulonglong)*pbVar11;
-            if (lVar10 != 0) break;
-            pcVar6 = pcVar6 + 1;
-            pbVar11 = pbVar11 + 1;
-          } while (pcVar6 != pcVar9);
+            lVar7 = (ulonglong)(byte)*pcVar5 - (ulonglong)*pbVar8;
+            if (lVar7 != 0) break;
+            pcVar5 = pcVar5 + 1;
+            pbVar8 = pbVar8 + 1;
+          } while (pcVar5 != pcVar6);
         }
-        if ((int)lVar10 == 0) {
+        if ((int)lVar7 == 0) {
           scrStringGlob.hashTable[uVar2].status_next =
-               (uint)(ushort)pHVar15->status_next |
+               (uint)(ushort)pHVar12->status_next |
                scrStringGlob.hashTable[uVar2].status_next & 0x30000;
-          pHVar15->status_next =
-               (uint)(ushort)scrStringGlob.hashTable[uVar4].status_next |
-               pHVar15->status_next & 0x30000;
-          <Var1 = scrStringGlob.hashTable[uVar4].u;
-          pHVar12->status_next = pHVar12->status_next & 0x30000 | uVar13;
-          uVar8 = (pHVar15->u).prev;
-          pHVar15->u = <Var1;
-          scrStringGlob.hashTable[uVar4].u.prev = uVar8;
-          if ((pHVar15->status_next & 0x30000) == 0) {
+          pHVar12->status_next =
+               (uint)(ushort)scrStringGlob.hashTable[uVar3].status_next |
+               pHVar12->status_next & 0x30000;
+          <Var1 = scrStringGlob.hashTable[uVar3].u;
+          pHVar9->status_next = pHVar9->status_next & 0x30000 | uVar10;
+          uVar2 = (pHVar12->u).prev;
+          pHVar12->u = <Var1;
+          scrStringGlob.hashTable[uVar3].u.prev = uVar2;
+          if ((pHVar12->status_next & 0x30000) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x1fe,0,"%s");
           }
-          if ((pHVar12->status_next & 0x30000) == 0) {
+          if ((pHVar9->status_next & 0x30000) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x1ff,0,"%s");
           }
-          pcVar6 = SL_ConvertToString(uVar8);
-          if (pRVar5->str != pcVar6) {
+          pcVar5 = SL_ConvertToString(uVar2);
+          if (pRVar4->str != pcVar5) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x201,0,"%s");
           }
           Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
           Profile_EndInternal((double *)0x0);
-          uVar4 = __restgprlr_19(uVar8);
-          return uVar4;
+          return uVar2;
         }
       }
-      uVar14 = (uint)(ushort)pHVar15->status_next;
-      uVar2 = uVar13;
-      uVar13 = uVar14;
-      pHVar15 = scrStringGlob.hashTable + uVar14;
+      uVar11 = (uint)(ushort)pHVar12->status_next;
+      uVar2 = uVar10;
+      uVar10 = uVar11;
+      pHVar12 = scrStringGlob.hashTable + uVar11;
     }
   }
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
   Profile_EndInternal((double *)0x0);
-  uVar4 = __restgprlr_19(0);
-  return uVar4;
+  return 0;
 }
 
 
@@ -570,42 +561,41 @@ uint SL_FindString(char *param_1)
 
 // 82543BC0  SL_FindLowercaseString  (script/scr_stringlist.cpp:547)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint SL_FindLowercaseString(char *param_1)
 
 {
   char cVar1;
-  char *pcVar2;
+  int iVar2;
   uint uVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
+  char *pcVar4;
+  int iVar5;
   char local_2030 [8240];
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
   Profile_Begin(0x149);
-  pcVar5 = pcVar2;
+  pcVar4 = param_1;
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  uVar3 = (int)pcVar5 - (int)pcVar2;
+  uVar3 = (int)pcVar4 - (int)param_1;
   if (0x2000 < (int)uVar3) {
     Profile_EndInternal((double *)0x0);
-    uVar3 = __restgprlr_28(0);
-    return uVar3;
+    return 0;
   }
-  iVar6 = 0;
+  iVar5 = 0;
   if (0 < (int)uVar3) {
     do {
-      pcVar5 = local_2030 + iVar6;
-      iVar4 = tolower((int)pcVar5[(int)pcVar2 - (int)local_2030]);
-      iVar6 = iVar6 + 1;
-      *pcVar5 = (char)iVar4;
-    } while (iVar6 < (int)uVar3);
+      pcVar4 = local_2030 + iVar5;
+      iVar2 = tolower((int)pcVar4[(int)param_1 - (int)local_2030]);
+      iVar5 = iVar5 + 1;
+      *pcVar4 = (char)iVar2;
+    } while (iVar5 < (int)uVar3);
   }
   Profile_EndInternal((double *)0x0);
   uVar3 = FindStringOfSize(local_2030,uVar3);
-  uVar3 = __restgprlr_28(uVar3);
   return uVar3;
 }
 
@@ -642,78 +632,78 @@ int SL_IsLowercaseString(uint param_1)
 
 // 82543D28  SL_AddUserInternal  (script/scr_stringlist.cpp:589)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SL_AddUserInternal(RefString *param_1,uint param_2)
 
 {
   uint uVar1;
-  uint uVar2;
+  long lVar2;
   int iVar3;
-  undefined8 uVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  uint *puVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_27(param_1);
-  puVar5 = (uint *)uVar4;
-  if ((uVar6 & 0xffffffff) != 0) {
-    uVar6 = (uVar6 & 0xffff) << 0x10;
+  if (param_2 != 0) {
+    uVar5 = ((ulonglong)param_2 & 0xffff) << 0x10;
     do {
-      uVar1 = *puVar5;
+      uVar1 = param_1->data;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed(uVar6 | uVar1,0,uVar4);
-        *puVar5 = uVar2;
+        lVar2 = storeWordConditionalIndexed(uVar5 | uVar1,0,(longlong)(int)param_1);
+        param_1->data = lVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((uVar1 & uVar6) != 0) goto LAB_82543e78;
+    if ((uVar1 & uVar5) != 0) {
+      return;
+    }
   }
   do {
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar4);
-      *puVar5 = uVar1;
+      lVar2 = storeWordConditionalIndexed
+                        ((ulonglong)(uint)param_1->data + 1,0,(longlong)(int)param_1);
+      param_1->data = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar6 = ZEXT48(scrStringDebugGlob);
-  uVar1 = ((int)puVar5 - (int)scrMemTreePub.mt_buffer) / 0xc;
-  if (uVar6 != 0) {
-    lVar7 = ((ulonglong)uVar1 & 0x3fffffff) * 4;
-    iVar3 = (int)lVar7;
+  uVar5 = ZEXT48(scrStringDebugGlob);
+  uVar1 = ((int)param_1 - (int)scrMemTreePub.mt_buffer) / 0xc;
+  if (uVar5 != 0) {
+    lVar6 = ((ulonglong)uVar1 & 0x3fffffff) * 4;
+    iVar3 = (int)lVar6;
     if (0xffff < *(int *)((int)scrStringDebugGlob->refCount + iVar3)) {
       SL_DebugConvertToString(uVar1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x260,0,"%s\n\t(SL_DebugConvertToString( str )) = %s");
-      uVar6 = ZEXT48(scrStringDebugGlob);
+      uVar5 = ZEXT48(scrStringDebugGlob);
     }
-    if (*(int *)(iVar3 + (int)uVar6) < 0) {
+    if (*(int *)(iVar3 + (int)uVar5) < 0) {
       SL_DebugConvertToString(uVar1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x261,0,"%s\n\t(SL_DebugConvertToString( str )) = %s");
-      uVar6 = ZEXT48(scrStringDebugGlob);
+      uVar5 = ZEXT48(scrStringDebugGlob);
     }
     do {
-      puVar5 = (uint *)(uVar6 + 0x40000);
+      puVar4 = (uint *)(uVar5 + 0x40000);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 0x40000);
-        *puVar5 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar5 + 0x40000);
+        *puVar4 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    lVar7 = lVar7 + ZEXT48(scrStringDebugGlob);
+    lVar6 = lVar6 + ZEXT48(scrStringDebugGlob);
     do {
-      puVar5 = (uint *)lVar7;
+      puVar4 = (uint *)lVar6;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar7);
-        *puVar5 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar6);
+        *puVar4 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-LAB_82543e78:
-  __restgprlr_27();
   return;
 }
 
@@ -745,6 +735,9 @@ uint SL_GetUser(uint param_1)
 
 // 82543EE0  SL_GetStringOfSize  (script/scr_stringlist.cpp:757)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
 
 {
@@ -752,133 +745,123 @@ uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
   ushort uVar2;
   <unnamed_type_u> <Var3;
   uint uVar4;
-  byte *pbVar5;
-  uint uVar6;
-  RefString *pRVar7;
-  char *pcVar8;
-  uint uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint *puVar13;
-  char *pcVar14;
-  longlong lVar15;
-  byte *pbVar16;
-  HashEntry *pHVar17;
-  uint uVar18;
-  uint uVar19;
-  HashEntry *pHVar20;
+  uint uVar5;
+  RefString *pRVar6;
+  char *pcVar7;
+  uint *puVar8;
+  char *pcVar9;
+  longlong lVar10;
+  byte *pbVar11;
+  uint uVar12;
+  HashEntry *pHVar13;
+  uint uVar14;
+  uint uVar15;
+  HashEntry *pHVar16;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  pbVar5 = (byte *)__savegprlr_17(param_1);
   Profile_Begin(0x149);
-  if (pbVar5 == (byte *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x303,0,"%s");
   }
-  uVar10 = (uint)uVar12;
-  uVar6 = GetHashCode((char *)pbVar5,uVar10);
-  pHVar17 = scrStringGlob.hashTable + uVar6;
+  uVar5 = GetHashCode(param_1,param_3);
+  pHVar13 = scrStringGlob.hashTable + uVar5;
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
-  uVar9 = pHVar17->status_next & 0x30000;
-  if (uVar9 == 0x20000) {
-    pRVar7 = GetRefString(scrStringGlob.hashTable[uVar6].u.prev);
-    if ((ulonglong)*(byte *)&pRVar7->data == (uVar12 & 0xff)) {
-      pcVar8 = pRVar7->str;
-      lVar15 = 0;
-      if ((uVar12 & 0xffffffff) != 0) {
-        pcVar14 = pcVar8 + uVar10;
-        pbVar16 = pbVar5;
+  uVar12 = pHVar13->status_next & 0x30000;
+  if (uVar12 == 0x20000) {
+    pRVar6 = GetRefString(scrStringGlob.hashTable[uVar5].u.prev);
+    if ((uint)*(byte *)&pRVar6->data == (param_3 & 0xff)) {
+      pcVar7 = pRVar6->str;
+      lVar10 = 0;
+      if (param_3 != 0) {
+        pcVar9 = pcVar7 + param_3;
+        pbVar11 = (byte *)param_1;
         do {
-          lVar15 = (ulonglong)(byte)*pcVar8 - (ulonglong)*pbVar16;
-          in_cr0 = (lVar15 == 0) << 1;
-          if (lVar15 != 0) break;
-          pcVar8 = pcVar8 + 1;
-          pbVar16 = pbVar16 + 1;
-        } while (pcVar8 != pcVar14);
+          lVar10 = (ulonglong)(byte)*pcVar7 - (ulonglong)*pbVar11;
+          in_cr0 = (lVar10 == 0) << 1;
+          if (lVar10 != 0) break;
+          pcVar7 = pcVar7 + 1;
+          pbVar11 = pbVar11 + 1;
+        } while (pcVar7 != pcVar9);
       }
-      if ((int)lVar15 == 0) {
-        SL_AddUserInternal(pRVar7,(uint)uVar11);
-        if ((pHVar17->status_next & 0x30000) == 0) {
+      if ((int)lVar10 == 0) {
+        SL_AddUserInternal(pRVar6,param_2);
+        if ((pHVar13->status_next & 0x30000) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x318,0,"%s");
         }
-        uVar9 = scrStringGlob.hashTable[uVar6].u.prev;
-        pcVar8 = SL_ConvertToString(uVar9);
-        if (pRVar7->str != pcVar8) {
+        uVar12 = scrStringGlob.hashTable[uVar5].u.prev;
+        pcVar7 = SL_ConvertToString(uVar12);
+        if (pRVar6->str != pcVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x31b,0,"%s");
         }
         Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
         Profile_EndInternal((double *)0x0);
-        uVar9 = __restgprlr_17(uVar9);
-        return uVar9;
+        return uVar12;
       }
     }
-    uVar18 = (uint)(ushort)scrStringGlob.hashTable[uVar6].status_next;
-    pHVar20 = scrStringGlob.hashTable + uVar18;
-    uVar9 = uVar6;
+    uVar14 = (uint)(ushort)scrStringGlob.hashTable[uVar5].status_next;
+    pHVar16 = scrStringGlob.hashTable + uVar14;
+    uVar12 = uVar5;
     uVar4 = scrStringGlob.hashTable[0].status_next;
-    while (scrStringGlob.hashTable[0].status_next = uVar4, pHVar20 != pHVar17) {
-      if ((pHVar20->status_next & 0x30000) != 0x10000) {
+    while (scrStringGlob.hashTable[0].status_next = uVar4, pHVar16 != pHVar13) {
+      if ((pHVar16->status_next & 0x30000) != 0x10000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x329,0,"%s");
       }
-      pRVar7 = GetRefString((pHVar20->u).prev);
-      if ((ulonglong)*(byte *)&pRVar7->data == (uVar12 & 0xff)) {
-        pcVar8 = pRVar7->str;
-        lVar15 = 0;
-        if ((uVar12 & 0xffffffff) != 0) {
-          pcVar14 = pcVar8 + uVar10;
-          pbVar16 = pbVar5;
+      pRVar6 = GetRefString((pHVar16->u).prev);
+      if ((uint)*(byte *)&pRVar6->data == (param_3 & 0xff)) {
+        pcVar7 = pRVar6->str;
+        lVar10 = 0;
+        if (param_3 != 0) {
+          pcVar9 = pcVar7 + param_3;
+          pbVar11 = (byte *)param_1;
           do {
-            lVar15 = (ulonglong)(byte)*pcVar8 - (ulonglong)*pbVar16;
-            in_cr0 = (lVar15 == 0) << 1;
-            if (lVar15 != 0) break;
-            pcVar8 = pcVar8 + 1;
-            pbVar16 = pbVar16 + 1;
-          } while (pcVar8 != pcVar14);
+            lVar10 = (ulonglong)(byte)*pcVar7 - (ulonglong)*pbVar11;
+            in_cr0 = (lVar10 == 0) << 1;
+            if (lVar10 != 0) break;
+            pcVar7 = pcVar7 + 1;
+            pbVar11 = pbVar11 + 1;
+          } while (pcVar7 != pcVar9);
         }
-        if ((int)lVar15 == 0) {
-          scrStringGlob.hashTable[uVar9].status_next =
-               (uint)(ushort)pHVar20->status_next |
-               scrStringGlob.hashTable[uVar9].status_next & 0x30000;
-          pHVar20->status_next =
-               (uint)(ushort)scrStringGlob.hashTable[uVar6].status_next |
-               pHVar20->status_next & 0x30000;
-          <Var3 = scrStringGlob.hashTable[uVar6].u;
-          pHVar17->status_next = pHVar17->status_next & 0x30000 | uVar18;
-          uVar9 = (pHVar20->u).prev;
-          pHVar20->u = <Var3;
-          scrStringGlob.hashTable[uVar6].u.prev = uVar9;
-          SL_AddUserInternal(pRVar7,(uint)uVar11);
-          if ((pHVar20->status_next & 0x30000) == 0) {
+        if ((int)lVar10 == 0) {
+          scrStringGlob.hashTable[uVar12].status_next =
+               (uint)(ushort)pHVar16->status_next |
+               scrStringGlob.hashTable[uVar12].status_next & 0x30000;
+          pHVar16->status_next =
+               (uint)(ushort)scrStringGlob.hashTable[uVar5].status_next |
+               pHVar16->status_next & 0x30000;
+          <Var3 = scrStringGlob.hashTable[uVar5].u;
+          pHVar13->status_next = pHVar13->status_next & 0x30000 | uVar14;
+          uVar12 = (pHVar16->u).prev;
+          pHVar16->u = <Var3;
+          scrStringGlob.hashTable[uVar5].u.prev = uVar12;
+          SL_AddUserInternal(pRVar6,param_2);
+          if ((pHVar16->status_next & 0x30000) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x338,0,"%s");
           }
-          if ((pHVar17->status_next & 0x30000) == 0) {
+          if ((pHVar13->status_next & 0x30000) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x339,0,"%s");
           }
-          pcVar8 = SL_ConvertToString(uVar9);
-          if (pRVar7->str != pcVar8) {
+          pcVar7 = SL_ConvertToString(uVar12);
+          if (pRVar6->str != pcVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                             ,0x33b,0,"%s");
           }
           Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
           Profile_EndInternal((double *)0x0);
-          uVar9 = __restgprlr_17(uVar9);
-          return uVar9;
+          return uVar12;
         }
       }
-      uVar19 = (uint)(ushort)pHVar20->status_next;
-      uVar9 = uVar18;
+      uVar15 = (uint)(ushort)pHVar16->status_next;
+      uVar12 = uVar14;
       uVar4 = scrStringGlob.hashTable[0].status_next;
-      uVar18 = uVar19;
-      pHVar20 = scrStringGlob.hashTable + uVar19;
+      uVar14 = uVar15;
+      pHVar16 = scrStringGlob.hashTable + uVar15;
     }
     if (uVar4 == 0) {
       Scr_DumpScriptThreads(true);
@@ -886,7 +869,7 @@ uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
                     /* WARNING: Subroutine does not return */
       Sys_Error("exceeded maximum number of script strings (see console log for more info)");
     }
-    uVar10 = MT_AllocIndex(uVar10 + 4,param_4);
+    uVar14 = MT_AllocIndex(param_3 + 4,param_4);
     if ((scrStringGlob.hashTable[uVar4].status_next & 0x30000) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x35c,0,"%s");
@@ -895,33 +878,33 @@ uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
     scrStringGlob.hashTable[0].status_next = (uint)uVar1;
     scrStringGlob.hashTable[uVar1].u.prev = 0;
     scrStringGlob.hashTable[uVar4].status_next =
-         (ushort)scrStringGlob.hashTable[uVar6].status_next | 0x10000;
-    <Var3 = scrStringGlob.hashTable[uVar6].u;
-    pHVar17->status_next = uVar4 & 0xffff | pHVar17->status_next & 0x30000;
+         (ushort)scrStringGlob.hashTable[uVar5].status_next | 0x10000;
+    <Var3 = scrStringGlob.hashTable[uVar5].u;
+    pHVar13->status_next = uVar4 & 0xffff | pHVar13->status_next & 0x30000;
     scrStringGlob.hashTable[uVar4].u = <Var3;
   }
   else {
-    if ((pHVar17->status_next & 0x30000) == 0) {
-      uVar10 = MT_AllocIndex(uVar10 + 4,param_4);
-      uVar9 = scrStringGlob.hashTable[uVar6].u.prev;
-      uVar1 = (ushort)scrStringGlob.hashTable[uVar6].status_next;
-      scrStringGlob.hashTable[uVar9].status_next =
-           scrStringGlob.hashTable[uVar9].status_next & 0x30000 | (uint)uVar1;
-      scrStringGlob.hashTable[uVar1].u.prev = uVar9;
+    if ((pHVar13->status_next & 0x30000) == 0) {
+      uVar14 = MT_AllocIndex(param_3 + 4,param_4);
+      uVar12 = scrStringGlob.hashTable[uVar5].u.prev;
+      uVar1 = (ushort)scrStringGlob.hashTable[uVar5].status_next;
+      scrStringGlob.hashTable[uVar12].status_next =
+           scrStringGlob.hashTable[uVar12].status_next & 0x30000 | (uint)uVar1;
+      scrStringGlob.hashTable[uVar1].u.prev = uVar12;
     }
     else {
-      if (uVar9 != 0x10000) {
+      if (uVar12 != 0x10000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x376,0,"%s");
       }
-      uVar1 = (ushort)scrStringGlob.hashTable[uVar6].status_next;
-      uVar9 = (uint)uVar1;
-      uVar2 = (ushort)scrStringGlob.hashTable[uVar9].status_next;
-      while (uVar2 != uVar6) {
-        uVar9 = (uint)(ushort)scrStringGlob.hashTable[uVar9].status_next;
-        uVar2 = (ushort)scrStringGlob.hashTable[uVar9].status_next;
+      uVar1 = (ushort)scrStringGlob.hashTable[uVar5].status_next;
+      uVar12 = (uint)uVar1;
+      uVar2 = (ushort)scrStringGlob.hashTable[uVar12].status_next;
+      while (uVar2 != uVar5) {
+        uVar12 = (uint)(ushort)scrStringGlob.hashTable[uVar12].status_next;
+        uVar2 = (ushort)scrStringGlob.hashTable[uVar12].status_next;
       }
-      if (uVar9 == 0) {
+      if (uVar12 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x37d,0,"%s");
       }
@@ -932,7 +915,7 @@ uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
                     /* WARNING: Subroutine does not return */
         Sys_Error("exceeded maximum number of script strings (see console log for more info)");
       }
-      uVar10 = MT_AllocIndex(uVar10 + 4,param_4);
+      uVar14 = MT_AllocIndex(param_3 + 4,param_4);
       if ((scrStringGlob.hashTable[uVar4].status_next & 0x30000) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x393,0,"%s");
@@ -940,64 +923,63 @@ uint SL_GetStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
       uVar2 = (ushort)scrStringGlob.hashTable[uVar4].status_next;
       scrStringGlob.hashTable[0].status_next = (uint)uVar2;
       scrStringGlob.hashTable[uVar2].u.prev = 0;
-      scrStringGlob.hashTable[uVar9].status_next =
-           scrStringGlob.hashTable[uVar9].status_next & 0x30000 | uVar4;
+      scrStringGlob.hashTable[uVar12].status_next =
+           scrStringGlob.hashTable[uVar12].status_next & 0x30000 | uVar4;
       scrStringGlob.hashTable[uVar4].status_next = uVar1 | 0x10000;
-      scrStringGlob.hashTable[uVar4].u = scrStringGlob.hashTable[uVar6].u;
+      scrStringGlob.hashTable[uVar4].u = scrStringGlob.hashTable[uVar5].u;
     }
-    if ((uVar6 & 0x30000) != 0) {
+    if ((uVar5 & 0x30000) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x39f,0,"%s");
     }
-    pHVar17->status_next = uVar6 | 0x20000;
+    pHVar13->status_next = uVar5 | 0x20000;
   }
-  if (uVar10 == 0) {
+  if (uVar14 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x3a3,0,"%s");
   }
-  scrStringGlob.hashTable[uVar6].u.prev = uVar10;
-  pRVar7 = GetRefString(uVar10);
+  scrStringGlob.hashTable[uVar5].u.prev = uVar14;
+  pRVar6 = GetRefString(uVar14);
   memcpy();
-  *(char *)((int)&pRVar7->data + 1) = (char)uVar11;
-  if ((uVar11 & 0xff) != (uVar11 & 0xffffffff)) {
+  *(char *)((int)&pRVar6->data + 1) = (char)param_2;
+  if ((param_2 & 0xff) != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x3aa,0,"%s");
   }
-  *(char *)&pRVar7->data = (char)uVar12;
-  *(undefined2 *)((int)&pRVar7->data + 2) = 1;
+  *(char *)&pRVar6->data = (char)param_3;
+  *(undefined2 *)((int)&pRVar6->data + 2) = 1;
   if (ZEXT48(scrStringDebugGlob) != 0) {
-    lVar15 = ZEXT48(scrStringDebugGlob) + 0x40000;
+    lVar10 = ZEXT48(scrStringDebugGlob) + 0x40000;
     do {
-      puVar13 = (uint *)lVar15;
+      puVar8 = (uint *)lVar10;
       if (in_RESERVE != '\0') {
-        uVar9 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar15);
-        *puVar13 = uVar9;
+        uVar12 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar10);
+        *puVar8 = uVar12;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    lVar15 = ((ulonglong)uVar10 & 0x3fffffff) * 4 + ZEXT48(scrStringDebugGlob);
+    lVar10 = ((ulonglong)uVar14 & 0x3fffffff) * 4 + ZEXT48(scrStringDebugGlob);
     do {
-      puVar13 = (uint *)lVar15;
+      puVar8 = (uint *)lVar10;
       if (in_RESERVE != '\0') {
-        uVar9 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar15);
-        *puVar13 = uVar9;
+        uVar12 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar10);
+        *puVar8 = uVar12;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  if ((pHVar17->status_next & 0x30000) == 0) {
+  if ((pHVar13->status_next & 0x30000) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x3b6,0,"%s");
   }
-  pcVar8 = SL_ConvertToString(uVar10);
-  if (pRVar7->str != pcVar8) {
+  pcVar7 = SL_ConvertToString(uVar14);
+  if (pRVar6->str != pcVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x3b7,0,"%s");
   }
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
   Profile_EndInternal((double *)0x0);
-  uVar9 = __restgprlr_17(uVar10);
-  return uVar9;
+  return uVar14;
 }
 
 
@@ -1041,37 +1023,34 @@ uint SL_GetString(char *param_1,uint param_2)
 
 // 825445E8  GetLowercaseStringOfSize  (script/scr_stringlist.cpp:975)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint GetLowercaseStringOfSize(char *param_1,uint param_2,uint param_3,int param_4)
 
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char *pcVar5;
+  char *pcVar3;
   char local_2040 [8256];
   
-  uVar4 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_26(param_1);
   Profile_Begin(0x149);
-  if (0x2000 < (uVar4 & 0xffffffff)) {
+  if (0x2000 < param_3) {
     Profile_EndInternal((double *)0x0);
     Com_Error(ERR_DROP,"max string length exceeded: \"%s\"");
-    uVar2 = __restgprlr_26(0);
-    return uVar2;
+    return 0;
   }
   uVar2 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
+  if (param_3 != 0) {
     do {
-      pcVar5 = local_2040 + uVar2;
-      iVar3 = tolower((int)pcVar5[iVar1 - (int)local_2040]);
+      pcVar3 = local_2040 + uVar2;
+      iVar1 = tolower((int)pcVar3[(int)param_1 - (int)local_2040]);
       uVar2 = uVar2 + 1;
-      *pcVar5 = (char)iVar3;
-    } while ((ulonglong)uVar2 < (uVar4 & 0xffffffff));
+      *pcVar3 = (char)iVar1;
+    } while (uVar2 < param_3);
   }
   Profile_EndInternal((double *)0x0);
-  uVar2 = SL_GetStringOfSize(local_2040,param_2,(uint)uVar4,param_4);
-  uVar2 = __restgprlr_26(uVar2);
+  uVar2 = SL_GetStringOfSize(local_2040,param_2,param_3,param_4);
   return uVar2;
 }
 
@@ -1116,123 +1095,116 @@ uint SL_GetLowercaseString(char *param_1,uint param_2)
 
 // 82545918  SL_ConvertToLowercase  (script/scr_stringlist.cpp:1012)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 uint SL_ConvertToLowercase(uint param_1,uint param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   uint uVar3;
   char *pcVar4;
   uint uVar5;
-  char *pcVar6;
-  uint uVar7;
   char local_2040 [8256];
   
-  uVar1 = __savegprlr_25(param_1);
   Profile_Begin(0x149);
-  uVar3 = (uint)uVar1;
-  iVar2 = SL_GetStringLen(uVar3);
-  uVar5 = iVar2 + 1;
-  if (0x2000 < uVar5) {
+  iVar1 = SL_GetStringLen(param_1);
+  uVar3 = iVar1 + 1;
+  if (0x2000 < uVar3) {
     Profile_EndInternal((double *)0x0);
-    uVar3 = __restgprlr_25(uVar1);
-    return uVar3;
+    return param_1;
   }
-  pcVar4 = SL_ConvertToString(uVar3);
-  uVar7 = 0;
-  if (uVar5 != 0) {
+  pcVar2 = SL_ConvertToString(param_1);
+  uVar5 = 0;
+  if (uVar3 != 0) {
     do {
-      pcVar6 = local_2040 + uVar7;
-      iVar2 = tolower((int)pcVar6[(int)pcVar4 - (int)local_2040]);
-      uVar7 = uVar7 + 1;
-      *pcVar6 = (char)iVar2;
-    } while (uVar7 < uVar5);
+      pcVar4 = local_2040 + uVar5;
+      iVar1 = tolower((int)pcVar4[(int)pcVar2 - (int)local_2040]);
+      uVar5 = uVar5 + 1;
+      *pcVar4 = (char)iVar1;
+    } while (uVar5 < uVar3);
   }
-  uVar5 = SL_GetStringOfSize(local_2040,param_2,uVar5,param_3);
-  SL_RemoveRefToString(uVar3);
+  uVar3 = SL_GetStringOfSize(local_2040,param_2,uVar3,param_3);
+  SL_RemoveRefToString(param_1);
   Profile_EndInternal((double *)0x0);
-  uVar3 = __restgprlr_25(uVar5);
   return uVar3;
 }
 
 
 // 82544708  SL_TransferRefToUser  (script/scr_stringlist.cpp:1043)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SL_TransferRefToUser(uint param_1,uint param_2)
 
 {
-  long lVar1;
-  ulonglong uVar2;
+  uint uVar1;
+  long lVar2;
   RefString *pRVar3;
-  int iVar5;
-  uint *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint *puVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   char in_RESERVE;
   byte in_cr0;
-  uint uVar4;
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_26(param_1);
   Profile_Begin(0x149);
-  uVar4 = (uint)uVar2;
-  pRVar3 = GetRefString(uVar4);
-  if ((*(byte *)((int)&pRVar3->data + 1) & uVar7) != 0) {
+  pRVar3 = GetRefString(param_1);
+  if ((*(byte *)((int)&pRVar3->data + 1) & param_2) != 0) {
     if ((ushort)pRVar3->data < 2) {
-      SL_DebugConvertToString(uVar4);
+      SL_DebugConvertToString(param_1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x41c,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
     }
-    uVar7 = ZEXT48(scrStringDebugGlob);
-    if (uVar7 != 0) {
-      lVar8 = (uVar2 & 0x3fffffff) * 4;
-      if (*(int *)((int)scrStringDebugGlob->refCount + (int)lVar8) == 0) {
-        SL_DebugConvertToString(uVar4);
+    uVar5 = ZEXT48(scrStringDebugGlob);
+    if (uVar5 != 0) {
+      lVar6 = ((ulonglong)param_1 & 0x3fffffff) * 4;
+      if (*(int *)((int)scrStringDebugGlob->refCount + (int)lVar6) == 0) {
+        SL_DebugConvertToString(param_1);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x421,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
-        uVar7 = ZEXT48(scrStringDebugGlob);
+        uVar5 = ZEXT48(scrStringDebugGlob);
       }
       do {
-        puVar6 = (uint *)(uVar7 + 0x40000);
+        puVar4 = (uint *)(uVar5 + 0x40000);
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,uVar7 + 0x40000);
-          *puVar6 = uVar4;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,uVar5 + 0x40000);
+          *puVar4 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      lVar8 = lVar8 + ZEXT48(scrStringDebugGlob);
+      lVar6 = lVar6 + ZEXT48(scrStringDebugGlob);
       do {
-        puVar6 = (uint *)lVar8;
+        puVar4 = (uint *)lVar6;
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar8);
-          *puVar6 = uVar4;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar6);
+          *puVar4 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
     do {
       if (in_RESERVE != '\0') {
-        lVar1 = storeWordConditionalIndexed
+        lVar2 = storeWordConditionalIndexed
                           ((ulonglong)(uint)pRVar3->data - 1,0,(longlong)(int)pRVar3);
-        pRVar3->data = lVar1;
+        pRVar3->data = lVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    iVar5 = Profile_EndInternal((double *)0x0);
-    __restgprlr_26(iVar5);
+    Profile_EndInternal((double *)0x0);
     return;
   }
   do {
     if (in_RESERVE != '\0') {
-      lVar1 = storeWordConditionalIndexed
-                        ((uVar7 & 0xffff) << 0x10 | (ulonglong)(uint)pRVar3->data,0,
+      lVar2 = storeWordConditionalIndexed
+                        (((ulonglong)param_2 & 0xffff) << 0x10 | (ulonglong)(uint)pRVar3->data,0,
                          (longlong)(int)pRVar3);
-      pRVar3->data = lVar1;
+      pRVar3->data = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar5);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1255,81 +1227,82 @@ void SL_CheckExists(uint param_1)
 
 // 82544900  SL_AddRefToString  (script/scr_stringlist.cpp:1087)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SL_AddRefToString(uint param_1)
 
 {
   uint uVar1;
   long lVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  RefString *pRVar5;
-  int iVar6;
-  uint *puVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  int iVar3;
+  RefString *pRVar4;
+  uint *puVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar3 = __savegprlr_27(param_1);
   Profile_Begin(0x149);
-  uVar8 = ZEXT48(scrStringDebugGlob);
-  uVar4 = (uint)uVar3;
-  if (uVar8 != 0) {
-    lVar9 = (uVar3 & 0x3fffffff) * 4;
-    iVar6 = (int)lVar9;
-    if (*(int *)((int)scrStringDebugGlob->refCount + iVar6) == 0) {
-      SL_DebugConvertToString(uVar4);
+  uVar6 = ZEXT48(scrStringDebugGlob);
+  if (uVar6 != 0) {
+    lVar7 = ((ulonglong)param_1 & 0x3fffffff) * 4;
+    iVar3 = (int)lVar7;
+    if (*(int *)((int)scrStringDebugGlob->refCount + iVar3) == 0) {
+      SL_DebugConvertToString(param_1);
       va("%d \'%s\'");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x447,0,"%s\n\t%s");
-      uVar8 = ZEXT48(scrStringDebugGlob);
+      uVar6 = ZEXT48(scrStringDebugGlob);
     }
-    if (0xffff < *(int *)(iVar6 + (int)uVar8)) {
-      SL_DebugConvertToString(uVar4);
+    if (0xffff < *(int *)(iVar3 + (int)uVar6)) {
+      SL_DebugConvertToString(param_1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x448,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
-      uVar8 = ZEXT48(scrStringDebugGlob);
+      uVar6 = ZEXT48(scrStringDebugGlob);
     }
     do {
-      puVar7 = (uint *)(uVar8 + 0x40000);
+      puVar5 = (uint *)(uVar6 + 0x40000);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 0x40000);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 0x40000);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    lVar9 = lVar9 + ZEXT48(scrStringDebugGlob);
+    lVar7 = lVar7 + ZEXT48(scrStringDebugGlob);
     do {
-      puVar7 = (uint *)lVar9;
+      puVar5 = (uint *)lVar7;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar9);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar7);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  pRVar5 = GetRefString(uVar4);
+  pRVar4 = GetRefString(param_1);
   do {
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed((ulonglong)(uint)pRVar5->data + 1,0,(longlong)(int)pRVar5)
+      lVar2 = storeWordConditionalIndexed((ulonglong)(uint)pRVar4->data + 1,0,(longlong)(int)pRVar4)
       ;
-      pRVar5->data = lVar2;
+      pRVar4->data = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((short)pRVar5->data == 0) {
-    SL_DebugConvertToString(uVar4);
+  if ((short)pRVar4->data == 0) {
+    SL_DebugConvertToString(param_1);
     va("string: \'%s\', refCount: %d");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x452,0,"%s\n\t%s");
   }
-  iVar6 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar6);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82544AA8  SL_FreeString  (script/scr_stringlist.cpp:1118)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void SL_FreeString(uint param_1,RefString *param_2,uint param_3)
 
@@ -1337,79 +1310,75 @@ void SL_FreeString(uint param_1,RefString *param_2,uint param_3)
   ushort uVar1;
   uint uVar2;
   uint uVar3;
-  int iVar4;
-  uint uVar5;
-  uint uVar6;
-  HashEntry *pHVar7;
-  HashEntry *pHVar8;
+  uint uVar4;
+  HashEntry *pHVar5;
+  HashEntry *pHVar6;
   
-  uVar2 = __savegprlr_21(param_1);
   Profile_Begin(0x149);
-  uVar3 = GetHashCode(param_2->str,param_3);
-  pHVar8 = scrStringGlob.hashTable + uVar3;
+  uVar2 = GetHashCode(param_2->str,param_3);
+  pHVar6 = scrStringGlob.hashTable + uVar2;
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
   if ((short)param_2->data == 0) {
     if (*(char *)((int)&param_2->data + 1) != '\0') {
-      SL_DebugConvertToString(uVar2);
+      SL_DebugConvertToString(param_1);
       va("%s: %d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x47e,0,"%s\n\t%s");
     }
-    MT_FreeIndex(uVar2,param_3 + 4);
-    if ((pHVar8->status_next & 0x30000) != 0x20000) {
+    MT_FreeIndex(param_1,param_3 + 4);
+    if ((pHVar6->status_next & 0x30000) != 0x20000) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x482,0,"%s\n\t(entry->status_next) = %i");
     }
-    uVar1 = (ushort)scrStringGlob.hashTable[uVar3].status_next;
-    uVar6 = (uint)uVar1;
-    pHVar7 = scrStringGlob.hashTable + uVar6;
-    uVar5 = uVar3;
-    if (scrStringGlob.hashTable[uVar3].u.prev == uVar2) {
-      if (pHVar7 != pHVar8) {
-        pHVar8->status_next = (ushort)scrStringGlob.hashTable[uVar6].status_next | 0x20000;
-        scrStringGlob.hashTable[uVar3].u = scrStringGlob.hashTable[uVar6].u;
-        uVar3 = (uint)uVar1;
-        scrStringGlob.nextFreeEntry = pHVar8;
-        pHVar8 = pHVar7;
+    uVar1 = (ushort)scrStringGlob.hashTable[uVar2].status_next;
+    uVar4 = (uint)uVar1;
+    pHVar5 = scrStringGlob.hashTable + uVar4;
+    uVar3 = uVar2;
+    if (scrStringGlob.hashTable[uVar2].u.prev == param_1) {
+      if (pHVar5 != pHVar6) {
+        pHVar6->status_next = (ushort)scrStringGlob.hashTable[uVar4].status_next | 0x20000;
+        scrStringGlob.hashTable[uVar2].u = scrStringGlob.hashTable[uVar4].u;
+        uVar2 = (uint)uVar1;
+        scrStringGlob.nextFreeEntry = pHVar6;
+        pHVar6 = pHVar5;
       }
     }
     else {
       while( true ) {
-        uVar3 = uVar6;
-        if (pHVar7 == pHVar8) {
+        uVar2 = uVar4;
+        if (pHVar5 == pHVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x499,0,"%s");
         }
-        if ((pHVar7->status_next & 0x30000) != 0x10000) {
+        if ((pHVar5->status_next & 0x30000) != 0x10000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                           ,0x49a,0,"%s");
         }
-        if ((pHVar7->u).prev == uVar2) break;
-        uVar6 = (uint)(ushort)pHVar7->status_next;
-        pHVar7 = scrStringGlob.hashTable + uVar6;
-        uVar5 = uVar3;
+        if ((pHVar5->u).prev == param_1) break;
+        uVar4 = (uint)(ushort)pHVar5->status_next;
+        pHVar5 = scrStringGlob.hashTable + uVar4;
+        uVar3 = uVar2;
       }
-      scrStringGlob.hashTable[uVar5].status_next =
-           (uint)(ushort)pHVar7->status_next | scrStringGlob.hashTable[uVar5].status_next & 0x30000;
-      pHVar8 = pHVar7;
+      scrStringGlob.hashTable[uVar3].status_next =
+           (uint)(ushort)pHVar5->status_next | scrStringGlob.hashTable[uVar3].status_next & 0x30000;
+      pHVar6 = pHVar5;
     }
-    if ((pHVar8->status_next & 0x30000) == 0) {
+    if ((pHVar6->status_next & 0x30000) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x4a8,0,"%s");
     }
-    uVar2 = scrStringGlob.hashTable[0].status_next;
+    uVar3 = scrStringGlob.hashTable[0].status_next;
     if ((scrStringGlob.hashTable[0].status_next & 0x30000) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x4ab,0,"%s");
     }
-    pHVar8->status_next = uVar2;
-    (pHVar8->u).prev = 0;
-    scrStringGlob.hashTable[uVar2].u.prev = uVar3;
-    scrStringGlob.hashTable[0].status_next = uVar3;
+    pHVar6->status_next = uVar3;
+    (pHVar6->u).prev = 0;
+    scrStringGlob.hashTable[uVar3].u.prev = uVar2;
+    scrStringGlob.hashTable[0].status_next = uVar2;
   }
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_21(iVar4);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1435,198 +1404,193 @@ void SL_RemoveRefToStringFree(uint param_1,RefString *param_2)
 
 // 82544D40  SL_RemoveRefToString  (script/scr_stringlist.cpp:1222)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SL_RemoveRefToString(uint param_1)
 
 {
   char cVar1;
   long lVar2;
   uint uVar3;
-  ulonglong uVar4;
-  RefString *pRVar5;
-  uint *puVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  RefString *pRVar4;
+  uint *puVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   char in_RESERVE;
   byte in_cr0;
-  uint uVar6;
   
-  uVar4 = __savegprlr_27(param_1);
   Profile_Begin(0x149);
-  uVar6 = (uint)uVar4;
-  pRVar5 = GetRefString(uVar6);
+  pRVar4 = GetRefString(param_1);
   do {
-    uVar8 = (ulonglong)(uint)pRVar5->data - 1;
+    uVar6 = (ulonglong)(uint)pRVar4->data - 1;
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed(uVar8,0,(longlong)(int)pRVar5);
-      pRVar5->data = lVar2;
+      lVar2 = storeWordConditionalIndexed(uVar6,0,(longlong)(int)pRVar4);
+      pRVar4->data = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   Profile_EndInternal((double *)0x0);
-  if ((uVar8 & 0xffff) == 0) {
-    uVar3 = *(byte *)&pRVar5->data - 1 & 0xff;
-    cVar1 = pRVar5->str[uVar3];
+  if ((uVar6 & 0xffff) == 0) {
+    uVar3 = *(byte *)&pRVar4->data - 1 & 0xff;
+    cVar1 = pRVar4->str[uVar3];
     while (cVar1 != '\0') {
-      cVar1 = pRVar5[0x20].str[uVar3];
+      cVar1 = pRVar4[0x20].str[uVar3];
       uVar3 = uVar3 + 0x100;
     }
-    SL_FreeString(uVar6,pRVar5,uVar3 + 1);
+    SL_FreeString(param_1,pRVar4,uVar3 + 1);
   }
-  uVar8 = ZEXT48(scrStringDebugGlob);
-  if (uVar8 != 0) {
+  uVar6 = ZEXT48(scrStringDebugGlob);
+  if (uVar6 != 0) {
     if ((scrStringDebugGlob->totalRefCount == 0) ||
-       (lVar9 = (uVar4 & 0x3fffffff) << 2,
-       *(int *)((int)scrStringDebugGlob->refCount + (int)lVar9) == 0)) {
-      lVar9 = (uVar4 & 0x3fffffff) << 2;
-      SL_DebugConvertToString(uVar6);
+       (lVar7 = ((ulonglong)param_1 & 0x3fffffff) << 2,
+       *(int *)((int)scrStringDebugGlob->refCount + (int)lVar7) == 0)) {
+      lVar7 = ((ulonglong)param_1 & 0x3fffffff) << 2;
+      SL_DebugConvertToString(param_1);
       va(
         "scrStringDebugGlob->totalRefCount: %i, stringValue: %i, scrStringDebugGlob->refCount[stringValue]: %i, string: \'%s\'"
         );
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x4d3,0,"%s\n\t%s");
-      uVar8 = ZEXT48(scrStringDebugGlob);
+      uVar6 = ZEXT48(scrStringDebugGlob);
     }
-    if (*(int *)((int)lVar9 + (int)uVar8) == 0) {
-      SL_DebugConvertToString(uVar6);
+    if (*(int *)((int)lVar7 + (int)uVar6) == 0) {
+      SL_DebugConvertToString(param_1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x4d4,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
-      uVar8 = ZEXT48(scrStringDebugGlob);
+      uVar6 = ZEXT48(scrStringDebugGlob);
     }
     do {
-      puVar7 = (uint *)(uVar8 + 0x40000);
+      puVar5 = (uint *)(uVar6 + 0x40000);
       if (in_RESERVE != '\0') {
-        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,uVar8 + 0x40000);
-        *puVar7 = uVar6;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,uVar6 + 0x40000);
+        *puVar5 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    uVar4 = ZEXT48(scrStringDebugGlob);
+    uVar6 = ZEXT48(scrStringDebugGlob);
     do {
-      puVar7 = (uint *)(lVar9 + uVar4);
+      puVar5 = (uint *)(lVar7 + uVar6);
       if (in_RESERVE != '\0') {
-        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar9 + uVar4);
-        *puVar7 = uVar6;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar7 + uVar6);
+        *puVar5 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82544EF0  SL_RemoveRefToStringOfSize  (script/scr_stringlist.cpp:1250)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SL_RemoveRefToStringOfSize(uint param_1,uint param_2)
 
 {
   long lVar1;
-  ulonglong uVar2;
+  uint uVar2;
   RefString *pRVar3;
-  int iVar5;
-  uint *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint *puVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   char in_RESERVE;
   byte in_cr0;
-  uint uVar4;
   
-  uVar2 = __savegprlr_27(param_1);
   Profile_Begin(0x149);
-  uVar4 = (uint)uVar2;
-  pRVar3 = GetRefString(uVar4);
+  pRVar3 = GetRefString(param_1);
   do {
-    uVar7 = (ulonglong)(uint)pRVar3->data - 1;
+    uVar5 = (ulonglong)(uint)pRVar3->data - 1;
     if (in_RESERVE != '\0') {
-      lVar1 = storeWordConditionalIndexed(uVar7,0,(longlong)(int)pRVar3);
+      lVar1 = storeWordConditionalIndexed(uVar5,0,(longlong)(int)pRVar3);
       pRVar3->data = lVar1;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((uVar7 & 0xffff) != 0) {
-    uVar7 = ZEXT48(scrStringDebugGlob);
-    if (uVar7 != 0) {
+  if ((uVar5 & 0xffff) != 0) {
+    uVar5 = ZEXT48(scrStringDebugGlob);
+    if (uVar5 != 0) {
       if ((scrStringDebugGlob->totalRefCount == 0) ||
-         (lVar8 = (uVar2 & 0x3fffffff) << 2,
-         *(int *)((int)scrStringDebugGlob->refCount + (int)lVar8) == 0)) {
-        lVar8 = (uVar2 & 0x3fffffff) << 2;
-        SL_DebugConvertToString(uVar4);
+         (lVar6 = ((ulonglong)param_1 & 0x3fffffff) << 2,
+         *(int *)((int)scrStringDebugGlob->refCount + (int)lVar6) == 0)) {
+        lVar6 = ((ulonglong)param_1 & 0x3fffffff) << 2;
+        SL_DebugConvertToString(param_1);
         va(
           "scrStringDebugGlob->totalRefCount: %i, stringValue: %i, scrStringDebugGlob->refCount[stringValue]: %i, string: \'%s\'"
           );
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x4ed,0,"%s\n\t%s");
-        uVar7 = ZEXT48(scrStringDebugGlob);
+        uVar5 = ZEXT48(scrStringDebugGlob);
       }
-      if (*(int *)((int)lVar8 + (int)uVar7) == 0) {
-        SL_DebugConvertToString(uVar4);
+      if (*(int *)((int)lVar6 + (int)uVar5) == 0) {
+        SL_DebugConvertToString(param_1);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp"
                         ,0x4ee,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
-        uVar7 = ZEXT48(scrStringDebugGlob);
+        uVar5 = ZEXT48(scrStringDebugGlob);
       }
       do {
-        puVar6 = (uint *)(uVar7 + 0x40000);
+        puVar4 = (uint *)(uVar5 + 0x40000);
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,uVar7 + 0x40000);
-          *puVar6 = uVar4;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,uVar5 + 0x40000);
+          *puVar4 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      uVar2 = ZEXT48(scrStringDebugGlob);
+      uVar5 = ZEXT48(scrStringDebugGlob);
       do {
-        puVar6 = (uint *)(lVar8 + uVar2);
+        puVar4 = (uint *)(lVar6 + uVar5);
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar8 + uVar2);
-          *puVar6 = uVar4;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar6 + uVar5);
+          *puVar4 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    iVar5 = Profile_EndInternal((double *)0x0);
-    __restgprlr_27(iVar5);
+    Profile_EndInternal((double *)0x0);
     return;
   }
   Profile_EndInternal((double *)0x0);
-  SL_FreeString(uVar4,pRVar3,param_2);
-  uVar7 = ZEXT48(scrStringDebugGlob);
-  if (uVar7 != 0) {
+  SL_FreeString(param_1,pRVar3,param_2);
+  uVar5 = ZEXT48(scrStringDebugGlob);
+  if (uVar5 != 0) {
     if ((scrStringDebugGlob->totalRefCount == 0) ||
-       (lVar8 = (uVar2 & 0x3fffffff) << 2,
-       *(int *)((int)scrStringDebugGlob->refCount + (int)lVar8) == 0)) {
-      lVar8 = (uVar2 & 0x3fffffff) << 2;
-      SL_DebugConvertToString(uVar4);
+       (lVar6 = ((ulonglong)param_1 & 0x3fffffff) << 2,
+       *(int *)((int)scrStringDebugGlob->refCount + (int)lVar6) == 0)) {
+      lVar6 = ((ulonglong)param_1 & 0x3fffffff) << 2;
+      SL_DebugConvertToString(param_1);
       va(
         "scrStringDebugGlob->totalRefCount: %i, stringValue: %i, scrStringDebugGlob->refCount[stringValue]: %i, string: \'%s\'"
         );
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x4ff,0,"%s\n\t%s");
-      uVar7 = ZEXT48(scrStringDebugGlob);
+      uVar5 = ZEXT48(scrStringDebugGlob);
     }
-    if (*(int *)((int)lVar8 + (int)uVar7) == 0) {
-      SL_DebugConvertToString(uVar4);
+    if (*(int *)((int)lVar6 + (int)uVar5) == 0) {
+      SL_DebugConvertToString(param_1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                       0x500,0,"%s\n\t(SL_DebugConvertToString( stringValue )) = %s");
-      uVar7 = ZEXT48(scrStringDebugGlob);
+      uVar5 = ZEXT48(scrStringDebugGlob);
     }
     do {
-      puVar6 = (uint *)(uVar7 + 0x40000);
+      puVar4 = (uint *)(uVar5 + 0x40000);
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,uVar7 + 0x40000);
-        *puVar6 = uVar4;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,uVar5 + 0x40000);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    uVar2 = ZEXT48(scrStringDebugGlob);
+    uVar5 = ZEXT48(scrStringDebugGlob);
     do {
-      puVar6 = (uint *)(lVar8 + uVar2);
+      puVar4 = (uint *)(lVar6 + uVar5);
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar8 + uVar2);
-        *puVar6 = uVar4;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar6 + uVar5);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1758,36 +1722,36 @@ uint SL_GetStringForVector(float *param_1)
 
 // 82545450  SL_ShutdownSystem  (script/scr_stringlist.cpp:1343)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SL_ShutdownSystem(uint param_1)
 
 {
-  uint uVar1;
-  RefString *pRVar2;
-  uint uVar3;
-  <unnamed_type_u> *p<Var4;
+  RefString *pRVar1;
+  uint uVar2;
+  <unnamed_type_u> *p<Var3;
   
-  uVar1 = __savegprlr_27(param_1);
-  if (uVar1 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x544,0,"%s");
   }
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
-  uVar3 = 8;
-  p<Var4 = &scrStringGlob.hashTable[1].u;
+  uVar2 = 8;
+  p<Var3 = &scrStringGlob.hashTable[1].u;
 LAB_825454a8:
   do {
-    if (((((HashEntry *)(p<Var4 + -1))->status_next & 0x30000) != 0) &&
-       (pRVar2 = GetRefString(p<Var4->prev), (*(byte *)((int)&pRVar2->data + 1) & uVar1) != 0)) {
-      *(byte *)((int)&pRVar2->data + 1) = (byte)*(undefined2 *)&pRVar2->data & ~(byte)uVar1;
+    if (((((HashEntry *)(p<Var3 + -1))->status_next & 0x30000) != 0) &&
+       (pRVar1 = GetRefString(p<Var3->prev), (*(byte *)((int)&pRVar1->data + 1) & param_1) != 0)) {
+      *(byte *)((int)&pRVar1->data + 1) = (byte)*(undefined2 *)&pRVar1->data & ~(byte)param_1;
       scrStringGlob.nextFreeEntry = (HashEntry *)0x0;
-      SL_RemoveRefToString(p<Var4->prev);
+      SL_RemoveRefToString(p<Var3->prev);
       if (scrStringGlob.nextFreeEntry != (HashEntry *)0x0) goto LAB_825454a8;
     }
-    uVar3 = uVar3 + 8;
-    p<Var4 = p<Var4 + 2;
-    if (0x3ffff < uVar3) {
+    uVar2 = uVar2 + 8;
+    p<Var3 = p<Var3 + 2;
+    if (0x3ffff < uVar2) {
       Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
-      __restgprlr_27();
       return;
     }
   } while( true );
@@ -1808,103 +1772,99 @@ void Scr_ShutdownGameStrings(void)
 
 // 82545530  SL_TransferSystem  (script/scr_stringlist.cpp:1387)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void SL_TransferSystem(uint param_1,uint param_2)
 
 {
   HashEntry *pHVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  longlong lVar5;
-  uint uVar6;
+  char *pcVar2;
+  longlong lVar3;
+  uint uVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_21(param_1);
-  if (uVar2 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x570,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x571,0,"%s");
   }
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
-  lVar5 = 0x7fff;
+  lVar3 = 0x7fff;
   pHVar1 = scrStringGlob.hashTable;
   do {
     if ((pHVar1[1].status_next & 0x30000) != 0) {
-      uVar6 = pHVar1[1].u.prev;
-      if (uVar6 == 0) {
+      uVar4 = pHVar1[1].u.prev;
+      if (uVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.h",
                         0x83,0,"%s");
       }
-      uVar6 = uVar6 * 0xc;
-      if (0xbffff < uVar6) {
+      uVar4 = uVar4 * 0xc;
+      if (0xbffff < uVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.h",
                         0x84,0,"%s");
       }
-      pcVar4 = scrMemTreePub.mt_buffer + uVar6;
-      if (((byte)pcVar4[1] & uVar2) != 0) {
-        pcVar4[1] = (byte)*(undefined2 *)pcVar4 & ~(byte)uVar2 | (byte)uVar3;
+      pcVar2 = scrMemTreePub.mt_buffer + uVar4;
+      if (((byte)pcVar2[1] & param_1) != 0) {
+        pcVar2[1] = (byte)*(undefined2 *)pcVar2 & ~(byte)param_1 | (byte)param_2;
       }
     }
-    lVar5 = lVar5 + -1;
+    lVar3 = lVar3 + -1;
     pHVar1 = pHVar1 + 1;
-  } while (lVar5 != 0);
+  } while (lVar3 != 0);
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
-  __restgprlr_21();
   return;
 }
 
 
 // 82545678  Scr_CreateCanonicalFilenameInternal  (script/scr_stringlist.cpp:1422)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_CreateCanonicalFilenameInternal(char *param_1,char *param_2,int param_3)
 
 {
-  undefined1 *puVar1;
+  char cVar1;
   int iVar2;
   longlong lVar3;
-  char *pcVar5;
-  longlong lVar4;
-  uint uVar6;
+  uint uVar4;
   
   lVar3 = (longlong)param_3;
-  lVar4 = (longlong)(int)param_2;
-  puVar1 = (undefined1 *)__savegprlr_27(param_1);
-  if ((int)lVar3 == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_stringlist.cpp",
                     0x591,0,"%s");
   }
   do {
     do {
       do {
-        pcVar5 = (char *)lVar4;
-        lVar4 = lVar4 + 1;
-        uVar6 = (uint)*pcVar5;
-      } while (uVar6 == 0x5c);
-    } while (uVar6 == 0x2f);
-    while (0x1f < uVar6) {
+        cVar1 = *param_2;
+        param_2 = param_2 + 1;
+        uVar4 = (uint)cVar1;
+      } while (uVar4 == 0x5c);
+    } while (uVar4 == 0x2f);
+    while (0x1f < uVar4) {
       while( true ) {
-        iVar2 = tolower(uVar6);
-        *puVar1 = (char)iVar2;
+        iVar2 = tolower(uVar4);
+        *param_1 = (char)iVar2;
         lVar3 = lVar3 + -1;
-        puVar1 = puVar1 + 1;
+        param_1 = param_1 + 1;
         if (lVar3 == 0) {
           Com_Error(ERR_DROP,"\x15Filename \'%s\' exceeds maximum length of %d");
         }
-        if (uVar6 == 0x2f) goto LAB_8254573c;
-        pcVar5 = (char *)lVar4;
-        lVar4 = lVar4 + 1;
-        uVar6 = (uint)*pcVar5;
-        if (uVar6 != 0x5c) break;
-        uVar6 = 0x2f;
+        if (uVar4 == 0x2f) goto LAB_8254573c;
+        cVar1 = *param_2;
+        param_2 = param_2 + 1;
+        uVar4 = (uint)cVar1;
+        if (uVar4 != 0x5c) break;
+        uVar4 = 0x2f;
       }
     }
 LAB_8254573c:
-    if (uVar6 == 0) {
-      *puVar1 = 0;
-      __restgprlr_27();
+    if (uVar4 == 0) {
+      *param_1 = '\0';
       return;
     }
   } while( true );

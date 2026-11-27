@@ -2,6 +2,8 @@
 
 // 8241C0E0  FX_RegisterDvars  (EffectsCore/fx_dvars.cpp:70)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void FX_RegisterDvars(void)
@@ -16,7 +18,6 @@ void FX_RegisterDvars(void)
   double dVar7;
   double dVar8;
   
-  __savefpr_27();
   fx_enable = Dvar_RegisterBool("fx_enable",true,4,"Toggles all effects processing");
   fx_draw = Dvar_RegisterBool("fx_draw",true,4,"Toggles drawing of effects after processing");
   fx_draw_spotLight =
@@ -145,7 +146,6 @@ void FX_RegisterDvars(void)
        Dvar_RegisterFloat("glass_shattered_scale",48.0,1.1754944e-38,(float)dVar7,uVar1,
                           "_CreatePhysObj: Unable to create physic object.");
   glass_debug = Dvar_RegisterBool("glass_debug",false,0,"Shows debug info for glass");
-  __restfpr_27();
   return;
 }
 

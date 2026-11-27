@@ -2,62 +2,51 @@
 
 // 82937F28  bdMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:26)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bdMessage * __thiscall
 bdMessage::bdMessage
           (bdMessage *this,uchar param_1,uchar *param_2,uint param_3,bool param_4,uchar *param_5,
           uint param_6)
 
 {
-  undefined4 *puVar1;
-  bdBitBuffer *pbVar2;
-  bool bVar5;
-  bdByteBuffer *pbVar3;
-  bdMessage *pbVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined4 *puStack00000014;
+  bdBitBuffer *pbVar1;
+  bool bVar3;
+  bdByteBuffer *pbVar2;
+  bdMessage *pbStack00000014;
   
-  uVar9 = (ulonglong)(int)param_6;
-  uVar8 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_22(this);
-  puVar1[1] = 0;
-  *(uchar *)(puVar1 + 2) = param_1;
-  *puVar1 = &_vftable_;
-  puVar1[3] = 0;
-  *(undefined1 *)(puVar1 + 4) = 0;
-  puVar1[5] = 0;
-  puStack00000014 = puVar1;
-  if (((uVar6 & 0xffffffff) != 0) && ((uVar7 & 0xffffffff) != 0)) {
-    pbVar2 = bdMemory::allocate(0x24);
-    if (pbVar2 == (bdBitBuffer *)0x0) {
-      pbVar2 = (bdBitBuffer *)0x0;
+  this->_padding_ = 0;
+  this->m_type = param_1;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_payload).m_ptr = (bdBitBuffer *)0x0;
+  this->m_payloadTypeChecked = false;
+  (this->m_unencPayload).m_ptr = (bdByteBuffer *)0x0;
+  pbStack00000014 = this;
+  if ((param_2 != (uchar *)0x0) && (param_3 != 0)) {
+    pbVar1 = bdMemory::allocate(0x24);
+    if (pbVar1 == (bdBitBuffer *)0x0) {
+      pbVar1 = (bdBitBuffer *)0x0;
     }
     else {
-      pbVar2 = bdBitBuffer::bdBitBuffer
-                         (pbVar2,(uchar *)uVar6,(uint)((uVar7 & 0xffffffff) << 3),param_4);
+      pbVar1 = bdBitBuffer::bdBitBuffer(pbVar1,param_2,param_3 << 3,param_4);
     }
-    bdReference<bdBitBuffer>::operator=((bdReference<bdBitBuffer> *)(puVar1 + 3),pbVar2);
-    bVar5 = bdBitBuffer::getTypeCheck(((bdReference<bdBitBuffer> *)(puVar1 + 3))->m_ptr);
-    *(bool *)(puVar1 + 4) = bVar5;
+    bdReference<bdBitBuffer>::operator=(&this->m_payload,pbVar1);
+    bVar3 = bdBitBuffer::getTypeCheck((this->m_payload).m_ptr);
+    this->m_payloadTypeChecked = bVar3;
   }
-  if (((uVar8 & 0xffffffff) != 0) && ((uVar9 & 0xffffffff) != 0)) {
-    pbVar3 = bdMemory::allocate(0x1c);
-    if (pbVar3 == (bdByteBuffer *)0x0) {
-      pbVar3 = (bdByteBuffer *)0x0;
+  if ((param_5 != (uchar *)0x0) && (param_6 != 0)) {
+    pbVar2 = bdMemory::allocate(0x1c);
+    if (pbVar2 == (bdByteBuffer *)0x0) {
+      pbVar2 = (bdByteBuffer *)0x0;
     }
     else {
-      pbVar3 = bdByteBuffer::bdByteBuffer(pbVar3,(uint)uVar9,false);
+      pbVar2 = bdByteBuffer::bdByteBuffer(pbVar2,param_6,false);
     }
-    bdReference<bdByteBuffer>::operator=((bdReference<bdByteBuffer> *)(puVar1 + 5),pbVar3);
-    bdByteBuffer::write(((bdReference<bdByteBuffer> *)(puVar1 + 5))->m_ptr,(void *)uVar8,(uint)uVar9
-                       );
+    bdReference<bdByteBuffer>::operator=(&this->m_unencPayload,pbVar2);
+    bdByteBuffer::write((this->m_unencPayload).m_ptr,param_5,param_6);
   }
-  pbVar4 = (bdMessage *)__restgprlr_22(puVar1);
-  return pbVar4;
+  return this;
 }
 
 
@@ -88,45 +77,45 @@ uchar __thiscall bdMessage::getType(bdMessage *this)
 
 // 829381D0  getPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:51)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdReference<bdBitBuffer> __thiscall bdMessage::getPayload(bdMessage *this)
 
 {
   uint uVar1;
-  uint *puVar2;
-  bdBitBuffer *pbVar3;
+  bdBitBuffer *pbVar2;
   int in_r4;
-  longlong lVar4;
-  uint *puVar5;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  puVar2 = (uint *)__savegprlr_28(this);
   if (*(int *)(in_r4 + 0xc) == 0) {
-    pbVar3 = bdMemory::allocate(0x24);
-    in_cr0 = (pbVar3 == (bdBitBuffer *)0x0) << 1;
-    if (pbVar3 == (bdBitBuffer *)0x0) {
-      pbVar3 = (bdBitBuffer *)0x0;
+    pbVar2 = bdMemory::allocate(0x24);
+    in_cr0 = (pbVar2 == (bdBitBuffer *)0x0) << 1;
+    if (pbVar2 == (bdBitBuffer *)0x0) {
+      pbVar2 = (bdBitBuffer *)0x0;
     }
     else {
-      pbVar3 = bdBitBuffer::bdBitBuffer(pbVar3,0,*(bool *)(in_r4 + 0x10));
+      pbVar2 = bdBitBuffer::bdBitBuffer(pbVar2,0,*(bool *)(in_r4 + 0x10));
     }
-    bdReference<bdBitBuffer>::operator=((bdReference<bdBitBuffer> *)(in_r4 + 0xc),pbVar3);
+    bdReference<bdBitBuffer>::operator=((bdReference<bdBitBuffer> *)(in_r4 + 0xc),pbVar2);
   }
-  pbVar3 = ((bdReference<bdBitBuffer> *)(in_r4 + 0xc))->m_ptr;
-  *puVar2 = (uint)pbVar3;
-  if (ZEXT48(pbVar3) != 0) {
-    lVar4 = ZEXT48(pbVar3) + 4;
+  pbVar2 = ((bdReference<bdBitBuffer> *)(in_r4 + 0xc))->m_ptr;
+  this->_padding_ = (int)pbVar2;
+  if (ZEXT48(pbVar2) != 0) {
+    lVar3 = ZEXT48(pbVar2) + 4;
     do {
-      puVar5 = (uint *)lVar4;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  pbVar3 = (bdBitBuffer *)__restgprlr_28(puVar2);
-  return (bdReference<bdBitBuffer>)pbVar3;
+  return (bdReference<bdBitBuffer>)(bdBitBuffer *)this;
 }
 
 

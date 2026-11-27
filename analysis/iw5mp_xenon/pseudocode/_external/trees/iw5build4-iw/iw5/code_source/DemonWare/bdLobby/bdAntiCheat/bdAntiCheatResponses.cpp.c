@@ -22,25 +22,25 @@ bdAntiCheatResponses::bdAntiCheatResponses(bdAntiCheatResponses *this)
 
 // 8290D860  ~bdAntiCheatResponses  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatresponses.cpp:23)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdAntiCheatResponses::~bdAntiCheatResponses(bdAntiCheatResponses *this)
 
 {
-  bdAntiCheatResponses *this_00;
   bdAntiCheatResponses *pbStack00000014;
   
-  this_00 = (bdAntiCheatResponses *)__savegprlr_29(this);
-  this_00->_padding_ = (int)&_vftable_;
-  pbStack00000014 = this_00;
-  clear(this_00);
-  bdMemory::deallocate((this_00->m_responses).m_data);
-  (this_00->m_responses).m_data = (long64 *)0x0;
-  (this_00->m_responses).m_size = 0;
-  (this_00->m_responses).m_capacity = 0;
-  bdMemory::deallocate((this_00->m_challengeIDs).m_data);
-  (this_00->m_challengeIDs).m_data = (ulong64 *)0x0;
-  (this_00->m_challengeIDs).m_size = 0;
-  (this_00->m_challengeIDs).m_capacity = 0;
-  __restgprlr_29();
+  this->_padding_ = (int)&_vftable_;
+  pbStack00000014 = this;
+  clear(this);
+  bdMemory::deallocate((this->m_responses).m_data);
+  (this->m_responses).m_data = (long64 *)0x0;
+  (this->m_responses).m_size = 0;
+  (this->m_responses).m_capacity = 0;
+  bdMemory::deallocate((this->m_challengeIDs).m_data);
+  (this->m_challengeIDs).m_data = (ulong64 *)0x0;
+  (this->m_challengeIDs).m_size = 0;
+  (this->m_challengeIDs).m_capacity = 0;
   return;
 }
 
@@ -67,54 +67,52 @@ void __thiscall bdAntiCheatResponses::clear(bdAntiCheatResponses *this)
 
 // 8290DA28  addResponse  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatresponses.cpp:38)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdAntiCheatResponses::addResponse
           (bdAntiCheatResponses *this,bdAntiCheatChallenge *param_1,long64 param_2)
 
 {
-  bool bVar1;
-  int iVar2;
+  uint uVar1;
+  bool bVar2;
   long64 *plVar3;
   int iVar4;
   uint uVar5;
   long64 lStack00000020;
   
-  iVar2 = __savegprlr_27(this);
+  uVar1 = (this->m_challengeIDs).m_size;
   uVar5 = 0;
-  if (*(uint *)(iVar2 + 0xc) != 0) {
+  if (uVar1 != 0) {
     iVar4 = 0;
     do {
-      if (param_1->m_challengeID ==
-          *(ulong64 *)(iVar4 + (int)((bdFastArray<unsigned___int64> *)(iVar2 + 4))->m_data)) {
-        bVar1 = true;
+      if (param_1->m_challengeID == *(ulong64 *)(iVar4 + (int)(this->m_challengeIDs).m_data)) {
+        bVar2 = true;
         goto LAB_8290da88;
       }
       uVar5 = uVar5 + 1;
       iVar4 = iVar4 + 8;
-    } while (uVar5 < *(uint *)(iVar2 + 0xc));
+    } while (uVar5 < uVar1);
   }
-  bVar1 = false;
+  bVar2 = false;
   uVar5 = 0;
 LAB_8290da88:
   lStack00000020 = param_2;
-  if (bVar1) {
+  if (bVar2) {
     bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheatResponses.cpp"
                  ,"bdAntiCheatResponses::addResponse",0x2b,
                  "Overriding existing response for challengeID %I64u");
-    plVar3 = bdFastArray<__int64>::operator[]((bdFastArray<__int64> *)(iVar2 + 0x10),uVar5);
+    plVar3 = bdFastArray<__int64>::operator[](&this->m_responses,uVar5);
     *plVar3 = param_2;
   }
   else {
-    bdFastArray<__int64>::setGrow
-              ((bdFastArray<__int64> *)(iVar2 + 0x10),(uint)*(ushort *)(iVar2 + 0x1c),
-               &stack0x00000020);
+    bdFastArray<__int64>::setGrow(&this->m_responses,(uint)this->m_numResponses,&stack0x00000020);
     bdFastArray<unsigned___int64>::setGrow
-              ((bdFastArray<unsigned___int64> *)(iVar2 + 4),(uint)*(ushort *)(iVar2 + 0x1c),
-               &param_1->m_challengeID);
-    *(short *)(iVar2 + 0x1c) = *(short *)(iVar2 + 0x1c) + 1;
+              (&this->m_challengeIDs,(uint)this->m_numResponses,&param_1->m_challengeID);
+    this->m_numResponses = this->m_numResponses + 1;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -148,71 +146,58 @@ void __thiscall bdFastArray<__int64>::~bdFastArray<__int64>(bdFastArray<__int64>
 
 // 8290D5B0  findResponse  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatresponses.cpp:56)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdAntiCheatResponses::findResponse
           (bdAntiCheatResponses *this,bdAntiCheatChallenge *param_1,long64 *param_2)
 
 {
-  int iVar2;
-  ulong64 *puVar3;
-  undefined8 uVar1;
-  undefined1 uVar5;
-  long64 *plVar4;
-  uint uVar6;
+  ulong64 *puVar1;
+  long64 *plVar2;
+  uint uVar3;
   
-  iVar2 = __savegprlr_27(this);
-  uVar6 = 0;
-  if (*(short *)(iVar2 + 0x1c) != 0) {
+  uVar3 = 0;
+  if (this->m_numResponses != 0) {
     do {
-      puVar3 = bdFastArray<unsigned___int64>::operator[]
-                         ((bdFastArray<unsigned___int64> *)(iVar2 + 4),uVar6);
-      if (*puVar3 == param_1->m_challengeID) {
-        plVar4 = bdFastArray<__int64>::operator[]((bdFastArray<__int64> *)(iVar2 + 0x10),uVar6);
-        uVar1 = 1;
-        *param_2 = *plVar4;
-        goto LAB_8290d60c;
+      puVar1 = bdFastArray<unsigned___int64>::operator[](&this->m_challengeIDs,uVar3);
+      if (*puVar1 == param_1->m_challengeID) {
+        plVar2 = bdFastArray<__int64>::operator[](&this->m_responses,uVar3);
+        *param_2 = *plVar2;
+        return true;
       }
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < *(ushort *)(iVar2 + 0x1c));
+      uVar3 = uVar3 + 1;
+    } while (uVar3 < this->m_numResponses);
   }
-  uVar1 = 0;
-LAB_8290d60c:
-  uVar5 = __restgprlr_27(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 8290D1D8  setLogMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatresponses.cpp:70)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdAntiCheatResponses::setLogMessage(bdAntiCheatResponses *this,uchar *param_1,uint param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  iVar1 = __savegprlr_29(this);
-  uVar4 = (undefined4)uVar3;
-  if (((uVar2 & 0xffffffff) == 0) || ((uVar3 & 0xffffffff) == 0)) {
-    *(undefined4 *)(iVar1 + 0x40) = 0;
+  if ((param_1 == (uchar *)0x0) || (param_2 == 0)) {
+    this->m_logMessageSize = 0;
     memset();
   }
   else {
-    if (0x20 < (uVar3 & 0xffffffff)) {
+    if (0x20 < param_2) {
       bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheatResponses.cpp"
                    ,"bdAntiCheatResponses::setLogMessage",0x52,
                    "Truncating response blob as size exceeds max allowed");
-      uVar4 = 0x20;
+      param_2 = 0x20;
     }
     memcpy();
-    *(undefined4 *)(iVar1 + 0x40) = uVar4;
+    this->m_logMessageSize = param_2;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -273,162 +258,152 @@ long64 * __thiscall bdFastArray<__int64>::operator[](bdFastArray<__int64> *this,
 
 // 8290D638  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatresponses.cpp:93)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdAntiCheatResponses::serialize(bdAntiCheatResponses *this,bdByteBuffer *param_1)
 
 {
-  int iVar1;
+  bool bVar3;
+  ulong64 *puVar1;
+  long64 *plVar2;
   bool bVar4;
-  ulong64 *puVar2;
-  long64 *plVar3;
-  bool bVar5;
-  undefined1 uVar6;
-  undefined8 uVar7;
-  uint uVar8;
+  uint uVar5;
   
-  iVar1 = __savegprlr_29(this);
-  bVar4 = bdByteBuffer::writeUInt16(param_1,*(ushort *)(iVar1 + 0x1c));
-  uVar8 = 0;
-  if (*(short *)(iVar1 + 0x1c) != 0) {
+  bVar3 = bdByteBuffer::writeUInt16(param_1,this->m_numResponses);
+  uVar5 = 0;
+  if (this->m_numResponses != 0) {
     do {
-      bVar5 = bVar4 == false;
-      bVar4 = false;
-      if (bVar5) break;
-      puVar2 = bdFastArray<unsigned___int64>::operator[]
-                         ((bdFastArray<unsigned___int64> *)(iVar1 + 4),uVar8);
-      bVar4 = bdByteBuffer::writeUInt64(param_1,*puVar2);
-      if (bVar4) {
-        plVar3 = bdFastArray<__int64>::operator[]((bdFastArray<__int64> *)(iVar1 + 0x10),uVar8);
-        bVar5 = bdByteBuffer::writeInt64(param_1,*plVar3);
-        bVar4 = true;
-        if (!bVar5) goto LAB_8290d6c8;
+      bVar4 = bVar3 == false;
+      bVar3 = false;
+      if (bVar4) break;
+      puVar1 = bdFastArray<unsigned___int64>::operator[](&this->m_challengeIDs,uVar5);
+      bVar3 = bdByteBuffer::writeUInt64(param_1,*puVar1);
+      if (bVar3) {
+        plVar2 = bdFastArray<__int64>::operator[](&this->m_responses,uVar5);
+        bVar4 = bdByteBuffer::writeInt64(param_1,*plVar2);
+        bVar3 = true;
+        if (!bVar4) goto LAB_8290d6c8;
       }
       else {
 LAB_8290d6c8:
-        bVar4 = false;
+        bVar3 = false;
       }
-      uVar8 = uVar8 + 1;
-    } while (uVar8 < *(ushort *)(iVar1 + 0x1c));
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < this->m_numResponses);
   }
-  if (bVar4 != false) {
-    bVar4 = bdByteBuffer::writeBlob(param_1,(void *)(iVar1 + 0x1e),*(uint *)(iVar1 + 0x40));
-    uVar7 = 1;
-    if (bVar4) goto LAB_8290d708;
+  if ((bVar3 != false) &&
+     (bVar3 = bdByteBuffer::writeBlob(param_1,this->m_logMessage,this->m_logMessageSize), bVar3)) {
+    return true;
   }
-  uVar7 = 0;
-LAB_8290d708:
-  uVar6 = __restgprlr_29(uVar7);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 8290D458  increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<unsigned___int64>::increaseCapacity(bdFastArray<unsigned___int64> *this,uint param_1)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  ulong64 *puVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar3 = (ulonglong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  uVar4 = (ulonglong)(uint)puVar1[1];
-  if ((uVar3 & 0xffffffff) <= uVar4) {
-    uVar3 = uVar4;
+  uVar3 = (ulonglong)this->m_capacity;
+  uVar2 = (longlong)(int)param_1;
+  if (param_1 <= uVar3) {
+    uVar2 = uVar3;
   }
-  uVar4 = uVar4 + uVar3;
-  pvVar2 = (void *)0x0;
-  if ((uVar4 != 0) &&
-     (pvVar2 = bdMemory::allocate((uint)((uVar4 & 0xffffffff) << 3)), puVar1[2] != 0)) {
+  uVar3 = uVar3 + uVar2;
+  puVar1 = (ulong64 *)0x0;
+  if ((uVar3 != 0) &&
+     (puVar1 = bdMemory::allocate((uint)((uVar3 & 0xffffffff) << 3)), this->m_size != 0)) {
     memcpy();
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = pvVar2;
-  puVar1[1] = (int)uVar4;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = puVar1;
+  this->m_capacity = (uint)uVar3;
   return;
 }
 
 
 // 8290D4C8  increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdFastArray<__int64>::increaseCapacity(bdFastArray<__int64> *this,uint param_1)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  long64 *plVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar3 = (ulonglong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  uVar4 = (ulonglong)(uint)puVar1[1];
-  if ((uVar3 & 0xffffffff) <= uVar4) {
-    uVar3 = uVar4;
+  uVar3 = (ulonglong)this->m_capacity;
+  uVar2 = (longlong)(int)param_1;
+  if (param_1 <= uVar3) {
+    uVar2 = uVar3;
   }
-  uVar4 = uVar4 + uVar3;
-  pvVar2 = (void *)0x0;
-  if ((uVar4 != 0) &&
-     (pvVar2 = bdMemory::allocate((uint)((uVar4 & 0xffffffff) << 3)), puVar1[2] != 0)) {
+  uVar3 = uVar3 + uVar2;
+  plVar1 = (long64 *)0x0;
+  if ((uVar3 != 0) &&
+     (plVar1 = bdMemory::allocate((uint)((uVar3 & 0xffffffff) << 3)), this->m_size != 0)) {
     memcpy();
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = pvVar2;
-  puVar1[1] = (int)uVar4;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = plVar1;
+  this->m_capacity = (uint)uVar3;
   return;
 }
 
 
 // 8290D928  setGrow  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:205)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<unsigned___int64>::setGrow
           (bdFastArray<unsigned___int64> *this,uint param_1,ulong64 *param_2)
 
 {
-  bdFastArray<unsigned___int64> *this_00;
-  ulonglong uVar1;
-  uint uVar2;
+  uint uVar1;
   
-  uVar1 = (ulonglong)(int)param_1;
-  this_00 = (bdFastArray<unsigned___int64> *)__savegprlr_28(this);
-  if ((ulonglong)this_00->m_size <= (uVar1 & 0xffffffff)) {
-    uVar2 = (uint)(uVar1 + 1);
-    if ((ulonglong)this_00->m_capacity < (uVar1 + 1 & 0xffffffff)) {
-      increaseCapacity(this_00,uVar2 - this_00->m_capacity);
+  if (this->m_size <= param_1) {
+    uVar1 = param_1 + 1;
+    if (this->m_capacity < uVar1) {
+      increaseCapacity(this,uVar1 - this->m_capacity);
     }
-    this_00->m_size = uVar2;
+    this->m_size = uVar1;
   }
-  *(ulong64 *)((int)((uVar1 & 0xffffffff) << 3) + (int)this_00->m_data) = *param_2;
-  __restgprlr_28();
+  this->m_data[param_1] = *param_2;
   return;
 }
 
 
 // 8290D980  setGrow  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:205)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<__int64>::setGrow(bdFastArray<__int64> *this,uint param_1,long64 *param_2)
 
 {
-  bdFastArray<__int64> *this_00;
-  ulonglong uVar1;
-  uint uVar2;
+  uint uVar1;
   
-  uVar1 = (ulonglong)(int)param_1;
-  this_00 = (bdFastArray<__int64> *)__savegprlr_28(this);
-  if ((ulonglong)this_00->m_size <= (uVar1 & 0xffffffff)) {
-    uVar2 = (uint)(uVar1 + 1);
-    if ((ulonglong)this_00->m_capacity < (uVar1 + 1 & 0xffffffff)) {
-      increaseCapacity(this_00,uVar2 - this_00->m_capacity);
+  if (this->m_size <= param_1) {
+    uVar1 = param_1 + 1;
+    if (this->m_capacity < uVar1) {
+      increaseCapacity(this,uVar1 - this->m_capacity);
     }
-    this_00->m_size = uVar2;
+    this->m_size = uVar1;
   }
-  *(long64 *)((int)((uVar1 & 0xffffffff) << 3) + (int)this_00->m_data) = *param_2;
-  __restgprlr_28();
+  this->m_data[param_1] = *param_2;
   return;
 }
 

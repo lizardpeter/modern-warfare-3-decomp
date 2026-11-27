@@ -76,46 +76,51 @@ uint avi::OutVar(uchar **param_1,void *param_2,uint param_3)
 
 // 827E53A8  write_thread  (mjpeg/avi.cpp:60)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void __thiscall avi_s::write_thread(avi_s *this)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  int iVar3;
-  ulong uVar4;
-  int iVar5;
-  int *piVar6;
+  uchar *puVar1;
+  int iVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  uchar **ppuVar5;
   
-  iVar3 = __savegprlr_22(this);
-  *(char *)(iVar3 + 0x169870) = '\0';
-  uVar4 = SetThreadPriority((void *)0xfffffffe,2);
-  piVar6 = (int *)(iVar3 + 0x169858);
-  while ((*(int *)(iVar3 + 0x169854) != *piVar6 || (*(char *)(iVar3 + 0x169870) == '\0'))) {
-    uVar4 = WaitForSingleObject(*(void **)(iVar3 + 0x169860),0xffffffff);
-    pcVar1 = (char *)*piVar6;
-    pcVar2 = *(char **)(iVar3 + 0x169854);
-    if (pcVar2 != pcVar1) {
-      if (pcVar2 < pcVar1) {
-        iVar5 = (iVar3 - (int)pcVar1) + 0x11013c;
-        if (iVar5 != 0) {
-          iVar5 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,iVar5,pcVar1);
-          streamedBytes = iVar5 + streamedBytes;
+  this->threadQuit = false;
+  SetThreadPriority((void *)0xfffffffe,2);
+  ppuVar5 = &this->writePtr;
+  while ((this->flushToPtr != *ppuVar5 || (this->threadQuit == false))) {
+    WaitForSingleObject(this->hOutput,0xffffffff);
+    uVar4 = ZEXT48(*ppuVar5);
+    puVar1 = this->flushToPtr;
+    if (ZEXT48(puVar1) != uVar4) {
+      if (ZEXT48(puVar1) < uVar4) {
+        lVar3 = ((longlong)(int)this - uVar4) + 0x11013c;
+        if (lVar3 != 0) {
+          iVar2 = DCache_StreamToCache
+                            (1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,(int)lVar3,(char *)*ppuVar5)
+          ;
+          streamedBytes = iVar2 + streamedBytes;
         }
-        *piVar6 = iVar3 + 0x1013c;
+        *ppuVar5 = this->buffer;
       }
-      uVar4 = DCache_StreamToCache
-                        (1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,(int)pcVar2 - *piVar6,
-                         (char *)*piVar6);
-      *piVar6 = (int)pcVar2;
-      streamedBytes = uVar4 + streamedBytes;
+      iVar2 = DCache_StreamToCache
+                        (1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,(int)puVar1 - (int)*ppuVar5,
+                         (char *)*ppuVar5);
+      *ppuVar5 = puVar1;
+      streamedBytes = iVar2 + streamedBytes;
     }
   }
-  __restgprlr_22(uVar4);
   return;
 }
 
 
 // 827E3B10  Out  (mjpeg/avi.h:65)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void __thiscall avi::idx1_s::Out(idx1_s *this,uchar **param_1)
 
@@ -124,37 +129,35 @@ void __thiscall avi::idx1_s::Out(idx1_s *this,uchar **param_1)
   uint uVar2;
   int iVar3;
   int *piVar4;
-  int *piVar5;
-  int iVar6;
+  int iVar5;
+  uchar *puVar6;
   uchar *puVar7;
-  uchar *puVar8;
   
-  piVar4 = (int *)__savegprlr_23(this);
   **param_1 = 'i';
-  iVar6 = 0;
+  iVar5 = 0;
   (*param_1)[1] = 'd';
   (*param_1)[2] = 'x';
   (*param_1)[3] = '1';
   puVar1 = *param_1;
-  puVar7 = puVar1 + 4;
+  puVar6 = puVar1 + 4;
+  *param_1 = puVar6;
+  *puVar6 = '\0';
+  puVar7 = *param_1;
+  *param_1 = puVar7 + 1;
+  puVar7[1] = '\0';
+  puVar7 = *param_1;
+  *param_1 = puVar7 + 1;
+  puVar7[1] = '\0';
+  puVar7 = *param_1;
+  *param_1 = puVar7 + 1;
+  puVar7[1] = '\0';
+  puVar7 = *param_1 + 1;
   *param_1 = puVar7;
-  *puVar7 = '\0';
-  puVar8 = *param_1;
-  *param_1 = puVar8 + 1;
-  puVar8[1] = '\0';
-  puVar8 = *param_1;
-  *param_1 = puVar8 + 1;
-  puVar8[1] = '\0';
-  puVar8 = *param_1;
-  *param_1 = puVar8 + 1;
-  puVar8[1] = '\0';
-  puVar8 = *param_1 + 1;
-  *param_1 = puVar8;
-  if (0 < *piVar4) {
-    piVar5 = piVar4 + 0x2000;
+  if (0 < this->count) {
+    piVar4 = this->offsets + 0x1fff;
     do {
-      uVar2 = piVar5[1];
-      *puVar8 = '0';
+      uVar2 = piVar4[1];
+      *puVar7 = '0';
       if ((uVar2 & 0x80000000) == 0) {
         (*param_1)[1] = '1';
         (*param_1)[2] = 'w';
@@ -165,129 +168,126 @@ void __thiscall avi::idx1_s::Out(idx1_s *this,uchar **param_1)
         (*param_1)[2] = 'd';
         (*param_1)[3] = 'c';
       }
-      puVar8 = *param_1;
-      iVar6 = iVar6 + 1;
-      *param_1 = puVar8 + 4;
-      puVar8[4] = '\x10';
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = '\0';
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = '\0';
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = '\0';
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      iVar3 = piVar5[-0x1fff];
-      puVar8[1] = (uchar)iVar3;
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (uchar)((uint)iVar3 >> 8);
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (uchar)((uint)iVar3 >> 0x10);
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (uchar)((uint)iVar3 >> 0x18);
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      piVar5 = piVar5 + 1;
-      iVar3 = *piVar5;
-      puVar8[1] = (uchar)iVar3;
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (uchar)((uint)iVar3 >> 8);
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (uchar)((uint)iVar3 >> 0x10);
-      puVar8 = *param_1;
-      *param_1 = puVar8 + 1;
-      puVar8[1] = (byte)((uint)iVar3 >> 0x18) & 0x7f;
-      puVar8 = *param_1 + 1;
-      *param_1 = puVar8;
-    } while (iVar6 < *piVar4);
+      puVar7 = *param_1;
+      iVar5 = iVar5 + 1;
+      *param_1 = puVar7 + 4;
+      puVar7[4] = '\x10';
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = '\0';
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = '\0';
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = '\0';
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      iVar3 = piVar4[-0x1fff];
+      puVar7[1] = (uchar)iVar3;
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (uchar)((uint)iVar3 >> 8);
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (uchar)((uint)iVar3 >> 0x10);
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (uchar)((uint)iVar3 >> 0x18);
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      piVar4 = piVar4 + 1;
+      iVar3 = *piVar4;
+      puVar7[1] = (uchar)iVar3;
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (uchar)((uint)iVar3 >> 8);
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (uchar)((uint)iVar3 >> 0x10);
+      puVar7 = *param_1;
+      *param_1 = puVar7 + 1;
+      puVar7[1] = (byte)((uint)iVar3 >> 0x18) & 0x7f;
+      puVar7 = *param_1 + 1;
+      *param_1 = puVar7;
+    } while (iVar5 < this->count);
   }
-  puVar8 = puVar8 + (-4 - (int)puVar7);
-  *puVar7 = (uchar)puVar8;
-  puVar1[5] = (uchar)((uint)puVar8 >> 8);
-  puVar1[6] = (uchar)((uint)puVar8 >> 0x10);
-  puVar1[7] = (uchar)((uint)puVar8 >> 0x18);
-  __restgprlr_23();
+  puVar7 = puVar7 + (-4 - (int)puVar6);
+  *puVar6 = (uchar)puVar7;
+  puVar1[5] = (uchar)((uint)puVar7 >> 8);
+  puVar1[6] = (uchar)((uint)puVar7 >> 0x10);
+  puVar1[7] = (uchar)((uint)puVar7 >> 0x18);
   return;
 }
 
 
 // 827E54A8  output_data  (mjpeg/avi.cpp:91)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 uint __thiscall avi_s::output_data(avi_s *this,void *param_1,uint param_2)
 
 {
   void *pvVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar2;
+  longlong lVar3;
   longlong lVar4;
-  uint uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint *puVar9;
-  longlong lVar10;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uchar **ppuVar7;
+  longlong lVar8;
   
-  lVar6 = (longlong)(int)param_2;
-  lVar4 = __savegprlr_20(this,param_1);
-  iVar3 = (int)lVar4;
-  pvVar1 = *(void **)(iVar3 + 0x16986c);
+  lVar4 = (longlong)(int)param_2;
+  lVar3 = (longlong)(int)this;
+  pvVar1 = this->hOutputAddLock;
   if (pvVar1 != (void *)0x0) {
     WaitForSingleObject(pvVar1,0xffffffff);
-    puVar9 = (uint *)(iVar3 + 0x169850);
-    uVar8 = (ulonglong)*puVar9;
-    if ((uVar8 + lVar6 & 0xffffffff) < (lVar4 + 0x11013cU & 0xffffffff)) {
-      uVar7 = (ulonglong)*(uint *)(iVar3 + 0x169858);
-      if (-((uVar8 < uVar7) - 1) != -((uVar8 + lVar6 < uVar7) - 1)) {
+    ppuVar7 = &this->outputPtr;
+    uVar6 = ZEXT48(*ppuVar7);
+    if ((uVar6 + lVar4 & 0xffffffff) < (lVar3 + 0x11013cU & 0xffffffff)) {
+      uVar5 = ZEXT48(this->writePtr);
+      if (-((uVar6 < uVar5) - 1) != -((uVar6 + lVar4 < uVar5) - 1)) {
         do {
           Com_PrintWarning(0x10,"WARNING: Movie encoding buffer overrun fileSize=%d\n");
           Sleep(1);
-          uVar8 = (ulonglong)*(uint *)(iVar3 + 0x169858);
-        } while (-((*puVar9 < uVar8) - 1) != -(((ulonglong)*puVar9 + lVar6 < uVar8) - 1));
+          uVar6 = ZEXT48(this->writePtr);
+        } while (-((ZEXT48(*ppuVar7) < uVar6) - 1) != -((ZEXT48(*ppuVar7) + lVar4 < uVar6) - 1));
       }
       memcpy();
-      *puVar9 = *puVar9 + (int)lVar6;
+      *ppuVar7 = *ppuVar7 + param_2;
     }
     else {
-      lVar10 = (lVar4 - uVar8) + 0x11013c;
-      if (lVar10 != 0) {
-        if (-((uVar8 < *(uint *)(iVar3 + 0x169858)) - 1) !=
-            -((uVar8 + lVar10 < (ulonglong)*(uint *)(iVar3 + 0x169858)) - 1)) {
+      lVar8 = (lVar3 - uVar6) + 0x11013c;
+      if (lVar8 != 0) {
+        if (-((uVar6 < ZEXT48(this->writePtr)) - 1) !=
+            -((uVar6 + lVar8 < ZEXT48(this->writePtr)) - 1)) {
           do {
             Com_PrintWarning(0x10,"WARNING: Movie encoding buffer overrun\n");
             Sleep(1);
-          } while (-(((ulonglong)*puVar9 < (ulonglong)*(uint *)(iVar3 + 0x169858)) - 1) !=
-                   -(((ulonglong)*puVar9 + lVar10 < (ulonglong)*(uint *)(iVar3 + 0x169858)) - 1));
+          } while (-((ZEXT48(*ppuVar7) < ZEXT48(this->writePtr)) - 1) !=
+                   -((ZEXT48(*ppuVar7) + lVar8 < ZEXT48(this->writePtr)) - 1));
         }
         memcpy();
       }
-      uVar8 = (lVar6 - lVar10) + lVar4 + 0x1013c;
-      if ((ulonglong)*(uint *)(iVar3 + 0x169858) <= (uVar8 & 0xffffffff)) {
+      uVar6 = (lVar4 - lVar8) + lVar3 + 0x1013c;
+      if (ZEXT48(this->writePtr) <= (uVar6 & 0xffffffff)) {
         do {
           Com_PrintWarning(0x10,"WARNING: Movie encoding buffer overrun\n");
           Sleep(1);
-        } while ((ulonglong)*(uint *)(iVar3 + 0x169858) <= (uVar8 & 0xffffffff));
+        } while (ZEXT48(this->writePtr) <= (uVar6 & 0xffffffff));
       }
       memcpy();
-      *puVar9 = (uint)uVar8;
+      *ppuVar7 = (uchar *)uVar6;
     }
-    iVar2 = *(int *)(iVar3 + 0x16985c);
-    *(int *)(iVar3 + 0x16985c) = iVar2 + (int)lVar6;
-    *(uint *)(iVar3 + 0x169854) = *puVar9;
-    ReleaseSemaphore(*(void **)(iVar3 + 0x169860),1,(long *)0x0);
-    ReleaseMutex(*(void **)(iVar3 + 0x16986c));
-    uVar5 = __restgprlr_20(iVar2);
-    return uVar5;
+    uVar2 = this->fileSize;
+    this->fileSize = uVar2 + param_2;
+    this->flushToPtr = *ppuVar7;
+    ReleaseSemaphore(this->hOutput,1,(long *)0x0);
+    ReleaseMutex(this->hOutputAddLock);
+    return uVar2;
   }
-  uVar5 = __restgprlr_20(*(undefined4 *)(iVar3 + 0x16985c));
-  return uVar5;
+  return this->fileSize;
 }
 
 
@@ -378,126 +378,121 @@ LIST_hdrl_s * __thiscall avi::RIFF_s::LIST_hdrl_s::LIST_hdrl_s(LIST_hdrl_s *this
 
 // 827E5F90  Out  (mjpeg/avi.h:108)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall avi::RIFF_s::LIST_hdrl_s::Out(LIST_hdrl_s *this,uchar **param_1)
 
 {
   uchar *puVar1;
-  undefined4 uVar2;
+  uint uVar2;
   uchar *puVar3;
   uchar *puVar4;
-  uchar *puVar5;
-  longlong lVar6;
   
-  puVar4 = (uchar *)__savegprlr_29(this);
-  **param_1 = *puVar4;
+  **param_1 = this->header[0];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[1];
+  puVar1[1] = this->header[1];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[2];
+  puVar1[1] = this->header[2];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[3];
+  puVar1[1] = this->header[3];
   puVar1 = *param_1;
-  puVar5 = puVar1 + 1;
-  *param_1 = puVar5;
-  uVar2 = *(undefined4 *)(puVar4 + 4);
-  *puVar5 = (uchar)uVar2;
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 8);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x10);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x18);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[8];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[9];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[10];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[0xb];
+  puVar3 = puVar1 + 1;
+  *param_1 = puVar3;
+  uVar2 = this->size;
+  *puVar3 = (uchar)uVar2;
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 8);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x10);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x18);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[0];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[1];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[2];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[3];
   *param_1 = *param_1 + 1;
-  avih_s::Out((avih_s *)(puVar4 + 0xc),param_1);
-  LIST_vid_strl_s::Out((LIST_vid_strl_s *)(puVar4 + 0x4c),param_1);
-  LIST_aud_strl_s::Out((LIST_aud_strl_s *)(puVar4 + 200),param_1);
-  lVar6 = (ZEXT48(*param_1) - ZEXT48(puVar5)) + -4;
-  *puVar5 = (uchar)lVar6;
-  puVar1[2] = (uchar)((ulonglong)lVar6 >> 8);
-  puVar1[3] = (uchar)((ulonglong)lVar6 >> 0x10);
-  puVar1[4] = (uchar)((ulonglong)lVar6 >> 0x18);
-  __restgprlr_29();
+  avih_s::Out(&this->avih,param_1);
+  LIST_vid_strl_s::Out(&this->strl_vid,param_1);
+  LIST_aud_strl_s::Out(&this->strl_aud,param_1);
+  puVar4 = *param_1 + (-4 - (int)(puVar1 + 1));
+  *puVar3 = (uchar)puVar4;
+  puVar1[2] = (uchar)((uint)puVar4 >> 8);
+  puVar1[3] = (uchar)((uint)puVar4 >> 0x10);
+  puVar1[4] = (uchar)((uint)puVar4 >> 0x18);
   return;
 }
 
 
 // 827E6260  create  (mjpeg/avi.cpp:132)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void __thiscall avi_s::create(avi_s *this,char *param_1,int param_2,int param_3,int param_4)
 
 {
-  RIFF_s *this_00;
   int iVar1;
   void *pvVar2;
-  ulonglong uVar3;
-  RIFF_s *pRVar4;
-  int *piVar5;
-  RIFF_s *local_50;
+  uchar *puVar3;
+  uchar *local_50;
   ulong auStack_4c [19];
   
-  uVar3 = (ulonglong)param_4;
-  this_00 = (RIFF_s *)__savegprlr_25(this,param_1);
-  (this_00->list).strl_vid.strh.Rate = (uint)uVar3;
-  (this_00->list).avih.Width = param_2;
-  (this_00->list).avih.Height = param_3;
-  (this_00->list).strl_vid.strf.width = param_2;
-  (this_00->list).strl_vid.strf.height = param_3;
-  (this_00->list).strl_vid.strh.rBottom = (ushort)param_3;
-  (this_00->list).strl_vid.strh.rRight = (ushort)param_2;
-  trapWord(6,uVar3,0);
-  pRVar4 = this_00 + 1;
-  this_00[0x16].idx1.offsets[0x16f8] = 0;
-  this_00[0x16].idx1.offsets[0x1efd] = (int)pRVar4;
-  this_00[0x16].idx1.offsets[0x1efc] = (int)pRVar4;
-  this_00[0x16].idx1.offsets[0x1efb] = (int)pRVar4;
-  this_00[0x16].idx1.offsets[0x1ef9] = 0;
-  this_00[0x16].idx1.offsets[0x1efa] = 0;
-  (this_00->list).avih.SuggestedBufferSize = 0;
-  (this_00->list).strl_vid.strh.rTop = 0;
-  (this_00->list).strl_vid.strh.rLeft = 0;
-  (this_00->list).strl_vid.strf.size_image = param_2 * param_3 * 3;
-  (this_00->list).avih.MicroSecPerFrame = (uint)(1000000 / (uVar3 & 0xffffffff));
-  (this_00->list).avih.TotalFrames = 0;
-  (this_00->list).strl_vid.strh.Length = 0;
-  (this_00->list).strl_aud.strh.Length = 0;
-  (this_00->idx1).count = 0;
-  local_50 = pRVar4;
-  avi::RIFF_s::Out(this_00,(uchar **)&local_50);
-  piVar5 = this_00[0x16].idx1.offsets + 0x1efe;
+  (this->riff).list.strl_vid.strh.Rate = param_4;
+  (this->riff).list.avih.Width = param_2;
+  (this->riff).list.avih.Height = param_3;
+  (this->riff).list.strl_vid.strf.width = param_2;
+  (this->riff).list.strl_vid.strf.height = param_3;
+  (this->riff).list.strl_vid.strh.rBottom = (ushort)param_3;
+  (this->riff).list.strl_vid.strh.rRight = (ushort)param_2;
+  trapWord(6,(longlong)param_4,0);
+  puVar3 = this->buffer;
+  this->audioBufferCount = 0;
+  this->writePtr = puVar3;
+  this->flushToPtr = puVar3;
+  this->outputPtr = puVar3;
+  this->audioSamplesQueueIn = 0;
+  this->audioSamplesQueueOut = 0;
+  (this->riff).list.avih.SuggestedBufferSize = 0;
+  (this->riff).list.strl_vid.strh.rTop = 0;
+  (this->riff).list.strl_vid.strh.rLeft = 0;
+  (this->riff).list.strl_vid.strf.size_image = param_2 * param_3 * 3;
+  (this->riff).list.avih.MicroSecPerFrame = (uint)(1000000 / (ulonglong)(uint)param_4);
+  (this->riff).list.avih.TotalFrames = 0;
+  (this->riff).list.strl_vid.strh.Length = 0;
+  (this->riff).list.strl_aud.strh.Length = 0;
+  (this->riff).idx1.count = 0;
+  local_50 = puVar3;
+  avi::RIFF_s::Out(&this->riff,&local_50);
   streamedBytes = 0;
-  *piVar5 = 0;
+  this->fileSize = 0;
   iVar1 = DCache_StreamToCache
-                    (1,DCACHE_LOCATION_AVI_RENDER,0,(int)local_50 + (-0x1013c - (int)this_00),
-                     pRVar4->header);
+                    (1,DCACHE_LOCATION_AVI_RENDER,0,(int)(local_50 + (-0x1013c - (int)this)),
+                     (char *)puVar3);
   streamedBytes = iVar1 + streamedBytes;
   iVar1 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,0xc,"LISTXXXXmovi");
   streamedBytes = iVar1 + streamedBytes;
-  *piVar5 = streamedBytes;
+  this->fileSize = streamedBytes;
   pvVar2 = CreateSemaphoreA((void *)0x0,0,0x7fffffff,(char *)0x0);
-  this_00[0x16].idx1.offsets[0x1eff] = (int)pvVar2;
+  this->hOutput = pvVar2;
   pvVar2 = CreateMutexA((void *)0x0,0,(char *)0x0);
-  this_00[0x16].idx1.offsets[0x1f02] = (int)pvVar2;
+  this->hOutputAddLock = pvVar2;
   pvVar2 = CreateThread((void *)0x0,0x1000,mjpeg_write_thread,(void *)0x0,0,auStack_4c);
-  this_00[0x16].idx1.offsets[0x1f01] = (int)pvVar2;
-  __restgprlr_25();
+  this->hOutputThread = pvVar2;
   return;
 }
 
@@ -730,68 +725,70 @@ avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::LIST_vid_strl_s(LIST_vid_strl_s *this
 
 // 827E5900  Out  (mjpeg/avi.h:177)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::Out(LIST_vid_strl_s *this,uchar **param_1)
 
 {
   uchar *puVar1;
-  undefined4 uVar2;
+  uint uVar2;
   uchar *puVar3;
   uchar *puVar4;
-  uchar *puVar5;
-  longlong lVar6;
   
-  puVar4 = (uchar *)__savegprlr_29(this);
-  **param_1 = *puVar4;
+  **param_1 = this->header[0];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[1];
+  puVar1[1] = this->header[1];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[2];
+  puVar1[1] = this->header[2];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[3];
+  puVar1[1] = this->header[3];
   puVar1 = *param_1;
-  puVar5 = puVar1 + 1;
-  *param_1 = puVar5;
-  uVar2 = *(undefined4 *)(puVar4 + 4);
-  *puVar5 = (uchar)uVar2;
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 8);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x10);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x18);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[8];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[9];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[10];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[0xb];
+  puVar3 = puVar1 + 1;
+  *param_1 = puVar3;
+  uVar2 = this->size;
+  *puVar3 = (uchar)uVar2;
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 8);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x10);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x18);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[0];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[1];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[2];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[3];
   *param_1 = *param_1 + 1;
-  strh_s::Out((strh_s *)(puVar4 + 0xc),param_1);
-  strf_s::Out((strf_s *)(puVar4 + 0x4c),param_1);
-  lVar6 = (ZEXT48(*param_1) - ZEXT48(puVar5)) + -4;
-  *puVar5 = (uchar)lVar6;
-  puVar1[2] = (uchar)((ulonglong)lVar6 >> 8);
-  puVar1[3] = (uchar)((ulonglong)lVar6 >> 0x10);
-  puVar1[4] = (uchar)((ulonglong)lVar6 >> 0x18);
-  __restgprlr_29();
+  strh_s::Out(&this->strh,param_1);
+  strf_s::Out(&this->strf,param_1);
+  puVar4 = *param_1 + (-4 - (int)(puVar1 + 1));
+  *puVar3 = (uchar)puVar4;
+  puVar1[2] = (uchar)((uint)puVar4 >> 8);
+  puVar1[3] = (uchar)((uint)puVar4 >> 0x10);
+  puVar1[4] = (uchar)((uint)puVar4 >> 0x18);
   return;
 }
 
 
 // 827E5C60  add_frame  (mjpeg/avi.cpp:183)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void __thiscall avi_s::add_frame(avi_s *this,uchar *param_1,uchar *param_2,uchar *param_3)
 
@@ -800,7 +797,6 @@ void __thiscall avi_s::add_frame(avi_s *this,uchar *param_1,uchar *param_2,uchar
   uint uVar2;
   uint uVar3;
   int iVar4;
-  avi_s *this_00;
   longlong lVar5;
   uchar *puVar6;
   uint uVar7;
@@ -816,14 +812,13 @@ void __thiscall avi_s::add_frame(avi_s *this,uchar *param_1,uchar *param_2,uchar
   jpeg_exif *in_stack_fffffc80;
   jpeg_encode jStack_320;
   
-  lVar5 = __savegprlr_24(this);
-  this_00 = (avi_s *)lVar5;
-  builtin_memcpy(this_00->encodeBuff,"00dc",4);
+  lVar5 = (longlong)(int)this;
+  builtin_memcpy(this->encodeBuff,"00dc",4);
   PIXBeginNamedEvent_Copy_NoVarArgs(0,"jpeg encode");
-  uVar2 = (this_00->riff).list.avih.Width;
-  puVar6 = jpeg_encode::encode(&jStack_320,this_00->encodeBuff + 8,uVar2,
-                               (this_00->riff).list.avih.Height,uVar2,0x400,param_1,param_2,
-                               in_stack_fffffc78,(bool)in_stack_fffffc7f,in_stack_fffffc80);
+  uVar2 = (this->riff).list.avih.Width;
+  puVar6 = jpeg_encode::encode(&jStack_320,this->encodeBuff + 8,uVar2,(this->riff).list.avih.Height,
+                               uVar2,0x400,param_1,param_2,in_stack_fffffc78,(bool)in_stack_fffffc7f
+                               ,in_stack_fffffc80);
   lVar11 = (longlong)(int)puVar6;
   PIXEndNamedEvent();
   for (uVar8 = lVar11 - lVar5; (uVar8 & 3) != 0; uVar8 = uVar8 + 1) {
@@ -832,27 +827,27 @@ void __thiscall avi_s::add_frame(avi_s *this,uchar *param_1,uchar *param_2,uchar
   }
   uVar8 = (lVar11 - lVar5) - 0x11013c;
   uVar12 = (lVar11 - lVar5) - 0x110144;
-  this_00->encodeBuff[4] = (uchar)uVar12;
-  this_00->encodeBuff[5] = (uchar)(uVar12 >> 8);
-  this_00->encodeBuff[6] = (uchar)(uVar12 >> 0x10);
-  this_00->encodeBuff[7] = (uchar)(uVar12 >> 0x18);
+  this->encodeBuff[4] = (uchar)uVar12;
+  this->encodeBuff[5] = (uchar)(uVar12 >> 8);
+  this->encodeBuff[6] = (uchar)(uVar12 >> 0x10);
+  this->encodeBuff[7] = (uchar)(uVar12 >> 0x18);
   if (0x40000 < (uVar8 & 0xffffffff)) {
     Com_PrintWarning(0x10,"WARNING: Jpeg encoding buffer overrun\n");
   }
-  uVar7 = output_data(this_00,this_00->encodeBuff,(uint)uVar8);
-  uVar2 = (this_00->riff).list.strl_vid.strh.Length;
-  uVar3 = (this_00->riff).list.strl_vid.strh.SuggestedBufferSize;
-  (this_00->riff).list.avih.TotalFrames = (this_00->riff).list.avih.TotalFrames + 1;
-  (this_00->riff).list.strl_vid.strh.Length = uVar2 + 1;
+  uVar7 = output_data(this,this->encodeBuff,(uint)uVar8);
+  uVar2 = (this->riff).list.strl_vid.strh.Length;
+  uVar3 = (this->riff).list.strl_vid.strh.SuggestedBufferSize;
+  (this->riff).list.avih.TotalFrames = (this->riff).list.avih.TotalFrames + 1;
+  (this->riff).list.strl_vid.strh.Length = uVar2 + 1;
   if ((ulonglong)uVar3 < (uVar12 & 0xffffffff)) {
-    (this_00->riff).list.strl_vid.strh.SuggestedBufferSize = (uint)uVar12;
+    (this->riff).list.strl_vid.strh.SuggestedBufferSize = (uint)uVar12;
   }
-  piVar10 = &this_00->audioSamplesQueueOut;
-  (this_00->riff).idx1.offsets[(this_00->riff).idx1.count] = uVar7;
-  (this_00->riff).idx1.sizes[(this_00->riff).idx1.count] = (uint)uVar12 | 0x80000000;
-  (this_00->riff).idx1.count = (this_00->riff).idx1.count + 1;
-  if (*piVar10 != this_00->audioSamplesQueueIn) {
-    piVar13 = &this_00->audioBufferCount;
+  piVar10 = &this->audioSamplesQueueOut;
+  (this->riff).idx1.offsets[(this->riff).idx1.count] = uVar7;
+  (this->riff).idx1.sizes[(this->riff).idx1.count] = (uint)uVar12 | 0x80000000;
+  (this->riff).idx1.count = (this->riff).idx1.count + 1;
+  if (*piVar10 != this->audioSamplesQueueIn) {
+    piVar13 = &this->audioBufferCount;
     do {
       lVar14 = 0x80;
       lVar11 = ((ulonglong)(uint)*piVar10 & 0xf) * 0x200 + lVar5 + 0x167844;
@@ -868,13 +863,12 @@ void __thiscall avi_s::add_frame(avi_s *this,uchar *param_1,uchar *param_2,uchar
         lVar14 = lVar14 + -1;
       } while (lVar14 != 0);
       if (avi::sampleRate <= iVar4 + 1) {
-        flush_samples(this_00);
+        flush_samples(this);
       }
       iVar4 = *piVar10;
       *piVar10 = iVar4 + 1;
-    } while (iVar4 + 1 != this_00->audioSamplesQueueIn);
+    } while (iVar4 + 1 != this->audioSamplesQueueIn);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1143,115 +1137,110 @@ void __thiscall avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::strh_s::Out(strh_s *t
 
 // 827E6418  close  (mjpeg/avi.cpp:221)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void __thiscall avi_s::close(avi_s *this)
 
 {
   uint uVar1;
-  longlong lVar2;
-  avi_s *this_00;
-  idx1_s *this_01;
+  idx1_s *this_00;
+  int iVar2;
   int iVar3;
-  bool bVar4;
-  int iVar5;
+  uchar *puVar4;
   uchar *puVar6;
-  longlong lVar7;
-  uint *puVar8;
+  longlong lVar5;
+  int *piVar7;
   uchar *local_50;
   uint local_4c [19];
   
-  lVar2 = __savegprlr_24(this);
-  this_00 = (avi_s *)lVar2;
-  flush_samples(this_00);
-  puVar6 = this_00->encodeBuff;
-  this_01 = &(this_00->riff).idx1;
-  uVar1 = this_00->fileSize;
-  local_50 = puVar6;
-  avi::idx1_s::Out(this_01,&local_50);
-  output_data(this_00,puVar6,(uint)(local_50 + (-0x11013c - (int)this_00)));
-  this_00->threadQuit = true;
-  ReleaseSemaphore(this_00->hOutput,1,(long *)0x0);
-  WaitForSingleObject(this_00->hOutputThread,0xffffffff);
-  CloseHandle(this_00->hOutputThread);
-  CloseHandle(this_00->hOutput);
-  CloseHandle(this_00->hOutputAddLock);
-  this_00->hOutputAddLock = (void *)0x0;
-  local_50 = puVar6;
-  avi::RIFF_s::Out(&this_00->riff,&local_50);
-  iVar3 = this_00->fileSize - 8;
-  this_00->encodeBuff[4] = (uchar)iVar3;
-  this_00->encodeBuff[5] = (uchar)((uint)iVar3 >> 8);
-  this_00->encodeBuff[6] = (uchar)((uint)iVar3 >> 0x10);
-  this_00->encodeBuff[7] = (uchar)((uint)iVar3 >> 0x18);
-  lVar7 = (ZEXT48(local_50) - lVar2) + -0x11013c;
-  iVar3 = (int)lVar7;
-  DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,0,iVar3,(char *)puVar6);
+  flush_samples(this);
+  puVar4 = this->encodeBuff;
+  this_00 = &(this->riff).idx1;
+  uVar1 = this->fileSize;
+  local_50 = puVar4;
+  avi::idx1_s::Out(this_00,&local_50);
+  output_data(this,puVar4,(uint)(local_50 + (-0x11013c - (int)this)));
+  this->threadQuit = true;
+  ReleaseSemaphore(this->hOutput,1,(long *)0x0);
+  WaitForSingleObject(this->hOutputThread,0xffffffff);
+  CloseHandle(this->hOutputThread);
+  CloseHandle(this->hOutput);
+  CloseHandle(this->hOutputAddLock);
+  this->hOutputAddLock = (void *)0x0;
+  local_50 = puVar4;
+  avi::RIFF_s::Out(&this->riff,&local_50);
+  iVar2 = this->fileSize - 8;
+  this->encodeBuff[4] = (uchar)iVar2;
+  this->encodeBuff[5] = (uchar)((uint)iVar2 >> 8);
+  this->encodeBuff[6] = (uchar)((uint)iVar2 >> 0x10);
+  this->encodeBuff[7] = (uchar)((uint)iVar2 >> 0x18);
+  puVar6 = local_50 + (-0x11013c - (int)this);
+  DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,0,(int)puVar6,(char *)puVar4);
   memcpy();
-  lVar7 = ((ulonglong)uVar1 - lVar7) + -8;
-  this_00->encodeBuff[4] = (uchar)lVar7;
-  this_00->encodeBuff[5] = (uchar)((ulonglong)lVar7 >> 8);
-  this_00->encodeBuff[6] = (uchar)((ulonglong)lVar7 >> 0x10);
-  this_00->encodeBuff[7] = (uchar)((ulonglong)lVar7 >> 0x18);
-  DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,iVar3,0xc,(char *)puVar6);
-  lVar7 = 2;
+  iVar2 = (uVar1 - (int)puVar6) + -8;
+  this->encodeBuff[4] = (uchar)iVar2;
+  this->encodeBuff[5] = (uchar)((uint)iVar2 >> 8);
+  this->encodeBuff[6] = (uchar)((uint)iVar2 >> 0x10);
+  this->encodeBuff[7] = (uchar)((uint)iVar2 >> 0x18);
+  DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,(int)puVar6,0xc,(char *)puVar4);
+  lVar5 = 2;
   local_50 = (uchar *)0x0;
   do {
-    iVar3 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)&local_50);
-    lVar7 = lVar7 + -1;
-    iVar3 = iVar3 + streamedBytes;
-    streamedBytes = iVar3;
-  } while (lVar7 != 0);
-  iVar5 = 0;
-  if (0 < this_01->count) {
-    lVar7 = lVar2 + 0x813c;
+    iVar2 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)&local_50);
+    lVar5 = lVar5 + -1;
+    iVar2 = iVar2 + streamedBytes;
+    streamedBytes = iVar2;
+  } while (lVar5 != 0);
+  iVar3 = 0;
+  if (0 < this_00->count) {
+    piVar7 = (this->riff).idx1.sizes;
     do {
-      puVar8 = (uint *)lVar7;
-      if ((*puVar8 & 0x80000000) != 0) {
-        iVar3 = DCache_StreamToCache
-                          (1,DCACHE_LOCATION_AVI_RENDER,iVar3,4,(char *)(puVar8 + -0x2000));
-        streamedBytes = iVar3 + streamedBytes;
-        local_4c[0] = *puVar8 & 0x7fffffff;
-        iVar3 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)local_4c);
-        iVar3 = iVar3 + streamedBytes;
-        streamedBytes = iVar3;
+      if ((*piVar7 & 0x80000000U) != 0) {
+        iVar2 = DCache_StreamToCache
+                          (1,DCACHE_LOCATION_AVI_RENDER,iVar2,4,(char *)(piVar7 + -0x2000));
+        streamedBytes = iVar2 + streamedBytes;
+        local_4c[0] = *piVar7 & 0x7fffffff;
+        iVar2 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)local_4c);
+        iVar2 = iVar2 + streamedBytes;
+        streamedBytes = iVar2;
       }
-      iVar5 = iVar5 + 1;
-      lVar7 = lVar7 + 4;
-    } while (iVar5 < this_01->count);
+      iVar3 = iVar3 + 1;
+      piVar7 = piVar7 + 1;
+    } while (iVar3 < this_00->count);
   }
-  lVar7 = 2;
+  lVar5 = 2;
   do {
-    iVar3 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,iVar3,4,(char *)&local_50);
-    lVar7 = lVar7 + -1;
-    iVar3 = iVar3 + streamedBytes;
-    streamedBytes = iVar3;
-  } while (lVar7 != 0);
-  iVar5 = 0;
-  if (0 < this_01->count) {
-    lVar2 = lVar2 + 0x813c;
+    iVar2 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,iVar2,4,(char *)&local_50);
+    lVar5 = lVar5 + -1;
+    iVar2 = iVar2 + streamedBytes;
+    streamedBytes = iVar2;
+  } while (lVar5 != 0);
+  iVar3 = 0;
+  if (0 < this_00->count) {
+    piVar7 = (this->riff).idx1.sizes;
     do {
-      puVar8 = (uint *)lVar2;
-      if ((*puVar8 & 0x80000000) == 0) {
-        iVar3 = DCache_StreamToCache
-                          (1,DCACHE_LOCATION_AVI_RENDER,iVar3,4,(char *)(puVar8 + -0x2000));
-        streamedBytes = iVar3 + streamedBytes;
-        local_4c[0] = *puVar8 & 0x7fffffff;
-        iVar3 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)local_4c);
-        iVar3 = iVar3 + streamedBytes;
-        streamedBytes = iVar3;
+      if ((*piVar7 & 0x80000000U) == 0) {
+        iVar2 = DCache_StreamToCache
+                          (1,DCACHE_LOCATION_AVI_RENDER,iVar2,4,(char *)(piVar7 + -0x2000));
+        streamedBytes = iVar2 + streamedBytes;
+        local_4c[0] = *piVar7 & 0x7fffffff;
+        iVar2 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,streamedBytes,4,(char *)local_4c);
+        iVar2 = iVar2 + streamedBytes;
+        streamedBytes = iVar2;
       }
-      iVar5 = iVar5 + 1;
-      lVar2 = lVar2 + 4;
-    } while (iVar5 < this_01->count);
+      iVar3 = iVar3 + 1;
+      piVar7 = piVar7 + 1;
+    } while (iVar3 < this_00->count);
   }
-  lVar2 = 2;
+  lVar5 = 2;
   do {
-    iVar3 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,iVar3,4,(char *)&local_50);
-    lVar2 = lVar2 + -1;
-    iVar3 = iVar3 + streamedBytes;
-    streamedBytes = iVar3;
-  } while (lVar2 != 0);
-  bVar4 = DCache_StreamToCacheComplete(1,DCACHE_LOCATION_AVI_RENDER,iVar3);
-  __restgprlr_24(bVar4);
+    iVar2 = DCache_StreamToCache(1,DCACHE_LOCATION_AVI_RENDER,iVar2,4,(char *)&local_50);
+    lVar5 = lVar5 + -1;
+    iVar2 = iVar2 + streamedBytes;
+    streamedBytes = iVar2;
+  } while (lVar5 != 0);
+  DCache_StreamToCacheComplete(1,DCACHE_LOCATION_AVI_RENDER,iVar2);
   return;
 }
 
@@ -1441,99 +1430,88 @@ void __thiscall avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::strf_s::Out(strf_s *t
 
 // 827E5A58  LIST_aud_strl_s  (mjpeg/avi.h:305)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 LIST_aud_strl_s * __thiscall
 avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::LIST_aud_strl_s(LIST_aud_strl_s *this)
 
 {
-  int iVar1;
-  undefined1 *puVar2;
-  LIST_aud_strl_s *pLVar3;
+  uint uVar1;
   
-  puVar2 = (undefined1 *)__savegprlr_28(this);
-  strh_s::strh_s((strh_s *)(puVar2 + 0xc));
-  *(undefined2 *)(puVar2 + 0x54) = 1;
-  *(undefined2 *)(puVar2 + 0x56) = 1;
-  puVar2[0x4c] = 0x73;
-  puVar2[0x4d] = 0x74;
-  puVar2[0x4f] = 0x66;
-  puVar2[0x4e] = 0x72;
-  *(int *)(puVar2 + 0x58) = sampleRate;
-  iVar1 = sampleRate << 1;
-  *(undefined2 *)(puVar2 + 0x60) = 2;
-  *(undefined2 *)(puVar2 + 0x62) = 0x10;
-  *(int *)(puVar2 + 0x5c) = iVar1;
-  *puVar2 = 0x4c;
-  puVar2[1] = 0x49;
-  puVar2[2] = 0x53;
-  puVar2[3] = 0x54;
-  puVar2[8] = 0x73;
-  puVar2[9] = 0x74;
-  puVar2[10] = 0x72;
-  puVar2[0xb] = 0x6c;
-  pLVar3 = (LIST_aud_strl_s *)__restgprlr_28(puVar2);
-  return pLVar3;
+  strh_s::strh_s(&this->strh);
+  (this->strf).format = 1;
+  (this->strf).channels = 1;
+  builtin_strncpy((this->strf).header,"strf",4);
+  (this->strf).samples_per_sec = sampleRate;
+  uVar1 = sampleRate << 1;
+  (this->strf).block_align = 2;
+  (this->strf).bits_per_sample = 0x10;
+  (this->strf).avg_bytes_per_sec = uVar1;
+  builtin_strncpy(this->header,"LIST",4);
+  builtin_strncpy(this->type,"strl",4);
+  return this;
 }
 
 
 // 827E5B08  Out  (mjpeg/avi.h:309)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::Out(LIST_aud_strl_s *this,uchar **param_1)
 
 {
   uchar *puVar1;
-  undefined4 uVar2;
+  uint uVar2;
   uchar *puVar3;
   uchar *puVar4;
-  uchar *puVar5;
-  longlong lVar6;
   
-  puVar4 = (uchar *)__savegprlr_29(this);
-  **param_1 = *puVar4;
+  **param_1 = this->header[0];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[1];
+  puVar1[1] = this->header[1];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[2];
+  puVar1[1] = this->header[2];
   puVar1 = *param_1;
   *param_1 = puVar1 + 1;
-  puVar1[1] = puVar4[3];
+  puVar1[1] = this->header[3];
   puVar1 = *param_1;
-  puVar5 = puVar1 + 1;
-  *param_1 = puVar5;
-  uVar2 = *(undefined4 *)(puVar4 + 4);
-  *puVar5 = (uchar)uVar2;
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 8);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x10);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = (uchar)((uint)uVar2 >> 0x18);
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[8];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[9];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[10];
-  puVar3 = *param_1;
-  *param_1 = puVar3 + 1;
-  puVar3[1] = puVar4[0xb];
+  puVar3 = puVar1 + 1;
+  *param_1 = puVar3;
+  uVar2 = this->size;
+  *puVar3 = (uchar)uVar2;
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 8);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x10);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = (uchar)(uVar2 >> 0x18);
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[0];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[1];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[2];
+  puVar4 = *param_1;
+  *param_1 = puVar4 + 1;
+  puVar4[1] = this->type[3];
   *param_1 = *param_1 + 1;
-  strh_s::Out((strh_s *)(puVar4 + 0xc),param_1);
-  strf_s::Out((strf_s *)(puVar4 + 0x4c),param_1);
-  lVar6 = (ZEXT48(*param_1) - ZEXT48(puVar5)) + -4;
-  *puVar5 = (uchar)lVar6;
-  puVar1[2] = (uchar)((ulonglong)lVar6 >> 8);
-  puVar1[3] = (uchar)((ulonglong)lVar6 >> 0x10);
-  puVar1[4] = (uchar)((ulonglong)lVar6 >> 0x18);
-  __restgprlr_29();
+  strh_s::Out(&this->strh,param_1);
+  strf_s::Out(&this->strf,param_1);
+  puVar4 = *param_1 + (-4 - (int)(puVar1 + 1));
+  *puVar3 = (uchar)puVar4;
+  puVar1[2] = (uchar)((uint)puVar4 >> 8);
+  puVar1[3] = (uchar)((uint)puVar4 >> 0x10);
+  puVar1[4] = (uchar)((uint)puVar4 >> 0x18);
   return;
 }
 
@@ -1581,34 +1559,34 @@ strh_s * __thiscall avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::strh_s::strh_s(st
 
 // 827E56E0  flush_samples  (mjpeg/avi.cpp:337)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall avi_s::flush_samples(avi_s *this)
 
 {
   int iVar1;
-  avi_s *this_00;
   uint uVar2;
   longlong lVar3;
   int *piVar4;
   
-  this_00 = (avi_s *)__savegprlr_29(this);
-  piVar4 = &this_00->audioBufferCount;
-  this_00->audioBufferHeaders[0] = '0';
-  this_00->audioBufferHeaders[1] = '1';
-  this_00->audioBufferHeaders[2] = 'w';
-  this_00->audioBufferHeaders[3] = 'b';
+  piVar4 = &this->audioBufferCount;
+  this->audioBufferHeaders[0] = '0';
+  this->audioBufferHeaders[1] = '1';
+  this->audioBufferHeaders[2] = 'w';
+  this->audioBufferHeaders[3] = 'b';
   lVar3 = ((ulonglong)(uint)*piVar4 & 0x7fffffff) << 1;
-  this_00->audioBufferHeaders[4] = (uchar)lVar3;
-  this_00->audioBufferHeaders[5] = (uchar)((ulonglong)lVar3 >> 8);
-  this_00->audioBufferHeaders[6] = (uchar)((ulonglong)lVar3 >> 0x10);
-  this_00->audioBufferHeaders[7] = (uchar)((ulonglong)lVar3 >> 0x18);
+  this->audioBufferHeaders[4] = (uchar)lVar3;
+  this->audioBufferHeaders[5] = (uchar)((ulonglong)lVar3 >> 8);
+  this->audioBufferHeaders[6] = (uchar)((ulonglong)lVar3 >> 0x10);
+  this->audioBufferHeaders[7] = (uchar)((ulonglong)lVar3 >> 0x18);
   iVar1 = *piVar4;
-  (this_00->riff).list.strl_aud.strh.Length = (this_00->riff).list.strl_aud.strh.Length + iVar1;
-  uVar2 = output_data(this_00,this_00->audioBufferHeaders,(iVar1 + 4) * 2);
-  (this_00->riff).idx1.offsets[(this_00->riff).idx1.count] = uVar2;
-  (this_00->riff).idx1.sizes[(this_00->riff).idx1.count] = iVar1 << 1;
-  (this_00->riff).idx1.count = (this_00->riff).idx1.count + 1;
+  (this->riff).list.strl_aud.strh.Length = (this->riff).list.strl_aud.strh.Length + iVar1;
+  uVar2 = output_data(this,this->audioBufferHeaders,(iVar1 + 4) * 2);
+  (this->riff).idx1.offsets[(this->riff).idx1.count] = uVar2;
+  (this->riff).idx1.sizes[(this->riff).idx1.count] = iVar1 << 1;
+  (this->riff).idx1.count = (this->riff).idx1.count + 1;
   *piVar4 = 0;
-  __restgprlr_29();
   return;
 }
 
@@ -1844,18 +1822,17 @@ void __thiscall avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::strh_s::Out(strh_s *t
 
 // 827E57A8  queue_samples  (mjpeg/avi.cpp:368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall avi_s::queue_samples(avi_s *this,short *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(this,param_1);
   if (param_2 != 0x100) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\avi.cpp",0x172,0,"%s");
   }
   memcpy();
-  *(int *)(iVar1 + 0x169848) = *(int *)(iVar1 + 0x169848) + 1;
-  __restgprlr_28();
+  this->audioSamplesQueueIn = this->audioSamplesQueueIn + 1;
   return;
 }
 

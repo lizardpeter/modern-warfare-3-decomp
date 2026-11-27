@@ -86,70 +86,65 @@ void R_EndMarkMeshVerts(void)
 
 // 82753B58  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
                (GfxMarkSurf *param_1,uint param_2,uint param_3,uint param_4,GfxMarkSurf *param_5,
                uint param_6)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint *puVar16;
-  longlong lVar15;
-  longlong lVar17;
+  ushort *puVar1;
+  GfxMarkSurfLighting GVar2;
+  uint uVar3;
+  GfxMarkSurf *pGVar4;
+  uint uVar5;
+  ushort uVar6;
+  uchar uVar7;
+  uchar uVar8;
+  longlong lVar9;
+  GfxMarkSurf *pGVar10;
   
-  uVar13 = (ulonglong)(int)param_6;
-  lVar12 = (longlong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  puVar7 = (uint *)__savegprlr_26(param_1);
-  if ((uVar9 & 0xffffffff) != 0) {
-    lVar17 = (uVar13 & 0xfffffff) * 0x10 + lVar12 + -0x10;
+  lVar9 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pGVar10 = param_5 + (param_6 - 1);
     do {
-      uVar3 = (ulonglong)(*puVar7 >> 0x12);
-      if (((uVar10 & 0xffffffff) <= uVar3) && (uVar3 < (uVar11 & 0xffffffff))) {
-        uVar14 = uVar13;
-        lVar15 = lVar17;
-        uVar6 = uVar13 & 0xffffffff;
-        while ((uVar6 != 0 && (puVar16 = (uint *)lVar15, uVar3 < *puVar16 >> 0x12))) {
-          uVar14 = uVar14 - 1;
-          lVar15 = lVar15 + -0x10;
-          puVar16[4] = *puVar16;
-          puVar16[5] = puVar16[1];
-          puVar16[6] = puVar16[2];
-          puVar16[7] = puVar16[3];
-          uVar6 = uVar14;
+      uVar3 = (param_1->drawGroup).packed >> 0x12;
+      if ((param_3 <= uVar3) && (pGVar4 = pGVar10, uVar5 = param_6, uVar3 < param_4)) {
+        for (; (uVar5 != 0 && (uVar3 < (pGVar4->drawGroup).packed >> 0x12)); pGVar4 = pGVar4 + -1) {
+          puVar1 = pGVar4->indices;
+          uVar6 = pGVar4->triCount;
+          uVar7 = pGVar4->modelType;
+          uVar8 = pGVar4->pad;
+          GVar2 = pGVar4->lighting;
+          pGVar4[1].drawGroup = pGVar4->drawGroup;
+          pGVar4[1].indices = puVar1;
+          pGVar4[1].triCount = uVar6;
+          pGVar4[1].modelType = uVar7;
+          pGVar4[1].pad = uVar8;
+          pGVar4[1].lighting = GVar2;
+          uVar5 = uVar5 - 1;
         }
-        iVar5 = (int)uVar14 * 0x10;
-        uVar8 = puVar7[1];
-        uVar13 = uVar13 + 1;
-        uVar1 = puVar7[2];
-        iVar4 = iVar5 + (int)lVar12;
-        uVar2 = puVar7[3];
-        lVar17 = lVar17 + 0x10;
-        *(uint *)(iVar5 + (int)lVar12) = *puVar7;
-        *(uint *)(iVar4 + 4) = uVar8;
-        *(uint *)(iVar4 + 8) = uVar1;
-        *(uint *)(iVar4 + 0xc) = uVar2;
+        puVar1 = param_1->indices;
+        param_6 = param_6 + 1;
+        uVar6 = param_1->triCount;
+        uVar7 = param_1->modelType;
+        uVar8 = param_1->pad;
+        GVar2 = param_1->lighting;
+        pGVar10 = pGVar10 + 1;
+        param_5[uVar5].drawGroup = param_1->drawGroup;
+        param_5[uVar5].indices = puVar1;
+        pGVar4 = param_5 + uVar5;
+        pGVar4->triCount = uVar6;
+        pGVar4->modelType = uVar7;
+        pGVar4->pad = uVar8;
+        param_5[uVar5].lighting = GVar2;
       }
-      uVar9 = uVar9 - 1;
-      puVar7 = puVar7 + 4;
-    } while (uVar9 != 0);
+      lVar9 = lVar9 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar9 != 0);
   }
-  uVar8 = __restgprlr_26(uVar13);
-  return uVar8;
+  return param_6;
 }
 
 
@@ -199,28 +194,26 @@ uint R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
 
 // 827538F0  R_ReserveMarkMeshIndices  (gfx_d3d/r_marksurf.cpp:129)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool R_ReserveMarkMeshIndices(int param_1,r_double_index_t **param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  r_double_index_t *prVar3;
+  r_double_index_t *prVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (g_markVertGlob.allowProcess == false) {
+  if (!g_markVertGlob.allowProcess) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x82,0
                     ,"%s");
   }
-  if (0x2400 < g_markVertGlob.indexCount + iVar1) {
+  if (0x2400 < g_markVertGlob.indexCount + param_1) {
     R_WarnOncePerFrame(R_WARN_MAX_MARK_INDS);
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+    return false;
   }
-  prVar3 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
-  g_markVertGlob.indexCount = g_markVertGlob.indexCount + iVar1;
-  *param_2 = prVar3;
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  prVar1 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
+  g_markVertGlob.indexCount = g_markVertGlob.indexCount + param_1;
+  *param_2 = prVar1;
+  return true;
 }
 
 
@@ -239,32 +232,28 @@ GfxWorldVertex * R_MarkMeshVertIter_Begin(ushort param_1)
 
 // 82753F38  R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
                (GfxMarkSurf *param_1,uint param_2,uint param_3,GfxMarkSurf *param_4)
 
 {
   ushort uVar1;
   ushort uVar2;
-  int iVar3;
+  uint uVar3;
   GfxMarkSurf *pGVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  GfxMarkSurf *pGVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pGVar4 = (GfxMarkSurf *)__savegprlr_27(param_1);
-  iVar3 = (int)((uVar6 & 0xffffffff) << 1);
-  uVar1 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3);
-  uVar2 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3 + 2);
-  pGVar7 = param_4;
-  uVar5 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-                    (pGVar4,param_2,0,(uint)uVar1,param_4,0);
-  uVar5 = R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-                    (pGVar4,param_2,(uint)uVar1,(uint)uVar2,pGVar7,uVar5);
-  uVar5 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-                    (pGVar4,param_2,(uint)uVar2,0x1660,param_4,uVar5);
-  uVar5 = __restgprlr_27(uVar5);
-  return uVar5;
+  uVar1 = rgp.mtlSortIndexBeginKey[param_3];
+  uVar2 = rgp.mtlSortIndexBeginKey[param_3 + 1];
+  pGVar4 = param_4;
+  uVar3 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (param_1,param_2,0,(uint)uVar1,param_4,0);
+  uVar3 = R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (param_1,param_2,(uint)uVar1,(uint)uVar2,pGVar4,uVar3);
+  uVar3 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (param_1,param_2,(uint)uVar2,0x1660,param_4,uVar3);
+  return uVar3;
 }
 
 
@@ -288,72 +277,67 @@ void R_MarkMeshVertIter_End(GfxWorldVertex *param_1)
 
 // 82753A08  R_ReserveMarkMeshVerts  (gfx_d3d/r_marksurf.cpp:174)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool R_ReserveMarkMeshVerts(int param_1,ushort *param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ushort uVar3;
+  ushort uVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (g_markVertGlob.allowProcess == false) {
+  if (!g_markVertGlob.allowProcess) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xaf,0
                     ,"%s");
   }
-  if (0x1800 < g_markVertGlob.vertCount + iVar1) {
+  if (0x1800 < g_markVertGlob.vertCount + param_1) {
     R_WarnOncePerFrame(R_WARN_MAX_MARK_VERTS);
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+    return false;
   }
-  uVar3 = (ushort)g_markVertGlob.vertCount;
-  g_markVertGlob.vertCount = g_markVertGlob.vertCount + iVar1;
-  *param_2 = uVar3;
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  uVar1 = (ushort)g_markVertGlob.vertCount;
+  g_markVertGlob.vertCount = g_markVertGlob.vertCount + param_1;
+  *param_2 = uVar1;
+  return true;
 }
 
 
 // 82753A90  R_ReserveMarkMeshVertsAndIndices  (gfx_d3d/r_marksurf.cpp:194)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_ReserveMarkMeshVertsAndIndices
                (int param_1,ushort *param_2,int param_3,r_double_index_t **param_4)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  longlong lVar3;
-  r_double_index_t *prVar4;
-  ushort uVar5;
+  r_double_index_t *prVar1;
+  ushort uVar2;
   
-  lVar3 = (longlong)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if (g_markVertGlob.allowProcess == false) {
+  if (!g_markVertGlob.allowProcess) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xc3,0
                     ,"%s");
   }
-  if (0x1800 < g_markVertGlob.vertCount + iVar1) {
+  if (0x1800 < g_markVertGlob.vertCount + param_1) {
     R_WarnOncePerFrame(R_WARN_MAX_MARK_VERTS);
-    uVar2 = __restgprlr_27(0);
-    return (bool)uVar2;
+    return false;
   }
-  if (0x2400 < ((ulonglong)g_markVertGlob.indexCount + lVar3 & 0xffffffff)) {
+  if (0x2400 < g_markVertGlob.indexCount + param_3) {
     R_WarnOncePerFrame(R_WARN_MAX_MARK_INDS);
-    uVar2 = __restgprlr_27(0);
-    return (bool)uVar2;
+    return false;
   }
-  prVar4 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
-  uVar5 = (ushort)g_markVertGlob.vertCount;
-  g_markVertGlob.vertCount = g_markVertGlob.vertCount + iVar1;
-  *param_2 = uVar5;
-  g_markVertGlob.indexCount = (uint)((ulonglong)g_markVertGlob.indexCount + lVar3);
-  *param_4 = prVar4;
-  uVar2 = __restgprlr_27(1);
-  return (bool)uVar2;
+  prVar1 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
+  uVar2 = (ushort)g_markVertGlob.vertCount;
+  g_markVertGlob.vertCount = g_markVertGlob.vertCount + param_1;
+  *param_2 = uVar2;
+  g_markVertGlob.indexCount = g_markVertGlob.indexCount + param_3;
+  *param_4 = prVar1;
+  return true;
 }
 
 
 // 82753C98  R_AddMarkSurf  (gfx_d3d/r_marksurf.cpp:222)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -365,92 +349,84 @@ void R_AddMarkSurf(Material *param_1,GfxMarkContext *param_2,ushort *param_3,uin
   GfxMarkSurf *pGVar3;
   uint uVar4;
   Material *pMVar5;
-  Material *pMVar6;
-  MaterialTechniqueSet *pMVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  MaterialTechniqueSet *pMVar6;
+  uint uVar7;
   
-  uVar8 = (ulonglong)(int)param_4;
-  pMVar5 = (Material *)__savegprlr_24(param_1);
-  if (g_markVertGlob.allowProcess == false) {
+  if (!g_markVertGlob.allowProcess) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xe6,0
                     ,"%s");
   }
-  pMVar6 = R_GetSortedMaterial((uint)((pMVar5->info).drawSurf.packed >> 0x1d) & 0xfff);
-  if (pMVar6 != pMVar5) {
+  pMVar5 = R_GetSortedMaterial((uint)((param_1->info).drawSurf.packed >> 0x1d) & 0xfff);
+  if (pMVar5 != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xe9,0
                     ,"%s");
   }
-  uVar9 = (uint)gfxDrawMethod.litTechType[9][0];
-  pMVar7 = Material_GetTechniqueSet(pMVar5);
-  if (pMVar7 == (MaterialTechniqueSet *)0x0) {
+  uVar7 = (uint)gfxDrawMethod.litTechType[9][0];
+  pMVar6 = Material_GetTechniqueSet(param_1);
+  if (pMVar6 == (MaterialTechniqueSet *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_inline.h",
                     0x76,0,"%s");
   }
-  if (pMVar7->techniques[uVar9] == (MaterialTechnique *)0x0) {
+  if (pMVar6->techniques[uVar7] == (MaterialTechnique *)0x0) {
     R_WarnOncePerFrame(R_WARN_NONLIT_MARK_MATERIAL);
   }
-  uVar9 = g_markVertGlob.surfCount;
+  uVar7 = g_markVertGlob.surfCount;
   if (0x5ff < g_markVertGlob.surfCount) {
     R_WarnOncePerFrame(R_WARN_GFX_MARK_SURF_LIMIT);
-    __restgprlr_24();
     return;
   }
-  uVar8 = (uVar8 & 0xffffffff) / 3;
   pGVar2 = scene.markSurfs + g_markVertGlob.surfCount;
-  uVar4 = (uint)uVar8;
+  uVar4 = (uint)((ulonglong)param_4 / 3);
   pGVar3 = scene.markSurfs + g_markVertGlob.surfCount;
   g_markVertGlob.surfCount = g_markVertGlob.surfCount + 1;
   (pGVar3->drawGroup).packed =
-       (uint)(((pMVar5->info).drawSurf.packed >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 |
+       (uint)(((param_1->info).drawSurf.packed >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 |
        (pGVar2->drawGroup).packed & 0x3ffff;
-  scene.markSurfs[uVar9].drawGroup.fields.sceneLightIndex = param_2->primaryLightIndex;
-  uVar1 = scene.markSurfs[uVar9].drawGroup.packed;
-  scene.markSurfs[uVar9].indices = param_3;
-  scene.markSurfs[uVar9].drawGroup.packed = uVar1 & 0xfffcff00 | 0x12;
+  scene.markSurfs[uVar7].drawGroup.fields.sceneLightIndex = param_2->primaryLightIndex;
+  uVar1 = scene.markSurfs[uVar7].drawGroup.packed;
+  scene.markSurfs[uVar7].indices = param_3;
+  scene.markSurfs[uVar7].drawGroup.packed = uVar1 & 0xfffcff00 | 0x12;
   if (uVar4 != (uVar4 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  scene.markSurfs[uVar9].triCount = (ushort)uVar8;
-  scene.markSurfs[uVar9].modelType = param_2->modelType;
-  scene.markSurfs[uVar9].pad = '\0';
-  scene.markSurfs[uVar9].lighting.fields.lmapIndex = (uchar)param_2->field1_0x1;
-  scene.markSurfs[uVar9].lighting.fields.reflectionProbeIndex = param_2->reflectionProbeIndex;
-  scene.markSurfs[uVar9].lighting.fields.modelIndex = (ushort)param_2->typeSpecificIndex;
-  __restgprlr_24();
+  scene.markSurfs[uVar7].triCount = (ushort)((ulonglong)param_4 / 3);
+  scene.markSurfs[uVar7].modelType = param_2->modelType;
+  scene.markSurfs[uVar7].pad = '\0';
+  scene.markSurfs[uVar7].lighting.fields.lmapIndex = (uchar)param_2->field1_0x1;
+  scene.markSurfs[uVar7].lighting.fields.reflectionProbeIndex = param_2->reflectionProbeIndex;
+  scene.markSurfs[uVar7].lighting.fields.modelIndex = (ushort)param_2->typeSpecificIndex;
   return;
 }
 
 
 // 82753E68  R_EmitMarkSurfs  (gfx_d3d/r_marksurf.cpp:291)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_EmitMarkSurfs(GfxMarkSurfList *param_1,int param_2)
 
 {
-  int *piVar1;
-  uint uVar2;
+  uint uVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1[1] != 0) {
+  if (param_1->count != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x126,
                     0,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->surfs == (GfxMarkSurf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x127,
                     0,"%s");
   }
-  uVar2 = scene.markSurfCount;
+  uVar1 = scene.markSurfCount;
   if (param_2 < (int)scene.markSurfCount) {
-    uVar2 = param_2;
+    uVar1 = param_2;
   }
-  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
-                    (scene.markSurfs,uVar2,(rgp.world)->sortKeyEffectDecal,(GfxMarkSurf *)*piVar1);
-  piVar1[1] = uVar2;
+  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (scene.markSurfs,uVar1,(rgp.world)->sortKeyEffectDecal,param_1->surfs);
+  param_1->count = uVar1;
   scene.markSurfCount = 0;
-  __restgprlr_28();
   return;
 }
 

@@ -109,230 +109,205 @@ int IsCurrentOrAlternateTitleId(ulong param_1)
 
 // 828AA488  XContentCrossTitleLaunchImage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:407)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XContentCrossTitleLaunchImage(ulong param_1,_XCONTENT_CROSS_TITLE_DATA *param_2,char *param_3)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  int iVar1;
+  ulong uVar2;
   ulong64 local_240 [2];
   _XCONTENT_DATA_INTERNAL local_230;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1,uVar5,lVar6);
   local_240[0] = 0;
-  if ((uVar5 & 0xffffffff) == 0) {
-    uVar4 = 0x57;
+  if (param_2 == (_XCONTENT_CROSS_TITLE_DATA *)0x0) {
+    uVar2 = 0x57;
   }
   else {
-    piVar1 = (int *)uVar5;
-    iVar3 = IsCurrentOrAlternateTitleId(piVar1[0x4d]);
-    if (iVar3 == 0) {
-      uVar4 = 5;
+    iVar1 = IsCurrentOrAlternateTitleId(param_2->dwTitleId);
+    if (iVar1 == 0) {
+      uVar2 = 5;
     }
     else {
-      uVar4 = DelayLoad((char *)0x273,&g_pfnXamContentLaunchImageInternal);
-      if (uVar4 == 0) {
-        if ((uVar2 & 0xffffffff) < 4) {
-          iVar3 = XamUserGetXUID(uVar2,1,local_240);
+      uVar2 = DelayLoad((char *)0x273,&g_pfnXamContentLaunchImageInternal);
+      if (uVar2 == 0) {
+        if (param_1 < 4) {
+          iVar1 = XamUserGetXUID(param_1,1,local_240);
         }
         else {
-          iVar3 = 0;
+          iVar1 = 0;
         }
-        if (iVar3 < 0) {
-          uVar4 = 0x525;
+        if (iVar1 < 0) {
+          uVar2 = 0x525;
         }
         else {
           memset();
-          local_230._padding_ = *piVar1;
-          local_230._padding_ = piVar1[1];
-          local_230.dwTitleId = piVar1[0x4d];
+          local_230._padding_ = param_2->DeviceID;
+          local_230._padding_ = param_2->dwContentType;
+          local_230.dwTitleId = param_2->dwTitleId;
           local_230.xuid = local_240[0];
           memcpy();
           memcpy();
-          uVar4 = (*g_pfnXamContentLaunchImageInternal)(&local_230,(char *)lVar6);
+          uVar2 = (*g_pfnXamContentLaunchImageInternal)(&local_230,param_3);
         }
       }
     }
   }
-  uVar4 = __restgprlr_27(uVar4);
-  return uVar4;
+  return uVar2;
 }
 
 
 // 828AA598  XContentCreateCrossTitleEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:475)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 ulong XContentCreateCrossTitleEnumerator
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,
                 ulong *param_6,void **param_7)
 
 {
-  ulonglong uVar1;
-  ulong uVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  ulong uVar1;
+  int iVar2;
   ulong64 local_50 [10];
   
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1,lVar4);
   local_50[0] = 0xffffffffffffffff;
-  if ((((uVar5 & 0xffffffff) == 3) || ((uVar6 & 0xffffffff) != 0)) || ((uVar7 & 0xffffffff) != 1)) {
-    uVar2 = 0x57;
+  if (((param_3 == 3) || (param_4 != 0)) || (param_5 != 1)) {
+    uVar1 = 0x57;
   }
   else {
-    uVar2 = DelayLoad((char *)0x279,&g_pfnXamContentAggregateCreateEnumerator);
-    if (uVar2 == 0) {
-      if ((uVar1 & 0xffffffff) < 4) {
-        iVar3 = XamUserGetXUID(uVar1,1,local_50);
+    uVar1 = DelayLoad((char *)0x279,&g_pfnXamContentAggregateCreateEnumerator);
+    if (uVar1 == 0) {
+      if (param_1 < 4) {
+        iVar2 = XamUserGetXUID(param_1,1,local_50);
       }
       else {
-        iVar3 = 0;
+        iVar2 = 0;
       }
-      if (iVar3 < 0) {
-        uVar2 = 0x525;
+      if (iVar2 < 0) {
+        uVar1 = 0x525;
       }
       else {
-        uVar2 = (*g_pfnXamContentAggregateCreateEnumerator)
-                          (local_50[0],(ulong)lVar4,(ulong)uVar5,0,param_7);
-        if ((uVar8 & 0xffffffff) != 0) {
-          *(undefined4 *)uVar8 = 0x138;
+        uVar1 = (*g_pfnXamContentAggregateCreateEnumerator)(local_50[0],param_2,param_3,0,param_7);
+        if (param_6 != (ulong *)0x0) {
+          *param_6 = 0x138;
         }
       }
     }
   }
-  uVar2 = __restgprlr_25(uVar2);
-  return uVar2;
+  return uVar1;
 }
 
 
 // 828AA680  InitAsyncMessage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:532)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong InitAsyncMessage(void *param_1,ulong param_2,_XASYNCMESSAGE **param_3)
 
 {
-  int iVar2;
   longlong lVar1;
-  ulong uVar3;
   _XASYNCMESSAGE *local_30 [12];
   
-  lVar1 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1,lVar1);
-  lVar1 = XamAlloc(0x10000000,lVar1 + 0x1c,local_30);
+  lVar1 = XamAlloc(0x10000000,(longlong)(int)param_2 + 0x1c,local_30);
   if (-1 < lVar1) {
     memset();
-    if (iVar2 != 0) {
+    if (param_1 != (void *)0x0) {
       local_30[0]->pBuffer = local_30[0] + 1;
       memcpy();
     }
     *param_3 = local_30[0];
   }
-  uVar3 = __restgprlr_28(lVar1);
-  return uVar3;
+  return (ulong)lVar1;
 }
 
 
 // 828AA708  ScheduleSystemRequest  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:571)
 
-undefined4
-ScheduleSystemRequest
-          (_func___cdecl_T_HRESULT_void_ptr *param_1,_XOVERLAPPED *param_2,void *param_3,
-          ulong param_4)
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
+ulong ScheduleSystemRequest
+                (_func___cdecl_T_HRESULT_void_ptr *param_1,_XOVERLAPPED *param_2,void *param_3,
+                ulong param_4)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  ulong uVar3;
-  int iVar4;
-  uint uVar5;
-  undefined4 uVar6;
-  ulonglong uVar7;
-  _XOVERLAPPED *p_Var8;
+  ulong uVar1;
+  int iVar2;
+  uint uVar3;
   _XASYNCMESSAGE *local_70 [4];
-  undefined4 local_60;
-  undefined4 local_54;
-  ulong local_48;
+  _XOVERLAPPED local_60 [3];
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar1 = ZEXT48(&stack0x00000000);
-  uVar2 = __savegprlr_26(param_1);
-  local_60 = 0;
+  local_60[0].InternalLow = 0;
   memset();
-  uVar3 = InitAsyncMessage(param_3,param_4,local_70);
-  if (-1 < (int)uVar3) {
-    if ((uVar7 & 0xffffffff) == 0) {
-      iVar4 = NtCreateEvent(uVar1 - 0x54,0,0,0);
-      if (iVar4 < 0) {
-        uVar3 = 0x8007000e;
+  uVar1 = InitAsyncMessage(param_3,param_4,local_70);
+  if (-1 < (int)uVar1) {
+    if (param_2 == (_XOVERLAPPED *)0x0) {
+      iVar2 = NtCreateEvent(&local_60[0].hEvent,0,0,0);
+      if (iVar2 < 0) {
+        uVar1 = 0x8007000e;
       }
       else {
-        uVar7 = uVar1 - 0x60;
+        param_2 = local_60;
       }
     }
-    if (-1 < (int)uVar3) {
-      p_Var8 = (_XOVERLAPPED *)uVar7;
-      local_70[0]->pOverlapped = p_Var8;
-      if (p_Var8->hEvent != (void *)0x0) {
-        uVar5 = ObReferenceObjectByHandle(p_Var8->hEvent,0xe,&local_70[0]->UserEvent);
-        if ((int)uVar5 < 0) {
-          uVar3 = uVar5 | 0x10000000;
+    if (-1 < (int)uVar1) {
+      local_70[0]->pOverlapped = param_2;
+      if (param_2->hEvent != (void *)0x0) {
+        uVar3 = ObReferenceObjectByHandle(param_2->hEvent,0xe,&local_70[0]->UserEvent);
+        if ((int)uVar3 < 0) {
+          uVar1 = uVar3 | 0x10000000;
         }
         else {
           *(undefined4 *)((int)local_70[0]->UserEvent + 4) = 0;
         }
       }
-      if (-1 < (int)uVar3) {
-        p_Var8->InternalContext = (ulong)local_70[0];
-        p_Var8->InternalLow = 0x3e5;
-        uVar3 = XamTaskSchedule(uVar2,local_70[0],0,&local_70[0]->hXamTask);
-        if ((int)uVar3 < 0) {
-          p_Var8->InternalContext = 0;
+      if (-1 < (int)uVar1) {
+        param_2->InternalContext = (ulong)local_70[0];
+        param_2->InternalLow = 0x3e5;
+        uVar1 = XamTaskSchedule(param_1,local_70[0],0,&local_70[0]->hXamTask);
+        if ((int)uVar1 < 0) {
+          param_2->InternalContext = 0;
           if (local_70[0]->UserEvent != (void *)0x0) {
             ObDereferenceObject(local_70[0]->UserEvent);
           }
         }
-        else if ((uVar7 & 0xffffffff) == (uVar1 - 0x60 & 0xffffffff)) {
-          XamGetOverlappedResult(uVar1 - 0x60,0,1);
-          SetLastError(local_48);
-          NtClose(local_54);
+        else if (param_2 == local_60) {
+          XamGetOverlappedResult(local_60,0,1);
+          SetLastError(local_60[0].dwExtendedError);
+          NtClose(local_60[0].hEvent);
         }
-        if (-1 < (int)uVar3) goto LAB_828aa878;
+        if (-1 < (int)uVar1) {
+          return uVar1;
+        }
       }
-      p_Var8->InternalLow = 0x65b;
-      if (-1 < (int)uVar3) goto LAB_828aa878;
+      param_2->InternalLow = 0x65b;
+      if (-1 < (int)uVar1) {
+        return uVar1;
+      }
     }
     if (local_70[0]->hXamTask == (void *)0x0) {
       XamFree(local_70[0]);
     }
   }
-LAB_828aa878:
-  uVar6 = __restgprlr_26(uVar3);
-  return uVar6;
+  return uVar1;
 }
 
 
 // 828AA888  EnumerateCrossTitleContentTaskProc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:728)
 
-undefined4 EnumerateCrossTitleContentTaskProc(void *param_1)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+T_HRESULT EnumerateCrossTitleContentTaskProc(void *param_1)
 
 {
   int *piVar1;
   undefined4 *puVar2;
-  int iVar4;
   longlong lVar3;
-  int iVar5;
-  undefined4 uVar6;
+  int iVar4;
   undefined4 local_260 [4];
   undefined1 local_250 [8];
   undefined4 *local_248;
@@ -343,8 +318,7 @@ undefined4 EnumerateCrossTitleContentTaskProc(void *param_1)
   undefined1 auStack_230 [320];
   ulong local_f0;
   
-  iVar4 = __savegprlr_28(param_1);
-  piVar1 = *(int **)(iVar4 + 0xc);
+  piVar1 = *(int **)((int)param_1 + 0xc);
   puVar2 = (undefined4 *)*piVar1;
   _local_248 = CONCAT44(puVar2 + 6,auStack_230);
   _local_240 = CONCAT44(0x200,puVar2[4]);
@@ -352,8 +326,8 @@ undefined4 EnumerateCrossTitleContentTaskProc(void *param_1)
   do {
     lVar3 = XMsgInProcessCall(*puVar2,puVar2[1],local_250,0);
     if (lVar3 < 0) goto LAB_828aa948;
-    iVar5 = IsCurrentOrAlternateTitleId(local_f0);
-  } while (iVar5 == 0);
+    iVar4 = IsCurrentOrAlternateTitleId(local_f0);
+  } while (iVar4 == 0);
   memcpy();
   *(ulong *)(piVar1[1] + 0x134) = local_f0;
   if ((undefined4 *)piVar1[3] != (undefined4 *)0x0) {
@@ -361,70 +335,62 @@ undefined4 EnumerateCrossTitleContentTaskProc(void *param_1)
   }
 LAB_828aa948:
   ObDereferenceObject(puVar2);
-  if (*(int *)(iVar4 + 8) != 0) {
-    XMsgCompleteIORequest(*(int *)(iVar4 + 8),(int)lVar3 >> 0x1f & 0x65b,lVar3,local_260[0]);
+  if (*(int *)((int)param_1 + 8) != 0) {
+    XMsgCompleteIORequest(*(int *)((int)param_1 + 8),(int)lVar3 >> 0x1f & 0x65b,lVar3,local_260[0]);
   }
-  uVar6 = __restgprlr_28(lVar3);
-  return uVar6;
+  return (int)lVar3;
 }
 
 
 // 828AA988  XEnumerateCrossTitle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontentcrosstitle.c:794)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XEnumerateCrossTitle
                 (void *param_1,void *param_2,ulong param_3,ulong *param_4,_XOVERLAPPED *param_5)
 
 {
-  _XOVERLAPPED *p_Var1;
-  undefined8 uVar2;
-  ulong uVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ulong uVar1;
+  uint uVar2;
   int local_60 [4];
   int local_50 [2];
   undefined4 local_48;
   ulong *local_44;
   _XOVERLAPPED *local_40;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if ((((uVar5 & 0xffffffff) != 0) && ((uVar6 & 0xffffffff) == 0x138)) &&
-     ((p_Var1 = (_XOVERLAPPED *)uVar7, (uVar7 & 0xffffffff) == 0 ||
-      (p_Var1->pCompletionRoutine == (_func___cdecl_void_ulong_ulong__XOVERLAPPED_ptr *)0x0)))) {
-    uVar3 = XamGetPrivateEnumStructureFromHandle(uVar2,local_60);
-    if (uVar3 != 0) goto LAB_828aaa98;
+  if (((param_2 != (void *)0x0) && (param_3 == 0x138)) &&
+     ((param_5 == (_XOVERLAPPED *)0x0 ||
+      (param_5->pCompletionRoutine == (_func___cdecl_void_ulong_ulong__XOVERLAPPED_ptr *)0x0)))) {
+    uVar1 = XamGetPrivateEnumStructureFromHandle(param_1,local_60);
+    if (uVar1 != 0) {
+      return uVar1;
+    }
     if (*(int *)(local_60[0] + 4) == 0x2000e) {
       local_50[0] = local_60[0];
       local_48 = 0x138;
       local_44 = param_4;
-      local_40 = p_Var1;
-      uVar4 = ScheduleSystemRequest(EnumerateCrossTitleContentTaskProc,p_Var1,local_50,0x14);
-      if ((int)uVar4 < 0) {
+      local_40 = param_5;
+      uVar2 = ScheduleSystemRequest(EnumerateCrossTitleContentTaskProc,param_5,local_50,0x14);
+      if ((int)uVar2 < 0) {
         ObDereferenceObject(local_60[0]);
       }
       else {
-        if ((uVar7 & 0xffffffff) == 0) {
-          uVar4 = GetLastError();
-          if ((int)uVar4 < 1) goto LAB_828aaa80;
+        if (param_5 == (_XOVERLAPPED *)0x0) {
+          uVar2 = GetLastError();
+          if ((int)uVar2 < 1) goto LAB_828aaa80;
         }
         else {
-          uVar4 = 0x3e5;
+          uVar2 = 0x3e5;
         }
-        uVar4 = uVar4 & 0xffff | 0x80070000;
+        uVar2 = uVar2 & 0xffff | 0x80070000;
       }
 LAB_828aaa80:
-      uVar3 = Win32FromHRESULT(uVar4);
-      goto LAB_828aaa98;
+      uVar1 = Win32FromHRESULT(uVar2);
+      return uVar1;
     }
     ObDereferenceObject();
   }
-  uVar3 = 0x57;
-LAB_828aaa98:
-  uVar3 = __restgprlr_27(uVar3);
-  return uVar3;
+  return 0x57;
 }
 

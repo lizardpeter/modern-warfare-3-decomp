@@ -37,13 +37,13 @@ char * db_zError(void)
 
 // 827E3778  DB_Zip_InitThreadMemory  (db_zlib/db_zutil.c:89)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DB_Zip_InitThreadMemory(db_z_stream_s *param_1,void *param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if (*(int *)(iVar1 + 0x28) != 0) {
+  if (param_1->opaque != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x5c,0,
                     "%s");
   }
@@ -53,10 +53,9 @@ void DB_Zip_InitThreadMemory(db_z_stream_s *param_1,void *param_2,int param_3)
   }
   *(int *)((int)param_2 + 0x204) = param_3 + -0x20c;
   *(int *)((int)param_2 + 0x208) = (int)param_2 + 0x20c;
-  *(code **)(iVar1 + 0x20) = db_zcalloc;
-  *(code **)(iVar1 + 0x24) = db_zcfree;
-  *(void **)(iVar1 + 0x28) = param_2;
-  __restgprlr_27();
+  param_1->zalloc = db_zcalloc;
+  param_1->zfree = db_zcfree;
+  param_1->opaque = param_2;
   return;
 }
 
@@ -79,18 +78,18 @@ void DB_Zip_ShutdownThreadMemory(db_z_stream_s *param_1)
 
 // 827E34E8  DB_Zip_Alloc  (db_zlib/db_zutil.c:115)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * DB_Zip_Alloc(ZipInfo *param_1,int param_2)
 
 {
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  uint *puVar4;
-  void *pvVar5;
-  uint uVar6;
+  uchar *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
   
-  puVar4 = (uint *)__savegprlr_28(param_1);
-  if (puVar4 == (uint *)0x0) {
+  if (param_1 == (ZipInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x77,0,
                     "%s");
   }
@@ -98,70 +97,68 @@ void * DB_Zip_Alloc(ZipInfo *param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x78,0,
                     "%s");
   }
-  if (0x7e < *puVar4) {
+  if (0x7e < (uint)param_1->offsetCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x79,0,
                     "%s");
   }
-  uVar1 = puVar4[0x82];
-  uVar3 = puVar4[*puVar4 + 1];
-  uVar6 = uVar3 + param_2;
-  if ((int)puVar4[0x81] < (int)uVar6) {
+  puVar1 = param_1->buffer;
+  iVar3 = param_1->offsets[param_1->offsetCount];
+  iVar4 = iVar3 + param_2;
+  if (param_1->size < iVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x7f,0,
                     "%s\n\t(offset) = %i");
   }
-  uVar2 = *puVar4;
-  *puVar4 = uVar2 + 1;
-  puVar4[uVar2 + 2] = uVar6;
-  pvVar5 = (void *)__restgprlr_28((ulonglong)uVar1 + (ulonglong)uVar3);
-  return pvVar5;
+  iVar2 = param_1->offsetCount;
+  param_1->offsetCount = iVar2 + 1;
+  param_1->offsets[iVar2 + 1] = iVar4;
+  return puVar1 + iVar3;
 }
 
 
 // 827E35F0  DB_Zip_Free  (db_zlib/db_zutil.c:136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_Zip_Free(ZipInfo *param_1,void *param_2)
 
 {
   int iVar1;
-  int *piVar2;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (ZipInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x89,0,
                     "%s");
   }
-  if (*piVar2 < 1) {
+  if (param_1->offsetCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x8a,0,
                     "%s\n\t(zipInfo->offsetCount) = %i");
   }
-  iVar1 = *piVar2;
-  *piVar2 = iVar1 + -1;
-  if ((int)param_2 - piVar2[0x82] != piVar2[iVar1]) {
+  iVar1 = param_1->offsetCount;
+  param_1->offsetCount = iVar1 + -1;
+  if ((int)param_2 - (int)param_1->buffer != param_1->offsets[iVar1 + -1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x8c,0,
                     "%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827E36B0  db_zcalloc  (db_zlib/db_zutil.c:148)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar * db_zcalloc(uchar *param_1,uint param_2,uint param_3)
 
 {
-  ZipInfo *pZVar1;
-  void *pvVar2;
-  uchar *puVar3;
+  uchar *puVar1;
   
-  pZVar1 = (ZipInfo *)__savegprlr_29(param_1);
-  if (pZVar1 == (ZipInfo *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\db_zlib\\db_zutil.c",0x9a,0,
                     "%s");
   }
-  pvVar2 = DB_Zip_Alloc(pZVar1,param_2 * param_3);
-  puVar3 = (uchar *)__restgprlr_29(pvVar2);
-  return puVar3;
+  puVar1 = DB_Zip_Alloc((ZipInfo *)param_1,param_2 * param_3);
+  return puVar1;
 }
 
 

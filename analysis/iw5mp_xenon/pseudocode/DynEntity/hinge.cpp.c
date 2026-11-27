@@ -14,79 +14,72 @@ void Hinge_Init(void)
 
 // 82413808  Hinge_Create  (DynEntity/hinge.cpp:31)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 Hinge * Hinge_Create(DynEntityHingeDef *param_1,PhysPreset *param_2,float *param_3,float param_4)
 
 {
-  int iVar1;
-  float *pfVar2;
-  dvar_t *pdVar3;
-  float fVar4;
-  Hinge *pHVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  double extraout_f1;
-  double dVar10;
+  DynEntityHingeDef *pDVar1;
+  dvar_t *pdVar2;
+  Hinge *pHVar3;
+  uint uVar4;
+  HingeGlob *pHVar5;
+  Hinge *pHVar6;
+  double dVar7;
   
-  uVar6 = (ulonglong)(int)param_2;
-  fVar4 = (float)__savegprlr_27((double)param_4,param_1);
-  dVar10 = extraout_f1;
-  if (fVar4 == 0.0) {
+  dVar7 = (double)param_4;
+  if (param_1 == (DynEntityHingeDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x23,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x24,0,
                     "%s");
   }
-  uVar7 = 0;
-  lVar8 = -0x7ccdb4c0;
+  uVar4 = 0;
+  pHVar5 = &hingeGlob;
   do {
-    iVar1 = (int)lVar8;
-    lVar9 = lVar8;
-    if (*(char *)(iVar1 + 0x1c) == '\0') {
+    pHVar6 = pHVar5->hinges;
+    if (pHVar5->hinges[0].active == false) {
 LAB_824138fc:
-      if (0x3f < uVar7) {
-        pHVar5 = (Hinge *)__restgprlr_27(0);
-        return pHVar5;
+      if (0x3f < uVar4) {
+        return (Hinge *)0x0;
       }
-      lVar8 = lVar9;
+      pHVar3 = pHVar6;
       memset();
-      pfVar2 = (float *)lVar9;
-      pfVar2[9] = fVar4;
-      *(undefined1 *)(pfVar2 + 7) = 1;
-      pfVar2[10] = (float)uVar6;
-      pfVar2[0xb] = *param_3;
-      pdVar3 = phys_autoDisableTime;
-      pfVar2[0xc] = param_3[1];
-      pfVar2[0xd] = param_3[2];
-      pfVar2[8] = (float)(pdVar3->current).integer;
-      *pfVar2 = (float)dVar10;
-      AngleAxisToQuat((float)dVar10,(float *)lVar8,(float *)((int)pfVar2[9] + 0xc));
-      pHVar5 = (Hinge *)__restgprlr_27(lVar9);
-      return pHVar5;
+      pHVar6->def = param_1;
+      pHVar6->active = true;
+      pHVar6->physPreset = param_2;
+      pHVar6->centerOfMassRelToAxisOriginAtAngleZero[0] = *param_3;
+      pdVar2 = phys_autoDisableTime;
+      pHVar6->centerOfMassRelToAxisOriginAtAngleZero[1] = param_3[1];
+      pHVar6->centerOfMassRelToAxisOriginAtAngleZero[2] = param_3[2];
+      pDVar1 = pHVar6->def;
+      pHVar6->autoDisableTimeLeft = (float)(pdVar2->current).integer;
+      ((Hinge *)&pHVar6->angle)->angle = (float)dVar7;
+      AngleAxisToQuat((float)dVar7,&pHVar3->angle,pDVar1->axisDir);
+      return pHVar6;
     }
-    lVar9 = lVar8 + 0x38;
-    if (*(char *)(iVar1 + 0x54) == '\0') {
-      uVar7 = uVar7 + 1;
+    pHVar6 = (Hinge *)((int)pHVar5 + 0x38);
+    if (((Hinge *)((int)pHVar5 + 0x38))->active == false) {
+      uVar4 = uVar4 + 1;
       goto LAB_824138fc;
     }
-    lVar9 = lVar8 + 0x70;
-    if (*(char *)(iVar1 + 0x8c) == '\0') {
-      uVar7 = uVar7 + 2;
+    pHVar6 = (Hinge *)((int)pHVar5 + 0x70);
+    if (((Hinge *)((int)pHVar5 + 0x70))->active == false) {
+      uVar4 = uVar4 + 2;
       goto LAB_824138fc;
     }
-    lVar9 = lVar8 + 0xa8;
-    if (*(char *)(iVar1 + 0xc4) == '\0') {
-      uVar7 = uVar7 + 3;
+    pHVar6 = (Hinge *)((int)pHVar5 + 0xa8);
+    if (((Hinge *)((int)pHVar5 + 0xa8))->active == false) {
+      uVar4 = uVar4 + 3;
       goto LAB_824138fc;
     }
-    uVar7 = uVar7 + 4;
-    lVar8 = lVar8 + 0xe0;
-    if (0x3f < uVar7) {
-      pHVar5 = (Hinge *)__restgprlr_27(0);
-      return pHVar5;
+    uVar4 = uVar4 + 4;
+    pHVar5 = (HingeGlob *)((int)pHVar5 + 0xe0);
+    if (0x3f < uVar4) {
+      return (Hinge *)0x0;
     }
   } while( true );
 }
@@ -110,6 +103,8 @@ void Hinge_Destroy(Hinge *param_1)
 
 // 82413A00  Hinge_AssertAllFree  (DynEntity/hinge.cpp:72)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hinge_AssertAllFree(void)
@@ -118,7 +113,6 @@ void Hinge_AssertAllFree(void)
   bool *pbVar1;
   longlong lVar2;
   
-  __savegprlr_27();
   pbVar1 = &hingeGlob.hinges[0].active;
   lVar2 = 0x40;
   do {
@@ -129,67 +123,64 @@ void Hinge_AssertAllFree(void)
     lVar2 = lVar2 + -1;
     pbVar1 = pbVar1 + 0x38;
   } while (lVar2 != 0);
-  __restgprlr_27();
   return;
 }
 
 
 // 82413A70  Hinge_Save  (DynEntity/hinge.cpp:82)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hinge_Save(Hinge *param_1,MemoryFile *param_2)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (Hinge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x53,0,
                     "%s");
   }
-  if (pfVar1[6] != 0.0) {
+  if (param_1->torqueAccum != 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x54,0,
                     "%s");
   }
-  MemFile_WriteFloat(param_2,*pfVar1);
-  MemFile_WriteFloat(param_2,pfVar1[5]);
-  __restgprlr_28();
+  MemFile_WriteFloat(param_2,param_1->angle);
+  MemFile_WriteFloat(param_2,param_1->angularVel);
   return;
 }
 
 
 // 82413B08  Hinge_Load  (DynEntity/hinge.cpp:92)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 Hinge * Hinge_Load(MemoryFile *param_1,DynEntityHingeDef *param_2,PhysPreset *param_3,float *param_4
                   )
 
 {
-  MemoryFile *pMVar1;
-  Hinge *pHVar2;
+  Hinge *pHVar1;
   float local_60;
   float local_5c;
   float local_58;
   
-  pMVar1 = (MemoryFile *)__savegprlr_24(param_1);
-  MemFile_ReadData(pMVar1,4,&local_60);
+  MemFile_ReadData(param_1,4,&local_60);
   local_5c = local_60;
   if (((uint)local_60 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
                     ,0xc6,0,"%s");
   }
-  MemFile_ReadData(pMVar1,4,&local_5c);
+  MemFile_ReadData(param_1,4,&local_5c);
   local_58 = local_5c;
   if (((uint)local_5c & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
                     ,0xc6,0,"%s");
   }
-  pHVar2 = Hinge_Create(param_2,param_3,param_4,local_60);
-  if (pHVar2 == (Hinge *)0x0) {
-    pHVar2 = (Hinge *)__restgprlr_24();
-    return pHVar2;
+  pHVar1 = Hinge_Create(param_2,param_3,param_4,local_60);
+  if (pHVar1 == (Hinge *)0x0) {
+    return pHVar1;
   }
-  pHVar2->angularVel = local_5c;
-  pHVar2 = (Hinge *)__restgprlr_24();
-  return pHVar2;
+  pHVar1->angularVel = local_5c;
+  return pHVar1;
 }
 
 
@@ -308,6 +299,10 @@ void MemFile_WriteFloat(MemoryFile *param_1,float param_2)
 
 // 82413F00  Hinge_UpdateAll  (DynEntity/hinge.cpp:171)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Hinge_UpdateAll(float param_1)
@@ -340,8 +335,7 @@ void Hinge_UpdateAll(float param_1)
   float local_98;
   Bounds local_90 [6];
   
-  __savegprlr_25((double)param_1);
-  dVar12 = (double)__savefpr_26();
+  dVar12 = (double)param_1;
   dVar19 = 0.0;
   if (0.0 < dVar12) {
     pfVar11 = &hingeGlob.hinges[0].torqueAccum;
@@ -407,8 +401,6 @@ void Hinge_UpdateAll(float param_1)
       pfVar11 = pfVar11 + 0xe;
     } while (lVar9 != 0);
   }
-  __restfpr_26();
-  __restgprlr_25();
   return;
 }
 

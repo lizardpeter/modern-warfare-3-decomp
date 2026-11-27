@@ -2,6 +2,8 @@
 
 // 82450BE8  FXW_UpdatePass0Worker  (EffectsCore/fx_update_worker.cpp:20)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_UpdatePass0Worker(FxPass0Cmd *param_1)
@@ -9,20 +11,18 @@ void FXW_UpdatePass0Worker(FxPass0Cmd *param_1)
 {
   FxSystem *pFVar1;
   ushort *puVar2;
-  int *piVar3;
-  int iVar4;
+  int iVar3;
   
-  piVar3 = (int *)__savegprlr_27(param_1);
-  if (*piVar3 == 0) {
+  if (param_1->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
                     ,0x1f,0,"%s");
   }
-  if (piVar3[6] == 0) {
+  if (param_1->updatePass == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
                     ,0x20,0,"%s");
   }
-  pFVar1 = (FxSystem *)*piVar3;
-  puVar2 = (ushort *)piVar3[6];
+  pFVar1 = (FxSystem *)param_1->_padding_;
+  puVar2 = param_1->updatePass;
   if ((pFVar1->systemFlags & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
                     ,0x25,0,"%s");
@@ -35,12 +35,11 @@ void FXW_UpdatePass0Worker(FxPass0Cmd *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
                     ,0x34,0,"%s");
   }
-  iVar4 = FXW_SystemUpdateEffect(pFVar1,piVar3[8],puVar2,0,piVar3[7]);
+  iVar3 = FXW_SystemUpdateEffect(pFVar1,param_1->isDeferred,puVar2,0,param_1->skipBolt);
   if (0 < pFVar1->numUpdateElement) {
     FXW_SystemUpdateElement(pFVar1);
   }
-  iVar4 = FXW_SystemUpdateEffectFinalize(pFVar1,puVar2,iVar4,piVar3[7]);
-  __restgprlr_27(iVar4);
+  FXW_SystemUpdateEffectFinalize(pFVar1,puVar2,iVar3,param_1->skipBolt);
   return;
 }
 

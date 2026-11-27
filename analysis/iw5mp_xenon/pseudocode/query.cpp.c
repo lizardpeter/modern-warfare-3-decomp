@@ -20,73 +20,69 @@ undefined4 Direct3D_GetDeviceCaps(uint param_1,_D3DDEVTYPE param_2,_D3DCAPS9 *pa
 
 // 8286DE90  ConvertD24FS8ToD32FS8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:742)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::ConvertD24FS8ToD32FS8(ulong param_1,float *param_2,ulong *param_3)
 
 {
   uint uVar1;
-  uint uVar2;
-  float fVar3;
+  float fVar2;
   
-  uVar2 = __savegprlr_29(param_1);
-  uVar1 = uVar2 >> 8;
+  uVar1 = param_1 >> 8;
   if ((ulonglong)uVar1 == 0) {
-    fVar3 = 0.0;
+    fVar2 = 0.0;
   }
   else if ((uVar1 & 0xf00000) == 0) {
-    fVar3 = (float)((uint)((0x71U - (LZCOUNT(uVar1 << 0xc) + 1) & 0xffffffff) << 0x17) |
-                   (uVar2 >> 8) << ((int)LZCOUNT(uVar1 << 0xc) + 4U & 0x3f) & 0x7fffff);
+    fVar2 = (float)((uint)((0x71U - (LZCOUNT(uVar1 << 0xc) + 1) & 0xffffffff) << 0x17) |
+                   uVar1 << ((int)LZCOUNT(uVar1 << 0xc) + 4U & 0x3f) & 0x7fffff);
   }
   else {
-    fVar3 = (float)((uint)((0x7f - ((~(ulonglong)uVar1 & 0xffffffff) >> 0x14 & 0xf) & 0xffffffff) <<
+    fVar2 = (float)((uint)((0x7f - ((~(ulonglong)uVar1 & 0xffffffff) >> 0x14 & 0xf) & 0xffffffff) <<
                           0x17) | (uVar1 & 0xfffff) << 3);
   }
-  *param_2 = fVar3;
-  *param_3 = uVar2 & 0xff;
-  __restgprlr_29();
+  *param_2 = fVar2;
+  *param_3 = param_1 & 0xff;
   return;
 }
 
 
 // 8286EA20  FreeEmptyQueryBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1183)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void FreeEmptyQueryBlock(CDevice *param_1,CQueryBlock *param_2)
 
 {
-  void *pvVar1;
+  CQueryBlock *pCVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
+  CQueryBlock *pCVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  lVar4 = __savegprlr_29(param_1);
-  uVar3 = lVar4 + 0x5564U;
-  if ((lVar4 + 0x5564U & 0xffffffff) != (uVar5 & 0xffffffff)) {
-    while (uVar7 = uVar3, iVar2 = (int)uVar7, *(int *)(iVar2 + 0xc) != 0) {
-      pvVar1 = *(void **)(iVar2 + 0xc);
-      uVar3 = ZEXT48(pvVar1);
-      if (ZEXT48(pvVar1) == (uVar5 & 0xffffffff)) {
-        iVar6 = ((*(uint *)((int)pvVar1 + 8) >> 0x14) + 0x200 & 0x1000) +
-                (*(uint *)((int)pvVar1 + 8) & 0x1fffffff);
-        D3D::FlushCachedMemory((void *)(iVar6 + -0x40000000),(void *)(iVar6 + -0x3ffff000),0);
-        XMemFree(*(void **)((int)pvVar1 + 8),0xb1800000);
-        *(undefined4 *)(iVar2 + 0xc) = *(undefined4 *)((int)pvVar1 + 0xc);
-        XMemFree(pvVar1,0x24800000);
-        uVar3 = uVar7;
+  pCVar1 = &param_1->m_QueryBlock;
+  if (&param_1->m_QueryBlock != param_2) {
+    while (pCVar3 = pCVar1, pCVar3->m_pNext != (CQueryBlock *)0x0) {
+      pCVar1 = pCVar3->m_pNext;
+      if (pCVar1 == param_2) {
+        iVar2 = (((uint)pCVar1->m_pBlock >> 0x14) + 0x200 & 0x1000) +
+                ((uint)pCVar1->m_pBlock & 0x1fffffff);
+        D3D::FlushCachedMemory((void *)(iVar2 + -0x40000000),(void *)(iVar2 + -0x3ffff000),0);
+        XMemFree(pCVar1->m_pBlock,0xb1800000);
+        pCVar3->m_pNext = pCVar1->m_pNext;
+        XMemFree(pCVar1,0x24800000);
+        pCVar1 = pCVar3;
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8286DF90  GetOpenQuerySlot  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1219)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4 GetOpenQuerySlot(CDevice *param_1,CQueryBlock **param_2,ulong **param_3)
@@ -94,129 +90,118 @@ undefined4 GetOpenQuerySlot(CDevice *param_1,CQueryBlock **param_2,ulong **param
 {
   int iVar1;
   CQueryBlock *pCVar2;
-  int iVar4;
-  CQueryBlock *pCVar5;
-  ulong *puVar6;
-  undefined8 uVar3;
-  undefined4 uVar7;
-  uint uVar8;
-  uint uVar9;
+  CQueryBlock *pCVar3;
+  ulong *puVar4;
+  uint uVar5;
+  uint uVar6;
   
-  iVar4 = __savegprlr_28(param_1);
   *param_3 = (ulong *)0x0;
-  iVar1 = *(int *)((CQueryBlock *)(iVar4 + 0x5564))->m_Groups;
-  pCVar2 = (CQueryBlock *)(iVar4 + 0x5564);
+  iVar1 = *(int *)(param_1->m_QueryBlock).m_Groups;
+  pCVar2 = &param_1->m_QueryBlock;
   while( true ) {
-    pCVar5 = pCVar2;
+    pCVar3 = pCVar2;
     if ((iVar1 != -1) || (*(int *)(pCVar2->m_Groups + 4) != -1)) goto LAB_8286e054;
-    pCVar5 = pCVar2->m_pNext;
-    if (pCVar5 == (CQueryBlock *)0x0) break;
-    iVar1 = *(int *)pCVar5->m_Groups;
-    pCVar2 = pCVar5;
+    pCVar3 = pCVar2->m_pNext;
+    if (pCVar3 == (CQueryBlock *)0x0) break;
+    iVar1 = *(int *)pCVar3->m_Groups;
+    pCVar2 = pCVar3;
   }
-  pCVar5 = XMemAlloc(0x1780,0x64800000);
-  if (pCVar5 != (CQueryBlock *)0x0) {
+  pCVar3 = XMemAlloc(0x1780,0x64800000);
+  if (pCVar3 != (CQueryBlock *)0x0) {
     D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
-    puVar6 = XMemAlloc(0x1000,0xbc800000);
-    pCVar5->m_pBlock = puVar6;
-    if (puVar6 != (ulong *)0x0) {
-      pCVar2->m_pNext = pCVar5;
+    puVar4 = XMemAlloc(0x1000,0xbc800000);
+    pCVar3->m_pBlock = puVar4;
+    if (puVar4 != (ulong *)0x0) {
+      pCVar2->m_pNext = pCVar3;
 LAB_8286e054:
-      uVar9 = 0;
+      uVar6 = 0;
       do {
-        if (pCVar5->m_Groups[uVar9] != 0xff) break;
-        uVar9 = uVar9 + 1;
-      } while (uVar9 < 8);
-      uVar8 = 0;
+        if (pCVar3->m_Groups[uVar6] != 0xff) break;
+        uVar6 = uVar6 + 1;
+      } while (uVar6 < 8);
+      uVar5 = 0;
       do {
-        if ((pCVar5->m_Groups[uVar9] >> (uVar8 & 0x3f) & 1) == 0) break;
-        uVar8 = uVar8 + 1;
-      } while (uVar8 < 8);
-      *param_2 = pCVar5;
-      pCVar5->m_Groups[uVar9] = (byte)(1 << (uVar8 & 0x3f)) | pCVar5->m_Groups[uVar9];
-      *param_3 = pCVar5->m_pBlock + (uVar9 * 8 + uVar8) * 0x10;
-      uVar3 = 0;
-LAB_8286e0cc:
-      uVar7 = __restgprlr_28(uVar3);
-      return uVar7;
+        if ((pCVar3->m_Groups[uVar6] >> (uVar5 & 0x3f) & 1) == 0) break;
+        uVar5 = uVar5 + 1;
+      } while (uVar5 < 8);
+      *param_2 = pCVar3;
+      pCVar3->m_Groups[uVar6] = (byte)(1 << (uVar5 & 0x3f)) | pCVar3->m_Groups[uVar6];
+      *param_3 = pCVar3->m_pBlock + (uVar6 * 8 + uVar5) * 0x10;
+      return 0;
     }
-    XMemFree(pCVar5,0x24800000);
+    XMemFree(pCVar3,0x24800000);
   }
-  uVar3 = 0xffffffff8007000e;
-  goto LAB_8286e0cc;
+  return 0x8007000e;
 }
 
 
 // 828708B8  D3DDevice_CreateQueryTiled  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1312)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DQuery * D3DDevice_CreateQueryTiled(D3DDevice *param_1,_D3DQUERYTYPE param_2,ulong param_3)
 
 {
-  ulong uVar1;
-  CDevice *pCVar3;
-  D3DQuery *pDVar4;
-  longlong lVar2;
-  int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  longlong lVar8;
+  undefined4 uVar1;
+  D3DQuery *pDVar2;
+  int iVar3;
+  uint uVar4;
+  longlong lVar5;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pCVar3 = (CDevice *)__savegprlr_26(param_1);
-  pDVar4 = XMemAlloc(0x9c,0x64800000);
-  lVar2 = (longlong)(int)pDVar4;
-  if (lVar2 == 0) {
+  pDVar2 = XMemAlloc(0x9c,0x64800000);
+  if ((longlong)(int)pDVar2 == 0) {
 LAB_828708e8:
-    lVar2 = 0;
+    pDVar2 = (D3DQuery *)0x0;
   }
   else {
-    *(_D3DQUERYTYPE *)(pDVar4 + 4) = param_2;
-    *(CDevice **)pDVar4 = pCVar3;
-    *(undefined4 *)(pDVar4 + 0xc) = 1;
-    *(undefined4 *)(pDVar4 + 0x94) = 1;
-    *(int *)(pDVar4 + 0x98) = (int)uVar6;
+    *(_D3DQUERYTYPE *)(pDVar2 + 4) = param_2;
+    *(D3DDevice **)pDVar2 = param_1;
+    *(undefined4 *)(pDVar2 + 0xc) = 1;
+    *(undefined4 *)(pDVar2 + 0x94) = 1;
+    *(ulong *)(pDVar2 + 0x98) = param_3;
     if (param_2 == D3DQUERYTYPE_EVENT) {
-      uVar1 = pCVar3->m_CpuFence;
-      pDVar4[0x10] = (D3DQuery)0x2;
-      *(ulong *)(pDVar4 + 0x18) = uVar1;
-      goto LAB_828709a4;
+      uVar1 = *(undefined4 *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+      pDVar2[0x10] = (D3DQuery)0x2;
+      *(undefined4 *)(pDVar2 + 0x18) = uVar1;
+      return pDVar2;
     }
     if (param_2 == D3DQUERYTYPE_OCCLUSION) {
-      uVar7 = 0;
-      if ((uVar6 & 0xffffffff) != 0) {
-        lVar8 = lVar2 + 0x58;
+      uVar4 = 0;
+      if (param_3 != 0) {
+        lVar5 = (longlong)(int)pDVar2 + 0x58;
         do {
-          iVar5 = GetOpenQuerySlot(pCVar3,(CQueryBlock **)lVar8,
-                                   (ulong **)((CQueryBlock **)lVar8 + -0xf));
-          if (iVar5 < 0) {
-            *(uint *)(pDVar4 + 0x98) = uVar7;
+          iVar3 = GetOpenQuerySlot((CDevice *)param_1,(CQueryBlock **)lVar5,
+                                   (ulong **)((CQueryBlock **)lVar5 + -0xf));
+          if (iVar3 < 0) {
+            *(uint *)(pDVar2 + 0x98) = uVar4;
             goto LAB_82870980;
           }
-          uVar7 = uVar7 + 1;
-          lVar8 = lVar8 + 4;
-        } while (uVar7 < *(uint *)(pDVar4 + 0x98));
+          uVar4 = uVar4 + 1;
+          lVar5 = lVar5 + 4;
+        } while (uVar4 < *(uint *)(pDVar2 + 0x98));
       }
     }
     else {
-      iVar5 = GetOpenQuerySlot(pCVar3,(CQueryBlock **)(pDVar4 + 0x58),(ulong **)(pDVar4 + 0x1c));
-      if (iVar5 < 0) {
+      iVar3 = GetOpenQuerySlot((CDevice *)param_1,(CQueryBlock **)(pDVar2 + 0x58),
+                               (ulong **)(pDVar2 + 0x1c));
+      if (iVar3 < 0) {
 LAB_82870980:
-        D3DQuery_Release(pDVar4);
+        D3DQuery_Release(pDVar2);
         goto LAB_828708e8;
       }
     }
-    pDVar4[0x10] = (D3DQuery)0x1;
+    pDVar2[0x10] = (D3DQuery)0x1;
   }
-LAB_828709a4:
-  pDVar4 = (D3DQuery *)__restgprlr_26(lVar2);
-  return pDVar4;
+  return pDVar2;
 }
 
 
 // 8286EAC0  D3DQuery_Release  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1423)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong D3DQuery_Release(D3DQuery *param_1)
@@ -226,199 +211,191 @@ ulong D3DQuery_Release(D3DQuery *param_1)
   int iVar2;
   CQueryBlock *pCVar3;
   longlong lVar4;
-  undefined4 *puVar5;
-  ulong uVar6;
-  uint *puVar7;
-  longlong lVar8;
-  int iVar9;
+  uint *puVar5;
+  longlong lVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
   uint uVar10;
-  uint uVar11;
-  uint uVar12;
-  int *piVar13;
+  int *piVar11;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar4 = __savegprlr_28(param_1);
-  puVar5 = (undefined4 *)lVar4;
-  pCVar1 = (CDevice *)*puVar5;
+  pCVar1 = *(CDevice **)param_1;
+  lVar4 = (longlong)(int)param_1 + 0xc;
   do {
-    puVar7 = (uint *)(lVar4 + 0xc);
-    lVar8 = (ulonglong)*puVar7 - 1;
+    puVar5 = (uint *)lVar4;
+    lVar6 = (ulonglong)*puVar5 - 1;
     if (in_RESERVE != '\0') {
-      uVar12 = storeWordConditionalIndexed(lVar8,0,lVar4 + 0xc);
-      *puVar7 = uVar12;
+      uVar10 = storeWordConditionalIndexed(lVar6,0,lVar4);
+      *puVar5 = uVar10;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((int)lVar8 == 0) {
-    if (puVar5[1] == 9) {
-      uVar12 = 0;
-      if (puVar5[0x26] != 0) {
-        lVar4 = lVar4 + 0x58;
+  if ((int)lVar6 == 0) {
+    if (*(int *)(param_1 + 4) == 9) {
+      uVar10 = 0;
+      if (*(int *)(param_1 + 0x98) != 0) {
+        lVar4 = (longlong)(int)param_1 + 0x58;
         do {
-          piVar13 = (int *)lVar4;
-          iVar2 = *piVar13;
-          iVar9 = piVar13[-0xf] - *(int *)(iVar2 + 8);
-          uVar11 = iVar9 >> 2;
-          uVar10 = (iVar9 >> 6) + (uint)((int)uVar11 < 0 && (uVar11 & 0xf) != 0);
-          uVar11 = uVar10 >> 3;
-          *(byte *)(iVar2 + uVar11) = *(byte *)(iVar2 + uVar11) & ~(byte)(1 << (uVar10 & 7));
-          if ((*(int *)*piVar13 == 0) && (*(int *)(((CQueryBlock *)*piVar13)->m_Groups + 4) == 0)) {
-            FreeEmptyQueryBlock(pCVar1,(CQueryBlock *)*piVar13);
+          piVar11 = (int *)lVar4;
+          iVar2 = *piVar11;
+          iVar7 = piVar11[-0xf] - *(int *)(iVar2 + 8);
+          uVar9 = iVar7 >> 2;
+          uVar8 = (iVar7 >> 6) + (uint)((int)uVar9 < 0 && (uVar9 & 0xf) != 0);
+          uVar9 = uVar8 >> 3;
+          *(byte *)(iVar2 + uVar9) = *(byte *)(iVar2 + uVar9) & ~(byte)(1 << (uVar8 & 7));
+          if ((*(int *)*piVar11 == 0) && (*(int *)(((CQueryBlock *)*piVar11)->m_Groups + 4) == 0)) {
+            FreeEmptyQueryBlock(pCVar1,(CQueryBlock *)*piVar11);
           }
-          uVar12 = uVar12 + 1;
+          uVar10 = uVar10 + 1;
           lVar4 = lVar4 + 4;
-        } while (uVar12 < (uint)puVar5[0x26]);
+        } while (uVar10 < *(uint *)(param_1 + 0x98));
       }
     }
-    else if (puVar5[1] == 10) {
-      if (puVar5[7] != 0) {
-        iVar2 = puVar5[0x16];
-        iVar9 = puVar5[7] - *(int *)(iVar2 + 8);
-        uVar12 = iVar9 >> 2;
-        uVar11 = (iVar9 >> 6) + (uint)((int)uVar12 < 0 && (uVar12 & 0xf) != 0);
-        uVar12 = uVar11 >> 3;
-        *(byte *)(iVar2 + uVar12) = *(byte *)(iVar2 + uVar12) & ~(byte)(1 << (uVar11 & 7));
+    else if (*(int *)(param_1 + 4) == 10) {
+      if (*(int *)(param_1 + 0x1c) != 0) {
+        iVar2 = *(int *)(param_1 + 0x58);
+        iVar7 = *(int *)(param_1 + 0x1c) - *(int *)(iVar2 + 8);
+        uVar10 = iVar7 >> 2;
+        uVar9 = (iVar7 >> 6) + (uint)((int)uVar10 < 0 && (uVar10 & 0xf) != 0);
+        uVar10 = uVar9 >> 3;
+        *(byte *)(iVar2 + uVar10) = *(byte *)(iVar2 + uVar10) & ~(byte)(1 << (uVar9 & 7));
       }
-      pCVar3 = (CQueryBlock *)puVar5[0x16];
+      pCVar3 = *(CQueryBlock **)(param_1 + 0x58);
       if ((*(int *)pCVar3->m_Groups == 0) && (*(int *)(pCVar3->m_Groups + 4) == 0)) {
         FreeEmptyQueryBlock(pCVar1,pCVar3);
       }
-      if ((puVar5[4] & 0xff000000) == 0x2000000) {
+      if ((*(uint *)(param_1 + 0x10) & 0xff000000) == 0x2000000) {
         pCVar1->m_ActiveScreenExtentQuery = false;
       }
     }
-    puVar5[2] = 0x78787878;
-    XMemFree(puVar5,0x24800000);
-    lVar8 = 0;
+    *(undefined4 *)(param_1 + 8) = 0x78787878;
+    XMemFree(param_1,0x24800000);
+    lVar6 = 0;
   }
-  uVar6 = __restgprlr_28(lVar8);
-  return uVar6;
+  return (ulong)lVar6;
 }
 
 
 // 8286EC60  D3DQuery_Issue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1561)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DQuery_Issue(D3DQuery *param_1,ulong param_2)
 
 {
   CDevice *this;
-  _D3DQUERYTYPE _Var1;
-  CQuery *pCVar2;
-  ulong *puVar3;
-  ulong *puVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  uint uVar7;
-  ulong uVar8;
+  int iVar1;
+  ulong *puVar2;
+  uint uVar3;
+  uint uVar4;
+  ulong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pCVar2 = (CQuery *)__savegprlr_25(param_1);
-  this = pCVar2->m_pDevice;
-  if ((uVar5 & 2) == 0) {
-    if ((uVar5 & 1) != 0) {
-      _Var1 = pCVar2->m_Type;
-      if (_Var1 != D3DQUERYTYPE_EVENT) {
-        if (_Var1 == D3DQUERYTYPE_OCCLUSION) {
-          puVar3 = pCVar2->m_pBase[pCVar2->m_TileCount - 1];
-          if ((pCVar2->m_Fence == 0) || (pCVar2->m_SuccessfulGetData)) {
-            pCVar2->m_SuccessfulGetData = false;
-            puVar3[4] = 0xfffffeed;
-            puVar3[5] = 0xfffffeed;
+  this = *(CDevice **)param_1;
+  if ((param_2 & 2) == 0) {
+    if ((param_2 & 1) != 0) {
+      iVar1 = *(int *)(param_1 + 4);
+      if (iVar1 != 8) {
+        if (iVar1 == 9) {
+          iVar1 = *(int *)(param_1 + (*(int *)(param_1 + 0x94) + 6) * 4);
+          if ((*(int *)(param_1 + 0x18) == 0) || (((byte)param_1[0x14] & 0x80) != 0)) {
+            param_1[0x14] = (D3DQuery)((byte)param_1[0x14] & 0x7f);
+            *(undefined4 *)(iVar1 + 0x10) = 0xfffffeed;
+            *(undefined4 *)(iVar1 + 0x14) = 0xfffffeed;
           }
           else {
-            puVar4 = *(ulong **)&this->field_0x30;
-            if (*(ulong **)&this->field_0x38 < puVar4) {
-              puVar4 = D3D::CDevice::KickOff(this);
+            puVar2 = *(ulong **)&this->field_0x30;
+            if (*(ulong **)&this->field_0x38 < puVar2) {
+              puVar2 = D3D::CDevice::KickOff(this);
             }
-            puVar4[1] = 0xc0013d00;
-            uVar6 = (((uint)(puVar3 + 4) >> 0x14) + 0x200 & 0x1000) +
-                    ((uint)(puVar3 + 4) & 0x1fffffff) | 2;
-            puVar4[2] = uVar6;
-            puVar4[3] = 0xfffffeed;
-            uVar7 = (((uint)(puVar3 + 5) >> 0x14) + 0x200 & 0x1000) +
-                    ((uint)(puVar3 + 5) & 0x1fffffff) | 2;
-            puVar4[4] = 0xc0013d00;
-            puVar4[5] = uVar7;
-            puVar4[6] = 0xfffffeed;
-            puVar4[7] = 0xc0043c00;
-            puVar4[8] = 0x13;
-            puVar4[9] = uVar6;
-            puVar4[10] = 0xfffffeed;
-            puVar4[0xb] = 0xffffffff;
-            puVar4[0xc] = 0x100;
-            puVar4[0xd] = 0xc0043c00;
-            puVar4[0xe] = 0x13;
-            puVar4[0xf] = uVar7;
-            puVar4[0x10] = 0xfffffeed;
-            puVar4[0x11] = 0xffffffff;
-            puVar4[0x12] = 0x100;
-            *(ulong **)&this->field_0x30 = puVar4 + 0x12;
+            puVar2[1] = 0xc0013d00;
+            uVar3 = ((iVar1 + 0x10U >> 0x14) + 0x200 & 0x1000) + (iVar1 + 0x10U & 0x1fffffff) | 2;
+            puVar2[2] = uVar3;
+            puVar2[3] = 0xfffffeed;
+            uVar4 = ((iVar1 + 0x14U >> 0x14) + 0x200 & 0x1000) + (iVar1 + 0x14U & 0x1fffffff) | 2;
+            puVar2[4] = 0xc0013d00;
+            puVar2[5] = uVar4;
+            puVar2[6] = 0xfffffeed;
+            puVar2[7] = 0xc0043c00;
+            puVar2[8] = 0x13;
+            puVar2[9] = uVar3;
+            puVar2[10] = 0xfffffeed;
+            puVar2[0xb] = 0xffffffff;
+            puVar2[0xc] = 0x100;
+            puVar2[0xd] = 0xc0043c00;
+            puVar2[0xe] = 0x13;
+            puVar2[0xf] = uVar4;
+            puVar2[0x10] = 0xfffffeed;
+            puVar2[0x11] = 0xffffffff;
+            puVar2[0x12] = 0x100;
+            *(ulong **)&this->field_0x30 = puVar2 + 0x12;
           }
-          D3D::IssueSampleCountQuery(this,pCVar2,0);
+          D3D::IssueSampleCountQuery(this,(CQuery *)param_1,0);
         }
-        else if (_Var1 == D3DQUERYTYPE_SCREENEXTENT) {
+        else if (iVar1 == 10) {
           if (this->m_WaitUntilIdleRequired) {
             D3D::WaitUntilIdleOrFlushCaches(this);
           }
-          puVar3 = *(ulong **)&this->field_0x30;
-          if (*(ulong **)&this->field_0x38 < puVar3) {
-            puVar3 = D3D::CDevice::KickOff(this);
+          puVar2 = *(ulong **)&this->field_0x30;
+          if (*(ulong **)&this->field_0x38 < puVar2) {
+            puVar2 = D3D::CDevice::KickOff(this);
           }
-          puVar3[1] = 0xc0015a00;
-          puVar3[2] = 0x1a;
-          puVar3[3] = (((uint)pCVar2->m_pBase[0] >> 0x14) + 0x200 & 0x1000) +
-                      ((uint)pCVar2->m_pBase[0] & 0x1ffffffe) | 1;
-          *(ulong **)&this->field_0x30 = puVar3 + 3;
+          puVar2[1] = 0xc0015a00;
+          puVar2[2] = 0x1a;
+          puVar2[3] = ((*(uint *)(param_1 + 0x1c) >> 0x14) + 0x200 & 0x1000) +
+                      (*(uint *)(param_1 + 0x1c) & 0x1ffffffe) | 1;
+          *(ulong **)&this->field_0x30 = puVar2 + 3;
           this->m_ActiveScreenExtentQuery = false;
         }
-        pCVar2->m_State = 1;
+        param_1[0x10] = (D3DQuery)0x1;
       }
-      pCVar2->m_Fence = this->m_CpuFence;
-      pCVar2->m_Issued = true;
+      *(ulong *)(param_1 + 0x18) = this->m_CpuFence;
+      param_1[0x14] = (D3DQuery)((byte)param_1[0x14] | 0x40);
     }
   }
   else {
     if (this->m_TilingBracket) {
-      uVar8 = this->m_Tiles;
+      uVar5 = this->m_Tiles;
     }
     else {
-      uVar8 = 1;
+      uVar5 = 1;
     }
-    pCVar2->m_TileCount = uVar8;
-    if (pCVar2->m_Type == D3DQUERYTYPE_OCCLUSION) {
-      D3D::IssueSampleCountQuery(this,pCVar2,1);
+    *(ulong *)(param_1 + 0x94) = uVar5;
+    if (*(int *)(param_1 + 4) == 9) {
+      D3D::IssueSampleCountQuery(this,(CQuery *)param_1,1);
     }
-    else if (pCVar2->m_Type == D3DQUERYTYPE_SCREENEXTENT) {
+    else if (*(int *)(param_1 + 4) == 10) {
       if (this->m_WaitUntilIdleRequired) {
         D3D::WaitUntilIdleOrFlushCaches(this);
       }
-      puVar3 = *(ulong **)&this->field_0x30;
-      if (*(ulong **)&this->field_0x38 < puVar3) {
-        puVar3 = D3D::CDevice::KickOff(this);
+      puVar2 = *(ulong **)&this->field_0x30;
+      if (*(ulong **)&this->field_0x38 < puVar2) {
+        puVar2 = D3D::CDevice::KickOff(this);
       }
-      puVar3[1] = 0xc0004600;
-      puVar3[2] = 0x19;
-      *(ulong **)&this->field_0x30 = puVar3 + 2;
+      puVar2[1] = 0xc0004600;
+      puVar2[2] = 0x19;
+      *(ulong **)&this->field_0x30 = puVar2 + 2;
       this->m_ActiveScreenExtentQuery = true;
     }
-    pCVar2->m_State = 2;
+    param_1[0x10] = (D3DQuery)0x2;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8286EF20  D3DQuery_GetData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:1819)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4 D3DQuery_GetData(D3DQuery *param_1,void *param_2,ulong param_3,ulong param_4)
 
 {
-  byte bVar1;
+  D3DQuery DVar1;
   ushort uVar2;
   ushort uVar3;
   ushort uVar4;
@@ -455,51 +432,44 @@ undefined4 D3DQuery_GetData(D3DQuery *param_1,void *param_2,ulong param_3,ulong 
   int iVar34;
   ulong uVar35;
   uint uVar36;
-  undefined4 *puVar37;
-  byte *pbVar38;
-  undefined4 uVar39;
-  ulonglong uVar40;
-  uint uVar41;
-  uint uVar42;
-  longlong lVar43;
-  longlong lVar44;
-  ulong uVar45;
-  uint uVar46;
-  longlong lVar47;
-  longlong local_a0 [20];
+  byte *pbVar37;
+  undefined4 uVar38;
+  uint uVar39;
+  uint uVar40;
+  longlong lVar41;
+  longlong lVar42;
+  ulong uVar43;
+  uint uVar44;
+  D3DQuery *pDVar45;
+  ulong local_a0 [40];
   
-  uVar40 = (ulonglong)(int)param_3;
-  lVar47 = (longlong)(int)param_1;
-  __savegprlr();
-  puVar37 = (undefined4 *)lVar47;
-  bVar1 = *(byte *)(puVar37 + 5);
-  this = (CDevice *)*puVar37;
-  if ((bVar1 & 0x40) == 0) {
-    uVar39 = 0x8876086a;
-    goto LAB_8286f2e4;
+  DVar1 = param_1[0x14];
+  this = *(CDevice **)param_1;
+  if (((byte)DVar1 & 0x40) == 0) {
+    return 0x8876086a;
   }
-  iVar34 = puVar37[1];
+  iVar34 = *(int *)(param_1 + 4);
   if (iVar34 == 9) {
-    uVar45 = puVar37[6];
-    if ((uVar45 == 0) ||
-       (uVar35 = this->m_CpuFence, uVar35 - this->m_pWriteBacks->GpuFence <= uVar35 - uVar45)) {
-      *(int *)param_2 = 0;
-      if (0xf < (uVar40 & 0xffffffff)) {
-        *(int *)((int)param_2 + 4) = 0;
-        *(int *)((int)param_2 + 8) = 0;
-        *(int *)((int)param_2 + 0xc) = 0;
+    uVar43 = *(ulong *)(param_1 + 0x18);
+    if ((uVar43 == 0) ||
+       (uVar35 = this->m_CpuFence, uVar35 - this->m_pWriteBacks->GpuFence <= uVar35 - uVar43)) {
+      *(undefined4 *)param_2 = 0;
+      if (0xf < param_3) {
+        *(undefined4 *)((int)param_2 + 4) = 0;
+        *(undefined4 *)((int)param_2 + 8) = 0;
+        *(undefined4 *)((int)param_2 + 0xc) = 0;
       }
-      uVar36 = puVar37[0x25];
-      uVar46 = 0;
-      lVar47 = lVar47 + 0x1c;
+      uVar36 = *(uint *)(param_1 + 0x94);
+      uVar44 = 0;
+      pDVar45 = param_1 + 0x1c;
       do {
-        lVar43 = ((ulonglong)(*(uint *)lVar47 >> 0x14) + 0x200 & 0x1000) +
-                 ((ulonglong)*(uint *)lVar47 & 0x1fffffff);
-        lVar44 = lVar43 + -0x40000000;
-        dataCacheBlockFlush(lVar44);
-        iVar34 = (int)lVar43;
-        uVar41 = *(uint *)(iVar34 + -0x3fffffec);
-        uVar42 = *(uint *)(iVar34 + -0x3ffffff0);
+        lVar41 = ((ulonglong)(*(uint *)pDVar45 >> 0x14) + 0x200 & 0x1000) +
+                 ((ulonglong)*(uint *)pDVar45 & 0x1fffffff);
+        lVar42 = lVar41 + -0x40000000;
+        dataCacheBlockFlush(lVar42);
+        iVar34 = (int)lVar41;
+        uVar39 = *(uint *)(iVar34 + -0x3fffffec);
+        uVar40 = *(uint *)(iVar34 + -0x3ffffff0);
         *(uint *)param_2 =
              ((*(int *)param_2 -
               ((uint)*(byte *)(iVar34 + -0x3fffffcd) << 0x18 |
@@ -508,14 +478,14 @@ undefined4 D3DQuery_GetData(D3DQuery *param_1,void *param_2,ulong param_3,ulong 
              - ((uint)*(byte *)(iVar34 + -0x3fffffc9) << 0x18 |
                 (uint)*(byte *)(iVar34 + -0x3fffffca) << 0x10 |
                 (uint)*(byte *)(iVar34 + -0x3fffffcb) << 8 | (uint)*(byte *)(iVar34 + -0x3fffffcc)))
-             + (uVar41 << 0x18 | (uVar41 & 0xff00) << 8 | uVar41 >> 8 & 0xff00 | uVar41 >> 0x18) +
-             (uVar42 << 0x18 | (uVar42 & 0xff00) << 8 | uVar42 >> 8 & 0xff00 | uVar42 >> 0x18);
-        if (0xf < (uVar40 & 0xffffffff)) {
-          pbVar38 = (byte *)lVar44;
-          bVar6 = pbVar38[3];
-          bVar13 = pbVar38[2];
-          bVar20 = pbVar38[1];
-          bVar27 = *pbVar38;
+             + (uVar39 << 0x18 | (uVar39 & 0xff00) << 8 | uVar39 >> 8 & 0xff00 | uVar39 >> 0x18) +
+             (uVar40 << 0x18 | (uVar40 & 0xff00) << 8 | uVar40 >> 8 & 0xff00 | uVar40 >> 0x18);
+        if (0xf < param_3) {
+          pbVar37 = (byte *)lVar42;
+          bVar6 = pbVar37[3];
+          bVar13 = pbVar37[2];
+          bVar20 = pbVar37[1];
+          bVar27 = *pbVar37;
           bVar7 = *(byte *)(iVar34 + -0x3fffffdd);
           bVar14 = *(byte *)(iVar34 + -0x3fffffde);
           bVar21 = *(byte *)(iVar34 + -0x3fffffdf);
@@ -532,7 +502,6 @@ undefined4 D3DQuery_GetData(D3DQuery *param_1,void *param_2,ulong param_3,ulong 
           bVar17 = *(byte *)(iVar34 + -0x3fffffda);
           bVar24 = *(byte *)(iVar34 + -0x3fffffdb);
           bVar31 = *(byte *)(iVar34 + -0x3fffffdc);
-          local_a0[0] = CONCAT44((byte *)(iVar34 + -0x3fffffe8),local_a0[0]._4_4_);
           bVar11 = *(byte *)(iVar34 + -0x3fffffe1);
           bVar18 = *(byte *)(iVar34 + -0x3fffffe2);
           bVar25 = *(byte *)(iVar34 + -0x3fffffe3);
@@ -572,33 +541,33 @@ undefined4 D3DQuery_GetData(D3DQuery *param_1,void *param_2,ulong param_3,ulong 
                 (uint)*(byte *)(iVar34 + -0x3fffffe6) << 0x10 |
                 (uint)*(byte *)(iVar34 + -0x3fffffe7) << 8 | (uint)*(byte *)(iVar34 + -0x3fffffe8));
         }
-        uVar46 = uVar46 + 1;
-        lVar47 = lVar47 + 4;
-      } while (uVar46 < uVar36);
+        uVar44 = uVar44 + 1;
+        pDVar45 = pDVar45 + 4;
+      } while (uVar44 < uVar36);
       if (this->m_NullHardware) {
-        uVar42 = 0;
-        *(int *)param_2 = 1;
-        uVar41 = 0;
+        uVar40 = 0;
+        *(undefined4 *)param_2 = 1;
+        uVar39 = 0;
       }
-      if ((uVar42 != 0xfffffeed) || (uVar41 != 0xfffffeed)) {
-        *(byte *)(puVar37 + 5) = bVar1 & 0x7f | 0x80;
+      if ((uVar40 != 0xfffffeed) || (uVar39 != 0xfffffeed)) {
+        param_1[0x14] = (D3DQuery)((byte)DVar1 & 0x7f | 0x80);
         goto LAB_8286f2dc;
       }
-      *(int *)param_2 = 1;
+      *(undefined4 *)param_2 = 1;
     }
     else {
-      if (uVar45 == uVar35) {
+      if (uVar43 == uVar35) {
         D3D::CDevice::KickOff(this);
       }
-      *(int *)param_2 = 1;
+      *(undefined4 *)param_2 = 1;
     }
-    if (0xf < (uVar40 & 0xffffffff)) {
-      *(int *)((int)param_2 + 8) = 0;
-      *(int *)((int)param_2 + 4) = 0;
-      *(int *)((int)param_2 + 0xc) = 1;
+    if (0xf < param_3) {
+      *(undefined4 *)((int)param_2 + 8) = 0;
+      *(undefined4 *)((int)param_2 + 4) = 0;
+      *(undefined4 *)((int)param_2 + 0xc) = 1;
     }
 LAB_8286efc0:
-    uVar39 = 1;
+    uVar38 = 1;
   }
   else {
     if (iVar34 == 10) {
@@ -606,21 +575,21 @@ LAB_8286efc0:
         memset();
       }
       else {
-        uVar45 = puVar37[6];
-        if (this->m_CpuFence - uVar45 < this->m_CpuFence - this->m_pWriteBacks->GpuFence) {
+        uVar43 = *(ulong *)(param_1 + 0x18);
+        if (this->m_CpuFence - uVar43 < this->m_CpuFence - this->m_pWriteBacks->GpuFence) {
 LAB_8286f1b8:
-          if (uVar45 == this->m_CpuFence) {
+          if (uVar43 == this->m_CpuFence) {
             D3D::CDevice::KickOff(this);
           }
           goto LAB_8286efc0;
         }
-        lVar47 = ((ulonglong)((uint)puVar37[7] >> 0x14) + 0x200 & 0x1000) +
-                 ((ulonglong)(uint)puVar37[7] & 0x1fffffff);
-        lVar43 = lVar47 + -0x40000000;
-        dataCacheBlockFlush(lVar43);
-        iVar34 = (int)lVar47;
+        lVar41 = ((ulonglong)(*(uint *)(param_1 + 0x1c) >> 0x14) + 0x200 & 0x1000) +
+                 ((ulonglong)*(uint *)(param_1 + 0x1c) & 0x1fffffff);
+        lVar42 = lVar41 + -0x40000000;
+        dataCacheBlockFlush(lVar42);
+        iVar34 = (int)lVar41;
         uVar2 = *(ushort *)(iVar34 + -0x3ffffffa);
-        uVar3 = *(ushort *)lVar43;
+        uVar3 = *(ushort *)lVar42;
         uVar4 = *(ushort *)(iVar34 + -0x3ffffffc);
         uVar5 = *(ushort *)&this->field_0x2888;
         *(uint *)((int)param_2 + 4) = (*(ushort *)(iVar34 + -0x3ffffffe) + 1) * 8;
@@ -630,31 +599,29 @@ LAB_8286f1b8:
         if ((uVar5 & 1) == 1) {
           D3D::ConvertD24FS8ToD32FS8
                     ((uint)*(ushort *)(iVar34 + -0x3ffffff8) << 0x15,(float *)((int)param_2 + 0x10),
-                     (ulong *)local_a0);
+                     local_a0);
           D3D::ConvertD24FS8ToD32FS8
                     ((*(ushort *)(iVar34 + -0x3ffffff6) + 1) * 0x200000,
-                     (float *)((int)param_2 + 0x14),(ulong *)local_a0);
+                     (float *)((int)param_2 + 0x14),local_a0);
         }
         else {
-          local_a0[0] = (longlong)(int)((*(ushort *)(iVar34 + -0x3ffffff6) + 1) * 0x2000);
+          uVar2 = *(ushort *)(iVar34 + -0x3ffffff6);
           *(float *)((int)param_2 + 0x10) =
                (float)(longlong)(int)((uint)*(ushort *)(iVar34 + -0x3ffffff8) << 0xd);
-          *(float *)((int)param_2 + 0x14) = (float)local_a0[0];
+          *(float *)((int)param_2 + 0x14) = (float)(longlong)(int)((uVar2 + 1) * 0x2000);
         }
       }
     }
     else if (iVar34 == 8) {
-      *(int *)param_2 = 1;
-      uVar45 = puVar37[6];
-      if (this->m_CpuFence - uVar45 < this->m_CpuFence - this->m_pWriteBacks->GpuFence)
+      *(undefined4 *)param_2 = 1;
+      uVar43 = *(ulong *)(param_1 + 0x18);
+      if (this->m_CpuFence - uVar43 < this->m_CpuFence - this->m_pWriteBacks->GpuFence)
       goto LAB_8286f1b8;
     }
 LAB_8286f2dc:
-    uVar39 = 0;
+    uVar38 = 0;
   }
-LAB_8286f2e4:
-  __restgprlr();
-  return uVar39;
+  return uVar38;
 }
 
 
@@ -721,663 +688,664 @@ void D3D::P_EPC(D3DDevice *param_1,int param_2)
 
 // 8286E250  P_CPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2259)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 CPerfCounters *
 D3D::P_CPC(D3DDevice *param_1,uint param_2,_D3DPERFCOUNTER_VALUES *param_3,CPerfCounters *param_4)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar3;
-  void *pvVar4;
-  ulonglong uVar2;
-  CPerfCounters *pCVar5;
-  ulonglong uVar6;
+  _D3DPERFCOUNTER_VALUES *p_Var1;
   
-  uVar2 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar3 = __savegprlr_29(param_1,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    pvVar4 = XMemAlloc(0x10,0x24800000);
-    uVar2 = (ulonglong)(int)pvVar4;
-    if (uVar2 != 0) goto LAB_8286e294;
+  if ((param_4 == (CPerfCounters *)0x0) &&
+     (param_4 = XMemAlloc(0x10,0x24800000), param_4 == (CPerfCounters *)0x0)) {
 LAB_8286e288:
-    uVar2 = 0;
+    param_4 = (CPerfCounters *)0x0;
   }
   else {
-LAB_8286e294:
-    puVar1 = (undefined4 *)uVar2;
-    if ((uVar6 & 0xffffffff) == 0) {
+    if (param_3 == (_D3DPERFCOUNTER_VALUES *)0x0) {
       g_DrPixMemAllocPhysicalCount = g_DrPixMemAllocPhysicalCount + 1;
-      pvVar4 = XMemAlloc(0x1e0,0xa2800000);
-      puVar1[1] = pvVar4;
-      if (pvVar4 == (void *)0x0) {
-        XMemFree(puVar1,0x24800000);
+      p_Var1 = XMemAlloc(0x1e0,0xa2800000);
+      param_4->m_pValues = p_Var1;
+      if (p_Var1 == (_D3DPERFCOUNTER_VALUES *)0x0) {
+        XMemFree(param_4,0x24800000);
         goto LAB_8286e288;
       }
     }
     else {
-      puVar1[1] = (int)uVar6;
+      param_4->m_pValues = param_3;
     }
-    FlushCachedMemory((void *)puVar1[1],(void *)((int)puVar1[1] + 0x1e0),0);
-    puVar1[2] = uVar3;
-    *puVar1 = 1;
-    puVar1[3] = 0;
+    FlushCachedMemory(param_4->m_pValues,param_4->m_pValues + 1,0);
+    param_4->m_pDevice = param_1;
+    param_4->m_RefCount = 1;
+    param_4->m_Fence = 0;
   }
-  pCVar5 = (CPerfCounters *)__restgprlr_29(uVar2);
-  return pCVar5;
+  return param_4;
 }
 
 
 // 8286E310  P_SPCE  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2348)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::P_SPCE(D3DDevice *param_1,_D3DPERFCOUNTER_EVENTS *param_2,ulong param_3)
 
 {
   byte bVar1;
-  int iVar2;
-  CDevice *this;
-  ulong *puVar3;
-  uint *puVar4;
-  longlong lVar5;
+  GPUPERFEVENT_CP GVar2;
+  GPUPERFEVENT_RBBM GVar3;
+  GPUPERFEVENT_SQ GVar4;
+  GPUPERFEVENT_VGT GVar5;
+  GPUPERFEVENT_VC GVar6;
+  GPUPERFEVENT_PA_SU GVar7;
+  GPUPERFEVENT_PA_SC GVar8;
+  GPUPERFEVENT_HZ GVar9;
+  GPUPERFEVENT_TCR GVar10;
+  GPUPERFEVENT_TCM GVar11;
+  GPUPERFEVENT_TCF GVar12;
+  GPUPERFEVENT_TP GVar13;
+  GPUPERFEVENT_SX GVar14;
+  GPUPERFEVENT_BC GVar15;
+  GPUPERFEVENT_MC GVar16;
+  GPUPERFEVENT_MH GVar17;
+  GPUPERFEVENT_BIF GVar18;
+  ulong *puVar19;
+  uint *puVar20;
   
-  lVar5 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_22(param_1,lVar5,param_3);
-  puVar3 = CDevice::BeginRingBig(this,0x78);
-  iVar2 = (int)lVar5;
-  bVar1 = *(byte *)(iVar2 + 3);
-  puVar3[1] = 0x1e6;
-  puVar3[2] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 7);
-  puVar3[3] = 0x395;
-  puVar3[4] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xb);
-  puVar3[5] = 0x396;
-  puVar3[6] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xf);
-  puVar3[7] = 0xdc8;
-  puVar3[8] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x13);
-  puVar3[9] = 0xdc9;
-  puVar3[10] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x17);
-  puVar3[0xb] = 0xdca;
-  puVar3[0xc] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x1b);
-  puVar3[0xd] = 0xdcb;
-  puVar3[0xe] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x1f);
-  puVar3[0xf] = 0xc48;
-  puVar3[0x10] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x23);
-  puVar3[0x11] = 0xc49;
-  puVar3[0x12] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x27);
-  puVar3[0x13] = 0xc4a;
-  puVar3[0x14] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x2b);
-  puVar3[0x15] = 0xc4b;
-  puVar3[0x16] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x2f);
-  puVar3[0x17] = 0xe48;
-  puVar3[0x18] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x33);
-  puVar3[0x19] = 0xe4b;
-  puVar3[0x1a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x37);
-  puVar3[0x1b] = 0xe4e;
-  puVar3[0x1c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x3b);
-  puVar3[0x1d] = 0xe51;
-  puVar3[0x1e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x3f);
-  puVar3[0x1f] = 0xc88;
-  puVar3[0x20] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x43);
-  puVar3[0x21] = 0xc89;
-  puVar3[0x22] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x47);
-  puVar3[0x23] = 0xc8a;
-  puVar3[0x24] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x4b);
-  puVar3[0x25] = 0xc8b;
-  puVar3[0x26] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x4f);
-  puVar3[0x27] = 0xc98;
-  puVar3[0x28] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x53);
-  puVar3[0x29] = 0xc99;
-  puVar3[0x2a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x57);
-  puVar3[0x2b] = 0xc9a;
-  puVar3[0x2c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x5b);
-  puVar3[0x2d] = 0xc9b;
-  puVar3[0x2e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x5f);
-  puVar3[0x2f] = 0x1004;
-  puVar3[0x30] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 99);
-  puVar3[0x31] = 0x1007;
-  puVar3[0x32] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x67);
-  puVar3[0x33] = 0xe05;
-  puVar3[0x34] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x6b);
-  puVar3[0x35] = 0xe08;
-  puVar3[0x36] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x6f);
-  puVar3[0x37] = 0xe54;
-  puVar3[0x38] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x73);
-  puVar3[0x39] = 0xe57;
-  puVar3[0x3a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x77);
-  puVar3[0x3b] = 0xe5a;
-  puVar3[0x3c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x7b);
-  puVar3[0x3d] = 0xe5d;
-  puVar3[0x3e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x7f);
-  puVar3[0x3f] = 0xe60;
-  puVar3[0x40] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x83);
-  puVar3[0x41] = 0xe63;
-  puVar3[0x42] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x87);
-  puVar3[0x43] = 0xe66;
-  puVar3[0x44] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x8b);
-  puVar3[0x45] = 0xe69;
-  puVar3[0x46] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x8f);
-  puVar3[0x47] = 0xe6c;
-  puVar3[0x48] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x93);
-  puVar3[0x49] = 0xe6f;
-  puVar3[0x4a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x97);
-  puVar3[0x4b] = 0xe72;
-  puVar3[0x4c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x9b);
-  puVar3[0x4d] = 0xe75;
-  puVar3[0x4e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0x9f);
-  puVar3[0x4f] = 0xe78;
-  puVar3[0x50] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xa3);
-  puVar3[0x51] = 0xe7b;
-  puVar3[0x52] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xa7);
-  puVar3[0x53] = 0xe1f;
-  puVar3[0x54] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xab);
-  puVar3[0x55] = 0xe22;
-  puVar3[0x56] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xaf);
-  puVar3[0x57] = 0xe28;
-  puVar3[0x58] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xb3);
-  puVar3[0x59] = 0xe2b;
-  puVar3[0x5a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xb7);
-  puVar3[0x5b] = 0xe31;
-  puVar3[0x5c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xbb);
-  puVar3[0x5d] = 0xe34;
-  puVar3[0x5e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xbf);
-  puVar3[0x5f] = 0xe3a;
-  puVar3[0x60] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xc3);
-  puVar3[0x61] = 0xe3d;
-  puVar3[0x62] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 199);
-  puVar3[99] = 0xdd4;
-  puVar3[100] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xcb);
-  puVar3[0x65] = 0xf04;
-  puVar3[0x66] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xcf);
-  puVar3[0x67] = 0xf05;
-  puVar3[0x68] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xd3);
-  puVar3[0x69] = 0xf06;
-  puVar3[0x6a] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xd7);
-  puVar3[0x6b] = 0xf07;
-  puVar3[0x6c] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xdb);
-  puVar3[0x6d] = 0x815;
-  puVar3[0x6e] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xdf);
-  puVar3[0x6f] = 0x855;
-  puVar3[0x70] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xe3);
-  puVar3[0x71] = 0xa18;
-  puVar3[0x72] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xe7);
-  puVar3[0x73] = 0xa1b;
-  puVar3[0x74] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xeb);
-  puVar3[0x75] = 0xa1e;
-  puVar3[0x76] = (uint)bVar1;
-  bVar1 = *(byte *)(iVar2 + 0xef);
-  puVar3[0x77] = 0x48;
-  puVar4 = puVar3 + 0x78;
-  *puVar4 = (uint)bVar1;
-  *(uint **)&this->field_0x30 = puVar4;
-  if (*(ulong **)&this->field_0x38 < puVar3 + 0x78) {
-    puVar4 = CDevice::KickOff(this);
+  puVar19 = CDevice::BeginRingBig((CDevice *)param_1,0x78);
+  GVar2 = param_2->CP[0];
+  puVar19[1] = 0x1e6;
+  puVar19[2] = (uint)(byte)GVar2;
+  GVar3 = param_2->RBBM[0];
+  puVar19[3] = 0x395;
+  puVar19[4] = (uint)(byte)GVar3;
+  bVar1 = *(byte *)((int)param_2->RBBM + 7);
+  puVar19[5] = 0x396;
+  puVar19[6] = (uint)bVar1;
+  GVar4 = param_2->SQ[0];
+  puVar19[7] = 0xdc8;
+  puVar19[8] = (uint)(byte)GVar4;
+  bVar1 = *(byte *)((int)param_2->SQ + 7);
+  puVar19[9] = 0xdc9;
+  puVar19[10] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->SQ + 0xb);
+  puVar19[0xb] = 0xdca;
+  puVar19[0xc] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->SQ + 0xf);
+  puVar19[0xd] = 0xdcb;
+  puVar19[0xe] = (uint)bVar1;
+  GVar5 = param_2->VGT[0];
+  puVar19[0xf] = 0xc48;
+  puVar19[0x10] = (uint)(byte)GVar5;
+  bVar1 = *(byte *)((int)param_2->VGT + 7);
+  puVar19[0x11] = 0xc49;
+  puVar19[0x12] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->VGT + 0xb);
+  puVar19[0x13] = 0xc4a;
+  puVar19[0x14] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->VGT + 0xf);
+  puVar19[0x15] = 0xc4b;
+  puVar19[0x16] = (uint)bVar1;
+  GVar6 = param_2->VC[0];
+  puVar19[0x17] = 0xe48;
+  puVar19[0x18] = (uint)(byte)GVar6;
+  bVar1 = *(byte *)((int)param_2->VC + 7);
+  puVar19[0x19] = 0xe4b;
+  puVar19[0x1a] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->VC + 0xb);
+  puVar19[0x1b] = 0xe4e;
+  puVar19[0x1c] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->VC + 0xf);
+  puVar19[0x1d] = 0xe51;
+  puVar19[0x1e] = (uint)bVar1;
+  GVar7 = param_2->PA_SU[0];
+  puVar19[0x1f] = 0xc88;
+  puVar19[0x20] = (uint)(byte)GVar7;
+  bVar1 = *(byte *)((int)param_2->PA_SU + 7);
+  puVar19[0x21] = 0xc89;
+  puVar19[0x22] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->PA_SU + 0xb);
+  puVar19[0x23] = 0xc8a;
+  puVar19[0x24] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->PA_SU + 0xf);
+  puVar19[0x25] = 0xc8b;
+  puVar19[0x26] = (uint)bVar1;
+  GVar8 = param_2->PA_SC[0];
+  puVar19[0x27] = 0xc98;
+  puVar19[0x28] = (uint)(byte)GVar8;
+  bVar1 = *(byte *)((int)param_2->PA_SC + 7);
+  puVar19[0x29] = 0xc99;
+  puVar19[0x2a] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->PA_SC + 0xb);
+  puVar19[0x2b] = 0xc9a;
+  puVar19[0x2c] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->PA_SC + 0xf);
+  puVar19[0x2d] = 0xc9b;
+  puVar19[0x2e] = (uint)bVar1;
+  GVar9 = param_2->HZ[0];
+  puVar19[0x2f] = 0x1004;
+  puVar19[0x30] = (uint)(byte)GVar9;
+  bVar1 = *(byte *)((int)param_2->HZ + 7);
+  puVar19[0x31] = 0x1007;
+  puVar19[0x32] = (uint)bVar1;
+  GVar10 = param_2->TCR[0];
+  puVar19[0x33] = 0xe05;
+  puVar19[0x34] = (uint)(byte)GVar10;
+  bVar1 = *(byte *)((int)param_2->TCR + 7);
+  puVar19[0x35] = 0xe08;
+  puVar19[0x36] = (uint)bVar1;
+  GVar11 = param_2->TCM[0];
+  puVar19[0x37] = 0xe54;
+  puVar19[0x38] = (uint)(byte)GVar11;
+  bVar1 = *(byte *)((int)param_2->TCM + 7);
+  puVar19[0x39] = 0xe57;
+  puVar19[0x3a] = (uint)bVar1;
+  GVar12 = param_2->TCF[0];
+  puVar19[0x3b] = 0xe5a;
+  puVar19[0x3c] = (uint)(byte)GVar12;
+  bVar1 = *(byte *)((int)param_2->TCF + 7);
+  puVar19[0x3d] = 0xe5d;
+  puVar19[0x3e] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0xb);
+  puVar19[0x3f] = 0xe60;
+  puVar19[0x40] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0xf);
+  puVar19[0x41] = 0xe63;
+  puVar19[0x42] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x13);
+  puVar19[0x43] = 0xe66;
+  puVar19[0x44] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x17);
+  puVar19[0x45] = 0xe69;
+  puVar19[0x46] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x1b);
+  puVar19[0x47] = 0xe6c;
+  puVar19[0x48] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x1f);
+  puVar19[0x49] = 0xe6f;
+  puVar19[0x4a] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x23);
+  puVar19[0x4b] = 0xe72;
+  puVar19[0x4c] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x27);
+  puVar19[0x4d] = 0xe75;
+  puVar19[0x4e] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x2b);
+  puVar19[0x4f] = 0xe78;
+  puVar19[0x50] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->TCF + 0x2f);
+  puVar19[0x51] = 0xe7b;
+  puVar19[0x52] = (uint)bVar1;
+  GVar13 = param_2->TP0[0];
+  puVar19[0x53] = 0xe1f;
+  puVar19[0x54] = (uint)(byte)GVar13;
+  bVar1 = *(byte *)((int)param_2->TP0 + 7);
+  puVar19[0x55] = 0xe22;
+  puVar19[0x56] = (uint)bVar1;
+  GVar13 = param_2->TP1[0];
+  puVar19[0x57] = 0xe28;
+  puVar19[0x58] = (uint)(byte)GVar13;
+  bVar1 = *(byte *)((int)param_2->TP1 + 7);
+  puVar19[0x59] = 0xe2b;
+  puVar19[0x5a] = (uint)bVar1;
+  GVar13 = param_2->TP2[0];
+  puVar19[0x5b] = 0xe31;
+  puVar19[0x5c] = (uint)(byte)GVar13;
+  bVar1 = *(byte *)((int)param_2->TP2 + 7);
+  puVar19[0x5d] = 0xe34;
+  puVar19[0x5e] = (uint)bVar1;
+  GVar13 = param_2->TP3[0];
+  puVar19[0x5f] = 0xe3a;
+  puVar19[0x60] = (uint)(byte)GVar13;
+  bVar1 = *(byte *)((int)param_2->TP3 + 7);
+  puVar19[0x61] = 0xe3d;
+  puVar19[0x62] = (uint)bVar1;
+  GVar14 = param_2->SX[0];
+  puVar19[99] = 0xdd4;
+  puVar19[100] = (uint)(byte)GVar14;
+  GVar15 = param_2->BC[0];
+  puVar19[0x65] = 0xf04;
+  puVar19[0x66] = (uint)(byte)GVar15;
+  bVar1 = *(byte *)((int)param_2->BC + 7);
+  puVar19[0x67] = 0xf05;
+  puVar19[0x68] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->BC + 0xb);
+  puVar19[0x69] = 0xf06;
+  puVar19[0x6a] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->BC + 0xf);
+  puVar19[0x6b] = 0xf07;
+  puVar19[0x6c] = (uint)bVar1;
+  GVar16 = param_2->MC0[0];
+  puVar19[0x6d] = 0x815;
+  puVar19[0x6e] = (uint)(byte)GVar16;
+  GVar16 = param_2->MC1[0];
+  puVar19[0x6f] = 0x855;
+  puVar19[0x70] = (uint)(byte)GVar16;
+  GVar17 = param_2->MH[0];
+  puVar19[0x71] = 0xa18;
+  puVar19[0x72] = (uint)(byte)GVar17;
+  bVar1 = *(byte *)((int)param_2->MH + 7);
+  puVar19[0x73] = 0xa1b;
+  puVar19[0x74] = (uint)bVar1;
+  bVar1 = *(byte *)((int)param_2->MH + 0xb);
+  puVar19[0x75] = 0xa1e;
+  puVar19[0x76] = (uint)bVar1;
+  GVar18 = param_2->BIF[0];
+  puVar19[0x77] = 0x48;
+  puVar20 = puVar19 + 0x78;
+  *puVar20 = (uint)(byte)GVar18;
+  param_1->m_pRing = puVar20;
+  if (param_1->m_pRingGuarantee < puVar19 + 0x78) {
+    puVar20 = CDevice::KickOff((CDevice *)param_1);
   }
-  puVar4[1] = 0x1f5;
-  puVar4[2] = 0;
-  puVar4[3] = 0x21f9;
-  puVar4[4] = 0x17;
-  puVar4[5] = 0x1f5;
-  puVar4[6] = 1;
-  *(uint **)&this->field_0x30 = puVar4 + 6;
-  __restgprlr_22();
+  puVar20[1] = 0x1f5;
+  puVar20[2] = 0;
+  puVar20[3] = 0x21f9;
+  puVar20[4] = 0x17;
+  puVar20[5] = 0x1f5;
+  puVar20[6] = 1;
+  param_1->m_pRing = puVar20 + 6;
   return;
 }
 
 
 // 8286F2F0  P_QPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2968)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::P_QPC(D3DDevice *param_1,D3DPerfCounters *param_2,ulong param_3)
 
 {
   uint uVar1;
-  CDevice *this;
-  ulong *puVar2;
-  ulonglong uVar3;
+  undefined4 uVar2;
+  ulong *puVar3;
   uint uVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  this = (CDevice *)__savegprlr_21(param_1);
   if (*(ulong *)(param_2 + 0xc) != 0) {
     D3DDevice_BlockOnFence(*(ulong *)(param_2 + 0xc));
   }
-  if (((uVar3 & 1) != 0) || (this->m_WaitUntilIdleRequired)) {
-    WaitUntilIdleOrFlushCaches(this);
+  if (((param_3 & 1) != 0) || (((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0)) {
+    WaitUntilIdleOrFlushCaches((CDevice *)param_1);
   }
-  if ((uVar3 & 4) != 0) {
-    puVar2 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar2) {
-      puVar2 = CDevice::KickOff(this);
+  if ((param_3 & 4) != 0) {
+    puVar3 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar3) {
+      puVar3 = CDevice::KickOff((CDevice *)param_1);
     }
-    puVar2[1] = 0xc0002600;
-    puVar2[2] = 0;
-    *(ulong **)&this->field_0x30 = puVar2 + 2;
+    puVar3[1] = 0xc0002600;
+    puVar3[2] = 0;
+    param_1->m_pRing = puVar3 + 2;
   }
   uVar1 = *(uint *)(param_2 + 4);
-  puVar2 = CDevice::BeginRingBig(this,0x168);
-  uVar4 = (uint)((uVar3 & 0xffffffff) >> 1) & 1 | 0xc0013e00;
-  puVar2[1] = uVar4;
-  puVar2[2] = 0x1e7;
-  puVar2[3] = ((uVar1 + 4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 4 & 0x1fffffff) | 2;
-  puVar2[4] = uVar4;
-  puVar2[5] = 0x1e8;
-  puVar2[6] = ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1fffffff) | 2;
-  puVar2[7] = uVar4;
-  puVar2[8] = 0x397;
-  puVar2[9] = ((uVar1 + 0xc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc & 0x1fffffff) | 2;
-  puVar2[10] = uVar4;
-  puVar2[0xb] = 0x398;
-  puVar2[0xc] = ((uVar1 + 8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 8 & 0x1fffffff) | 2;
-  puVar2[0xd] = uVar4;
-  puVar2[0xe] = 0x399;
-  puVar2[0xf] = ((uVar1 + 0x14 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x14 & 0x1fffffff) | 2;
-  puVar2[0x10] = uVar4;
-  puVar2[0x11] = 0x39a;
-  puVar2[0x12] = ((uVar1 + 0x10 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x10 & 0x1fffffff) | 2;
-  puVar2[0x13] = uVar4;
-  puVar2[0x14] = 0xdcc;
-  puVar2[0x15] = ((uVar1 + 0x1c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c & 0x1fffffff) | 2;
-  puVar2[0x16] = uVar4;
-  puVar2[0x17] = 0xdcd;
-  puVar2[0x18] = ((uVar1 + 0x18 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x18 & 0x1fffffff) | 2;
-  puVar2[0x19] = uVar4;
-  puVar2[0x1a] = 0xdce;
-  puVar2[0x1b] = ((uVar1 + 0x24 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x24 & 0x1fffffff) | 2;
-  puVar2[0x1c] = uVar4;
-  puVar2[0x1d] = 0xdcf;
-  puVar2[0x1e] = ((uVar1 + 0x20 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x20 & 0x1fffffff) | 2;
-  puVar2[0x1f] = uVar4;
-  puVar2[0x20] = 0xdd0;
-  puVar2[0x21] = ((uVar1 + 0x2c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x2c & 0x1fffffff) | 2;
-  puVar2[0x22] = uVar4;
-  puVar2[0x23] = 0xdd1;
-  puVar2[0x24] = ((uVar1 + 0x28 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x28 & 0x1fffffff) | 2;
-  puVar2[0x25] = uVar4;
-  puVar2[0x26] = 0xdd2;
-  puVar2[0x27] = ((uVar1 + 0x34 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x34 & 0x1fffffff) | 2;
-  puVar2[0x28] = uVar4;
-  puVar2[0x29] = 0xdd3;
-  puVar2[0x2a] = ((uVar1 + 0x30 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x30 & 0x1fffffff) | 2;
-  puVar2[0x2b] = uVar4;
-  puVar2[0x2c] = 0xc4c;
-  puVar2[0x2d] = ((uVar1 + 0x3c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x3c & 0x1fffffff) | 2;
-  puVar2[0x2e] = uVar4;
-  puVar2[0x2f] = 0xc4d;
-  puVar2[0x30] = ((uVar1 + 0x38 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x38 & 0x1fffffff) | 2;
-  puVar2[0x31] = uVar4;
-  puVar2[0x32] = 0xc4e;
-  puVar2[0x33] = ((uVar1 + 0x44 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x44 & 0x1fffffff) | 2;
-  puVar2[0x34] = uVar4;
-  puVar2[0x35] = 0xc4f;
-  puVar2[0x36] = ((uVar1 + 0x40 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x40 & 0x1fffffff) | 2;
-  puVar2[0x37] = uVar4;
-  puVar2[0x38] = 0xc50;
-  puVar2[0x39] = ((uVar1 + 0x4c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x4c & 0x1fffffff) | 2;
-  puVar2[0x3a] = uVar4;
-  puVar2[0x3b] = 0xc51;
-  puVar2[0x3c] = ((uVar1 + 0x48 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x48 & 0x1fffffff) | 2;
-  puVar2[0x3d] = uVar4;
-  puVar2[0x3e] = 0xc52;
-  puVar2[0x3f] = ((uVar1 + 0x54 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x54 & 0x1fffffff) | 2;
-  puVar2[0x40] = uVar4;
-  puVar2[0x41] = 0xc53;
-  puVar2[0x42] = ((uVar1 + 0x50 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x50 & 0x1fffffff) | 2;
-  puVar2[0x43] = uVar4;
-  puVar2[0x44] = 0xe4a;
-  puVar2[0x45] = ((uVar1 + 0x5c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x5c & 0x1fffffff) | 2;
-  puVar2[0x46] = uVar4;
-  puVar2[0x47] = 0xe49;
-  puVar2[0x48] = ((uVar1 + 0x58 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x58 & 0x1fffffff) | 2;
-  puVar2[0x49] = uVar4;
-  puVar2[0x4a] = 0xe4d;
-  puVar2[0x4b] = ((uVar1 + 100 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 100 & 0x1fffffff) | 2;
-  puVar2[0x4c] = uVar4;
-  puVar2[0x4d] = 0xe4c;
-  puVar2[0x4e] = ((uVar1 + 0x60 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x60 & 0x1fffffff) | 2;
-  puVar2[0x4f] = uVar4;
-  puVar2[0x50] = 0xe50;
-  puVar2[0x51] = ((uVar1 + 0x6c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x6c & 0x1fffffff) | 2;
-  puVar2[0x52] = uVar4;
-  puVar2[0x53] = 0xe4f;
-  puVar2[0x54] = ((uVar1 + 0x68 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x68 & 0x1fffffff) | 2;
-  puVar2[0x55] = uVar4;
-  puVar2[0x56] = 0xe53;
-  puVar2[0x57] = ((uVar1 + 0x74 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x74 & 0x1fffffff) | 2;
-  puVar2[0x58] = uVar4;
-  puVar2[0x59] = 0xe52;
-  puVar2[0x5a] = ((uVar1 + 0x70 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x70 & 0x1fffffff) | 2;
-  puVar2[0x5b] = uVar4;
-  puVar2[0x5c] = 0xc8c;
-  puVar2[0x5d] = ((uVar1 + 0x7c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x7c & 0x1fffffff) | 2;
-  puVar2[0x5e] = uVar4;
-  puVar2[0x5f] = 0xc8d;
-  puVar2[0x60] = ((uVar1 + 0x78 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x78 & 0x1fffffff) | 2;
-  puVar2[0x61] = uVar4;
-  puVar2[0x62] = 0xc8e;
-  puVar2[99] = ((uVar1 + 0x84 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x84 & 0x1fffffff) | 2;
-  puVar2[100] = uVar4;
-  puVar2[0x65] = 0xc8f;
-  puVar2[0x66] = ((uVar1 + 0x80 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x80 & 0x1fffffff) | 2;
-  puVar2[0x67] = uVar4;
-  puVar2[0x68] = 0xc90;
-  puVar2[0x69] = ((uVar1 + 0x8c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x8c & 0x1fffffff) | 2;
-  puVar2[0x6a] = uVar4;
-  puVar2[0x6b] = 0xc91;
-  puVar2[0x6c] = ((uVar1 + 0x88 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x88 & 0x1fffffff) | 2;
-  puVar2[0x6d] = uVar4;
-  puVar2[0x6e] = 0xc92;
-  puVar2[0x6f] = ((uVar1 + 0x94 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x94 & 0x1fffffff) | 2;
-  puVar2[0x70] = uVar4;
-  puVar2[0x71] = 0xc93;
-  puVar2[0x72] = ((uVar1 + 0x90 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x90 & 0x1fffffff) | 2;
-  puVar2[0x73] = uVar4;
-  puVar2[0x74] = 0xc9c;
-  puVar2[0x75] = ((uVar1 + 0x9c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x9c & 0x1fffffff) | 2;
-  puVar2[0x76] = uVar4;
-  puVar2[0x77] = 0xc9d;
-  puVar2[0x78] = ((uVar1 + 0x98 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x98 & 0x1fffffff) | 2;
-  puVar2[0x79] = uVar4;
-  puVar2[0x7a] = 0xc9e;
-  puVar2[0x7b] = ((uVar1 + 0xa4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa4 & 0x1fffffff) | 2;
-  puVar2[0x7c] = uVar4;
-  puVar2[0x7d] = 0xc9f;
-  puVar2[0x7e] = ((uVar1 + 0xa0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa0 & 0x1fffffff) | 2;
-  puVar2[0x7f] = uVar4;
-  puVar2[0x80] = 0xca0;
-  puVar2[0x81] = ((uVar1 + 0xac >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xac & 0x1fffffff) | 2;
-  puVar2[0x82] = uVar4;
-  puVar2[0x83] = 0xca1;
-  puVar2[0x84] = ((uVar1 + 0xa8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa8 & 0x1fffffff) | 2;
-  puVar2[0x85] = uVar4;
-  puVar2[0x86] = 0xca2;
-  puVar2[0x87] = ((uVar1 + 0xb4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb4 & 0x1fffffff) | 2;
-  puVar2[0x88] = uVar4;
-  puVar2[0x89] = 0xca3;
-  puVar2[0x8a] = ((uVar1 + 0xb0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb0 & 0x1fffffff) | 2;
-  puVar2[0x8b] = uVar4;
-  puVar2[0x8c] = 0x1006;
-  puVar2[0x8d] = ((uVar1 + 0xbc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xbc & 0x1fffffff) | 2;
-  puVar2[0x8e] = uVar4;
-  puVar2[0x8f] = 0x1005;
-  puVar2[0x90] = ((uVar1 + 0xb8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb8 & 0x1fffffff) | 2;
-  puVar2[0x91] = uVar4;
-  puVar2[0x92] = 0x1009;
-  puVar2[0x93] = ((uVar1 + 0xc4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc4 & 0x1fffffff) | 2;
-  puVar2[0x94] = uVar4;
-  puVar2[0x95] = 0x1008;
-  puVar2[0x96] = ((uVar1 + 0xc0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc0 & 0x1fffffff) | 2;
-  puVar2[0x97] = uVar4;
-  puVar2[0x98] = 0xe07;
-  puVar2[0x99] = ((uVar1 + 0xcc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xcc & 0x1fffffff) | 2;
-  puVar2[0x9a] = uVar4;
-  puVar2[0x9b] = 0xe06;
-  puVar2[0x9c] = ((uVar1 + 200 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 200 & 0x1fffffff) | 2;
-  puVar2[0x9d] = uVar4;
-  puVar2[0x9e] = 0xe0a;
-  puVar2[0x9f] = ((uVar1 + 0xd4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd4 & 0x1fffffff) | 2;
-  puVar2[0xa0] = uVar4;
-  puVar2[0xa1] = 0xe09;
-  puVar2[0xa2] = ((uVar1 + 0xd0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd0 & 0x1fffffff) | 2;
-  puVar2[0xa3] = uVar4;
-  puVar2[0xa4] = 0xe56;
-  puVar2[0xa5] = ((uVar1 + 0xdc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xdc & 0x1fffffff) | 2;
-  puVar2[0xa6] = uVar4;
-  puVar2[0xa7] = 0xe55;
-  puVar2[0xa8] = ((uVar1 + 0xd8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd8 & 0x1fffffff) | 2;
-  puVar2[0xa9] = uVar4;
-  puVar2[0xaa] = 0xe59;
-  puVar2[0xab] = ((uVar1 + 0xe4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe4 & 0x1fffffff) | 2;
-  puVar2[0xac] = uVar4;
-  puVar2[0xad] = 0xe58;
-  puVar2[0xae] = ((uVar1 + 0xe0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe0 & 0x1fffffff) | 2;
-  puVar2[0xaf] = uVar4;
-  puVar2[0xb0] = 0xe5c;
-  puVar2[0xb1] = ((uVar1 + 0xec >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xec & 0x1fffffff) | 2;
-  puVar2[0xb2] = uVar4;
-  puVar2[0xb3] = 0xe5b;
-  puVar2[0xb4] = ((uVar1 + 0xe8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe8 & 0x1fffffff) | 2;
-  puVar2[0xb5] = uVar4;
-  puVar2[0xb6] = 0xe5f;
-  puVar2[0xb7] = ((uVar1 + 0xf4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf4 & 0x1fffffff) | 2;
-  puVar2[0xb8] = uVar4;
-  puVar2[0xb9] = 0xe5e;
-  puVar2[0xba] = ((uVar1 + 0xf0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf0 & 0x1fffffff) | 2;
-  puVar2[0xbb] = uVar4;
-  puVar2[0xbc] = 0xe62;
-  puVar2[0xbd] = ((uVar1 + 0xfc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xfc & 0x1fffffff) | 2;
-  puVar2[0xbe] = uVar4;
-  puVar2[0xbf] = 0xe61;
-  puVar2[0xc0] = ((uVar1 + 0xf8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf8 & 0x1fffffff) | 2;
-  puVar2[0xc1] = uVar4;
-  puVar2[0xc2] = 0xe65;
-  puVar2[0xc3] = ((uVar1 + 0x104 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x104 & 0x1fffffff) | 2;
-  puVar2[0xc4] = uVar4;
-  puVar2[0xc5] = 0xe64;
-  puVar2[0xc6] = ((uVar1 + 0x100 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x100 & 0x1fffffff) | 2;
-  puVar2[199] = uVar4;
-  puVar2[200] = 0xe68;
-  puVar2[0xc9] = ((uVar1 + 0x10c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x10c & 0x1fffffff) | 2;
-  puVar2[0xca] = uVar4;
-  puVar2[0xcb] = 0xe67;
-  puVar2[0xcc] = ((uVar1 + 0x108 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x108 & 0x1fffffff) | 2;
-  puVar2[0xcd] = uVar4;
-  puVar2[0xce] = 0xe6b;
-  puVar2[0xcf] = ((uVar1 + 0x114 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x114 & 0x1fffffff) | 2;
-  puVar2[0xd0] = uVar4;
-  puVar2[0xd1] = 0xe6a;
-  puVar2[0xd2] = ((uVar1 + 0x110 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x110 & 0x1fffffff) | 2;
-  puVar2[0xd3] = uVar4;
-  puVar2[0xd4] = 0xe6e;
-  puVar2[0xd5] = ((uVar1 + 0x11c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x11c & 0x1fffffff) | 2;
-  puVar2[0xd6] = uVar4;
-  puVar2[0xd7] = 0xe6d;
-  puVar2[0xd8] = ((uVar1 + 0x118 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x118 & 0x1fffffff) | 2;
-  puVar2[0xd9] = uVar4;
-  puVar2[0xda] = 0xe71;
-  puVar2[0xdb] = ((uVar1 + 0x124 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x124 & 0x1fffffff) | 2;
-  puVar2[0xdc] = uVar4;
-  puVar2[0xdd] = 0xe70;
-  puVar2[0xde] = ((uVar1 + 0x120 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x120 & 0x1fffffff) | 2;
-  puVar2[0xdf] = uVar4;
-  puVar2[0xe0] = 0xe74;
-  puVar2[0xe1] = ((uVar1 + 300 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 300 & 0x1fffffff) | 2;
-  puVar2[0xe2] = uVar4;
-  puVar2[0xe3] = 0xe73;
-  puVar2[0xe4] = ((uVar1 + 0x128 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x128 & 0x1fffffff) | 2;
-  puVar2[0xe5] = uVar4;
-  puVar2[0xe6] = 0xe77;
-  puVar2[0xe7] = ((uVar1 + 0x134 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x134 & 0x1fffffff) | 2;
-  puVar2[0xe8] = uVar4;
-  puVar2[0xe9] = 0xe76;
-  puVar2[0xea] = ((uVar1 + 0x130 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x130 & 0x1fffffff) | 2;
-  puVar2[0xeb] = uVar4;
-  puVar2[0xec] = 0xe7a;
-  puVar2[0xed] = ((uVar1 + 0x13c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x13c & 0x1fffffff) | 2;
-  puVar2[0xee] = uVar4;
-  puVar2[0xef] = 0xe79;
-  puVar2[0xf0] = ((uVar1 + 0x138 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x138 & 0x1fffffff) | 2;
-  puVar2[0xf1] = uVar4;
-  puVar2[0xf2] = 0xe7d;
-  puVar2[0xf3] = ((uVar1 + 0x144 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x144 & 0x1fffffff) | 2;
-  puVar2[0xf4] = uVar4;
-  puVar2[0xf5] = 0xe7c;
-  puVar2[0xf6] = ((uVar1 + 0x140 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x140 & 0x1fffffff) | 2;
-  puVar2[0xf7] = uVar4;
-  puVar2[0xf8] = 0xe21;
-  puVar2[0xf9] = ((uVar1 + 0x14c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x14c & 0x1fffffff) | 2;
-  puVar2[0xfa] = uVar4;
-  puVar2[0xfb] = 0xe20;
-  puVar2[0xfc] = ((uVar1 + 0x148 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x148 & 0x1fffffff) | 2;
-  puVar2[0xfd] = uVar4;
-  puVar2[0xfe] = 0xe24;
-  puVar2[0xff] = ((uVar1 + 0x154 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x154 & 0x1fffffff) | 2;
-  puVar2[0x100] = uVar4;
-  puVar2[0x101] = 0xe23;
-  puVar2[0x102] = ((uVar1 + 0x150 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x150 & 0x1fffffff) | 2;
-  puVar2[0x103] = uVar4;
-  puVar2[0x104] = 0xe2a;
-  puVar2[0x105] = ((uVar1 + 0x15c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x15c & 0x1fffffff) | 2;
-  puVar2[0x106] = uVar4;
-  puVar2[0x107] = 0xe29;
-  puVar2[0x108] = ((uVar1 + 0x158 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x158 & 0x1fffffff) | 2;
-  puVar2[0x109] = uVar4;
-  puVar2[0x10a] = 0xe2d;
-  puVar2[0x10b] = ((uVar1 + 0x164 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x164 & 0x1fffffff) | 2;
-  puVar2[0x10c] = uVar4;
-  puVar2[0x10d] = 0xe2c;
-  puVar2[0x10e] = ((uVar1 + 0x160 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x160 & 0x1fffffff) | 2;
-  puVar2[0x10f] = uVar4;
-  puVar2[0x110] = 0xe33;
-  puVar2[0x111] = ((uVar1 + 0x16c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x16c & 0x1fffffff) | 2;
-  puVar2[0x112] = uVar4;
-  puVar2[0x113] = 0xe32;
-  puVar2[0x114] = ((uVar1 + 0x168 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x168 & 0x1fffffff) | 2;
-  puVar2[0x115] = uVar4;
-  puVar2[0x116] = 0xe36;
-  puVar2[0x117] = ((uVar1 + 0x174 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x174 & 0x1fffffff) | 2;
-  puVar2[0x118] = uVar4;
-  puVar2[0x119] = 0xe35;
-  puVar2[0x11a] = ((uVar1 + 0x170 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x170 & 0x1fffffff) | 2;
-  puVar2[0x11b] = uVar4;
-  puVar2[0x11c] = 0xe3c;
-  puVar2[0x11d] = ((uVar1 + 0x17c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x17c & 0x1fffffff) | 2;
-  puVar2[0x11e] = uVar4;
-  puVar2[0x11f] = 0xe3b;
-  puVar2[0x120] = ((uVar1 + 0x178 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x178 & 0x1fffffff) | 2;
-  puVar2[0x121] = uVar4;
-  puVar2[0x122] = 0xe3f;
-  puVar2[0x123] = ((uVar1 + 0x184 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x184 & 0x1fffffff) | 2;
-  puVar2[0x124] = uVar4;
-  puVar2[0x125] = 0xe3e;
-  puVar2[0x126] = ((uVar1 + 0x180 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x180 & 0x1fffffff) | 2;
-  puVar2[0x127] = uVar4;
-  puVar2[0x128] = 0xdd8;
-  puVar2[0x129] = ((uVar1 + 0x18c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x18c & 0x1fffffff) | 2;
-  puVar2[0x12a] = uVar4;
-  puVar2[299] = 0xdd9;
-  puVar2[300] = ((uVar1 + 0x188 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x188 & 0x1fffffff) | 2;
-  puVar2[0x12d] = uVar4;
-  puVar2[0x12e] = 0xf08;
-  puVar2[0x12f] = ((uVar1 + 0x194 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x194 & 0x1fffffff) | 2;
-  puVar2[0x130] = uVar4;
-  puVar2[0x131] = 0xf09;
-  puVar2[0x132] = ((uVar1 + 400 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 400 & 0x1fffffff) | 2;
-  puVar2[0x133] = uVar4;
-  puVar2[0x134] = 0xf0a;
-  puVar2[0x135] = ((uVar1 + 0x19c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x19c & 0x1fffffff) | 2;
-  puVar2[0x136] = uVar4;
-  puVar2[0x137] = 0xf0b;
-  puVar2[0x138] = ((uVar1 + 0x198 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x198 & 0x1fffffff) | 2;
-  puVar2[0x139] = uVar4;
-  puVar2[0x13a] = 0xf0c;
-  puVar2[0x13b] = ((uVar1 + 0x1a4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a4 & 0x1fffffff) | 2;
-  puVar2[0x13c] = uVar4;
-  puVar2[0x13d] = 0xf0d;
-  puVar2[0x13e] = ((uVar1 + 0x1a0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a0 & 0x1fffffff) | 2;
-  puVar2[0x13f] = uVar4;
-  puVar2[0x140] = 0xf0e;
-  puVar2[0x141] = ((uVar1 + 0x1ac >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1ac & 0x1fffffff) | 2;
-  puVar2[0x142] = uVar4;
-  puVar2[0x143] = 0xf0f;
-  puVar2[0x144] = ((uVar1 + 0x1a8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a8 & 0x1fffffff) | 2;
-  puVar2[0x145] = uVar4;
-  puVar2[0x146] = 0x817;
-  puVar2[0x147] = ((uVar1 + 0x1b4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b4 & 0x1fffffff) | 2;
-  puVar2[0x148] = uVar4;
-  puVar2[0x149] = 0x816;
-  puVar2[0x14a] = ((uVar1 + 0x1b0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b0 & 0x1fffffff) | 2;
-  puVar2[0x14b] = uVar4;
-  puVar2[0x14c] = 0x857;
-  puVar2[0x14d] = ((uVar1 + 0x1bc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1bc & 0x1fffffff) | 2;
-  puVar2[0x14e] = uVar4;
-  puVar2[0x14f] = 0x856;
-  puVar2[0x150] = ((uVar1 + 0x1b8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b8 & 0x1fffffff) | 2;
-  puVar2[0x151] = uVar4;
-  puVar2[0x152] = 0xa1a;
-  puVar2[0x153] = ((uVar1 + 0x1c4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c4 & 0x1fffffff) | 2;
-  puVar2[0x154] = uVar4;
-  puVar2[0x155] = 0xa19;
-  puVar2[0x156] = ((uVar1 + 0x1c0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c0 & 0x1fffffff) | 2;
-  puVar2[0x157] = uVar4;
-  puVar2[0x158] = 0xa1d;
-  puVar2[0x159] = ((uVar1 + 0x1cc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1cc & 0x1fffffff) | 2;
-  puVar2[0x15a] = uVar4;
-  puVar2[0x15b] = 0xa1c;
-  puVar2[0x15c] = ((uVar1 + 0x1c8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c8 & 0x1fffffff) | 2;
-  puVar2[0x15d] = uVar4;
-  puVar2[0x15e] = 0xa20;
-  puVar2[0x15f] = ((uVar1 + 0x1d4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d4 & 0x1fffffff) | 2;
-  puVar2[0x160] = uVar4;
-  puVar2[0x161] = 0xa1f;
-  puVar2[0x162] = ((uVar1 + 0x1d0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d0 & 0x1fffffff) | 2;
-  puVar2[0x163] = uVar4;
-  puVar2[0x164] = 0x4a;
-  puVar2[0x165] = ((uVar1 + 0x1dc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1dc & 0x1fffffff) | 2;
-  puVar2[0x166] = uVar4;
-  puVar2[0x167] = 0x49;
-  puVar2[0x168] = ((uVar1 + 0x1d8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d8 & 0x1fffffff) | 2;
-  *(ulong **)&this->field_0x30 = puVar2 + 0x168;
-  *(ulong *)(param_2 + 0xc) = this->m_CpuFence;
-  __restgprlr_21();
+  puVar3 = CDevice::BeginRingBig((CDevice *)param_1,0x168);
+  uVar4 = param_3 >> 1 & 1 | 0xc0013e00;
+  puVar3[1] = uVar4;
+  puVar3[2] = 0x1e7;
+  puVar3[3] = ((uVar1 + 4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 4 & 0x1fffffff) | 2;
+  puVar3[4] = uVar4;
+  puVar3[5] = 0x1e8;
+  puVar3[6] = ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1fffffff) | 2;
+  puVar3[7] = uVar4;
+  puVar3[8] = 0x397;
+  puVar3[9] = ((uVar1 + 0xc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc & 0x1fffffff) | 2;
+  puVar3[10] = uVar4;
+  puVar3[0xb] = 0x398;
+  puVar3[0xc] = ((uVar1 + 8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 8 & 0x1fffffff) | 2;
+  puVar3[0xd] = uVar4;
+  puVar3[0xe] = 0x399;
+  puVar3[0xf] = ((uVar1 + 0x14 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x14 & 0x1fffffff) | 2;
+  puVar3[0x10] = uVar4;
+  puVar3[0x11] = 0x39a;
+  puVar3[0x12] = ((uVar1 + 0x10 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x10 & 0x1fffffff) | 2;
+  puVar3[0x13] = uVar4;
+  puVar3[0x14] = 0xdcc;
+  puVar3[0x15] = ((uVar1 + 0x1c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c & 0x1fffffff) | 2;
+  puVar3[0x16] = uVar4;
+  puVar3[0x17] = 0xdcd;
+  puVar3[0x18] = ((uVar1 + 0x18 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x18 & 0x1fffffff) | 2;
+  puVar3[0x19] = uVar4;
+  puVar3[0x1a] = 0xdce;
+  puVar3[0x1b] = ((uVar1 + 0x24 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x24 & 0x1fffffff) | 2;
+  puVar3[0x1c] = uVar4;
+  puVar3[0x1d] = 0xdcf;
+  puVar3[0x1e] = ((uVar1 + 0x20 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x20 & 0x1fffffff) | 2;
+  puVar3[0x1f] = uVar4;
+  puVar3[0x20] = 0xdd0;
+  puVar3[0x21] = ((uVar1 + 0x2c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x2c & 0x1fffffff) | 2;
+  puVar3[0x22] = uVar4;
+  puVar3[0x23] = 0xdd1;
+  puVar3[0x24] = ((uVar1 + 0x28 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x28 & 0x1fffffff) | 2;
+  puVar3[0x25] = uVar4;
+  puVar3[0x26] = 0xdd2;
+  puVar3[0x27] = ((uVar1 + 0x34 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x34 & 0x1fffffff) | 2;
+  puVar3[0x28] = uVar4;
+  puVar3[0x29] = 0xdd3;
+  puVar3[0x2a] = ((uVar1 + 0x30 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x30 & 0x1fffffff) | 2;
+  puVar3[0x2b] = uVar4;
+  puVar3[0x2c] = 0xc4c;
+  puVar3[0x2d] = ((uVar1 + 0x3c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x3c & 0x1fffffff) | 2;
+  puVar3[0x2e] = uVar4;
+  puVar3[0x2f] = 0xc4d;
+  puVar3[0x30] = ((uVar1 + 0x38 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x38 & 0x1fffffff) | 2;
+  puVar3[0x31] = uVar4;
+  puVar3[0x32] = 0xc4e;
+  puVar3[0x33] = ((uVar1 + 0x44 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x44 & 0x1fffffff) | 2;
+  puVar3[0x34] = uVar4;
+  puVar3[0x35] = 0xc4f;
+  puVar3[0x36] = ((uVar1 + 0x40 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x40 & 0x1fffffff) | 2;
+  puVar3[0x37] = uVar4;
+  puVar3[0x38] = 0xc50;
+  puVar3[0x39] = ((uVar1 + 0x4c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x4c & 0x1fffffff) | 2;
+  puVar3[0x3a] = uVar4;
+  puVar3[0x3b] = 0xc51;
+  puVar3[0x3c] = ((uVar1 + 0x48 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x48 & 0x1fffffff) | 2;
+  puVar3[0x3d] = uVar4;
+  puVar3[0x3e] = 0xc52;
+  puVar3[0x3f] = ((uVar1 + 0x54 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x54 & 0x1fffffff) | 2;
+  puVar3[0x40] = uVar4;
+  puVar3[0x41] = 0xc53;
+  puVar3[0x42] = ((uVar1 + 0x50 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x50 & 0x1fffffff) | 2;
+  puVar3[0x43] = uVar4;
+  puVar3[0x44] = 0xe4a;
+  puVar3[0x45] = ((uVar1 + 0x5c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x5c & 0x1fffffff) | 2;
+  puVar3[0x46] = uVar4;
+  puVar3[0x47] = 0xe49;
+  puVar3[0x48] = ((uVar1 + 0x58 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x58 & 0x1fffffff) | 2;
+  puVar3[0x49] = uVar4;
+  puVar3[0x4a] = 0xe4d;
+  puVar3[0x4b] = ((uVar1 + 100 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 100 & 0x1fffffff) | 2;
+  puVar3[0x4c] = uVar4;
+  puVar3[0x4d] = 0xe4c;
+  puVar3[0x4e] = ((uVar1 + 0x60 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x60 & 0x1fffffff) | 2;
+  puVar3[0x4f] = uVar4;
+  puVar3[0x50] = 0xe50;
+  puVar3[0x51] = ((uVar1 + 0x6c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x6c & 0x1fffffff) | 2;
+  puVar3[0x52] = uVar4;
+  puVar3[0x53] = 0xe4f;
+  puVar3[0x54] = ((uVar1 + 0x68 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x68 & 0x1fffffff) | 2;
+  puVar3[0x55] = uVar4;
+  puVar3[0x56] = 0xe53;
+  puVar3[0x57] = ((uVar1 + 0x74 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x74 & 0x1fffffff) | 2;
+  puVar3[0x58] = uVar4;
+  puVar3[0x59] = 0xe52;
+  puVar3[0x5a] = ((uVar1 + 0x70 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x70 & 0x1fffffff) | 2;
+  puVar3[0x5b] = uVar4;
+  puVar3[0x5c] = 0xc8c;
+  puVar3[0x5d] = ((uVar1 + 0x7c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x7c & 0x1fffffff) | 2;
+  puVar3[0x5e] = uVar4;
+  puVar3[0x5f] = 0xc8d;
+  puVar3[0x60] = ((uVar1 + 0x78 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x78 & 0x1fffffff) | 2;
+  puVar3[0x61] = uVar4;
+  puVar3[0x62] = 0xc8e;
+  puVar3[99] = ((uVar1 + 0x84 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x84 & 0x1fffffff) | 2;
+  puVar3[100] = uVar4;
+  puVar3[0x65] = 0xc8f;
+  puVar3[0x66] = ((uVar1 + 0x80 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x80 & 0x1fffffff) | 2;
+  puVar3[0x67] = uVar4;
+  puVar3[0x68] = 0xc90;
+  puVar3[0x69] = ((uVar1 + 0x8c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x8c & 0x1fffffff) | 2;
+  puVar3[0x6a] = uVar4;
+  puVar3[0x6b] = 0xc91;
+  puVar3[0x6c] = ((uVar1 + 0x88 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x88 & 0x1fffffff) | 2;
+  puVar3[0x6d] = uVar4;
+  puVar3[0x6e] = 0xc92;
+  puVar3[0x6f] = ((uVar1 + 0x94 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x94 & 0x1fffffff) | 2;
+  puVar3[0x70] = uVar4;
+  puVar3[0x71] = 0xc93;
+  puVar3[0x72] = ((uVar1 + 0x90 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x90 & 0x1fffffff) | 2;
+  puVar3[0x73] = uVar4;
+  puVar3[0x74] = 0xc9c;
+  puVar3[0x75] = ((uVar1 + 0x9c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x9c & 0x1fffffff) | 2;
+  puVar3[0x76] = uVar4;
+  puVar3[0x77] = 0xc9d;
+  puVar3[0x78] = ((uVar1 + 0x98 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x98 & 0x1fffffff) | 2;
+  puVar3[0x79] = uVar4;
+  puVar3[0x7a] = 0xc9e;
+  puVar3[0x7b] = ((uVar1 + 0xa4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa4 & 0x1fffffff) | 2;
+  puVar3[0x7c] = uVar4;
+  puVar3[0x7d] = 0xc9f;
+  puVar3[0x7e] = ((uVar1 + 0xa0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa0 & 0x1fffffff) | 2;
+  puVar3[0x7f] = uVar4;
+  puVar3[0x80] = 0xca0;
+  puVar3[0x81] = ((uVar1 + 0xac >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xac & 0x1fffffff) | 2;
+  puVar3[0x82] = uVar4;
+  puVar3[0x83] = 0xca1;
+  puVar3[0x84] = ((uVar1 + 0xa8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xa8 & 0x1fffffff) | 2;
+  puVar3[0x85] = uVar4;
+  puVar3[0x86] = 0xca2;
+  puVar3[0x87] = ((uVar1 + 0xb4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb4 & 0x1fffffff) | 2;
+  puVar3[0x88] = uVar4;
+  puVar3[0x89] = 0xca3;
+  puVar3[0x8a] = ((uVar1 + 0xb0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb0 & 0x1fffffff) | 2;
+  puVar3[0x8b] = uVar4;
+  puVar3[0x8c] = 0x1006;
+  puVar3[0x8d] = ((uVar1 + 0xbc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xbc & 0x1fffffff) | 2;
+  puVar3[0x8e] = uVar4;
+  puVar3[0x8f] = 0x1005;
+  puVar3[0x90] = ((uVar1 + 0xb8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xb8 & 0x1fffffff) | 2;
+  puVar3[0x91] = uVar4;
+  puVar3[0x92] = 0x1009;
+  puVar3[0x93] = ((uVar1 + 0xc4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc4 & 0x1fffffff) | 2;
+  puVar3[0x94] = uVar4;
+  puVar3[0x95] = 0x1008;
+  puVar3[0x96] = ((uVar1 + 0xc0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xc0 & 0x1fffffff) | 2;
+  puVar3[0x97] = uVar4;
+  puVar3[0x98] = 0xe07;
+  puVar3[0x99] = ((uVar1 + 0xcc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xcc & 0x1fffffff) | 2;
+  puVar3[0x9a] = uVar4;
+  puVar3[0x9b] = 0xe06;
+  puVar3[0x9c] = ((uVar1 + 200 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 200 & 0x1fffffff) | 2;
+  puVar3[0x9d] = uVar4;
+  puVar3[0x9e] = 0xe0a;
+  puVar3[0x9f] = ((uVar1 + 0xd4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd4 & 0x1fffffff) | 2;
+  puVar3[0xa0] = uVar4;
+  puVar3[0xa1] = 0xe09;
+  puVar3[0xa2] = ((uVar1 + 0xd0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd0 & 0x1fffffff) | 2;
+  puVar3[0xa3] = uVar4;
+  puVar3[0xa4] = 0xe56;
+  puVar3[0xa5] = ((uVar1 + 0xdc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xdc & 0x1fffffff) | 2;
+  puVar3[0xa6] = uVar4;
+  puVar3[0xa7] = 0xe55;
+  puVar3[0xa8] = ((uVar1 + 0xd8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xd8 & 0x1fffffff) | 2;
+  puVar3[0xa9] = uVar4;
+  puVar3[0xaa] = 0xe59;
+  puVar3[0xab] = ((uVar1 + 0xe4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe4 & 0x1fffffff) | 2;
+  puVar3[0xac] = uVar4;
+  puVar3[0xad] = 0xe58;
+  puVar3[0xae] = ((uVar1 + 0xe0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe0 & 0x1fffffff) | 2;
+  puVar3[0xaf] = uVar4;
+  puVar3[0xb0] = 0xe5c;
+  puVar3[0xb1] = ((uVar1 + 0xec >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xec & 0x1fffffff) | 2;
+  puVar3[0xb2] = uVar4;
+  puVar3[0xb3] = 0xe5b;
+  puVar3[0xb4] = ((uVar1 + 0xe8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xe8 & 0x1fffffff) | 2;
+  puVar3[0xb5] = uVar4;
+  puVar3[0xb6] = 0xe5f;
+  puVar3[0xb7] = ((uVar1 + 0xf4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf4 & 0x1fffffff) | 2;
+  puVar3[0xb8] = uVar4;
+  puVar3[0xb9] = 0xe5e;
+  puVar3[0xba] = ((uVar1 + 0xf0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf0 & 0x1fffffff) | 2;
+  puVar3[0xbb] = uVar4;
+  puVar3[0xbc] = 0xe62;
+  puVar3[0xbd] = ((uVar1 + 0xfc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xfc & 0x1fffffff) | 2;
+  puVar3[0xbe] = uVar4;
+  puVar3[0xbf] = 0xe61;
+  puVar3[0xc0] = ((uVar1 + 0xf8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0xf8 & 0x1fffffff) | 2;
+  puVar3[0xc1] = uVar4;
+  puVar3[0xc2] = 0xe65;
+  puVar3[0xc3] = ((uVar1 + 0x104 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x104 & 0x1fffffff) | 2;
+  puVar3[0xc4] = uVar4;
+  puVar3[0xc5] = 0xe64;
+  puVar3[0xc6] = ((uVar1 + 0x100 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x100 & 0x1fffffff) | 2;
+  puVar3[199] = uVar4;
+  puVar3[200] = 0xe68;
+  puVar3[0xc9] = ((uVar1 + 0x10c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x10c & 0x1fffffff) | 2;
+  puVar3[0xca] = uVar4;
+  puVar3[0xcb] = 0xe67;
+  puVar3[0xcc] = ((uVar1 + 0x108 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x108 & 0x1fffffff) | 2;
+  puVar3[0xcd] = uVar4;
+  puVar3[0xce] = 0xe6b;
+  puVar3[0xcf] = ((uVar1 + 0x114 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x114 & 0x1fffffff) | 2;
+  puVar3[0xd0] = uVar4;
+  puVar3[0xd1] = 0xe6a;
+  puVar3[0xd2] = ((uVar1 + 0x110 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x110 & 0x1fffffff) | 2;
+  puVar3[0xd3] = uVar4;
+  puVar3[0xd4] = 0xe6e;
+  puVar3[0xd5] = ((uVar1 + 0x11c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x11c & 0x1fffffff) | 2;
+  puVar3[0xd6] = uVar4;
+  puVar3[0xd7] = 0xe6d;
+  puVar3[0xd8] = ((uVar1 + 0x118 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x118 & 0x1fffffff) | 2;
+  puVar3[0xd9] = uVar4;
+  puVar3[0xda] = 0xe71;
+  puVar3[0xdb] = ((uVar1 + 0x124 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x124 & 0x1fffffff) | 2;
+  puVar3[0xdc] = uVar4;
+  puVar3[0xdd] = 0xe70;
+  puVar3[0xde] = ((uVar1 + 0x120 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x120 & 0x1fffffff) | 2;
+  puVar3[0xdf] = uVar4;
+  puVar3[0xe0] = 0xe74;
+  puVar3[0xe1] = ((uVar1 + 300 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 300 & 0x1fffffff) | 2;
+  puVar3[0xe2] = uVar4;
+  puVar3[0xe3] = 0xe73;
+  puVar3[0xe4] = ((uVar1 + 0x128 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x128 & 0x1fffffff) | 2;
+  puVar3[0xe5] = uVar4;
+  puVar3[0xe6] = 0xe77;
+  puVar3[0xe7] = ((uVar1 + 0x134 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x134 & 0x1fffffff) | 2;
+  puVar3[0xe8] = uVar4;
+  puVar3[0xe9] = 0xe76;
+  puVar3[0xea] = ((uVar1 + 0x130 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x130 & 0x1fffffff) | 2;
+  puVar3[0xeb] = uVar4;
+  puVar3[0xec] = 0xe7a;
+  puVar3[0xed] = ((uVar1 + 0x13c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x13c & 0x1fffffff) | 2;
+  puVar3[0xee] = uVar4;
+  puVar3[0xef] = 0xe79;
+  puVar3[0xf0] = ((uVar1 + 0x138 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x138 & 0x1fffffff) | 2;
+  puVar3[0xf1] = uVar4;
+  puVar3[0xf2] = 0xe7d;
+  puVar3[0xf3] = ((uVar1 + 0x144 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x144 & 0x1fffffff) | 2;
+  puVar3[0xf4] = uVar4;
+  puVar3[0xf5] = 0xe7c;
+  puVar3[0xf6] = ((uVar1 + 0x140 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x140 & 0x1fffffff) | 2;
+  puVar3[0xf7] = uVar4;
+  puVar3[0xf8] = 0xe21;
+  puVar3[0xf9] = ((uVar1 + 0x14c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x14c & 0x1fffffff) | 2;
+  puVar3[0xfa] = uVar4;
+  puVar3[0xfb] = 0xe20;
+  puVar3[0xfc] = ((uVar1 + 0x148 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x148 & 0x1fffffff) | 2;
+  puVar3[0xfd] = uVar4;
+  puVar3[0xfe] = 0xe24;
+  puVar3[0xff] = ((uVar1 + 0x154 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x154 & 0x1fffffff) | 2;
+  puVar3[0x100] = uVar4;
+  puVar3[0x101] = 0xe23;
+  puVar3[0x102] = ((uVar1 + 0x150 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x150 & 0x1fffffff) | 2;
+  puVar3[0x103] = uVar4;
+  puVar3[0x104] = 0xe2a;
+  puVar3[0x105] = ((uVar1 + 0x15c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x15c & 0x1fffffff) | 2;
+  puVar3[0x106] = uVar4;
+  puVar3[0x107] = 0xe29;
+  puVar3[0x108] = ((uVar1 + 0x158 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x158 & 0x1fffffff) | 2;
+  puVar3[0x109] = uVar4;
+  puVar3[0x10a] = 0xe2d;
+  puVar3[0x10b] = ((uVar1 + 0x164 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x164 & 0x1fffffff) | 2;
+  puVar3[0x10c] = uVar4;
+  puVar3[0x10d] = 0xe2c;
+  puVar3[0x10e] = ((uVar1 + 0x160 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x160 & 0x1fffffff) | 2;
+  puVar3[0x10f] = uVar4;
+  puVar3[0x110] = 0xe33;
+  puVar3[0x111] = ((uVar1 + 0x16c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x16c & 0x1fffffff) | 2;
+  puVar3[0x112] = uVar4;
+  puVar3[0x113] = 0xe32;
+  puVar3[0x114] = ((uVar1 + 0x168 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x168 & 0x1fffffff) | 2;
+  puVar3[0x115] = uVar4;
+  puVar3[0x116] = 0xe36;
+  puVar3[0x117] = ((uVar1 + 0x174 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x174 & 0x1fffffff) | 2;
+  puVar3[0x118] = uVar4;
+  puVar3[0x119] = 0xe35;
+  puVar3[0x11a] = ((uVar1 + 0x170 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x170 & 0x1fffffff) | 2;
+  puVar3[0x11b] = uVar4;
+  puVar3[0x11c] = 0xe3c;
+  puVar3[0x11d] = ((uVar1 + 0x17c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x17c & 0x1fffffff) | 2;
+  puVar3[0x11e] = uVar4;
+  puVar3[0x11f] = 0xe3b;
+  puVar3[0x120] = ((uVar1 + 0x178 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x178 & 0x1fffffff) | 2;
+  puVar3[0x121] = uVar4;
+  puVar3[0x122] = 0xe3f;
+  puVar3[0x123] = ((uVar1 + 0x184 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x184 & 0x1fffffff) | 2;
+  puVar3[0x124] = uVar4;
+  puVar3[0x125] = 0xe3e;
+  puVar3[0x126] = ((uVar1 + 0x180 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x180 & 0x1fffffff) | 2;
+  puVar3[0x127] = uVar4;
+  puVar3[0x128] = 0xdd8;
+  puVar3[0x129] = ((uVar1 + 0x18c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x18c & 0x1fffffff) | 2;
+  puVar3[0x12a] = uVar4;
+  puVar3[299] = 0xdd9;
+  puVar3[300] = ((uVar1 + 0x188 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x188 & 0x1fffffff) | 2;
+  puVar3[0x12d] = uVar4;
+  puVar3[0x12e] = 0xf08;
+  puVar3[0x12f] = ((uVar1 + 0x194 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x194 & 0x1fffffff) | 2;
+  puVar3[0x130] = uVar4;
+  puVar3[0x131] = 0xf09;
+  puVar3[0x132] = ((uVar1 + 400 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 400 & 0x1fffffff) | 2;
+  puVar3[0x133] = uVar4;
+  puVar3[0x134] = 0xf0a;
+  puVar3[0x135] = ((uVar1 + 0x19c >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x19c & 0x1fffffff) | 2;
+  puVar3[0x136] = uVar4;
+  puVar3[0x137] = 0xf0b;
+  puVar3[0x138] = ((uVar1 + 0x198 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x198 & 0x1fffffff) | 2;
+  puVar3[0x139] = uVar4;
+  puVar3[0x13a] = 0xf0c;
+  puVar3[0x13b] = ((uVar1 + 0x1a4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a4 & 0x1fffffff) | 2;
+  puVar3[0x13c] = uVar4;
+  puVar3[0x13d] = 0xf0d;
+  puVar3[0x13e] = ((uVar1 + 0x1a0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a0 & 0x1fffffff) | 2;
+  puVar3[0x13f] = uVar4;
+  puVar3[0x140] = 0xf0e;
+  puVar3[0x141] = ((uVar1 + 0x1ac >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1ac & 0x1fffffff) | 2;
+  puVar3[0x142] = uVar4;
+  puVar3[0x143] = 0xf0f;
+  puVar3[0x144] = ((uVar1 + 0x1a8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1a8 & 0x1fffffff) | 2;
+  puVar3[0x145] = uVar4;
+  puVar3[0x146] = 0x817;
+  puVar3[0x147] = ((uVar1 + 0x1b4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b4 & 0x1fffffff) | 2;
+  puVar3[0x148] = uVar4;
+  puVar3[0x149] = 0x816;
+  puVar3[0x14a] = ((uVar1 + 0x1b0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b0 & 0x1fffffff) | 2;
+  puVar3[0x14b] = uVar4;
+  puVar3[0x14c] = 0x857;
+  puVar3[0x14d] = ((uVar1 + 0x1bc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1bc & 0x1fffffff) | 2;
+  puVar3[0x14e] = uVar4;
+  puVar3[0x14f] = 0x856;
+  puVar3[0x150] = ((uVar1 + 0x1b8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1b8 & 0x1fffffff) | 2;
+  puVar3[0x151] = uVar4;
+  puVar3[0x152] = 0xa1a;
+  puVar3[0x153] = ((uVar1 + 0x1c4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c4 & 0x1fffffff) | 2;
+  puVar3[0x154] = uVar4;
+  puVar3[0x155] = 0xa19;
+  puVar3[0x156] = ((uVar1 + 0x1c0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c0 & 0x1fffffff) | 2;
+  puVar3[0x157] = uVar4;
+  puVar3[0x158] = 0xa1d;
+  puVar3[0x159] = ((uVar1 + 0x1cc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1cc & 0x1fffffff) | 2;
+  puVar3[0x15a] = uVar4;
+  puVar3[0x15b] = 0xa1c;
+  puVar3[0x15c] = ((uVar1 + 0x1c8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1c8 & 0x1fffffff) | 2;
+  puVar3[0x15d] = uVar4;
+  puVar3[0x15e] = 0xa20;
+  puVar3[0x15f] = ((uVar1 + 0x1d4 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d4 & 0x1fffffff) | 2;
+  puVar3[0x160] = uVar4;
+  puVar3[0x161] = 0xa1f;
+  puVar3[0x162] = ((uVar1 + 0x1d0 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d0 & 0x1fffffff) | 2;
+  puVar3[0x163] = uVar4;
+  puVar3[0x164] = 0x4a;
+  puVar3[0x165] = ((uVar1 + 0x1dc >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1dc & 0x1fffffff) | 2;
+  puVar3[0x166] = uVar4;
+  puVar3[0x167] = 0x49;
+  puVar3[0x168] = ((uVar1 + 0x1d8 >> 0x14) + 0x200 & 0x1000) + (uVar1 + 0x1d8 & 0x1fffffff) | 2;
+  uVar2 = *(undefined4 *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+  param_1->m_pRing = puVar3 + 0x168;
+  *(undefined4 *)(param_2 + 0xc) = uVar2;
   return;
 }
 
@@ -1401,29 +1369,26 @@ int D3DPerfCounters_IsBusy(D3DPerfCounters *param_1)
 
 // 82870840  D3DPerfCounters_GetValues  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:3174)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 D3DPerfCounters_GetValues
           (D3DPerfCounters *param_1,_D3DPERFCOUNTER_VALUES *param_2,uint param_3,ulong *param_4)
 
 {
   void *pvVar1;
-  int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_4;
-  iVar2 = __savegprlr_29(param_1,param_2,param_3);
-  if (*(ulong *)(iVar2 + 0xc) != 0) {
-    D3DDevice_BlockOnFence(*(ulong *)(iVar2 + 0xc));
+  if (*(ulong *)(param_1 + 0xc) != 0) {
+    D3DDevice_BlockOnFence(*(ulong *)(param_1 + 0xc));
   }
-  pvVar1 = *(void **)(iVar2 + 4);
+  pvVar1 = *(void **)(param_1 + 4);
   memcpy();
   D3D::FlushCachedMemory(pvVar1,(void *)((int)pvVar1 + 0x1e0),0);
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(undefined4 *)uVar4 = 0x2aaaaaaa;
+  if (param_4 != (ulong *)0x0) {
+    *param_4 = 0x2aaaaaaa;
   }
-  uVar3 = __restgprlr_29(0);
-  return uVar3;
+  return 0;
 }
 
 

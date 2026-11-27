@@ -2,24 +2,22 @@
 
 // 8244EF68  FXIW_UpdateSpotLightEffectPartial  (EffectsCore/fx_update_spot.cpp:20)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_UpdateSpotLightEffectPartial
                (FxSystem *param_1,FxEffect *param_2,ushort param_3,int param_4,int param_5)
 
 {
-  FxSystem *pFVar1;
-  FxElem *pFVar2;
-  FxUpdateResult FVar3;
-  ulonglong uVar4;
+  FxElem *pFVar1;
+  FxUpdateResult FVar2;
   
-  uVar4 = (ulonglong)(short)param_3;
-  pFVar1 = (FxSystem *)__savegprlr_25(param_1);
-  if (pFVar1->activeSpotLightEffectCount != 1) {
+  if (param_1->activeSpotLightEffectCount != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0x2e,0,"%s");
   }
-  if ((uVar4 & 0xffff) != (ulonglong)pFVar1->activeSpotLightEffectHandle) {
+  if (param_3 != param_1->activeSpotLightEffectHandle) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0x2f,0,"%s");
   }
@@ -27,149 +25,140 @@ void FXIW_UpdateSpotLightEffectPartial
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0x30,0,"localEffect->msecLastUpdate <= msecUpdateEnd\n\t%g, %g");
   }
-  if (pFVar1->activeSpotLightElemCount != 0) {
-    pFVar2 = FX_ElemFromHandle(pFVar1,pFVar1->activeSpotLightElemHandle);
-    FVar3 = FXW_UpdateElement(pFVar1,param_2,(ushort)uVar4,pFVar2,pFVar1->activeSpotLightElemHandle,
+  if (param_1->activeSpotLightElemCount != 0) {
+    pFVar1 = FX_ElemFromHandle(param_1,param_1->activeSpotLightElemHandle);
+    FVar2 = FXW_UpdateElement(param_1,param_2,param_3,pFVar1,param_1->activeSpotLightElemHandle,
                               param_4,param_5);
-    pFVar2->defer = FVar3 == FX_UPDATE_REMOVE;
+    pFVar1->defer = FVar2 == FX_UPDATE_REMOVE;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8244F0A0  FXIW_UpdateSpotLightForDraw  (EffectsCore/fx_update_spot.cpp:62)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_UpdateSpotLightForDraw(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  FxSystem *pFVar1;
-  FxBolt *pFVar2;
+  FxBolt *pFVar1;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  if (((param_2->status & 0x1fffU) != 0) && (param_2->msecLastUpdate <= pFVar1->msecNow)) {
+  if (((param_2->status & 0x1fffU) != 0) && (param_2->msecLastUpdate <= param_1->msecNow)) {
     if (param_2->bolt == 0xff) {
-      pFVar1->activeSpotLightBoltDobj = 0xfff;
+      param_1->activeSpotLightBoltDobj = 0xfff;
     }
     else {
-      pFVar2 = FX_BoltFromHandle(pFVar1,param_2->bolt);
-      pFVar1->activeSpotLightBoltDobj = pFVar2->dobjHandle;
+      pFVar1 = FX_BoltFromHandle(param_1,param_2->bolt);
+      param_1->activeSpotLightBoltDobj = pFVar1->dobjHandle;
     }
     if (param_2->bolt != 0xff) {
-      FXW_UpdateEffectBolt(pFVar1,param_2);
+      FXW_UpdateEffectBolt(param_1,param_2);
     }
     FXIW_UpdateSpotLightEffectPartial
-              (pFVar1,param_2,param_3,param_2->msecLastUpdate,pFVar1->msecNow);
+              (param_1,param_2,param_3,param_2->msecLastUpdate,param_1->msecNow);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8244F140  FXW_UpdateSpotLightForDraw  (EffectsCore/fx_update_spot.cpp:92)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_UpdateSpotLightForDraw(FxSystem *param_1)
 
 {
-  FxSystem *pFVar1;
-  FxEffect *pFVar2;
+  FxEffect *pFVar1;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  if ((pFVar1->systemFlags & 1) != 0) {
+  if ((param_1->systemFlags & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,100,0,"%s");
   }
-  if (0 < pFVar1->activeSpotLightEffectCount) {
-    if (pFVar1->activeSpotLightEffectCount != 1) {
+  if (0 < param_1->activeSpotLightEffectCount) {
+    if (param_1->activeSpotLightEffectCount != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                       ,0x73,0,"%s");
     }
-    pFVar2 = FX_EffectFromHandle(pFVar1,pFVar1->activeSpotLightEffectHandle);
-    FXIW_UpdateSpotLightForDraw(pFVar1,pFVar2,pFVar1->activeSpotLightEffectHandle);
+    pFVar1 = FX_EffectFromHandle(param_1,param_1->activeSpotLightEffectHandle);
+    FXIW_UpdateSpotLightForDraw(param_1,pFVar1,param_1->activeSpotLightEffectHandle);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8244F1E0  FXIW_FinalizeSpotLightElem  (EffectsCore/fx_update_spot.cpp:125)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_FinalizeSpotLightElem(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  FxSystem *pFVar1;
-  FxElem *pFVar2;
-  ulonglong uVar3;
+  FxElem *pFVar1;
   
-  uVar3 = (ulonglong)(short)param_3;
-  pFVar1 = (FxSystem *)__savegprlr_27(param_1);
-  if (pFVar1->activeSpotLightEffectCount != 1) {
+  if (param_1->activeSpotLightEffectCount != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0x92,0,"%s");
   }
-  if ((uVar3 & 0xffff) != (ulonglong)pFVar1->activeSpotLightEffectHandle) {
+  if (param_3 != param_1->activeSpotLightEffectHandle) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0x93,0,"%s");
   }
-  if ((pFVar1->activeSpotLightElemCount != 0) &&
-     (pFVar2 = FX_ElemFromHandle(pFVar1,pFVar1->activeSpotLightElemHandle), pFVar2->defer)) {
-    FXW_FreeSpotLightElem(pFVar1,pFVar1->activeSpotLightElemHandle,param_2);
+  if ((param_1->activeSpotLightElemCount != 0) &&
+     (pFVar1 = FX_ElemFromHandle(param_1,param_1->activeSpotLightElemHandle), pFVar1->defer)) {
+    FXW_FreeSpotLightElem(param_1,param_1->activeSpotLightElemHandle,param_2);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8244F2A0  FXIW_FinalizeSpotLightEffect  (EffectsCore/fx_update_spot.cpp:160)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_FinalizeSpotLightEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  FxSystem *pFVar1;
-  
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  FXW_UpdateEffect(pFVar1,0,param_2,param_3);
-  FXIW_FinalizeSpotLightElem(pFVar1,param_2,param_3);
-  __restgprlr_29();
+  FXW_UpdateEffect(param_1,0,param_2,param_3);
+  FXIW_FinalizeSpotLightElem(param_1,param_2,param_3);
   return;
 }
 
 
 // 8244F2E0  FXW_FinalizeSpotLight  (EffectsCore/fx_update_spot.cpp:167)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_FinalizeSpotLight(FxSystem *param_1)
 
 {
   ushort uVar1;
-  FxSystem *pFVar2;
-  FxEffect *pFVar3;
+  FxEffect *pFVar2;
   
-  pFVar2 = (FxSystem *)__savegprlr_29(param_1);
-  if ((pFVar2->systemFlags & 1) != 0) {
+  if ((param_1->systemFlags & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                     ,0xaf,0,"%s");
   }
-  if (0 < pFVar2->activeSpotLightEffectCount) {
-    if (pFVar2->activeSpotLightEffectCount != 1) {
+  if (0 < param_1->activeSpotLightEffectCount) {
+    if (param_1->activeSpotLightEffectCount != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
                       ,0xbe,0,"%s");
     }
-    pFVar3 = FX_EffectFromHandle(pFVar2,pFVar2->activeSpotLightEffectHandle);
-    uVar1 = pFVar2->activeSpotLightEffectHandle;
-    FXW_UpdateEffect(pFVar2,0,pFVar3,uVar1);
-    FXIW_FinalizeSpotLightElem(pFVar2,pFVar3,uVar1);
+    pFVar2 = FX_EffectFromHandle(param_1,param_1->activeSpotLightEffectHandle);
+    uVar1 = param_1->activeSpotLightEffectHandle;
+    FXW_UpdateEffect(param_1,0,pFVar2,uVar1);
+    FXIW_FinalizeSpotLightElem(param_1,pFVar2,uVar1);
   }
-  __restgprlr_29();
   return;
 }
 

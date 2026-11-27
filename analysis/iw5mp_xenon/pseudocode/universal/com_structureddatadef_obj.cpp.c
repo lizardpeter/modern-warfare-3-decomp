@@ -177,84 +177,84 @@ void SaveBuffer_StructuredDataValidationTypeArray(bool param_1,int param_2)
 
 // 825F78C8  LoadBuffer_StructuredDataEnumEntryArray  (universal/com_structureddatadef_load_buf.h:619)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  StructuredDataEnumEntry *pSVar3;
+  longlong lVar1;
+  StructuredDataEnumEntry *pSVar2;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar1,bufStructuredDataEnumEntry,(int)((uVar2 & 0xffffffff) << 3));
-  pSVar3 = bufStructuredDataEnumEntry;
-  if (0 < (int)uVar2) {
+  lVar1 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataEnumEntry,param_2 << 3);
+  pSVar2 = bufStructuredDataEnumEntry;
+  if (0 < param_2) {
     do {
-      bufStructuredDataEnumEntry = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,8);
+      bufStructuredDataEnumEntry = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,8);
       bufXString = &bufStructuredDataEnumEntry->string;
       LoadBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      lVar1 = lVar1 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F7930  LoadBuffer_StructuredDataEnumEntryStream  (universal/com_structureddatadef_load_buf.h:641)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x284,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataEnumEntry,8);
       bufXString = &bufStructuredDataEnumEntry->string;
       LoadBuffer_XString(false);
       bufStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825F5550  SaveBuffer_StructuredDataValidationTypeStream  (universal/com_structureddatadef_save_buf.h:649)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataValidationTypeStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x28c,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataValidationType,4,&bufoutStructuredDataValidationType);
       bufStructuredDataValidationType = (StructuredDataValidationType *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataValidationType =
            (StructuredDataValidationType *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -327,81 +327,82 @@ void SaveBuffer_EnumIndexTypeArray(bool param_1,int param_2)
 
 // 825F7A40  LoadBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_load_buf.h:687)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataEnumArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   StructuredDataEnumEntry *pSVar1;
-  StructuredDataEnum *pSVar3;
-  ulonglong uVar4;
+  StructuredDataEnum *pSVar2;
+  longlong lVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataEnum,
-                    (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataEnum;
-  if (0 < (int)uVar4) {
+  lVar3 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataEnum,
+                    (int)((lVar3 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+  pSVar2 = bufStructuredDataEnum;
+  if (0 < param_2) {
     do {
-      bufStructuredDataEnum = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0xc);
+      bufStructuredDataEnum = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,0xc);
       if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
         pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
         bufStructuredDataEnum->entries = pSVar1;
         bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
         LoadBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
       }
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      lVar3 = lVar3 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F5618  SaveBuffer_EnumIndexTypeStream  (universal/com_structureddatadef_save_buf.h:709)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_EnumIndexTypeStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x2c8,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufEnumIndexType,2,&bufoutEnumIndexType);
       bufEnumIndexType = (ushort *)AssetBuf_GetSourcePos();
       bufstreamEnumIndexType = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F7AE0  LoadBuffer_StructuredDataEnumStream  (universal/com_structureddatadef_load_buf.h:709)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataEnumStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   StructuredDataEnumEntry *pSVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x2c8,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataEnum,0xc);
       if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
@@ -411,10 +412,9 @@ void LoadBuffer_StructuredDataEnumStream(bool param_1,int param_2)
         LoadBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
       }
       bufStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -483,39 +483,38 @@ StructuredDataEnumEntry * AllocSaveBuffer_StructuredDataEnumEntry(void)
 
 // 825F5728  SaveBuffer_StructuredDataEnumEntryArray  (universal/com_structureddatadef_save_buf.h:753)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
+  longlong lVar1;
+  StructuredDataEnumEntry *pSVar2;
   StructuredDataEnumEntry *pSVar3;
   StructuredDataEnumEntry *pSVar4;
-  StructuredDataEnumEntry *pSVar5;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_22(param_1);
-  SaveBuffer_Stream(bVar1,bufStructuredDataEnumEntry,(int)((uVar2 & 0xffffffff) << 3),
-                    &bufoutStructuredDataEnumEntry);
-  pSVar5 = bufStructuredDataEnumEntry;
-  pSVar4 = bufstreamStructuredDataEnumEntry;
-  pSVar3 = bufoutStructuredDataEnumEntry;
-  if (0 < (int)uVar2) {
+  lVar1 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataEnumEntry,param_2 << 3,&bufoutStructuredDataEnumEntry);
+  pSVar4 = bufStructuredDataEnumEntry;
+  pSVar3 = bufstreamStructuredDataEnumEntry;
+  pSVar2 = bufoutStructuredDataEnumEntry;
+  if (0 < param_2) {
     do {
-      bufoutStructuredDataEnumEntry = pSVar3;
-      bufStructuredDataEnumEntry = pSVar5;
-      bufstreamStructuredDataEnumEntry = pSVar4;
-      SaveBuffer_Stream(false,pSVar5,8,&bufoutStructuredDataEnumEntry);
+      bufoutStructuredDataEnumEntry = pSVar2;
+      bufStructuredDataEnumEntry = pSVar4;
+      bufstreamStructuredDataEnumEntry = pSVar3;
+      SaveBuffer_Stream(false,pSVar4,8,&bufoutStructuredDataEnumEntry);
       bufXString = &bufStructuredDataEnumEntry->string;
       bufstreamXString = &bufstreamStructuredDataEnumEntry->string;
       bufoutXString = &bufoutStructuredDataEnumEntry->string;
       SaveBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar5 = pSVar5 + 1;
+      lVar1 = lVar1 + -1;
       pSVar4 = pSVar4 + 1;
       pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      pSVar2 = pSVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -597,19 +596,20 @@ void LoadBuffer_StructuredDataTypeUnion(bool param_1)
 
 // 825F57D8  SaveBuffer_StructuredDataEnumEntryStream  (universal/com_structureddatadef_save_buf.h:783)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x312,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataEnumEntry,8,&bufoutStructuredDataEnumEntry);
       bufXString = &bufStructuredDataEnumEntry->string;
@@ -618,10 +618,9 @@ void SaveBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
       SaveBuffer_XString(false);
       bufStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -669,31 +668,32 @@ StructuredDataEnum * AllocSaveBuffer_StructuredDataEnum(void)
 
 // 825F5980  SaveBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_save_buf.h:838)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataEnumArray(bool param_1,int param_2)
 
 {
-  bool bVar3;
   void *pvVar1;
   StructuredDataEnumEntry *pSVar2;
+  StructuredDataEnum *pSVar3;
   StructuredDataEnum *pSVar4;
   StructuredDataEnum *pSVar5;
-  StructuredDataEnum *pSVar6;
-  ulonglong uVar7;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataEnum,
-                    (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2),
+  lVar6 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataEnum,
+                    (int)((lVar6 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2),
                     &bufoutStructuredDataEnum);
-  pSVar6 = bufStructuredDataEnum;
-  pSVar4 = bufoutStructuredDataEnum;
-  pSVar5 = bufstreamStructuredDataEnum;
-  if (0 < (int)uVar7) {
+  pSVar5 = bufStructuredDataEnum;
+  pSVar3 = bufoutStructuredDataEnum;
+  pSVar4 = bufstreamStructuredDataEnum;
+  if (0 < param_2) {
     do {
-      bufStructuredDataEnum = pSVar6;
-      bufstreamStructuredDataEnum = pSVar5;
-      bufoutStructuredDataEnum = pSVar4;
-      SaveBuffer_Stream(false,pSVar6,0xc,&bufoutStructuredDataEnum);
+      bufStructuredDataEnum = pSVar5;
+      bufstreamStructuredDataEnum = pSVar4;
+      bufoutStructuredDataEnum = pSVar3;
+      SaveBuffer_Stream(false,pSVar5,0xc,&bufoutStructuredDataEnum);
       if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
         pvVar1 = AssetBuf_FindStreamData(bufStructuredDataEnum->entries);
         if (pvVar1 != (void *)0x0) {
@@ -708,13 +708,12 @@ void SaveBuffer_StructuredDataEnumArray(bool param_1,int param_2)
         bufoutStructuredDataEnum->entries = (StructuredDataEnumEntry *)0xffffffff;
         SaveBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
       }
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
+      lVar6 = lVar6 + -1;
       pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      pSVar3 = pSVar3 + 1;
+      pSVar4 = pSVar4 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
@@ -745,21 +744,22 @@ void LoadBuffer_StructuredDataTypeUnionArray(bool param_1,int param_2)
 
 // 825F5AB0  SaveBuffer_StructuredDataEnumStream  (universal/com_structureddatadef_save_buf.h:868)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataEnumStream(bool param_1,int param_2)
 
 {
-  char cVar3;
   void *pvVar1;
   StructuredDataEnumEntry *pSVar2;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
-  if (cVar3 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x367,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataEnum,0xc,&bufoutStructuredDataEnum);
       if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
@@ -778,15 +778,17 @@ void SaveBuffer_StructuredDataEnumStream(bool param_1,int param_2)
       }
       bufStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 825F7D60  LoadBuffer_StructuredDataTypeUnionStream  (universal/com_structureddatadef_load_buf.h:869)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void LoadBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
 
@@ -794,16 +796,14 @@ void LoadBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
   StructuredDataTypeCategory SVar1;
   StructuredDataTypeUnion *pSVar2;
   StructuredDataTypeUnion *pSVar3;
-  char cVar4;
-  longlong lVar5;
+  longlong lVar4;
   
-  lVar5 = (longlong)param_2;
-  cVar4 = __savegprlr_27(param_1);
-  if (cVar4 == '\0') {
+  lVar4 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x368,0,"%s");
   }
-  if (0 < (int)lVar5) {
+  if (0 < param_2) {
     do {
       SVar1 = bufStructuredDataType->type;
       pSVar2 = (StructuredDataTypeUnion *)bufint;
@@ -818,10 +818,9 @@ void LoadBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
         LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
       }
       bufStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetStreamPos();
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -897,27 +896,27 @@ void LoadBuffer_StructuredDataTypeArray(bool param_1,int param_2)
 
 // 825F5C18  SaveBuffer_StructuredDataTypeCategoryStream  (universal/com_structureddatadef_save_buf.h:928)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataTypeCategoryStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x3a3,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataTypeCategory,4,&bufoutStructuredDataTypeCategory);
       bufStructuredDataTypeCategory = (StructuredDataTypeCategory *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataTypeCategory = (StructuredDataTypeCategory *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1155,45 +1154,45 @@ void LoadBuffer_voidStream(bool param_1,int param_2)
 
 // 825F5DB0  SaveBuffer_StructuredDataTypeUnionStream  (universal/com_structureddatadef_save_buf.h:1056)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
 
 {
   StructuredDataTypeCategory SVar1;
-  char cVar2;
-  uint **ppuVar3;
-  longlong lVar4;
+  uint **ppuVar2;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_21(param_1);
-  if (cVar2 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x423,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SVar1 = bufStructuredDataType->type;
       if (SVar1 == DATA_STRING) {
         bufuint = &bufStructuredDataTypeUnion->stringDataLength;
         bufoutuint = &bufoutStructuredDataTypeUnion->stringDataLength;
-        ppuVar3 = &bufoutuint;
+        ppuVar2 = &bufoutuint;
         bufstreamuint = (uint *)bufstreamStructuredDataTypeUnion;
 LAB_825f5e94:
-        SaveBuffer_Stream(true,bufStructuredDataTypeUnion,4,ppuVar3);
+        SaveBuffer_Stream(true,bufStructuredDataTypeUnion,4,ppuVar2);
       }
       else if ((((SVar1 == DATA_ENUM) || (SVar1 == DATA_STRUCT)) || (SVar1 == DATA_INDEXED_ARRAY))
               || (SVar1 == DATA_ENUM_ARRAY)) {
         bufoutint = &bufoutStructuredDataTypeUnion->enumIndex;
         bufint = &bufStructuredDataTypeUnion->enumIndex;
-        ppuVar3 = (uint **)&bufoutint;
+        ppuVar2 = (uint **)&bufoutint;
         bufstreamint = (int *)bufstreamStructuredDataTypeUnion;
         goto LAB_825f5e94;
       }
       bufStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -1340,29 +1339,29 @@ StructuredDataStructProperty * AllocLoadBuffer_StructuredDataStructProperty(void
 
 // 825F8098  LoadBuffer_StructuredDataStructPropertyArray  (universal/com_structureddatadef_load_buf.h:1111)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  StructuredDataStructProperty *pSVar3;
+  longlong lVar1;
+  StructuredDataStructProperty *pSVar2;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar1,bufStructuredDataStructProperty,
-                    (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataStructProperty;
-  if (0 < (int)uVar2) {
+  lVar1 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataStructProperty,
+                    (int)((lVar1 + ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 & 0xffffffff) << 2));
+  pSVar2 = bufStructuredDataStructProperty;
+  if (0 < param_2) {
     do {
-      bufStructuredDataStructProperty = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0x14);
+      bufStructuredDataStructProperty = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,0x14);
       bufXString = &bufStructuredDataStructProperty->name;
       LoadBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      lVar1 = lVar1 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1403,55 +1402,55 @@ void LoadBuffer_BYTEArray(bool param_1,int param_2)
 
 // 825F5EF8  SaveBuffer_StructuredDataTypeStream  (universal/com_structureddatadef_save_buf.h:1130)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataTypeStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x46d,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataType,8,&bufoutStructuredDataType);
       bufStructuredDataType = (StructuredDataType *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataType = (StructuredDataType *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F8108  LoadBuffer_StructuredDataStructPropertyStream  (universal/com_structureddatadef_load_buf.h:1133)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x470,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataStructProperty,0x14);
       bufXString = &bufStructuredDataStructProperty->name;
       LoadBuffer_XString(false);
       bufStructuredDataStructProperty = (StructuredDataStructProperty *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1577,97 +1576,86 @@ StructuredDataDefSet * StructuredDataDef_LoadDef(char *param_1)
 
 // 825F8D68  StructuredData_GetTypeSize  (universal/com_structureddatadef_obj.cpp:1156)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint StructuredData_GetTypeSize(StructuredDataDef *param_1,StructuredDataType *param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  undefined4 *puVar4;
-  int *piVar5;
+  StructuredDataEnumedArray *pSVar2;
+  StructuredDataIndexedArray *pSVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (StructuredDataDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                     ,0x488,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (StructuredDataType *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                     ,0x489,0,"%s");
   }
-  puVar4 = (undefined4 *)uVar3;
-  switch(*puVar4) {
-  case 0:
-  case 8:
-    uVar2 = __restgprlr_28(4);
-    return uVar2;
-  case 1:
-  case 2:
-    uVar2 = __restgprlr_28(1);
-    return uVar2;
-  case 3:
-    uVar2 = __restgprlr_28(puVar4[1]);
-    return uVar2;
-  case 4:
-  case 9:
-    uVar2 = __restgprlr_28(2);
-    return uVar2;
-  case 5:
-    if (*(uint *)(iVar1 + 0x10) <= (uint)puVar4[1]) {
+  switch(param_2->type) {
+  case DATA_INT:
+  case DATA_FLOAT:
+    return 4;
+  case DATA_BYTE:
+  case DATA_BOOL:
+    return 1;
+  case DATA_STRING:
+    return (param_2->u).stringDataLength;
+  case DATA_ENUM:
+  case DATA_SHORT:
+    return 2;
+  case DATA_STRUCT:
+    if ((uint)param_1->structCount <= (param_2->u).stringDataLength) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                       ,0x4a0,0,
                       "type->u.structIndex doesn\'t index def->structCount\n\t%i not in [0, %i)");
     }
-    uVar2 = __restgprlr_28(*(undefined4 *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x14) + 8));
-    return uVar2;
-  case 6:
+    return param_1->structs[(param_2->u).stringDataLength].size;
+  case DATA_INDEXED_ARRAY:
     break;
-  case 7:
-    if (*(uint *)(iVar1 + 0x20) <= (uint)puVar4[1]) {
+  case DATA_ENUM_ARRAY:
+    if ((uint)param_1->enumedArrayCount <= (param_2->u).stringDataLength) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                       ,0x4ae,0,
                       "type->u.enumedArrayIndex doesn\'t index def->enumedArrayCount\n\t%i not in [0, %i)"
                      );
     }
-    piVar5 = (int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x24));
-    if (*(uint *)(iVar1 + 8) <= *(uint *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x24))) {
+    pSVar2 = param_1->enumedArrays + (param_2->u).stringDataLength;
+    if ((uint)param_1->enumCount <=
+        (uint)param_1->enumedArrays[(param_2->u).stringDataLength].enumIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                       ,0x4b1,0,
                       "enumedArray->enumIndex doesn\'t index def->enumCount\n\t%i not in [0, %i)");
     }
-    iVar1 = *(int *)(*piVar5 * 0xc + *(int *)(iVar1 + 0xc) + 4);
-    if (piVar5[1] != 2) {
-      uVar2 = __restgprlr_28((longlong)iVar1 * (longlong)piVar5[3]);
-      return uVar2;
+    iVar1 = param_1->enums[pSVar2->enumIndex].reservedEntryCount;
+    if ((pSVar2->elementType).type != DATA_BOOL) {
+      return iVar1 * pSVar2->elementSize;
     }
-    uVar2 = __restgprlr_28(((longlong)iVar1 * (longlong)piVar5[3] + 7U & 0xffffffff) >> 3);
-    return uVar2;
+    return iVar1 * pSVar2->elementSize + 7 >> 3;
   default:
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                       ,0x4be,0,"Unhandled data type");
     }
-    uVar2 = __restgprlr_28(0);
-    return uVar2;
+    return 0;
   }
-  if (*(uint *)(iVar1 + 0x18) <= (uint)puVar4[1]) {
+  if ((uint)param_1->indexedArrayCount <= (param_2->u).stringDataLength) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                     ,0x4a4,0,
                     "type->u.indexedArrayIndex doesn\'t index def->indexedArrayCount\n\t%i not in [0, %i)"
                    );
   }
-  piVar5 = (int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x1c));
-  if (*(int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x1c)) < 0) {
+  pSVar3 = param_1->indexedArrays + (param_2->u).stringDataLength;
+  if (param_1->indexedArrays[(param_2->u).stringDataLength].arraySize < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
                     ,0x4a7,0,"indexedArray->arraySize >= 0\n\t%i, %i");
   }
-  if (piVar5[1] != 2) {
-    uVar2 = __restgprlr_28((longlong)piVar5[3] * (longlong)*piVar5);
-    return uVar2;
+  if ((pSVar3->elementType).type != DATA_BOOL) {
+    return pSVar3->elementSize * pSVar3->arraySize;
   }
-  uVar2 = __restgprlr_28(((longlong)piVar5[3] * (longlong)*piVar5 + 7U & 0xffffffff) >> 3);
-  return uVar2;
+  return pSVar3->elementSize * pSVar3->arraySize + 7 >> 3;
 }
 
 
@@ -1756,60 +1744,60 @@ void SaveBuffer_StructuredDataIndexedArrayArray(bool param_1,int param_2)
 
 // 825F8218  LoadBuffer_StructuredDataStructArray  (universal/com_structureddatadef_load_buf.h:1184)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataStructArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   StructuredDataStructProperty *pSVar1;
-  StructuredDataStruct *pSVar3;
-  ulonglong uVar4;
+  StructuredDataStruct *pSVar2;
+  longlong lVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataStruct,(int)((uVar4 & 0xffffffff) << 4));
-  pSVar3 = bufStructuredDataStruct;
-  if (0 < (int)uVar4) {
+  lVar3 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataStruct,param_2 << 4);
+  pSVar2 = bufStructuredDataStruct;
+  if (0 < param_2) {
     do {
-      bufStructuredDataStruct = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0x10);
+      bufStructuredDataStruct = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,0x10);
       if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
         pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
         bufStructuredDataStruct->properties = pSVar1;
         bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
         LoadBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
       }
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      lVar3 = lVar3 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825EF030  SaveBuffer_voidStream  (database/db_primtypes_save_buf.h:1188)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_voidStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x4a7,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufvoid,1,&bufoutvoid);
       bufvoid = AssetBuf_GetSourcePos();
       bufstreamvoid = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1849,20 +1837,21 @@ void SaveBuffer_byte(bool param_1)
 
 // 825F82B0  LoadBuffer_StructuredDataStructStream  (universal/com_structureddatadef_load_buf.h:1206)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataStructStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   StructuredDataStructProperty *pSVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x4b9,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataStruct,0x10);
       if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
@@ -1872,10 +1861,9 @@ void LoadBuffer_StructuredDataStructStream(bool param_1,int param_2)
         LoadBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
       }
       bufStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1896,27 +1884,27 @@ uchar * AllocSaveBuffer_byte(void)
 
 // 825F5FC0  SaveBuffer_StructuredDataIndexedArrayStream  (universal/com_structureddatadef_save_buf.h:1211)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataIndexedArrayStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x4be,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataIndexedArray,0x10,&bufoutStructuredDataIndexedArray);
       bufStructuredDataIndexedArray = (StructuredDataIndexedArray *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataIndexedArray = (StructuredDataIndexedArray *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2018,27 +2006,27 @@ void LoadBuffer_uint8_tArray(bool param_1,int param_2)
 
 // 825EF0F8  SaveBuffer_byteStream  (database/db_primtypes_save_buf.h:1248)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_byteStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x4e3,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbyte,1,&bufoutbyte);
       bufbyte = AssetBuf_GetSourcePos();
       bufstreambyte = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2161,27 +2149,27 @@ void LoadBuffer_int8_tArray(bool param_1,int param_2)
 
 // 825F6088  SaveBuffer_StructuredDataEnumedArrayStream  (universal/com_structureddatadef_save_buf.h:1292)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataEnumedArrayStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x50f,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataEnumedArray,0x10,&bufoutStructuredDataEnumedArray);
       bufStructuredDataEnumedArray = (StructuredDataEnumedArray *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataEnumedArray = (StructuredDataEnumedArray *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2225,25 +2213,26 @@ void LoadBuffer_int8_tStream(bool param_1,int param_2)
 
 // 825F84B8  LoadBuffer_StructuredDataDefArray  (universal/com_structureddatadef_load_buf.h:1303)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefArray(bool param_1,int param_2)
 
 {
-  bool bVar5;
   StructuredDataEnum *pSVar1;
   StructuredDataStruct *pSVar2;
   StructuredDataIndexedArray *pSVar3;
   StructuredDataEnumedArray *pSVar4;
-  StructuredDataDef *pSVar6;
-  longlong lVar7;
+  StructuredDataDef *pSVar5;
+  longlong lVar6;
   
-  lVar7 = (longlong)param_2;
-  bVar5 = (bool)__savegprlr_25(param_1);
-  LoadBuffer_Stream(bVar5,bufStructuredDataDef,(int)lVar7 * 0x34);
-  pSVar6 = bufStructuredDataDef;
-  if (0 < (int)lVar7) {
+  lVar6 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataDef,param_2 * 0x34);
+  pSVar5 = bufStructuredDataDef;
+  if (0 < param_2) {
     do {
-      bufStructuredDataDef = pSVar6;
-      LoadBuffer_Stream(false,pSVar6,0x34);
+      bufStructuredDataDef = pSVar5;
+      LoadBuffer_Stream(false,pSVar5,0x34);
       if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
         pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
         bufStructuredDataDef->enums = pSVar1;
@@ -2270,11 +2259,10 @@ void LoadBuffer_StructuredDataDefArray(bool param_1,int param_2)
         LoadBuffer_Stream(true,bufStructuredDataEnumedArray,
                           bufStructuredDataDef->enumedArrayCount << 4);
       }
-      lVar7 = lVar7 + -1;
-      pSVar6 = pSVar6 + 1;
-    } while (lVar7 != 0);
+      lVar6 = lVar6 + -1;
+      pSVar5 = pSVar5 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -2296,27 +2284,27 @@ void SaveBuffer_StructuredDataStructProperty(bool param_1)
 
 // 825EF1C0  SaveBuffer_BYTEStream  (database/db_primtypes_save_buf.h:1308)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_BYTEStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x51f,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufBYTE,1,&bufoutBYTE);
       bufBYTE = AssetBuf_GetSourcePos();
       bufstreamBYTE = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2357,23 +2345,24 @@ void SaveBuffer_char(bool param_1)
 
 // 825F8618  LoadBuffer_StructuredDataDefStream  (universal/com_structureddatadef_load_buf.h:1325)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefStream(bool param_1,int param_2)
 
 {
-  char cVar5;
   StructuredDataEnum *pSVar1;
   StructuredDataStruct *pSVar2;
   StructuredDataIndexedArray *pSVar3;
   StructuredDataEnumedArray *pSVar4;
-  longlong lVar6;
+  longlong lVar5;
   
-  lVar6 = (longlong)param_2;
-  cVar5 = __savegprlr_26(param_1);
-  if (cVar5 == '\0') {
+  lVar5 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x530,0,"%s");
   }
-  if (0 < (int)lVar6) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataDef,0x34);
       if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
@@ -2403,10 +2392,9 @@ void LoadBuffer_StructuredDataDefStream(bool param_1,int param_2)
                           bufStructuredDataDef->enumedArrayCount << 4);
       }
       bufStructuredDataDef = (StructuredDataDef *)AssetBuf_GetStreamPos();
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -2483,40 +2471,40 @@ StructuredDataStructProperty * AllocSaveBuffer_StructuredDataStructProperty(void
 
 // 825F6198  SaveBuffer_StructuredDataStructPropertyArray  (universal/com_structureddatadef_save_buf.h:1350)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
+  longlong lVar1;
+  StructuredDataStructProperty *pSVar2;
   StructuredDataStructProperty *pSVar3;
   StructuredDataStructProperty *pSVar4;
-  StructuredDataStructProperty *pSVar5;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_22(param_1);
-  SaveBuffer_Stream(bVar1,bufStructuredDataStructProperty,
-                    (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2),
+  lVar1 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataStructProperty,
+                    (int)((lVar1 + ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 & 0xffffffff) << 2),
                     &bufoutStructuredDataStructProperty);
-  pSVar5 = bufStructuredDataStructProperty;
-  pSVar4 = bufstreamStructuredDataStructProperty;
-  pSVar3 = bufoutStructuredDataStructProperty;
-  if (0 < (int)uVar2) {
+  pSVar4 = bufStructuredDataStructProperty;
+  pSVar3 = bufstreamStructuredDataStructProperty;
+  pSVar2 = bufoutStructuredDataStructProperty;
+  if (0 < param_2) {
     do {
-      bufoutStructuredDataStructProperty = pSVar3;
-      bufstreamStructuredDataStructProperty = pSVar4;
-      bufStructuredDataStructProperty = pSVar5;
-      SaveBuffer_Stream(false,pSVar5,0x14,&bufoutStructuredDataStructProperty);
+      bufoutStructuredDataStructProperty = pSVar2;
+      bufstreamStructuredDataStructProperty = pSVar3;
+      bufStructuredDataStructProperty = pSVar4;
+      SaveBuffer_Stream(false,pSVar4,0x14,&bufoutStructuredDataStructProperty);
       bufXString = &bufStructuredDataStructProperty->name;
       bufstreamXString = &bufstreamStructuredDataStructProperty->name;
       bufoutXString = &bufoutStructuredDataStructProperty->name;
       SaveBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar5 = pSVar5 + 1;
+      lVar1 = lVar1 + -1;
       pSVar4 = pSVar4 + 1;
       pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      pSVar2 = pSVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -2570,50 +2558,51 @@ void LoadBuffer_qboolean(bool param_1)
 
 // 825EF288  SaveBuffer_charStream  (database/db_primtypes_save_buf.h:1368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_charStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x55b,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufchar,1,&bufoutchar);
       bufchar = (char *)AssetBuf_GetSourcePos();
       bufstreamchar = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F8840  LoadBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_load_buf.h:1375)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   StructuredDataDef *pSVar1;
-  StructuredDataDefSet *pSVar3;
-  ulonglong uVar4;
+  StructuredDataDefSet *pSVar2;
+  longlong lVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_27(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataDefSet,
-                    (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataDefSet;
-  if (0 < (int)uVar4) {
+  lVar3 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataDefSet,
+                    (int)((lVar3 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+  pSVar2 = bufStructuredDataDefSet;
+  if (0 < param_2) {
     do {
-      bufStructuredDataDefSet = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0xc);
+      bufStructuredDataDefSet = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,0xc);
       AssetBuf_PushStreamPos(3);
       bufXString = &bufStructuredDataDefSet->name;
       LoadBuffer_XString(false);
@@ -2624,11 +2613,10 @@ void LoadBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
         LoadBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
       }
       AssetBuf_PopStreamPos();
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      lVar3 = lVar3 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2649,19 +2637,20 @@ int * AllocLoadBuffer_qboolean(void)
 
 // 825F6250  SaveBuffer_StructuredDataStructPropertyStream  (universal/com_structureddatadef_save_buf.h:1380)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x567,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataStructProperty,0x14,
                         &bufoutStructuredDataStructProperty);
@@ -2672,10 +2661,9 @@ void SaveBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
       bufStructuredDataStructProperty = (StructuredDataStructProperty *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataStructProperty =
            (StructuredDataStructProperty *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -2744,20 +2732,21 @@ void SaveBuffer_StructuredDataStruct(bool param_1)
 
 // 825F8900  LoadBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_load_buf.h:1397)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   StructuredDataDef *pSVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_28(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x578,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataDefSet,0xc);
       AssetBuf_PushStreamPos(3);
@@ -2771,10 +2760,9 @@ void LoadBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
       }
       AssetBuf_PopStreamPos();
       bufStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2862,27 +2850,27 @@ void LoadBuffer_int(bool param_1)
 
 // 825EF350  SaveBuffer_uint8_tStream  (database/db_primtypes_save_buf.h:1428)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_uint8_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x597,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufuint8_t,1,&bufoutuint8_t);
       bufuint8_t = AssetBuf_GetSourcePos();
       bufstreamuint8_t = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2941,30 +2929,30 @@ StructuredDataDefSet ** AllocLoadBuffer_StructuredDataDefSetPtr(void)
 
 // 825F63F8  SaveBuffer_StructuredDataStructArray  (universal/com_structureddatadef_save_buf.h:1442)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataStructArray(bool param_1,int param_2)
 
 {
-  bool bVar3;
   void *pvVar1;
   StructuredDataStructProperty *pSVar2;
+  StructuredDataStruct *pSVar3;
   StructuredDataStruct *pSVar4;
   StructuredDataStruct *pSVar5;
-  StructuredDataStruct *pSVar6;
-  ulonglong uVar7;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataStruct,(int)((uVar7 & 0xffffffff) << 4),
-                    &bufoutStructuredDataStruct);
-  pSVar6 = bufStructuredDataStruct;
-  pSVar4 = bufoutStructuredDataStruct;
-  pSVar5 = bufstreamStructuredDataStruct;
-  if (0 < (int)uVar7) {
+  lVar6 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataStruct,param_2 << 4,&bufoutStructuredDataStruct);
+  pSVar5 = bufStructuredDataStruct;
+  pSVar3 = bufoutStructuredDataStruct;
+  pSVar4 = bufstreamStructuredDataStruct;
+  if (0 < param_2) {
     do {
-      bufStructuredDataStruct = pSVar6;
-      bufoutStructuredDataStruct = pSVar4;
-      bufstreamStructuredDataStruct = pSVar5;
-      SaveBuffer_Stream(false,pSVar6,0x10,&bufoutStructuredDataStruct);
+      bufStructuredDataStruct = pSVar5;
+      bufoutStructuredDataStruct = pSVar3;
+      bufstreamStructuredDataStruct = pSVar4;
+      SaveBuffer_Stream(false,pSVar5,0x10,&bufoutStructuredDataStruct);
       if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
         pvVar1 = AssetBuf_FindStreamData(bufStructuredDataStruct->properties);
         if (pvVar1 != (void *)0x0) {
@@ -2980,13 +2968,12 @@ void SaveBuffer_StructuredDataStructArray(bool param_1,int param_2)
         bufoutStructuredDataStruct->properties = (StructuredDataStructProperty *)0xffffffff;
         SaveBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
       }
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
+      lVar6 = lVar6 + -1;
       pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      pSVar3 = pSVar3 + 1;
+      pSVar4 = pSVar4 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
@@ -3017,24 +3004,25 @@ char * AllocSaveBuffer_int8_t(void)
 
 // 825F8AB0  LoadBuffer_StructuredDataDefSetPtrArray  (universal/com_structureddatadef_load_buf.h:1449)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
 
 {
   StructuredDataDefSet *pSVar1;
-  bool bVar4;
   StructuredDataDefSet *pSVar2;
   void **ppvVar3;
-  ulonglong uVar5;
-  StructuredDataDefSet **ppSVar6;
+  longlong lVar4;
+  StructuredDataDefSet **ppSVar5;
   
-  uVar5 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_27(param_1);
-  LoadBuffer_Stream(bVar4,bufStructuredDataDefSetPtr,(int)((uVar5 & 0xffffffff) << 2));
-  ppSVar6 = bufStructuredDataDefSetPtr;
-  if (0 < (int)uVar5) {
+  lVar4 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufStructuredDataDefSetPtr,param_2 << 2);
+  ppSVar5 = bufStructuredDataDefSetPtr;
+  if (0 < param_2) {
     do {
-      bufStructuredDataDefSetPtr = ppSVar6;
-      LoadBuffer_Stream(false,ppSVar6,4);
+      bufStructuredDataDefSetPtr = ppSVar5;
+      LoadBuffer_Stream(false,ppSVar5,4);
       AssetBuf_PushStreamPos(0);
       pSVar1 = *bufStructuredDataDefSetPtr;
       if (pSVar1 != (StructuredDataDefSet *)0x0) {
@@ -3059,11 +3047,10 @@ void LoadBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
         }
       }
       AssetBuf_PopStreamPos();
-      uVar5 = uVar5 - 1;
-      ppSVar6 = ppSVar6 + 1;
-    } while (uVar5 != 0);
+      lVar4 = lVar4 + -1;
+      ppSVar5 = ppSVar5 + 1;
+    } while (lVar4 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -3103,22 +3090,23 @@ void LoadBuffer_intStream(bool param_1,int param_2)
 
 // 825F8B90  LoadBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_load_buf.h:1471)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
 
 {
   StructuredDataDefSet *pSVar1;
-  char cVar4;
   StructuredDataDefSet *pSVar2;
   void **ppvVar3;
-  longlong lVar5;
+  longlong lVar4;
   
-  lVar5 = (longlong)param_2;
-  cVar4 = __savegprlr_28(param_1);
-  if (cVar4 == '\0') {
+  lVar4 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
                     ,0x5c2,0,"%s");
   }
-  if (0 < (int)lVar5) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufStructuredDataDefSetPtr,4);
       AssetBuf_PushStreamPos(0);
@@ -3146,31 +3134,31 @@ void LoadBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
       }
       AssetBuf_PopStreamPos();
       bufStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetStreamPos();
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F6520  SaveBuffer_StructuredDataStructStream  (universal/com_structureddatadef_save_buf.h:1472)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataStructStream(bool param_1,int param_2)
 
 {
-  char cVar3;
   void *pvVar1;
   StructuredDataStructProperty *pSVar2;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
-  if (cVar3 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x5c3,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataStruct,0x10,&bufoutStructuredDataStruct);
       if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
@@ -3190,10 +3178,9 @@ void SaveBuffer_StructuredDataStructStream(bool param_1,int param_2)
       }
       bufStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -3224,18 +3211,19 @@ uchar * AllocLoadBuffer_byte4096(void)
 
 // 825F6650  SaveBuffer_StructuredDataDef  (universal/com_structureddatadef_save_buf.h:1487)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDef(bool param_1)
 
 {
-  bool bVar6;
   void *pvVar1;
   StructuredDataEnum *pSVar2;
   StructuredDataStruct *pSVar3;
   StructuredDataIndexedArray *pSVar4;
   StructuredDataEnumedArray *pSVar5;
   
-  bVar6 = (bool)__savegprlr_26(param_1);
-  SaveBuffer_Stream(bVar6,bufStructuredDataDef,0x34,&bufoutStructuredDataDef);
+  SaveBuffer_Stream(param_1,bufStructuredDataDef,0x34,&bufoutStructuredDataDef);
   if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
     pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enums);
     if (pvVar1 != (void *)0x0) {
@@ -3297,34 +3285,33 @@ void SaveBuffer_StructuredDataDef(bool param_1)
     SaveBuffer_Stream(true,bufStructuredDataEnumedArray,bufStructuredDataDef->enumedArrayCount << 4,
                       &bufoutStructuredDataEnumedArray);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 825EF418  SaveBuffer_int8_tStream  (database/db_primtypes_save_buf.h:1488)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_int8_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x5d3,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufint8_t,1,&bufoutint8_t);
       bufint8_t = (char *)AssetBuf_GetSourcePos();
       bufstreamint8_t = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3432,27 +3419,27 @@ void LoadBuffer_byte128Array(bool param_1,int param_2)
 
 // 825EF4E0  SaveBuffer_boolStream  (database/db_primtypes_save_buf.h:1548)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_boolStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x60f,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbool,1,&bufoutbool);
       bufbool = (bool *)AssetBuf_GetSourcePos();
       bufstreambool = (bool *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3564,6 +3551,9 @@ StructuredDataDef * AllocSaveBuffer_StructuredDataDef(void)
 
 // 825F6900  SaveBuffer_StructuredDataDefArray  (universal/com_structureddatadef_save_buf.h:1602)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefArray(bool param_1,int param_2)
 
 {
@@ -3578,7 +3568,6 @@ void SaveBuffer_StructuredDataDefArray(bool param_1,int param_2)
   StructuredDataDef *pSVar9;
   uint local_b0;
   
-  __savegprlr();
   SaveBuffer_Stream(param_1,bufStructuredDataDef,param_2 * 0x34,&bufoutStructuredDataDef);
   pSVar9 = bufStructuredDataDef;
   pSVar7 = bufoutStructuredDataDef;
@@ -3659,7 +3648,6 @@ void SaveBuffer_StructuredDataDefArray(bool param_1,int param_2)
       pSVar8 = pSVar8 + 1;
     } while (uVar6 - 1 != 0);
   }
-  __restgprlr();
   return;
 }
 
@@ -3689,27 +3677,27 @@ void LoadBuffer_byte64Stream(bool param_1,int param_2)
 
 // 825EF5A8  SaveBuffer_qbooleanStream  (database/db_primtypes_save_buf.h:1615)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_qbooleanStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x652,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufqboolean,4,&bufoutqboolean);
       bufqboolean = (int *)AssetBuf_GetSourcePos();
       bufstreamqboolean = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3736,6 +3724,9 @@ void SaveBuffer_int(bool param_1)
 
 // 825F6C30  SaveBuffer_StructuredDataDefStream  (universal/com_structureddatadef_save_buf.h:1632)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefStream(bool param_1,int param_2)
 
 {
@@ -3747,9 +3738,7 @@ void SaveBuffer_StructuredDataDefStream(bool param_1,int param_2)
   ulonglong uVar6;
   uint local_a8;
   
-  uVar6 = (ulonglong)param_1;
-  __savegprlr();
-  if ((uVar6 & 0xff) == 0) {
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x663,0,"%s");
   }
@@ -3825,7 +3814,6 @@ void SaveBuffer_StructuredDataDefStream(bool param_1,int param_2)
       local_a8 = (uint)(uVar6 - 1);
     } while (uVar6 - 1 != 0);
   }
-  __restgprlr();
   return;
 }
 
@@ -3936,27 +3924,27 @@ void LoadBuffer_byte32Stream(bool param_1,int param_2)
 
 // 825EF670  SaveBuffer_intStream  (database/db_primtypes_save_buf.h:1675)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_intStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x68e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufint,4,&bufoutint);
       bufint = (int *)AssetBuf_GetSourcePos();
       bufstreamint = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4011,31 +3999,32 @@ void SaveBuffer_byte4096(bool param_1)
 
 // 825F7078  SaveBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_save_buf.h:1691)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
 
 {
-  bool bVar3;
   void *pvVar1;
   StructuredDataDef *pSVar2;
+  StructuredDataDefSet *pSVar3;
   StructuredDataDefSet *pSVar4;
   StructuredDataDefSet *pSVar5;
-  StructuredDataDefSet *pSVar6;
-  ulonglong uVar7;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_16(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataDefSet,
-                    (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2),
+  lVar6 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataDefSet,
+                    (int)((lVar6 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2),
                     &bufoutStructuredDataDefSet);
-  pSVar4 = bufoutStructuredDataDefSet;
-  pSVar5 = bufstreamStructuredDataDefSet;
-  pSVar6 = bufStructuredDataDefSet;
-  if (0 < (int)uVar7) {
+  pSVar3 = bufoutStructuredDataDefSet;
+  pSVar4 = bufstreamStructuredDataDefSet;
+  pSVar5 = bufStructuredDataDefSet;
+  if (0 < param_2) {
     do {
-      bufstreamStructuredDataDefSet = pSVar5;
-      bufStructuredDataDefSet = pSVar6;
-      bufoutStructuredDataDefSet = pSVar4;
-      SaveBuffer_Stream(false,pSVar6,0xc,&bufoutStructuredDataDefSet);
+      bufstreamStructuredDataDefSet = pSVar4;
+      bufStructuredDataDefSet = pSVar5;
+      bufoutStructuredDataDefSet = pSVar3;
+      SaveBuffer_Stream(false,pSVar5,0xc,&bufoutStructuredDataDefSet);
       AssetBuf_PushStreamPos(3);
       bufXString = &bufStructuredDataDefSet->name;
       bufstreamXString = &bufstreamStructuredDataDefSet->name;
@@ -4056,13 +4045,12 @@ void SaveBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
         SaveBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
+      lVar6 = lVar6 + -1;
+      pSVar3 = pSVar3 + 1;
       pSVar4 = pSVar4 + 1;
       pSVar5 = pSVar5 + 1;
-      pSVar6 = pSVar6 + 1;
-    } while (uVar7 != 0);
+    } while (lVar6 != 0);
   }
-  __restgprlr_16();
   return;
 }
 
@@ -4126,21 +4114,22 @@ void LoadBuffer_unsignedStream(bool param_1,int param_2)
 
 // 825F71E0  SaveBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_save_buf.h:1721)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
 
 {
-  char cVar3;
   void *pvVar1;
   StructuredDataDef *pSVar2;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_19(param_1);
-  if (cVar3 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x6bc,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataDefSet,0xc,&bufoutStructuredDataDefSet);
       AssetBuf_PushStreamPos(3);
@@ -4165,10 +4154,9 @@ void SaveBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
       AssetBuf_PopStreamPos();
       bufStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetSourcePos();
       bufstreamStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
@@ -4185,27 +4173,27 @@ void LoadBuffer_DWORD(bool param_1)
 
 // 825EF738  SaveBuffer_byte4096Stream  (database/db_primtypes_save_buf.h:1735)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_byte4096Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x6ca,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbyte4096,1,&bufoutbyte4096);
       bufbyte4096 = AssetBuf_GetSourcePos();
       bufstreambyte4096 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4340,30 +4328,30 @@ void LoadBuffer_DWORDStream(bool param_1,int param_2)
 
 // 825F7460  SaveBuffer_StructuredDataDefSetPtrArray  (universal/com_structureddatadef_save_buf.h:1767)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
 
 {
-  bool bVar3;
   StructuredDataDefSet *pSVar1;
   void *pvVar2;
+  StructuredDataDefSet **ppSVar3;
   StructuredDataDefSet **ppSVar4;
   StructuredDataDefSet **ppSVar5;
-  StructuredDataDefSet **ppSVar6;
-  ulonglong uVar7;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_20(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataDefSetPtr,(int)((uVar7 & 0xffffffff) << 2),
-                    &bufoutStructuredDataDefSetPtr);
-  ppSVar6 = bufStructuredDataDefSetPtr;
-  ppSVar4 = bufoutStructuredDataDefSetPtr;
-  ppSVar5 = bufstreamStructuredDataDefSetPtr;
-  if (0 < (int)uVar7) {
+  lVar6 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufStructuredDataDefSetPtr,param_2 << 2,&bufoutStructuredDataDefSetPtr);
+  ppSVar5 = bufStructuredDataDefSetPtr;
+  ppSVar3 = bufoutStructuredDataDefSetPtr;
+  ppSVar4 = bufstreamStructuredDataDefSetPtr;
+  if (0 < param_2) {
     do {
-      bufStructuredDataDefSetPtr = ppSVar6;
-      bufoutStructuredDataDefSetPtr = ppSVar4;
-      bufstreamStructuredDataDefSetPtr = ppSVar5;
-      SaveBuffer_Stream(false,ppSVar6,4,&bufoutStructuredDataDefSetPtr);
+      bufStructuredDataDefSetPtr = ppSVar5;
+      bufoutStructuredDataDefSetPtr = ppSVar3;
+      bufstreamStructuredDataDefSetPtr = ppSVar4;
+      SaveBuffer_Stream(false,ppSVar5,4,&bufoutStructuredDataDefSetPtr);
       AssetBuf_PushStreamPos(0);
       if (*bufStructuredDataDefSetPtr != (StructuredDataDefSet *)0x0) {
         pSVar1 = AssetBuf_FindStreamData(*bufStructuredDataDefSetPtr);
@@ -4384,13 +4372,12 @@ void SaveBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
         }
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
-      ppSVar6 = ppSVar6 + 1;
-      ppSVar4 = ppSVar4 + 1;
+      lVar6 = lVar6 + -1;
       ppSVar5 = ppSVar5 + 1;
-    } while (uVar7 != 0);
+      ppSVar3 = ppSVar3 + 1;
+      ppSVar4 = ppSVar4 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -4421,27 +4408,27 @@ int * AllocLoadBuffer_int32_t(void)
 
 // 825EF800  SaveBuffer_byte128Stream  (database/db_primtypes_save_buf.h:1795)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_byte128Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x706,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbyte128,1,&bufoutbyte128);
       bufbyte128 = AssetBuf_GetSourcePos();
       bufstreambyte128 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4458,21 +4445,22 @@ void LoadBuffer_int32_tArray(bool param_1,int param_2)
 
 // 825F75B0  SaveBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_save_buf.h:1797)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
 
 {
-  char cVar3;
   StructuredDataDefSet *pSVar1;
   void *pvVar2;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_23(param_1);
-  if (cVar3 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
                     ,0x708,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufStructuredDataDefSetPtr,4,&bufoutStructuredDataDefSetPtr);
       AssetBuf_PushStreamPos(0);
@@ -4497,10 +4485,9 @@ void SaveBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
       AssetBuf_PopStreamPos();
       bufStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetSourcePos();
       bufstreamStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -4598,27 +4585,27 @@ void LoadBuffer_uint32_tArray(bool param_1,int param_2)
 
 // 825EF8C8  SaveBuffer_byte64Stream  (database/db_primtypes_save_buf.h:1855)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_byte64Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x742,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbyte64,1,&bufoutbyte64);
       bufbyte64 = AssetBuf_GetSourcePos();
       bufstreambyte64 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4716,27 +4703,27 @@ void LoadBuffer_uintArray(bool param_1,int param_2)
 
 // 825EF990  SaveBuffer_byte32Stream  (database/db_primtypes_save_buf.h:1915)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_byte32Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x77e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufbyte32,1,&bufoutbyte32);
       bufbyte32 = AssetBuf_GetSourcePos();
       bufstreambyte32 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4857,27 +4844,27 @@ void LoadBuffer_uint64_tStream(bool param_1,int param_2)
 
 // 825EFA58  SaveBuffer_unsignedStream  (database/db_primtypes_save_buf.h:1975)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_unsignedStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x7ba,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufunsigned,4,&bufoutunsigned);
       bufunsigned = (uint *)AssetBuf_GetSourcePos();
       bufstreamunsigned = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4975,27 +4962,27 @@ void LoadBuffer_raw_DWORDStream(bool param_1,int param_2)
 
 // 825EFB20  SaveBuffer_DWORDStream  (database/db_primtypes_save_buf.h:2035)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_DWORDStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x7f6,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufDWORD,4,&bufoutDWORD);
       bufDWORD = (ulong *)AssetBuf_GetSourcePos();
       bufstreamDWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5117,27 +5104,27 @@ float * AllocLoadBuffer_float16(void)
 
 // 825EFBE8  SaveBuffer_int32_tStream  (database/db_primtypes_save_buf.h:2095)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_int32_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x832,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufint32_t,4,&bufoutint32_t);
       bufint32_t = (int *)AssetBuf_GetSourcePos();
       bufstreamint32_t = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5245,27 +5232,27 @@ void LoadBuffer_raw_floatArray(bool param_1,int param_2)
 
 // 825EFCB0  SaveBuffer_uint32_tStream  (database/db_primtypes_save_buf.h:2155)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_uint32_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x86e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufuint32_t,4,&bufoutuint32_t);
       bufuint32_t = (uint *)AssetBuf_GetSourcePos();
       bufstreamuint32_t = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5363,27 +5350,27 @@ void LoadBuffer_raw_float16Array(bool param_1,int param_2)
 
 // 825EFD78  SaveBuffer_uintStream  (database/db_primtypes_save_buf.h:2215)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_uintStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x8aa,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufuint,4,&bufoutuint);
       bufuint = (uint *)AssetBuf_GetSourcePos();
       bufstreamuint = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5481,27 +5468,27 @@ void LoadBuffer_raw_vec3_tArray(bool param_1,int param_2)
 
 // 825EFE40  SaveBuffer_uint64_tStream  (database/db_primtypes_save_buf.h:2275)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_uint64_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x8e6,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufuint64_t,8,&bufoutuint64_t);
       bufuint64_t = (ulong64 *)AssetBuf_GetSourcePos();
       bufstreamuint64_t = (ulong64 *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5622,27 +5609,27 @@ void LoadBuffer_raw_ushortStream(bool param_1,int param_2)
 
 // 825EFF08  SaveBuffer_raw_DWORDStream  (database/db_primtypes_save_buf.h:2335)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_DWORDStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x922,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_DWORD,4,&bufoutraw_DWORD);
       bufraw_DWORD = (ulong *)AssetBuf_GetSourcePos();
       bufstreamraw_DWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5750,27 +5737,27 @@ void LoadBuffer_raw_uint128(bool param_1)
 
 // 825EFFD0  SaveBuffer_floatStream  (database/db_primtypes_save_buf.h:2395)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_floatStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x95e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,buffloat,4,&bufoutfloat);
       buffloat = (float *)AssetBuf_GetSourcePos();
       bufstreamfloat = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -5882,27 +5869,27 @@ uchar * AllocLoadBuffer_raw_byte(void)
 
 // 825F0098  SaveBuffer_float16Stream  (database/db_primtypes_save_buf.h:2455)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_float16Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x99a,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,buffloat16,4,&bufoutfloat16);
       buffloat16 = (float *)AssetBuf_GetSourcePos();
       bufstreamfloat16 = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6010,27 +5997,27 @@ void LoadBuffer_raw_byte16Array(bool param_1,int param_2)
 
 // 825F0160  SaveBuffer_raw_floatStream  (database/db_primtypes_save_buf.h:2515)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_floatStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x9d6,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_float,4,&bufoutraw_float);
       bufraw_float = (float *)AssetBuf_GetSourcePos();
       bufstreamraw_float = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6128,27 +6115,27 @@ void LoadBuffer_raw_byte4096Array(bool param_1,int param_2)
 
 // 825F0228  SaveBuffer_raw_float16Stream  (database/db_primtypes_save_buf.h:2575)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_float16Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xa12,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_float16,4,&bufoutraw_float16);
       bufraw_float16 = (float *)AssetBuf_GetSourcePos();
       bufstreamraw_float16 = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6246,27 +6233,27 @@ void LoadBuffer_vec_tArray(bool param_1,int param_2)
 
 // 825F02F8  SaveBuffer_raw_vec3_tStream  (database/db_primtypes_save_buf.h:2635)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_vec3_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xa4e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_vec3_t,0xc,&bufoutraw_vec3_t);
       bufraw_vec3_t = (float (*) [3])AssetBuf_GetSourcePos();
       bufstreamraw_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6387,27 +6374,27 @@ void LoadBuffer_vec2_tStream(bool param_1,int param_2)
 
 // 825F03C0  SaveBuffer_raw_ushortStream  (database/db_primtypes_save_buf.h:2695)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_ushortStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xa8a,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_ushort,2,&bufoutraw_ushort);
       bufraw_ushort = (ushort *)AssetBuf_GetSourcePos();
       bufstreamraw_ushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6505,27 +6492,27 @@ void LoadBuffer_vec3_tStream(bool param_1,int param_2)
 
 // 825F0488  SaveBuffer_raw_uintStream  (database/db_primtypes_save_buf.h:2755)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_uintStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xac6,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_uint,4,&bufoutraw_uint);
       bufraw_uint = (uint *)AssetBuf_GetSourcePos();
       bufstreamraw_uint = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6623,27 +6610,27 @@ void LoadBuffer_vec4_tStream(bool param_1,int param_2)
 
 // 825F0550  SaveBuffer_raw_uint128Stream  (database/db_primtypes_save_buf.h:2815)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_uint128Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xb02,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_uint128,4,&bufoutraw_uint128);
       bufraw_uint128 = (uint *)AssetBuf_GetSourcePos();
       bufstreamraw_uint128 = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6741,27 +6728,27 @@ void LoadBuffer_BoundsStream(bool param_1,int param_2)
 
 // 825F0618  SaveBuffer_raw_byteStream  (database/db_primtypes_save_buf.h:2875)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_byteStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xb3e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_byte,1,&bufoutraw_byte);
       bufraw_byte = AssetBuf_GetSourcePos();
       bufstreamraw_byte = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6859,27 +6846,27 @@ void LoadBuffer_raw_vec4_tStream(bool param_1,int param_2)
 
 // 825F06E0  SaveBuffer_raw_byte16Stream  (database/db_primtypes_save_buf.h:2935)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_byte16Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xb7a,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_byte16,1,&bufoutraw_byte16);
       bufraw_byte16 = AssetBuf_GetSourcePos();
       bufstreamraw_byte16 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6987,27 +6974,27 @@ void LoadBuffer_short(bool param_1)
 
 // 825F07A8  SaveBuffer_raw_byte4096Stream  (database/db_primtypes_save_buf.h:2995)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_byte4096Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xbb6,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_byte4096,1,&bufoutraw_byte4096);
       bufraw_byte4096 = AssetBuf_GetSourcePos();
       bufstreamraw_byte4096 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7129,27 +7116,27 @@ void LoadBuffer_int16_tArray(bool param_1,int param_2)
 
 // 825F0870  SaveBuffer_vec_tStream  (database/db_primtypes_save_buf.h:3062)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_vec_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xbf9,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufvec_t,4,&bufoutvec_t);
       bufvec_t = (float *)AssetBuf_GetSourcePos();
       bufstreamvec_t = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7247,27 +7234,27 @@ void LoadBuffer_uint16_tArray(bool param_1,int param_2)
 
 // 825F0938  SaveBuffer_vec2_tStream  (database/db_primtypes_save_buf.h:3129)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_vec2_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xc3c,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufvec2_t,8,&bufoutvec2_t);
       bufvec2_t = (float (*) [2])AssetBuf_GetSourcePos();
       bufstreamvec2_t = (float (*) [2])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7388,27 +7375,27 @@ void LoadBuffer_ushortStream(bool param_1,int param_2)
 
 // 825F0A08  SaveBuffer_vec3_tStream  (database/db_primtypes_save_buf.h:3196)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_vec3_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xc7f,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufvec3_t,0xc,&bufoutvec3_t);
       bufvec3_t = (float (*) [3])AssetBuf_GetSourcePos();
       bufstreamvec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7516,27 +7503,27 @@ void LoadBuffer_XQuat2(bool param_1)
 
 // 825F0AD0  SaveBuffer_vec4_tStream  (database/db_primtypes_save_buf.h:3263)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_vec4_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xcc2,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufvec4_t,0x10,&bufoutvec4_t);
       bufvec4_t = (float (*) [4])AssetBuf_GetSourcePos();
       bufstreamvec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7658,27 +7645,27 @@ void LoadBuffer_UnsignedShortArray(bool param_1,int param_2)
 
 // 825F0BA0  SaveBuffer_BoundsStream  (database/db_primtypes_save_buf.h:3337)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_BoundsStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xd0c,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufBounds,0x18,&bufoutBounds);
       bufBounds = (Bounds *)AssetBuf_GetSourcePos();
       bufstreamBounds = (Bounds *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7767,27 +7754,27 @@ void SaveBuffer_raw_vec4_tArray(bool param_1,int param_2)
 
 // 825F48D8  LoadBuffer_ScriptStringArray  (database/db_primtypes_load_buf.h:3377)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_ScriptStringArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  ushort *puVar3;
+  longlong lVar1;
+  ushort *puVar2;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_29(param_1);
-  LoadBuffer_Stream(bVar1,bufScriptString,(int)((uVar2 & 0xffffffff) << 1));
-  puVar3 = bufScriptString;
-  if (0 < (int)uVar2) {
+  lVar1 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufScriptString,param_2 << 1);
+  puVar2 = bufScriptString;
+  if (0 < param_2) {
     do {
-      bufScriptString = puVar3;
-      LoadBuffer_Stream(false,puVar3,2);
+      bufScriptString = puVar2;
+      LoadBuffer_Stream(false,puVar2,2);
       LoadBuffer_ScriptStringCustom(bufScriptString);
-      uVar2 = uVar2 - 1;
-      puVar3 = puVar3 + 1;
-    } while (uVar2 != 0);
+      lVar1 = lVar1 + -1;
+      puVar2 = puVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -7818,27 +7805,27 @@ void LoadBuffer_ScriptStringStream(bool param_1,int param_2)
 
 // 825F0C68  SaveBuffer_raw_vec4_tStream  (database/db_primtypes_save_buf.h:3404)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_raw_vec4_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xd4f,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufraw_vec4_t,0x10,&bufoutraw_vec4_t);
       bufraw_vec4_t = (float (*) [4])AssetBuf_GetSourcePos();
       bufstreamraw_vec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -7904,50 +7891,50 @@ float (*) [3] AllocSaveBuffer_shared_vec3_t(void)
 
 // 825F0D60  SaveBuffer_shared_vec3_tArray  (database/db_primtypes_save_buf.h:3442)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_shared_vec3_tArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  float (*pafVar3) [3];
-  ulonglong uVar4;
-  float (*pafVar5) [3];
-  int iVar6;
-  float (*pafVar7) [3];
+  longlong lVar1;
+  float (*pafVar2) [3];
+  longlong lVar3;
+  float (*pafVar4) [3];
+  int iVar5;
+  float (*pafVar6) [3];
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_25(param_1);
-  SaveBuffer_Stream(bVar1,bufshared_vec3_t,
-                    (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2),&bufoutshared_vec3_t
-                   );
-  if (0 < (int)uVar2) {
-    iVar6 = 0;
-    uVar4 = uVar2;
+  lVar1 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufshared_vec3_t,
+                    (int)((lVar1 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2),
+                    &bufoutshared_vec3_t);
+  if (0 < param_2) {
+    iVar5 = 0;
+    lVar3 = lVar1;
     do {
       AssetBuf_SetStreamData
-                ((void *)((int)*bufshared_vec3_t + iVar6),
-                 (void *)((int)*bufstreamshared_vec3_t + iVar6));
-      uVar4 = uVar4 - 1;
-      iVar6 = iVar6 + 0xc;
-    } while (uVar4 != 0);
+                ((void *)((int)*bufshared_vec3_t + iVar5),
+                 (void *)((int)*bufstreamshared_vec3_t + iVar5));
+      lVar3 = lVar3 + -1;
+      iVar5 = iVar5 + 0xc;
+    } while (lVar3 != 0);
   }
-  pafVar7 = bufshared_vec3_t;
-  pafVar5 = bufstreamshared_vec3_t;
-  pafVar3 = bufoutshared_vec3_t;
-  if (0 < (int)uVar2) {
+  pafVar6 = bufshared_vec3_t;
+  pafVar4 = bufstreamshared_vec3_t;
+  pafVar2 = bufoutshared_vec3_t;
+  if (0 < param_2) {
     do {
-      bufstreamshared_vec3_t = pafVar5;
-      bufshared_vec3_t = pafVar7;
-      bufoutshared_vec3_t = pafVar3;
-      AssetBuf_SetStreamData(pafVar7,pafVar5);
+      bufstreamshared_vec3_t = pafVar4;
+      bufshared_vec3_t = pafVar6;
+      bufoutshared_vec3_t = pafVar2;
+      AssetBuf_SetStreamData(pafVar6,pafVar4);
       SaveBuffer_Stream(false,bufshared_vec3_t,0xc,&bufoutshared_vec3_t);
-      uVar2 = uVar2 - 1;
-      pafVar7 = pafVar7 + 1;
-      pafVar5 = pafVar5 + 1;
-      pafVar3 = pafVar3 + 1;
-    } while (uVar2 != 0);
+      lVar1 = lVar1 + -1;
+      pafVar6 = pafVar6 + 1;
+      pafVar4 = pafVar4 + 1;
+      pafVar2 = pafVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -8006,28 +7993,28 @@ void LoadBuffer_TempString(bool param_1)
 
 // 825F0E28  SaveBuffer_shared_vec3_tStream  (database/db_primtypes_save_buf.h:3475)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_shared_vec3_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xd96,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       AssetBuf_SetStreamData(bufshared_vec3_t,bufstreamshared_vec3_t);
       SaveBuffer_Stream(true,bufshared_vec3_t,0xc,&bufoutshared_vec3_t);
       bufshared_vec3_t = (float (*) [3])AssetBuf_GetSourcePos();
       bufstreamshared_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8058,45 +8045,45 @@ void SaveBuffer_short(bool param_1)
 
 // 825F4B48  LoadBuffer_TempStringArray  (database/db_primtypes_load_buf.h:3493)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_TempStringArray(bool param_1,int param_2)
 
 {
   char cVar1;
-  bool bVar3;
   uchar *puVar2;
-  char *pcVar4;
-  char **ppcVar5;
-  ulonglong uVar6;
+  char *pcVar3;
+  char **ppcVar4;
+  longlong lVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar3,bufTempString,(int)((uVar6 & 0xffffffff) << 2));
-  ppcVar5 = bufTempString;
-  if (0 < (int)uVar6) {
+  lVar5 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufTempString,param_2 << 2);
+  ppcVar4 = bufTempString;
+  if (0 < param_2) {
     do {
-      bufTempString = ppcVar5;
-      LoadBuffer_Stream(false,ppcVar5,4);
+      bufTempString = ppcVar4;
+      LoadBuffer_Stream(false,ppcVar4,4);
       if (*bufTempString != (char *)0x0) {
         if (*bufTempString == (char *)0xffffffff) {
           puVar2 = AssetBuf_AllocStreamPos(0);
           *bufTempString = (char *)puVar2;
           bufConstChar = *bufTempString;
-          pcVar4 = *bufTempString;
+          pcVar3 = *bufTempString;
           do {
-            cVar1 = *pcVar4;
-            pcVar4 = pcVar4 + 1;
+            cVar1 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
           } while (cVar1 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar4 - (int)*bufTempString);
+          LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufTempString);
         }
         else {
           AssetBuf_ConvertOffsetToPointer(bufTempString);
         }
       }
-      uVar6 = uVar6 - 1;
-      ppcVar5 = ppcVar5 + 1;
-    } while (uVar6 != 0);
+      lVar5 = lVar5 + -1;
+      ppcVar4 = ppcVar4 + 1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8127,33 +8114,35 @@ void SaveBuffer_shortArray(bool param_1,int param_2)
 
 // 825F4C10  LoadBuffer_TempStringStream  (database/db_primtypes_load_buf.h:3515)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_TempStringStream(bool param_1,int param_2)
 
 {
-  char cVar2;
-  uchar *puVar1;
+  char cVar1;
+  uchar *puVar2;
   char *pcVar3;
   longlong lVar4;
   
   lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
                     ,0xdbe,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufTempString,4);
       if (*bufTempString != (char *)0x0) {
         if (*bufTempString == (char *)0xffffffff) {
-          puVar1 = AssetBuf_AllocStreamPos(0);
-          *bufTempString = (char *)puVar1;
+          puVar2 = AssetBuf_AllocStreamPos(0);
+          *bufTempString = (char *)puVar2;
           bufConstChar = *bufTempString;
           pcVar3 = *bufTempString;
           do {
-            cVar2 = *pcVar3;
+            cVar1 = *pcVar3;
             pcVar3 = pcVar3 + 1;
-          } while (cVar2 != '\0');
+          } while (cVar1 != '\0');
           LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufTempString);
         }
         else {
@@ -8164,7 +8153,6 @@ void LoadBuffer_TempStringStream(bool param_1,int param_2)
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -8200,27 +8188,27 @@ void LoadBuffer_XString(bool param_1)
 
 // 825F0F00  SaveBuffer_shortStream  (database/db_primtypes_save_buf.h:3535)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_shortStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xdd2,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufshort,2,&bufoutshort);
       bufshort = (short *)AssetBuf_GetSourcePos();
       bufstreamshort = (short *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8265,45 +8253,45 @@ short * AllocSaveBuffer_int16_t(void)
 
 // 825F4DC0  LoadBuffer_XStringArray  (database/db_primtypes_load_buf.h:3558)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_XStringArray(bool param_1,int param_2)
 
 {
   char cVar1;
-  bool bVar3;
   uchar *puVar2;
-  char *pcVar4;
-  char **ppcVar5;
-  ulonglong uVar6;
+  char *pcVar3;
+  char **ppcVar4;
+  longlong lVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar3,bufXString,(int)((uVar6 & 0xffffffff) << 2));
-  ppcVar5 = bufXString;
-  if (0 < (int)uVar6) {
+  lVar5 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufXString,param_2 << 2);
+  ppcVar4 = bufXString;
+  if (0 < param_2) {
     do {
-      bufXString = ppcVar5;
-      LoadBuffer_Stream(false,ppcVar5,4);
+      bufXString = ppcVar4;
+      LoadBuffer_Stream(false,ppcVar4,4);
       if (*bufXString != (char *)0x0) {
         if (*bufXString == (char *)0xffffffff) {
           puVar2 = AssetBuf_AllocStreamPos(0);
           *bufXString = (char *)puVar2;
           bufConstChar = *bufXString;
-          pcVar4 = *bufXString;
+          pcVar3 = *bufXString;
           do {
-            cVar1 = *pcVar4;
-            pcVar4 = pcVar4 + 1;
+            cVar1 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
           } while (cVar1 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar4 - (int)*bufXString);
+          LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufXString);
         }
         else {
           AssetBuf_ConvertOffsetToPointer(bufXString);
         }
       }
-      uVar6 = uVar6 - 1;
-      ppcVar5 = ppcVar5 + 1;
-    } while (uVar6 != 0);
+      lVar5 = lVar5 + -1;
+      ppcVar4 = ppcVar4 + 1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8320,33 +8308,35 @@ void SaveBuffer_int16_tArray(bool param_1,int param_2)
 
 // 825F4E88  LoadBuffer_XStringStream  (database/db_primtypes_load_buf.h:3580)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_XStringStream(bool param_1,int param_2)
 
 {
-  char cVar2;
-  uchar *puVar1;
+  char cVar1;
+  uchar *puVar2;
   char *pcVar3;
   longlong lVar4;
   
   lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
                     ,0xdff,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufXString,4);
       if (*bufXString != (char *)0x0) {
         if (*bufXString == (char *)0xffffffff) {
-          puVar1 = AssetBuf_AllocStreamPos(0);
-          *bufXString = (char *)puVar1;
+          puVar2 = AssetBuf_AllocStreamPos(0);
+          *bufXString = (char *)puVar2;
           bufConstChar = *bufXString;
           pcVar3 = *bufXString;
           do {
-            cVar2 = *pcVar3;
+            cVar1 = *pcVar3;
             pcVar3 = pcVar3 + 1;
-          } while (cVar2 != '\0');
+          } while (cVar1 != '\0');
           LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufXString);
         }
         else {
@@ -8357,7 +8347,6 @@ void LoadBuffer_XStringStream(bool param_1,int param_2)
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -8386,27 +8375,27 @@ void LoadBuffer_XStringPtr(bool param_1)
 
 // 825F0FC8  SaveBuffer_int16_tStream  (database/db_primtypes_save_buf.h:3595)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_int16_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xe0e,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufint16_t,2,&bufoutint16_t);
       bufint16_t = (short *)AssetBuf_GetSourcePos();
       bufstreamint16_t = (short *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8451,22 +8440,23 @@ ushort * AllocSaveBuffer_uint16_t(void)
 
 // 825F5010  LoadBuffer_XStringPtrArray  (database/db_primtypes_load_buf.h:3623)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_XStringPtrArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   char **ppcVar1;
-  char ***pppcVar3;
-  ulonglong uVar4;
+  char ***pppcVar2;
+  longlong lVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufXStringPtr,(int)((uVar4 & 0xffffffff) << 2));
-  pppcVar3 = bufXStringPtr;
-  if (0 < (int)uVar4) {
+  lVar3 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufXStringPtr,param_2 << 2);
+  pppcVar2 = bufXStringPtr;
+  if (0 < param_2) {
     do {
-      bufXStringPtr = pppcVar3;
-      LoadBuffer_Stream(false,pppcVar3,4);
+      bufXStringPtr = pppcVar2;
+      LoadBuffer_Stream(false,pppcVar2,4);
       if (*bufXStringPtr != (char **)0x0) {
         if (*bufXStringPtr == (char **)0xffffffff) {
           ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
@@ -8478,11 +8468,10 @@ void LoadBuffer_XStringPtrArray(bool param_1,int param_2)
           AssetBuf_ConvertOffsetToPointer(bufXStringPtr);
         }
       }
-      uVar4 = uVar4 - 1;
-      pppcVar3 = pppcVar3 + 1;
-    } while (uVar4 != 0);
+      lVar3 = lVar3 + -1;
+      pppcVar2 = pppcVar2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8499,20 +8488,21 @@ void SaveBuffer_uint16_tArray(bool param_1,int param_2)
 
 // 825F50B0  LoadBuffer_XStringPtrStream  (database/db_primtypes_load_buf.h:3645)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_XStringPtrStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   char **ppcVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
                     ,0xe40,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufXStringPtr,4);
       if (*bufXStringPtr != (char **)0x0) {
@@ -8527,37 +8517,36 @@ void LoadBuffer_XStringPtrStream(bool param_1,int param_2)
         }
       }
       bufXStringPtr = (char ***)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825F1090  SaveBuffer_uint16_tStream  (database/db_primtypes_save_buf.h:3655)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_uint16_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xe4a,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufuint16_t,2,&bufoutuint16_t);
       bufuint16_t = (ushort *)AssetBuf_GetSourcePos();
       bufstreamuint16_t = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8632,22 +8621,23 @@ void SaveBuffer_ushortArray(bool param_1,int param_2)
 
 // 825F5200  LoadBuffer_ScriptStringListArray  (database/db_primtypes_load_buf.h:3690)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_ScriptStringListArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   char **ppcVar1;
-  ScriptStringList *pSVar3;
-  ulonglong uVar4;
+  ScriptStringList *pSVar2;
+  longlong lVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufScriptStringList,(int)((uVar4 & 0xffffffff) << 3));
-  pSVar3 = bufScriptStringList;
-  if (0 < (int)uVar4) {
+  lVar3 = (longlong)param_2;
+  LoadBuffer_Stream(param_1,bufScriptStringList,param_2 << 3);
+  pSVar2 = bufScriptStringList;
+  if (0 < param_2) {
     do {
-      bufScriptStringList = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,8);
+      bufScriptStringList = pSVar2;
+      LoadBuffer_Stream(false,pSVar2,8);
       AssetBuf_PushStreamPos(3);
       if (bufScriptStringList->strings != (char **)0x0) {
         ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
@@ -8656,31 +8646,31 @@ void LoadBuffer_ScriptStringListArray(bool param_1,int param_2)
         LoadBuffer_TempStringArray(true,bufScriptStringList->count);
       }
       AssetBuf_PopStreamPos();
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      lVar3 = lVar3 + -1;
+      pSVar2 = pSVar2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F52A0  LoadBuffer_ScriptStringListStream  (database/db_primtypes_load_buf.h:3712)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_ScriptStringListStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   char **ppcVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
                     ,0xe83,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufScriptStringList,8);
       AssetBuf_PushStreamPos(3);
@@ -8692,37 +8682,36 @@ void LoadBuffer_ScriptStringListStream(bool param_1,int param_2)
       }
       AssetBuf_PopStreamPos();
       bufScriptStringList = (ScriptStringList *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825F1158  SaveBuffer_ushortStream  (database/db_primtypes_save_buf.h:3715)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ushortStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xe86,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufushort,2,&bufoutushort);
       bufushort = (ushort *)AssetBuf_GetSourcePos();
       bufstreamushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8799,28 +8788,28 @@ void SaveBuffer_XQuatArray(bool param_1,int param_2)
 
 // 825F53D0  LoadBuffer_XZoneHandleStream  (database/db_primtypes_load_buf.h:3766)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LoadBuffer_XZoneHandleStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
                     ,0xeb9,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       LoadBuffer_Stream(true,bufXZoneHandle,1);
       bufbyte = bufXZoneHandle;
       LoadBuffer_Stream(false,bufXZoneHandle,1);
       bufXZoneHandle = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -8837,27 +8826,27 @@ void LoadBuffer_complex_t(bool param_1)
 
 // 825F1220  SaveBuffer_XQuatStream  (database/db_primtypes_save_buf.h:3782)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XQuatStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xec9,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufXQuat,8,&bufoutXQuat);
       bufXQuat = (short (*) [4])AssetBuf_GetSourcePos();
       bufstreamXQuat = (short (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -8945,27 +8934,27 @@ void LoadBuffer_complex_tStream(bool param_1,int param_2)
 
 // 825F12E8  SaveBuffer_XQuat2Stream  (database/db_primtypes_save_buf.h:3849)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XQuat2Stream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xf0c,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufXQuat2,4,&bufoutXQuat2);
       bufXQuat2 = (short (*) [2])AssetBuf_GetSourcePos();
       bufstreamXQuat2 = (short (*) [2])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -9006,27 +8995,27 @@ void SaveBuffer_UnsignedShortArray(bool param_1,int param_2)
 
 // 825F13B0  SaveBuffer_UnsignedShortStream  (database/db_primtypes_save_buf.h:3909)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_UnsignedShortStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xf48,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufUnsignedShort,2,&bufoutUnsignedShort);
       bufUnsignedShort = (ushort *)AssetBuf_GetSourcePos();
       bufstreamUnsignedShort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -9058,63 +9047,63 @@ ushort * AllocSaveBuffer_ScriptString(void)
 
 // 825F1498  SaveBuffer_ScriptStringArray  (database/db_primtypes_save_buf.h:3941)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ScriptStringArray(bool param_1,int param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
+  longlong lVar1;
+  ushort *puVar2;
   ushort *puVar3;
   ushort *puVar4;
-  ushort *puVar5;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_25(param_1);
-  SaveBuffer_Stream(bVar1,bufScriptString,(int)((uVar2 & 0xffffffff) << 1),&bufoutScriptString);
-  puVar5 = bufScriptString;
-  puVar4 = bufstreamScriptString;
-  puVar3 = bufoutScriptString;
-  if (0 < (int)uVar2) {
+  lVar1 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufScriptString,param_2 << 1,&bufoutScriptString);
+  puVar4 = bufScriptString;
+  puVar3 = bufstreamScriptString;
+  puVar2 = bufoutScriptString;
+  if (0 < param_2) {
     do {
-      bufstreamScriptString = puVar4;
-      bufScriptString = puVar5;
-      bufoutScriptString = puVar3;
-      SaveBuffer_Stream(false,puVar5,2,&bufoutScriptString);
+      bufstreamScriptString = puVar3;
+      bufScriptString = puVar4;
+      bufoutScriptString = puVar2;
+      SaveBuffer_Stream(false,puVar4,2,&bufoutScriptString);
       SaveBuffer_ScriptStringCustom(bufScriptString,bufoutScriptString);
-      uVar2 = uVar2 - 1;
-      puVar5 = puVar5 + 1;
+      lVar1 = lVar1 + -1;
       puVar4 = puVar4 + 1;
       puVar3 = puVar3 + 1;
-    } while (uVar2 != 0);
+      puVar2 = puVar2 + 1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825F1528  SaveBuffer_ScriptStringStream  (database/db_primtypes_save_buf.h:3971)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ScriptStringStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xf86,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufScriptString,2,&bufoutScriptString);
       SaveBuffer_ScriptStringCustom(bufScriptString,bufoutScriptString);
       bufScriptString = (ushort *)AssetBuf_GetSourcePos();
       bufstreamScriptString = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -9155,43 +9144,44 @@ void SaveBuffer_ConstCharArray(bool param_1,int param_2)
 
 // 825F15F8  SaveBuffer_ConstCharStream  (database/db_primtypes_save_buf.h:4031)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ConstCharStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0xfc2,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufConstChar,1,&bufoutConstChar);
       bufConstChar = (char *)AssetBuf_GetSourcePos();
       bufstreamConstChar = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825F1688  SaveBuffer_TempString  (database/db_primtypes_save_buf.h:4046)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_TempString(bool param_1)
 
 {
   char cVar1;
-  bool bVar4;
   char *pcVar2;
   uchar *puVar3;
   
-  bVar4 = (bool)__savegprlr_29(param_1);
-  SaveBuffer_Stream(bVar4,bufTempString,4,&bufoutTempString);
+  SaveBuffer_Stream(param_1,bufTempString,4,&bufoutTempString);
   if (*bufTempString != (char *)0x0) {
     pcVar2 = AssetBuf_FindStreamData(*bufTempString);
     *bufoutTempString = pcVar2;
@@ -9214,7 +9204,6 @@ void SaveBuffer_TempString(bool param_1)
       SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufTempString,&bufoutConstChar);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -9235,30 +9224,31 @@ char ** AllocSaveBuffer_TempString(void)
 
 // 825F17B0  SaveBuffer_TempStringArray  (database/db_primtypes_save_buf.h:4076)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_TempStringArray(bool param_1,int param_2)
 
 {
   char cVar1;
-  bool bVar4;
   char *pcVar2;
   uchar *puVar3;
+  char **ppcVar4;
   char **ppcVar5;
   char **ppcVar6;
-  char **ppcVar7;
-  ulonglong uVar8;
+  longlong lVar7;
   
-  uVar8 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_18(param_1);
-  SaveBuffer_Stream(bVar4,bufTempString,(int)((uVar8 & 0xffffffff) << 2),&bufoutTempString);
-  ppcVar7 = bufTempString;
-  ppcVar5 = bufoutTempString;
-  ppcVar6 = bufstreamTempString;
-  if (0 < (int)uVar8) {
+  lVar7 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufTempString,param_2 << 2,&bufoutTempString);
+  ppcVar6 = bufTempString;
+  ppcVar4 = bufoutTempString;
+  ppcVar5 = bufstreamTempString;
+  if (0 < param_2) {
     do {
-      bufstreamTempString = ppcVar6;
-      bufTempString = ppcVar7;
-      bufoutTempString = ppcVar5;
-      SaveBuffer_Stream(false,ppcVar7,4,&bufoutTempString);
+      bufstreamTempString = ppcVar5;
+      bufTempString = ppcVar6;
+      bufoutTempString = ppcVar4;
+      SaveBuffer_Stream(false,ppcVar6,4,&bufoutTempString);
       if (*bufTempString != (char *)0x0) {
         pcVar2 = AssetBuf_FindStreamData(*bufTempString);
         *bufoutTempString = pcVar2;
@@ -9281,56 +9271,57 @@ void SaveBuffer_TempStringArray(bool param_1,int param_2)
           SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufTempString,&bufoutConstChar);
         }
       }
-      uVar8 = uVar8 - 1;
-      ppcVar7 = ppcVar7 + 1;
-      ppcVar5 = ppcVar5 + 1;
+      lVar7 = lVar7 + -1;
       ppcVar6 = ppcVar6 + 1;
-    } while (uVar8 != 0);
+      ppcVar4 = ppcVar4 + 1;
+      ppcVar5 = ppcVar5 + 1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 825F1930  SaveBuffer_TempStringStream  (database/db_primtypes_save_buf.h:4106)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_TempStringStream(bool param_1,int param_2)
 
 {
-  char cVar3;
-  char *pcVar1;
-  uchar *puVar2;
+  char cVar1;
+  char *pcVar2;
+  uchar *puVar3;
   longlong lVar4;
   
   lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_21(param_1);
-  if (cVar3 == '\0') {
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x100d,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufTempString,4,&bufoutTempString);
       if (*bufTempString != (char *)0x0) {
-        pcVar1 = AssetBuf_FindStreamData(*bufTempString);
-        *bufoutTempString = pcVar1;
+        pcVar2 = AssetBuf_FindStreamData(*bufTempString);
+        *bufoutTempString = pcVar2;
         if (*bufoutTempString == (char *)0xffffffff) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                           ,0xfd4,0,"%s");
         }
         if (*bufoutTempString == (char *)0x0) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufoutTempString = (char *)puVar2;
+          puVar3 = AssetBuf_AllocStreamPos(0);
+          *bufoutTempString = (char *)puVar3;
           bufConstChar = *bufTempString;
           bufstreamConstChar = *bufoutTempString;
           AssetBuf_SetStreamData(*bufTempString,*bufoutTempString);
           *bufoutTempString = (char *)0xffffffff;
-          pcVar1 = *bufTempString;
+          pcVar2 = *bufTempString;
           do {
-            cVar3 = *pcVar1;
-            pcVar1 = pcVar1 + 1;
-          } while (cVar3 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar1 - (int)*bufTempString,&bufoutConstChar);
+            cVar1 = *pcVar2;
+            pcVar2 = pcVar2 + 1;
+          } while (cVar1 != '\0');
+          SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufTempString,&bufoutConstChar);
         }
       }
       bufTempString = (char **)AssetBuf_GetSourcePos();
@@ -9338,23 +9329,23 @@ void SaveBuffer_TempStringStream(bool param_1,int param_2)
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 825F1AB8  SaveBuffer_XString  (database/db_primtypes_save_buf.h:4121)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XString(bool param_1)
 
 {
   char cVar1;
-  bool bVar4;
   char *pcVar2;
   uchar *puVar3;
   
-  bVar4 = (bool)__savegprlr_29(param_1);
-  SaveBuffer_Stream(bVar4,bufXString,4,&bufoutXString);
+  SaveBuffer_Stream(param_1,bufXString,4,&bufoutXString);
   if (*bufXString != (char *)0x0) {
     pcVar2 = AssetBuf_FindStreamData(*bufXString);
     *bufoutXString = pcVar2;
@@ -9377,7 +9368,6 @@ void SaveBuffer_XString(bool param_1)
       SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufXString,&bufoutConstChar);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -9398,30 +9388,31 @@ char ** AllocSaveBuffer_XString(void)
 
 // 825F1BE0  SaveBuffer_XStringArray  (database/db_primtypes_save_buf.h:4151)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XStringArray(bool param_1,int param_2)
 
 {
   char cVar1;
-  bool bVar4;
   char *pcVar2;
   uchar *puVar3;
+  char **ppcVar4;
   char **ppcVar5;
   char **ppcVar6;
-  char **ppcVar7;
-  ulonglong uVar8;
+  longlong lVar7;
   
-  uVar8 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_18(param_1);
-  SaveBuffer_Stream(bVar4,bufXString,(int)((uVar8 & 0xffffffff) << 2),&bufoutXString);
-  ppcVar7 = bufXString;
-  ppcVar5 = bufoutXString;
-  ppcVar6 = bufstreamXString;
-  if (0 < (int)uVar8) {
+  lVar7 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufXString,param_2 << 2,&bufoutXString);
+  ppcVar6 = bufXString;
+  ppcVar4 = bufoutXString;
+  ppcVar5 = bufstreamXString;
+  if (0 < param_2) {
     do {
-      bufoutXString = ppcVar5;
-      bufstreamXString = ppcVar6;
-      bufXString = ppcVar7;
-      SaveBuffer_Stream(false,ppcVar7,4,&bufoutXString);
+      bufoutXString = ppcVar4;
+      bufstreamXString = ppcVar5;
+      bufXString = ppcVar6;
+      SaveBuffer_Stream(false,ppcVar6,4,&bufoutXString);
       if (*bufXString != (char *)0x0) {
         pcVar2 = AssetBuf_FindStreamData(*bufXString);
         *bufoutXString = pcVar2;
@@ -9444,56 +9435,57 @@ void SaveBuffer_XStringArray(bool param_1,int param_2)
           SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufXString,&bufoutConstChar);
         }
       }
-      uVar8 = uVar8 - 1;
-      ppcVar7 = ppcVar7 + 1;
-      ppcVar5 = ppcVar5 + 1;
+      lVar7 = lVar7 + -1;
       ppcVar6 = ppcVar6 + 1;
-    } while (uVar8 != 0);
+      ppcVar4 = ppcVar4 + 1;
+      ppcVar5 = ppcVar5 + 1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 825F1D60  SaveBuffer_XStringStream  (database/db_primtypes_save_buf.h:4181)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XStringStream(bool param_1,int param_2)
 
 {
-  char cVar3;
-  char *pcVar1;
-  uchar *puVar2;
+  char cVar1;
+  char *pcVar2;
+  uchar *puVar3;
   longlong lVar4;
   
   lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_21(param_1);
-  if (cVar3 == '\0') {
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x1058,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufXString,4,&bufoutXString);
       if (*bufXString != (char *)0x0) {
-        pcVar1 = AssetBuf_FindStreamData(*bufXString);
-        *bufoutXString = pcVar1;
+        pcVar2 = AssetBuf_FindStreamData(*bufXString);
+        *bufoutXString = pcVar2;
         if (*bufoutXString == (char *)0xffffffff) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                           ,0x101f,0,"%s");
         }
         if (*bufoutXString == (char *)0x0) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufoutXString = (char *)puVar2;
+          puVar3 = AssetBuf_AllocStreamPos(0);
+          *bufoutXString = (char *)puVar3;
           bufConstChar = *bufXString;
           bufstreamConstChar = *bufoutXString;
           AssetBuf_SetStreamData(*bufXString,*bufoutXString);
           *bufoutXString = (char *)0xffffffff;
-          pcVar1 = *bufXString;
+          pcVar2 = *bufXString;
           do {
-            cVar3 = *pcVar1;
-            pcVar1 = pcVar1 + 1;
-          } while (cVar3 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar1 - (int)*bufXString,&bufoutConstChar);
+            cVar1 = *pcVar2;
+            pcVar2 = pcVar2 + 1;
+          } while (cVar1 != '\0');
+          SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufXString,&bufoutConstChar);
         }
       }
       bufXString = (char **)AssetBuf_GetSourcePos();
@@ -9501,7 +9493,6 @@ void SaveBuffer_XStringStream(bool param_1,int param_2)
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -9551,28 +9542,29 @@ char *** AllocSaveBuffer_XStringPtr(void)
 
 // 825F1FF0  SaveBuffer_XStringPtrArray  (database/db_primtypes_save_buf.h:4226)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XStringPtrArray(bool param_1,int param_2)
 
 {
-  bool bVar2;
   char **ppcVar1;
+  char ***pppcVar2;
   char ***pppcVar3;
   char ***pppcVar4;
-  char ***pppcVar5;
-  ulonglong uVar6;
+  longlong lVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar2,bufXStringPtr,(int)((uVar6 & 0xffffffff) << 2),&bufoutXStringPtr);
-  pppcVar5 = bufXStringPtr;
-  pppcVar3 = bufoutXStringPtr;
-  pppcVar4 = bufstreamXStringPtr;
-  if (0 < (int)uVar6) {
+  lVar5 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufXStringPtr,param_2 << 2,&bufoutXStringPtr);
+  pppcVar4 = bufXStringPtr;
+  pppcVar2 = bufoutXStringPtr;
+  pppcVar3 = bufstreamXStringPtr;
+  if (0 < param_2) {
     do {
-      bufstreamXStringPtr = pppcVar4;
-      bufoutXStringPtr = pppcVar3;
-      bufXStringPtr = pppcVar5;
-      SaveBuffer_Stream(false,pppcVar5,4,&bufoutXStringPtr);
+      bufstreamXStringPtr = pppcVar3;
+      bufoutXStringPtr = pppcVar2;
+      bufXStringPtr = pppcVar4;
+      SaveBuffer_Stream(false,pppcVar4,4,&bufoutXStringPtr);
       if (*bufXStringPtr != (char **)0x0) {
         ppcVar1 = AssetBuf_FindStreamData(*bufXStringPtr);
         *bufoutXStringPtr = ppcVar1;
@@ -9590,33 +9582,33 @@ void SaveBuffer_XStringPtrArray(bool param_1,int param_2)
           SaveBuffer_XString(true);
         }
       }
-      uVar6 = uVar6 - 1;
-      pppcVar5 = pppcVar5 + 1;
-      pppcVar3 = pppcVar3 + 1;
+      lVar5 = lVar5 + -1;
       pppcVar4 = pppcVar4 + 1;
-    } while (uVar6 != 0);
+      pppcVar2 = pppcVar2 + 1;
+      pppcVar3 = pppcVar3 + 1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 825F2130  SaveBuffer_XStringPtrStream  (database/db_primtypes_save_buf.h:4256)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XStringPtrStream(bool param_1,int param_2)
 
 {
-  char cVar2;
   char **ppcVar1;
-  longlong lVar3;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_22(param_1);
-  if (cVar2 == '\0') {
+  lVar2 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x10a3,0,"%s");
   }
-  if (0 < (int)lVar3) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufXStringPtr,4,&bufoutXStringPtr);
       if (*bufXStringPtr != (char **)0x0) {
@@ -9638,10 +9630,9 @@ void SaveBuffer_XStringPtrStream(bool param_1,int param_2)
       }
       bufXStringPtr = (char ***)AssetBuf_GetSourcePos();
       bufstreamXStringPtr = (char ***)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -9691,30 +9682,30 @@ ScriptStringList * AllocSaveBuffer_ScriptStringList(void)
 
 // 825F2370  SaveBuffer_ScriptStringListArray  (database/db_primtypes_save_buf.h:4308)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ScriptStringListArray(bool param_1,int param_2)
 
 {
-  bool bVar3;
   void *pvVar1;
   char **ppcVar2;
+  ScriptStringList *pSVar3;
   ScriptStringList *pSVar4;
   ScriptStringList *pSVar5;
-  ScriptStringList *pSVar6;
-  ulonglong uVar7;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufScriptStringList,(int)((uVar7 & 0xffffffff) << 3),
-                    &bufoutScriptStringList);
-  pSVar6 = bufScriptStringList;
-  pSVar4 = bufoutScriptStringList;
-  pSVar5 = bufstreamScriptStringList;
-  if (0 < (int)uVar7) {
+  lVar6 = (longlong)param_2;
+  SaveBuffer_Stream(param_1,bufScriptStringList,param_2 << 3,&bufoutScriptStringList);
+  pSVar5 = bufScriptStringList;
+  pSVar3 = bufoutScriptStringList;
+  pSVar4 = bufstreamScriptStringList;
+  if (0 < param_2) {
     do {
-      bufstreamScriptStringList = pSVar5;
-      bufoutScriptStringList = pSVar4;
-      bufScriptStringList = pSVar6;
-      SaveBuffer_Stream(false,pSVar6,8,&bufoutScriptStringList);
+      bufstreamScriptStringList = pSVar4;
+      bufoutScriptStringList = pSVar3;
+      bufScriptStringList = pSVar5;
+      SaveBuffer_Stream(false,pSVar5,8,&bufoutScriptStringList);
       AssetBuf_PushStreamPos(3);
       if (bufScriptStringList->strings != (char **)0x0) {
         pvVar1 = AssetBuf_FindStreamData(bufScriptStringList->strings);
@@ -9731,34 +9722,34 @@ void SaveBuffer_ScriptStringListArray(bool param_1,int param_2)
         SaveBuffer_TempStringArray(true,bufScriptStringList->count);
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
+      lVar6 = lVar6 + -1;
       pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      pSVar3 = pSVar3 + 1;
+      pSVar4 = pSVar4 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 825F24A8  SaveBuffer_ScriptStringListStream  (database/db_primtypes_save_buf.h:4338)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_ScriptStringListStream(bool param_1,int param_2)
 
 {
-  char cVar3;
   void *pvVar1;
   char **ppcVar2;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
-  if (cVar3 == '\0') {
+  lVar3 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x10f5,0,"%s");
   }
-  if (0 < (int)lVar4) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufScriptStringList,8,&bufoutScriptStringList);
       AssetBuf_PushStreamPos(3);
@@ -9779,10 +9770,9 @@ void SaveBuffer_ScriptStringListStream(bool param_1,int param_2)
       AssetBuf_PopStreamPos();
       bufScriptStringList = (ScriptStringList *)AssetBuf_GetSourcePos();
       bufstreamScriptStringList = (ScriptStringList *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -9827,19 +9817,20 @@ void SaveBuffer_XZoneHandleArray(bool param_1,int param_2)
 
 // 825F2688  SaveBuffer_XZoneHandleStream  (database/db_primtypes_save_buf.h:4403)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_XZoneHandleStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x1136,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufXZoneHandle,1,&bufoutXZoneHandle);
       bufbyte = bufXZoneHandle;
@@ -9848,10 +9839,9 @@ void SaveBuffer_XZoneHandleStream(bool param_1,int param_2)
       SaveBuffer_Stream(false,bufXZoneHandle,1,&bufoutbyte);
       bufXZoneHandle = AssetBuf_GetSourcePos();
       bufstreamXZoneHandle = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -9892,27 +9882,27 @@ void SaveBuffer_complex_tArray(bool param_1,int param_2)
 
 // 825F2788  SaveBuffer_complex_tStream  (database/db_primtypes_save_buf.h:4477)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_complex_tStream(bool param_1,int param_2)
 
 {
-  char cVar1;
-  longlong lVar2;
+  longlong lVar1;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 == '\0') {
+  lVar1 = (longlong)param_2;
+  if (!param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
                     ,0x1180,0,"%s");
   }
-  if (0 < (int)lVar2) {
+  if (0 < param_2) {
     do {
       SaveBuffer_Stream(true,bufcomplex_t,8,&bufoutcomplex_t);
       bufcomplex_t = (complex_s *)AssetBuf_GetSourcePos();
       bufstreamcomplex_t = (complex_s *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  __restgprlr_28();
   return;
 }
 

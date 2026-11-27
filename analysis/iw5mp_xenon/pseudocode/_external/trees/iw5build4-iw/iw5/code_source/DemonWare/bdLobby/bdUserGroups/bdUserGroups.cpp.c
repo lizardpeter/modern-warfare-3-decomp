@@ -22,6 +22,9 @@ void __thiscall bdUserGroups::~bdUserGroups(bdUserGroups *this)
 
 // 8290C8B0  getMemberships  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdusergroups/bdusergroups.cpp:299)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdUserGroups::getMemberships
           (bdUserGroups *this,ulong64 *param_1,uint param_2,bdUserGroupMembershipInfo *param_3,
@@ -30,72 +33,68 @@ bdUserGroups::getMemberships
 {
   uint uVar1;
   bool bVar2;
-  bdReference<bdRemoteTask> *pbVar4;
-  bdTaskByteBuffer *pbVar5;
+  bdTaskByteBuffer *pbVar4;
   ulonglong uVar3;
-  bool bVar8;
-  bdLobbyErrorCode bVar6;
-  bdRemoteTask *pbVar7;
-  ulonglong uVar9;
+  bool bVar6;
+  bdLobbyErrorCode bVar5;
   uint in_r8;
-  uint *puVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  uint *puVar7;
+  bdUserGroupMembershipInfo *pbVar8;
   char in_RESERVE;
-  byte bVar13;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar9;
+  bdUserGroups *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  uVar9 = (ulonglong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  pbVar4 = (bdReference<bdRemoteTask> *)__savegprlr_23(this);
-  uVar12 = 0;
-  pbVar4->m_ptr = (bdRemoteTask *)0x0;
+  pbVar8 = (bdUserGroupMembershipInfo *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_5c = 1;
-  pbStack00000014 = pbVar4;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar13 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar9 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
     uVar3 = 0;
   }
   else {
-    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,(int)uVar9 * 9 + 0x40,true);
-    uVar3 = (ulonglong)(int)pbVar5;
+    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,(int)param_3 * 9 + 0x40,true);
+    uVar3 = (ulonglong)(int)pbVar4;
   }
   local_60.m_ptr = (bdTaskByteBuffer *)uVar3;
   if ((uVar3 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar3 + 4);
+      puVar7 = (uint *)(uVar3 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar3 + 4);
-        *puVar10 = uVar1;
-        bVar13 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar3 + 4);
+        *puVar7 = uVar1;
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar13 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'A','\t');
-  bVar8 = true;
-  if ((uVar9 & 0xffffffff) != 0) {
+  bVar6 = true;
+  if (param_3 != (bdUserGroupMembershipInfo *)0x0) {
     do {
-      bVar2 = bVar8 == false;
-      bVar8 = false;
+      bVar2 = bVar6 == false;
+      bVar6 = false;
       if (bVar2) break;
-      bVar8 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)lVar11);
-      uVar12 = uVar12 + 1;
-      lVar11 = lVar11 + 8;
-    } while ((uVar12 & 0xffffffff) < (uVar9 & 0xffffffff));
+      bVar6 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)param_2);
+      pbVar8 = (bdUserGroupMembershipInfo *)((int)&pbVar8->_padding_ + 1);
+      param_2 = param_2 + 8;
+    } while (pbVar8 < param_3);
   }
-  if (bVar8 == false) {
+  if (bVar6 == false) {
     bdLogMessage(BD_LOG_WARNING,"warn/","userGroups",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdUserGroups\\bdUserGroups.cpp"
                  ,"bdUserGroups::getMemberships",0x148,"Failed to write param into buffer");
   }
   else {
-    bVar6 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar4,&local_60);
-    if (bVar6 == BD_NO_ERROR) {
-      bdRemoteTask::setTaskResult(pbVar4->m_ptr,(bdTaskResult *)param_4,in_r8);
+    bVar5 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_60)
+    ;
+    if (bVar5 == BD_NO_ERROR) {
+      bdRemoteTask::setTaskResult
+                ((bdRemoteTask *)this->m_remoteTaskManager,(bdTaskResult *)param_4,in_r8);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/","userGroups",
@@ -104,7 +103,6 @@ bdUserGroups::getMemberships
     }
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar7 = (bdRemoteTask *)__restgprlr_23(pbVar4);
-  return (bdReference<bdRemoteTask>)pbVar7;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

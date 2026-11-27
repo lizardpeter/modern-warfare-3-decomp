@@ -40,6 +40,8 @@ void _dynamic_initializer_for__s_FacebookAccounts__(void)
 
 // 826FC4B0  Facebook_Shutdown  (social/fb_authenticate.cpp:95)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_Shutdown(void)
@@ -52,7 +54,6 @@ void Facebook_Shutdown(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   pbVar4 = g_DWFacebookTask;
   do {
     pbVar1 = pbVar4->m_ptr;
@@ -77,13 +78,14 @@ void Facebook_Shutdown(void)
     }
     pbVar4 = pbVar4 + 1;
   } while ((int)pbVar4 < -0x7bae21b8);
-  __restgprlr_29();
   return;
 }
 
 
 // 826FC550  Facebook_UserSignedOut  (social/fb_authenticate.cpp:105)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -92,50 +94,47 @@ void Facebook_UserSignedOut(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar5;
-  UiContext *pUVar3;
-  char *pcVar4;
+  bool bVar4;
+  UiContext *pUVar2;
+  char *pcVar3;
   LocalClientNum_t local_40 [16];
   
-  iVar1 = __savegprlr_26(param_1);
-  if ((g_DWFacebookTask[iVar1].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar2 = (**(code **)((g_DWFacebookTask[iVar1].m_ptr)->_padding_ + 4))(), iVar2 == 1)) {
-    bdRemoteTask::cancelTask(g_DWFacebookTask[iVar1].m_ptr);
-    bVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_40);
-    if ((bVar5) && (pUVar3 = UI_GetClientDC(local_40[0]), pUVar3 != (UiContext *)0x0)) {
-      if (g_DWFacebookTaskType[iVar1] == FACEBOOK_DW_TASK_TYPE_REGISTERING) {
-        Menus_CloseByName(pUVar3,"popup_facebook_authenticating");
-        Menus_CloseByName(pUVar3,"popup_facebook");
-        pcVar4 = UI_SafeTranslateString("MENU_FACEBOOK_UNAVAILABLE");
-        Dvar_SetString(facebook_popup_text,pcVar4);
+  if ((g_DWFacebookTask[param_1].m_ptr != (bdRemoteTask *)0x0) &&
+     (iVar1 = (**(code **)((g_DWFacebookTask[param_1].m_ptr)->_padding_ + 4))(), iVar1 == 1)) {
+    bdRemoteTask::cancelTask(g_DWFacebookTask[param_1].m_ptr);
+    bVar4 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_40);
+    if ((bVar4) && (pUVar2 = UI_GetClientDC(local_40[0]), pUVar2 != (UiContext *)0x0)) {
+      if (g_DWFacebookTaskType[param_1] == FACEBOOK_DW_TASK_TYPE_REGISTERING) {
+        Menus_CloseByName(pUVar2,"popup_facebook_authenticating");
+        Menus_CloseByName(pUVar2,"popup_facebook");
+        pcVar3 = UI_SafeTranslateString("MENU_FACEBOOK_UNAVAILABLE");
+        Dvar_SetString(facebook_popup_text,pcVar3);
       }
       else {
-        if (g_DWFacebookTaskType[iVar1] != FACEBOOK_DW_TASK_TYPE_UNREGISTERING) goto LAB_826fc664;
-        Menus_CloseByName(pUVar3,"popup_facebook_unregistering");
-        pcVar4 = UI_SafeTranslateString("MENU_FACEBOOK_UNAVAILABLE");
-        Dvar_SetString(facebook_popup_text,pcVar4);
+        if (g_DWFacebookTaskType[param_1] != FACEBOOK_DW_TASK_TYPE_UNREGISTERING) goto LAB_826fc664;
+        Menus_CloseByName(pUVar2,"popup_facebook_unregistering");
+        pcVar3 = UI_SafeTranslateString("MENU_FACEBOOK_UNAVAILABLE");
+        Dvar_SetString(facebook_popup_text,pcVar3);
       }
-      Menus_OpenByName(pUVar3,"popup_facebook_authentication_popup");
+      Menus_OpenByName(pUVar2,"popup_facebook_authentication_popup");
     }
   }
 LAB_826fc664:
-  s_facebookAgeVerified[iVar1] = false;
-  (&DAT_8451dbc4)[iVar1] = 0;
-  s_facebookAgeDone[iVar1] = false;
-  g_HasFacebookRegisterCheckCompleted[iVar1] = false;
-  g_FacebookIsRegistered[iVar1] = false;
-  g_DWFacebookTaskStage[iVar1] = FACEBOOK_DW_TASK_STAGE_WAITING;
-  g_FacebookRetryTime[iVar1] = 0;
-  g_DWFacebookTaskType[iVar1] = FACEBOOK_DW_TASK_TYPE_CHECKING_IF_REGISTERED;
-  g_FacebookRetryAttempts[iVar1] = 0;
+  s_facebookAgeVerified[param_1] = false;
+  (&DAT_8451dbc4)[param_1] = 0;
+  s_facebookAgeDone[param_1] = false;
+  g_HasFacebookRegisterCheckCompleted[param_1] = false;
+  g_FacebookIsRegistered[param_1] = false;
+  g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WAITING;
+  g_FacebookRetryTime[param_1] = 0;
+  g_DWFacebookTaskType[param_1] = FACEBOOK_DW_TASK_TYPE_CHECKING_IF_REGISTERED;
+  g_FacebookRetryAttempts[param_1] = 0;
   guideKeyboard_Buffer[0] = L'\0';
   guideKeyboardTitle[0] = L'\0';
   guideKeyboardDefault[0] = '\0';
   Dvar_SetString(facebook_username,"");
   Dvar_SetString(facebook_password,"");
   Dvar_SetString(facebook_password_asterisk,"");
-  __restgprlr_26();
   return;
 }
 
@@ -175,6 +174,8 @@ void Facebook_CreatePassword_Asterisks(void)
 
 // 826FB8A8  Facebook_UserKeyboard  (social/fb_authenticate.cpp:180)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -187,7 +188,6 @@ void Facebook_UserKeyboard(void)
   int iVar4;
   char acStack_a0 [160];
   
-  __savegprlr_29();
   LVar1 = Cmd_LocalClientNum();
   uVar2 = CL_ControllerIndexFromClientNum(LVar1);
   pcVar3 = UI_SafeTranslateString("MENU_FACEBOOK_USERNAME");
@@ -203,11 +203,9 @@ void Facebook_UserKeyboard(void)
                           &guideKeyboard_pOverlapped);
   if (uVar2 != 0x3e5) {
     Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
-    __restgprlr_29();
     return;
   }
   facebookUsernameKeyboardActiveGlobal = true;
-  __restgprlr_29();
   return;
 }
 
@@ -244,6 +242,8 @@ void Facebook_UserKeyboardComplete(int param_1)
 
 // 826FBA98  Facebook_PasswordKeyboard  (social/fb_authenticate.cpp:261)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -256,7 +256,6 @@ void Facebook_PasswordKeyboard(void)
   int iVar4;
   char acStack_a0 [160];
   
-  __savegprlr_29();
   LVar1 = Cmd_LocalClientNum();
   uVar2 = CL_ControllerIndexFromClientNum(LVar1);
   pcVar3 = UI_SafeTranslateString("MENU_FACEBOOK_PASSWORD");
@@ -272,11 +271,9 @@ void Facebook_PasswordKeyboard(void)
                           &guideKeyboard_pOverlapped);
   if (uVar2 != 0x3e5) {
     Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
-    __restgprlr_29();
     return;
   }
   facebookPasswordKeyboardActiveGlobal = true;
-  __restgprlr_29();
   return;
 }
 
@@ -314,6 +311,8 @@ void Facebook_PasswordKeyboardComplete(int param_1)
 
 // 826FBC88  Facebook_SocialConfigComplete_Callback  (social/fb_authenticate.cpp:360)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_SocialConfigComplete_Callback(void)
@@ -324,7 +323,6 @@ void Facebook_SocialConfigComplete_Callback(void)
   DvarValue *pDVar3;
   int *piVar4;
   
-  __savegprlr_28();
   piVar4 = g_FacebookRetryTime;
   pDVar3 = &facebook_delay->current;
   pdVar2 = facebook_delay;
@@ -340,7 +338,6 @@ void Facebook_SocialConfigComplete_Callback(void)
     }
     piVar4 = piVar4 + 1;
   } while ((int)piVar4 < -0x7bae243c);
-  __restgprlr_28();
   return;
 }
 
@@ -518,33 +515,35 @@ bool Facebook_IsChecking(int param_1)
 
 // 826FBF18  Facebook_RetryCheckingIfRegistered  (social/fb_authenticate.cpp:470)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Facebook_RetryCheckingIfRegistered(int param_1)
 
 {
   dvar_t *pdVar1;
   dvar_t *pdVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
+  uint uVar3;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
   pdVar2 = facebook_max_retry_time;
   pdVar1 = facebook_retry_step;
-  iVar5 = g_FacebookRetryAttempts[iVar3];
-  g_FacebookRetryAttempts[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar1->current).integer / 1000) * (iVar5 + 1),
+  iVar4 = g_FacebookRetryAttempts[param_1];
+  g_FacebookRetryAttempts[param_1] = iVar4 + 1;
+  uVar3 = Live_GenerateTimeToRetryInSeconds
+                    (((pdVar1->current).integer / 1000) * (iVar4 + 1),
                      (pdVar2->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  g_DWFacebookTaskStage[iVar3] = FACEBOOK_DW_TASK_STAGE_WAITING;
-  g_FacebookRetryTime[iVar3] = iVar5 + uVar4 * 1000;
-  __restgprlr_29();
+  iVar4 = Sys_Milliseconds();
+  g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WAITING;
+  g_FacebookRetryTime[param_1] = iVar4 + uVar3 * 1000;
   return;
 }
 
 
 // 826FC8C0  Facebook_UpdateCheckingIfRegistered  (social/fb_authenticate.cpp:478)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Facebook_UpdateCheckingIfRegistered(int param_1)
@@ -553,73 +552,85 @@ void Facebook_UpdateCheckingIfRegistered(int param_1)
   bdRemoteTask *pbVar1;
   bool bVar2;
   int iVar3;
-  int iVar4;
-  bdLobbyErrorCode bVar5;
-  uint uVar6;
-  bool bVar9;
-  bdFacebook *pbVar7;
-  bdReference<bdRemoteTask> bVar8;
+  bdLobbyErrorCode bVar4;
+  uint uVar5;
+  bool bVar8;
+  bdFacebook *pbVar6;
+  bdReference<bdRemoteTask> bVar7;
   LocalClientNum_t local_50;
   bdReference<bdRemoteTask> abStack_4c [19];
   
-  iVar3 = __savegprlr_25(param_1);
   bVar2 = false;
-  if (g_DWFacebookTaskStage[iVar3] == FACEBOOK_DW_TASK_STAGE_WAITING) {
-    bVar9 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,&local_50);
-    if ((bVar9) && (iVar4 = CL_IsCgameInitialized(local_50), iVar4 != 0)) {
+  if (g_DWFacebookTaskStage[param_1] == FACEBOOK_DW_TASK_STAGE_WAITING) {
+    bVar8 = CL_DoesControllerIndexHaveALocalClientNum(param_1,&local_50);
+    if ((bVar8) && (iVar3 = CL_IsCgameInitialized(local_50), iVar3 != 0)) {
       bVar2 = true;
     }
-    pbVar7 = dwGetFacebook(iVar3);
-    if ((((pbVar7 == (bdFacebook *)0x0) || (g_FacebookRetryTime[iVar3] < 0)) ||
-        (iVar4 = Sys_Milliseconds(), iVar4 <= g_FacebookRetryTime[iVar3])) || (bVar2))
-    goto LAB_826fcac8;
-    g_FacebookRetryTime[iVar3] = 0;
-    bVar8 = bdFacebook::getRegisteredAccounts
-                      ((bdFacebook *)abStack_4c,(uint)pbVar7,(bdFacebookAccount *)0x1);
+    pbVar6 = dwGetFacebook(param_1);
+    if (pbVar6 == (bdFacebook *)0x0) {
+      return;
+    }
+    if (g_FacebookRetryTime[param_1] < 0) {
+      return;
+    }
+    iVar3 = Sys_Milliseconds();
+    if (iVar3 <= g_FacebookRetryTime[param_1]) {
+      return;
+    }
+    if (bVar2) {
+      return;
+    }
+    g_FacebookRetryTime[param_1] = 0;
+    bVar7 = bdFacebook::getRegisteredAccounts
+                      ((bdFacebook *)abStack_4c,(uint)pbVar6,(bdFacebookAccount *)0x1);
     bdReference<bdRemoteTask>::operator=
-              (g_DWFacebookTask + iVar3,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
+              (g_DWFacebookTask + param_1,(bdReference<bdRemoteTask> *)bVar7.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_4c);
-    pbVar1 = g_DWFacebookTask[iVar3].m_ptr;
+    pbVar1 = g_DWFacebookTask[param_1].m_ptr;
     if ((pbVar1 != (bdRemoteTask *)0x0) &&
-       (iVar4 = (**(code **)(pbVar1->_padding_ + 4))(), iVar4 == 1)) {
-      g_DWFacebookTaskStage[iVar3] = FACEBOOK_DW_TASK_STAGE_WORKING;
-      __restgprlr_25();
+       (iVar3 = (**(code **)(pbVar1->_padding_ + 4))(), iVar3 == 1)) {
+      g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WORKING;
       return;
     }
   }
   else {
-    if (g_DWFacebookTaskStage[iVar3] != FACEBOOK_DW_TASK_STAGE_WORKING) goto LAB_826fcac8;
-    if ((g_DWFacebookTask[iVar3].m_ptr == (bdRemoteTask *)0x0) ||
-       (iVar4 = (**(code **)((g_DWFacebookTask[iVar3].m_ptr)->_padding_ + 4))(), iVar4 == 1))
-    goto LAB_826fcac8;
-    bVar5 = bdRemoteTask::getErrorCode(g_DWFacebookTask[iVar3].m_ptr);
-    if ((iVar4 == 2) && (bVar5 == BD_NO_ERROR)) {
-      uVar6 = bdRemoteTask::getNumResults(g_DWFacebookTask[iVar3].m_ptr);
-      g_FacebookIsRegistered[iVar3] = uVar6 != 0;
-      g_HasFacebookRegisterCheckCompleted[iVar3] = true;
-      if (uVar6 != 0) {
+    if (g_DWFacebookTaskStage[param_1] != FACEBOOK_DW_TASK_STAGE_WORKING) {
+      return;
+    }
+    if (g_DWFacebookTask[param_1].m_ptr == (bdRemoteTask *)0x0) {
+      return;
+    }
+    iVar3 = (**(code **)((g_DWFacebookTask[param_1].m_ptr)->_padding_ + 4))();
+    if (iVar3 == 1) {
+      return;
+    }
+    bVar4 = bdRemoteTask::getErrorCode(g_DWFacebookTask[param_1].m_ptr);
+    if ((iVar3 == 2) && (bVar4 == BD_NO_ERROR)) {
+      uVar5 = bdRemoteTask::getNumResults(g_DWFacebookTask[param_1].m_ptr);
+      g_FacebookIsRegistered[param_1] = uVar5 != 0;
+      g_HasFacebookRegisterCheckCompleted[param_1] = true;
+      if (uVar5 != 0) {
         Dvar_SetString(facebook_username,"");
         Dvar_SetString(facebook_password,"");
         Dvar_SetString(facebook_password_asterisk,"");
-        Facebook_GetFriends(iVar3);
+        Facebook_GetFriends(param_1);
       }
-      g_DWFacebookTaskStage[iVar3] = FACEBOOK_DW_TASK_STAGE_WAITING;
-      g_FacebookRetryAttempts[iVar3] = 0;
-      g_DWFacebookTaskType[iVar3] = FACEBOOK_DW_TASK_TYPE_FINISHED;
-      g_FacebookRetryTime[iVar3] = 0;
-      __restgprlr_25();
+      g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WAITING;
+      g_FacebookRetryAttempts[param_1] = 0;
+      g_DWFacebookTaskType[param_1] = FACEBOOK_DW_TASK_TYPE_FINISHED;
+      g_FacebookRetryTime[param_1] = 0;
       return;
     }
   }
-  Facebook_RetryCheckingIfRegistered(iVar3);
-LAB_826fcac8:
-  __restgprlr_25();
+  Facebook_RetryCheckingIfRegistered(param_1);
   return;
 }
 
 
 // 826FCAD0  Facebook_UpdateRegistering  (social/fb_authenticate.cpp:561)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -628,80 +639,87 @@ void Facebook_UpdateRegistering(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  bdLobbyErrorCode bVar3;
-  bool bVar7;
-  UiContext *pUVar4;
-  char *pcVar5;
-  int iVar6;
+  bdLobbyErrorCode bVar2;
+  bool bVar5;
+  UiContext *pUVar3;
+  char *pcVar4;
   LocalClientNum_t local_50 [20];
   
-  iVar1 = __savegprlr_24(param_1);
-  iVar6 = iVar1;
-  if (g_DWFacebookTaskStage[iVar1] != FACEBOOK_DW_TASK_STAGE_WORKING) goto LAB_826fcc74;
-  iVar6 = 0;
-  if (g_DWFacebookTask[iVar1].m_ptr == (bdRemoteTask *)0x0) goto LAB_826fcc74;
-  iVar2 = (**(code **)((g_DWFacebookTask[iVar1].m_ptr)->_padding_ + 4))();
-  iVar6 = 1;
-  if (iVar2 == 1) goto LAB_826fcc74;
-  bVar3 = bdRemoteTask::getErrorCode(g_DWFacebookTask[iVar1].m_ptr);
-  bVar7 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_50);
-  iVar6 = 0;
-  if (!bVar7) goto LAB_826fcc74;
-  pUVar4 = UI_GetClientDC(local_50[0]);
-  iVar6 = 0;
-  if (pUVar4 == (UiContext *)0x0) goto LAB_826fcc74;
-  Menus_CloseByName(pUVar4,"popup_facebook_authenticating");
-  g_FacebookIsRegistered[iVar1] = false;
-  if (iVar2 == 4) {
-    pcVar5 = "MENU_FACEBOOK_UNAVAILABLE";
+  if (g_DWFacebookTaskStage[param_1] != FACEBOOK_DW_TASK_STAGE_WORKING) {
+    return;
   }
-  else if ((int)bVar3 < 0xe1a) {
-    if (bVar3 == BD_FACEBOOK_DISABLED_FOR_USER) {
-      pcVar5 = "MENU_FACEBOOK_DISABLED_FOR_USER";
-    }
-    else if ((int)bVar3 < 0xe13) {
-      if ((int)bVar3 < 0xe11) {
-        if (bVar3 != BD_NO_ERROR) goto LAB_826fcc1c;
-        g_FacebookIsRegistered[iVar1] = true;
-        Menus_CloseByName(pUVar4,"popup_facebook_authenticate");
-        Facebook_GetFriends(iVar1);
-        pcVar5 = "MENU_FACEBOOK_OK";
-      }
-      else {
-        pcVar5 = "MENU_FACEBOOK_AUTH_FAIL";
-      }
-    }
-    else if (bVar3 == BD_FACEBOOK_UNAVAILABLE) {
-      pcVar5 = "MENU_FACEBOOK_UNAVAILABLE";
-    }
-    else {
-LAB_826fcc1c:
-      pcVar5 = "MENU_FACEBOOK_ERROR";
-    }
+  if (g_DWFacebookTask[param_1].m_ptr == (bdRemoteTask *)0x0) {
+    return;
   }
-  else if (bVar3 == BD_FACEBOOK_MAXIMUM_ACCOUNTS_REACHED) {
-    pcVar5 = "MENU_FACEBOOK_MAX_ACCOUNTS";
+  iVar1 = (**(code **)((g_DWFacebookTask[param_1].m_ptr)->_padding_ + 4))();
+  if (iVar1 == 1) {
+    return;
+  }
+  bVar2 = bdRemoteTask::getErrorCode(g_DWFacebookTask[param_1].m_ptr);
+  bVar5 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_50);
+  if (!bVar5) {
+    return;
+  }
+  pUVar3 = UI_GetClientDC(local_50[0]);
+  if (pUVar3 == (UiContext *)0x0) {
+    return;
+  }
+  Menus_CloseByName(pUVar3,"popup_facebook_authenticating");
+  g_FacebookIsRegistered[param_1] = false;
+  if (iVar1 == 4) {
+    pcVar4 = "MENU_FACEBOOK_UNAVAILABLE";
+    goto LAB_826fcc3c;
+  }
+  if ((int)bVar2 < 0xe1a) {
+    if (bVar2 == BD_FACEBOOK_DISABLED_FOR_USER) {
+      pcVar4 = "MENU_FACEBOOK_DISABLED_FOR_USER";
+      goto LAB_826fcc3c;
+    }
+    if ((int)bVar2 < 0xe13) {
+      if (0xe10 < (int)bVar2) {
+        pcVar4 = "MENU_FACEBOOK_AUTH_FAIL";
+        goto LAB_826fcc3c;
+      }
+      if (bVar2 == BD_NO_ERROR) {
+        g_FacebookIsRegistered[param_1] = true;
+        Menus_CloseByName(pUVar3,"popup_facebook_authenticate");
+        Facebook_GetFriends(param_1);
+        pcVar4 = "MENU_FACEBOOK_OK";
+        goto LAB_826fcc3c;
+      }
+    }
+    else if (bVar2 == BD_FACEBOOK_UNAVAILABLE) {
+      pcVar4 = "MENU_FACEBOOK_UNAVAILABLE";
+      goto LAB_826fcc3c;
+    }
   }
   else {
-    if (bVar3 != BD_FACEBOOK_ACCOUNT_ALREADY_REGISTERED) goto LAB_826fcc1c;
-    pcVar5 = "MENU_FACEBOOK_ALREADY_REGISTERED";
+    if (bVar2 == BD_FACEBOOK_MAXIMUM_ACCOUNTS_REACHED) {
+      pcVar4 = "MENU_FACEBOOK_MAX_ACCOUNTS";
+      goto LAB_826fcc3c;
+    }
+    if (bVar2 == BD_FACEBOOK_ACCOUNT_ALREADY_REGISTERED) {
+      pcVar4 = "MENU_FACEBOOK_ALREADY_REGISTERED";
+      goto LAB_826fcc3c;
+    }
   }
-  pcVar5 = UI_SafeTranslateString(pcVar5);
-  if (pcVar5 != (char *)0x0) {
-    Dvar_SetString(facebook_popup_text,pcVar5);
+  pcVar4 = "MENU_FACEBOOK_ERROR";
+LAB_826fcc3c:
+  pcVar4 = UI_SafeTranslateString(pcVar4);
+  if (pcVar4 != (char *)0x0) {
+    Dvar_SetString(facebook_popup_text,pcVar4);
   }
-  iVar6 = Menus_OpenByName(pUVar4,"popup_facebook_authentication_popup");
-  g_DWFacebookTaskStage[iVar1] = FACEBOOK_DW_TASK_STAGE_WAITING;
-  g_DWFacebookTaskType[iVar1] = FACEBOOK_DW_TASK_TYPE_FINISHED;
-LAB_826fcc74:
-  __restgprlr_24(iVar6);
+  Menus_OpenByName(pUVar3,"popup_facebook_authentication_popup");
+  g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WAITING;
+  g_DWFacebookTaskType[param_1] = FACEBOOK_DW_TASK_TYPE_FINISHED;
   return;
 }
 
 
 // 826FCC80  Facebook_UpdateUnRegistering  (social/fb_authenticate.cpp:657)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -710,106 +728,105 @@ void Facebook_UpdateUnRegistering(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  bdLobbyErrorCode bVar3;
-  bool bVar7;
-  UiContext *pUVar4;
-  char *pcVar5;
-  int iVar6;
+  bdLobbyErrorCode bVar2;
+  bool bVar5;
+  UiContext *pUVar3;
+  char *pcVar4;
   LocalClientNum_t local_50 [20];
   
-  iVar1 = __savegprlr_24(param_1);
-  iVar6 = iVar1;
-  if (g_DWFacebookTaskStage[iVar1] != FACEBOOK_DW_TASK_STAGE_WORKING) goto LAB_826fcde0;
-  iVar6 = 0;
-  if (g_DWFacebookTask[iVar1].m_ptr == (bdRemoteTask *)0x0) goto LAB_826fcde0;
-  iVar2 = (**(code **)((g_DWFacebookTask[iVar1].m_ptr)->_padding_ + 4))();
-  iVar6 = 1;
-  if (iVar2 == 1) goto LAB_826fcde0;
-  bVar3 = bdRemoteTask::getErrorCode(g_DWFacebookTask[iVar1].m_ptr);
-  bVar7 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_50);
-  iVar6 = 0;
-  if (!bVar7) goto LAB_826fcde0;
-  pUVar4 = UI_GetClientDC(local_50[0]);
-  iVar6 = 0;
-  if (pUVar4 == (UiContext *)0x0) goto LAB_826fcde0;
-  Menus_CloseByName(pUVar4,"popup_facebook_unregistering");
-  if (iVar2 == 4) {
-LAB_826fcd2c:
-    pcVar5 = "MENU_FACEBOOK_UNAVAILABLE";
+  if (g_DWFacebookTaskStage[param_1] != FACEBOOK_DW_TASK_STAGE_WORKING) {
+    return;
   }
-  else if (bVar3 == BD_NO_ERROR) {
-    Dvar_SetString(facebook_username,"");
-    Dvar_SetString(facebook_password,"");
-    Dvar_SetString(facebook_password_asterisk,"");
-    Facebook_ClearFriends(iVar1,true);
-    pcVar5 = "MENU_FACEBOOK_UNREGISTER_OK";
-    g_FacebookIsRegistered[iVar1] = false;
+  if (g_DWFacebookTask[param_1].m_ptr == (bdRemoteTask *)0x0) {
+    return;
   }
-  else {
-    if (bVar3 == BD_FACEBOOK_UNAVAILABLE) goto LAB_826fcd2c;
-    pcVar5 = "MENU_FACEBOOK_ERROR";
+  iVar1 = (**(code **)((g_DWFacebookTask[param_1].m_ptr)->_padding_ + 4))();
+  if (iVar1 == 1) {
+    return;
   }
-  pcVar5 = UI_SafeTranslateString(pcVar5);
-  if (pcVar5 != (char *)0x0) {
-    Dvar_SetString(facebook_popup_text,pcVar5);
+  bVar2 = bdRemoteTask::getErrorCode(g_DWFacebookTask[param_1].m_ptr);
+  bVar5 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_50);
+  if (!bVar5) {
+    return;
   }
-  iVar6 = Menus_OpenByName(pUVar4,"popup_facebook_authentication_popup");
-  g_DWFacebookTaskStage[iVar1] = FACEBOOK_DW_TASK_STAGE_WAITING;
-  g_DWFacebookTaskType[iVar1] = FACEBOOK_DW_TASK_TYPE_FINISHED;
-LAB_826fcde0:
-  __restgprlr_24(iVar6);
+  pUVar3 = UI_GetClientDC(local_50[0]);
+  if (pUVar3 == (UiContext *)0x0) {
+    return;
+  }
+  Menus_CloseByName(pUVar3,"popup_facebook_unregistering");
+  if (iVar1 != 4) {
+    if (bVar2 == BD_NO_ERROR) {
+      Dvar_SetString(facebook_username,"");
+      Dvar_SetString(facebook_password,"");
+      Dvar_SetString(facebook_password_asterisk,"");
+      Facebook_ClearFriends(param_1,true);
+      pcVar4 = "MENU_FACEBOOK_UNREGISTER_OK";
+      g_FacebookIsRegistered[param_1] = false;
+      goto LAB_826fcda8;
+    }
+    if (bVar2 != BD_FACEBOOK_UNAVAILABLE) {
+      pcVar4 = "MENU_FACEBOOK_ERROR";
+      goto LAB_826fcda8;
+    }
+  }
+  pcVar4 = "MENU_FACEBOOK_UNAVAILABLE";
+LAB_826fcda8:
+  pcVar4 = UI_SafeTranslateString(pcVar4);
+  if (pcVar4 != (char *)0x0) {
+    Dvar_SetString(facebook_popup_text,pcVar4);
+  }
+  Menus_OpenByName(pUVar3,"popup_facebook_authentication_popup");
+  g_DWFacebookTaskStage[param_1] = FACEBOOK_DW_TASK_STAGE_WAITING;
+  g_DWFacebookTaskType[param_1] = FACEBOOK_DW_TASK_TYPE_FINISHED;
   return;
 }
 
 
 // 826FBF90  Facebook_XenonAgeVerification_Update  (social/fb_authenticate.cpp:733)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Facebook_XenonAgeVerification_Update(int param_1)
 
 {
   ulong uVar1;
-  ulong uVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  undefined4 *puVar2;
+  longlong lVar3;
   
-  uVar1 = __savegprlr_26(param_1);
-  if (s_facebookAgeDone[uVar1] == false) {
-    if ((&DAT_8451dbc4)[uVar1] == '\0') {
-      puVar3 = (undefined4 *)(uVar1 * 0x1c + -0x7bae3c5c);
-      lVar4 = 7;
+  if (s_facebookAgeDone[param_1] == false) {
+    if ((&DAT_8451dbc4)[param_1] == '\0') {
+      puVar2 = (undefined4 *)(param_1 * 0x1c + -0x7bae3c5c);
+      lVar3 = 7;
       do {
-        puVar3 = puVar3 + 1;
-        *puVar3 = 0;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
+        puVar2 = puVar2 + 1;
+        *puVar2 = 0;
+        lVar3 = lVar3 + -1;
+      } while (lVar3 != 0);
       memset();
-      uVar2 = _XAccountGetUserInfo
-                        (uVar1,0x5de,(_GET_USER_INFO_RESPONSE *)(&DAT_8451c438 + uVar1 * 0x5de),
-                         s_facebookAgeVerifyTask + uVar1);
-      if (uVar2 == 0x3e5) {
-        (&DAT_8451dbc4)[uVar1] = 1;
+      uVar1 = _XAccountGetUserInfo
+                        (param_1,0x5de,(_GET_USER_INFO_RESPONSE *)(param_1 * 0x5de + -0x7bae3bc8),
+                         s_facebookAgeVerifyTask + param_1);
+      if (uVar1 == 0x3e5) {
+        (&DAT_8451dbc4)[param_1] = 1;
       }
     }
-    else if (s_facebookAgeVerifyTask[uVar1].InternalLow != 0x3e5) {
-      if (s_facebookAgeVerifyTask[uVar1].dwExtendedError == 0) {
-        uVar2 = XGetLocale();
-        if ((((uVar2 == 0x15) || (uVar2 = XGetLocale(), uVar2 == 0x1f)) &&
-            (0xd < (byte)(&DAT_8451c473)[uVar1 * 0x5de])) ||
-           (0xc < (byte)(&DAT_8451c473)[uVar1 * 0x5de])) {
-          s_facebookAgeVerified[uVar1] = true;
+    else if (s_facebookAgeVerifyTask[param_1].InternalLow != 0x3e5) {
+      if (s_facebookAgeVerifyTask[param_1].dwExtendedError == 0) {
+        uVar1 = XGetLocale();
+        if ((((uVar1 == 0x15) || (uVar1 = XGetLocale(), uVar1 == 0x1f)) &&
+            (0xd < (byte)(&DAT_8451c473)[param_1 * 0x5de])) ||
+           (0xc < (byte)(&DAT_8451c473)[param_1 * 0x5de])) {
+          s_facebookAgeVerified[param_1] = true;
         }
-        s_facebookAgeDone[uVar1] = true;
+        s_facebookAgeDone[param_1] = true;
         memset();
-        __restgprlr_26();
         return;
       }
-      (&DAT_8451dbc4)[uVar1] = 0;
-      __restgprlr_26();
+      (&DAT_8451dbc4)[param_1] = 0;
       return;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1066,6 +1083,8 @@ void _dynamic_atexit_destructor_for__s_FacebookAccounts__(void)
 
 // 82940930  `dynamic_atexit_destructor_for_'g_DWFacebookTask''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWFacebookTask__(void)
@@ -1081,7 +1100,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookTask__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar6 = 3;
   pwVar7 = defaultStr;
   do {
@@ -1109,7 +1127,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookTask__(void)
     lVar6 = lVar6 + -1;
     in_cr0 = (lVar6 == 0) << 1;
   } while (-1 < lVar6);
-  __restgprlr_29();
   return;
 }
 

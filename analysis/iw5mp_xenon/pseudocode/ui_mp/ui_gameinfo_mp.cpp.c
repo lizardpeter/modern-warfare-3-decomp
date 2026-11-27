@@ -14,6 +14,9 @@ void TRACK_ui_gameinfo(void)
 
 // 825A35E8  UI_ParseInfos  (ui_mp/ui_gameinfo_mp.cpp:65)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 int UI_ParseInfos(char *param_1,int param_2,char **param_3)
 
 {
@@ -21,52 +24,46 @@ int UI_ParseInfos(char *param_1,int param_2,char **param_3)
   char cVar2;
   char *pcVar3;
   char *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
+  char *pcVar5;
+  int iVar6;
   char *pcStack00000014;
   char cStack_881;
   char local_880 [1024];
   char acStack_480 [1152];
   
-  lVar8 = (longlong)(int)param_3;
-  pcStack00000014 = (char *)__savegprlr_18(param_1);
-  lVar7 = 0;
+  iVar6 = 0;
+  pcStack00000014 = param_1;
   pcVar3 = Com_Parse(&stack0x00000014);
   if (*pcVar3 == '\0') {
-LAB_825a3840:
-    iVar5 = __restgprlr_18(lVar7);
-    return iVar5;
+    return 0;
   }
-  pcVar6 = "{";
+  pcVar5 = "{";
 LAB_825a366c:
   do {
     cVar1 = *pcVar3;
-    cVar2 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 != '\0') {
       pcVar3 = pcVar3 + 1;
-      pcVar6 = pcVar6 + 1;
+      pcVar5 = pcVar5 + 1;
       if (cVar1 == cVar2) goto LAB_825a366c;
     }
     if (cVar1 != cVar2) {
       Com_PrintError(0xd,"Missing { in info file - got %s instead\n");
-      iVar5 = __restgprlr_18(lVar7);
-      return iVar5;
+      return iVar6;
     }
-    if ((int)lVar7 == param_2) {
+    if (iVar6 == param_2) {
       Com_PrintError(0xd,"Max infos exceeded\n");
-      goto LAB_825a3840;
+      return iVar6;
     }
     local_880[0] = '\0';
     pcVar3 = Com_Parse(&stack0x00000014);
     cVar1 = *pcVar3;
-    while (pcVar6 = "}", pcVar4 = pcVar3, cVar1 != '\0') {
+    while (pcVar5 = "}", pcVar4 = pcVar3, cVar1 != '\0') {
       do {
         cVar1 = *pcVar4;
-        cVar2 = *pcVar6;
+        cVar2 = *pcVar5;
         if (cVar1 == '\0') break;
-        pcVar6 = pcVar6 + 1;
+        pcVar5 = pcVar5 + 1;
         pcVar4 = pcVar4 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) goto LAB_825a3744;
@@ -81,38 +78,37 @@ LAB_825a366c:
     }
     Com_PrintError(0xd,"Unexpected end of info file\n");
 LAB_825a3744:
-    *(int *)lVar8 = (int)(ui_arenaBuf + ui_arenaBufPos);
+    *param_3 = ui_arenaBuf + ui_arenaBufPos;
     pcVar3 = local_880;
     do {
       cVar1 = *pcVar3;
       pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
     pcVar4 = va("%d");
-    pcVar6 = pcVar4;
+    pcVar5 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
     ui_arenaBufPos =
-         (int)(pcVar3 + (int)(pcVar6 + ui_arenaBufPos + (-(int)pcVar4 - (int)local_880) + 4));
+         (int)(pcVar3 + (int)(pcVar5 + ui_arenaBufPos + (-(int)pcVar4 - (int)local_880) + 4));
     if (0x8000 < ui_arenaBufPos) {
       Com_Error(ERR_DROP,"ARENA_BUFFER_SIZE exceeded");
     }
     pcVar3 = &cStack_881;
-    pcVar6 = (char *)(*(int *)lVar8 + -1);
+    pcVar5 = *param_3 + -1;
     do {
       pcVar3 = pcVar3 + 1;
       cVar1 = *pcVar3;
-      pcVar6 = pcVar6 + 1;
-      *pcVar6 = cVar1;
+      pcVar5 = pcVar5 + 1;
+      *pcVar5 = cVar1;
     } while (cVar1 != '\0');
-    lVar7 = lVar7 + 1;
-    lVar8 = lVar8 + 4;
+    iVar6 = iVar6 + 1;
+    param_3 = param_3 + 1;
     pcVar3 = Com_Parse(&stack0x00000014);
-    pcVar6 = "{";
+    pcVar5 = "{";
     if (*pcVar3 == '\0') {
-      iVar5 = __restgprlr_18(lVar7);
-      return iVar5;
+      return iVar6;
     }
   } while( true );
 }
@@ -148,6 +144,8 @@ void UI_LoadArenasFromFile_FastFile(void)
 
 // 825A3900  UI_SortArenas  (ui_mp/ui_gameinfo_mp.cpp:204)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_SortArenas(void)
@@ -162,8 +160,7 @@ void UI_SortArenas(void)
   int iVar7;
   int iVar8;
   
-  __savegprlr_25();
-  if (sharedUiInfo.mapsAreSorted == false) {
+  if (!sharedUiInfo.mapsAreSorted) {
     iVar8 = 0;
     if (0 < sharedUiInfo.mapCount) {
       pmVar5 = sharedUiInfo.mapList;
@@ -197,7 +194,6 @@ LAB_825a39d8:
     }
     sharedUiInfo.mapsAreSorted = true;
   }
-  __restgprlr_25();
   return;
 code_r0x825a3990:
   iVar7 = iVar7 + 1;
@@ -219,6 +215,8 @@ mapInfo * UI_GetMapInfo_Sorted(int param_1)
 
 // 825A3A58  UI_UpdateArenas  (ui_mp/ui_gameinfo_mp.cpp:262)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_UpdateArenas(void)
@@ -240,7 +238,6 @@ void UI_UpdateArenas(void)
   char *pcVar14;
   char *local_9c [39];
   
-  __savegprlr();
   if (sharedUiInfo.updateArenas != 0) {
     sharedUiInfo.mapCount = 0;
     sharedUiInfo.mapsAreSorted = false;
@@ -354,7 +351,6 @@ LAB_825a3e30:
     }
     sharedUiInfo.updateArenas = 0;
   }
-  __restgprlr();
   return;
 }
 
@@ -378,31 +374,29 @@ void UI_LoadArenas(void)
 
 // 825A3EB0  UI_GetIndexForMapName  (ui_mp/ui_gameinfo_mp.cpp:428)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool UI_GetIndexForMapName(char *param_1,int *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  undefined1 uVar3;
-  char *pcVar4;
-  int iVar5;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  iVar5 = 0;
+  iVar3 = 0;
   if (0 < sharedUiInfo.mapCount) {
-    pcVar4 = sharedUiInfo.mapList[0].mapLoadName;
+    pcVar2 = sharedUiInfo.mapList[0].mapLoadName;
     do {
-      iVar2 = I_stricmp(pcVar4,pcVar1);
-      if (iVar2 == 0) {
-        *param_2 = iVar5;
-        uVar3 = __restgprlr_27(1);
-        return (bool)uVar3;
+      iVar1 = I_stricmp(pcVar2,param_1);
+      if (iVar1 == 0) {
+        *param_2 = iVar3;
+        return true;
       }
-      iVar5 = iVar5 + 1;
-      pcVar4 = pcVar4 + 0xa78;
-    } while (iVar5 < sharedUiInfo.mapCount);
+      iVar3 = iVar3 + 1;
+      pcVar2 = pcVar2 + 0xa78;
+    } while (iVar3 < sharedUiInfo.mapCount);
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 

@@ -2,12 +2,14 @@
 
 // 827830E0  R_Stats_PrintBspTess  (gfx_d3d/r_stats.cpp:28)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_Stats_PrintBspTess(GfxFrontEndStats *param_1)
 
 {
   char **ppcVar1;
   
-  __savegprlr_27(param_1);
   Com_Printf(8,"\n=== Front End Bsp Tess ===\n");
   Com_Printf(8,"|--------------------|-------|--------|--------|\n");
   Com_Printf(8,"| merge result       | excl  | excl %% | total  |\n");
@@ -18,13 +20,14 @@ void R_Stats_PrintBspTess(GfxFrontEndStats *param_1)
     ppcVar1 = ppcVar1 + 1;
   } while ((int)ppcVar1 < -0x7d65d118);
   Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  __restgprlr_27();
   return;
 }
 
 
 // 82783200  R_Stats_Display  (gfx_d3d/r_stats.cpp:49)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* void __cdecl R_Stats_Display(struct GfxFrontEndStats const *) */
 
 void R_Stats_Display(GfxFrontEndStats *param_1)
@@ -32,7 +35,6 @@ void R_Stats_Display(GfxFrontEndStats *param_1)
 {
   char **ppcVar1;
   
-  __savegprlr_27(param_1);
   Com_Printf(8,"\n=== Front End Bsp Tess ===\n");
   Com_Printf(8,"|--------------------|-------|--------|--------|\n");
   Com_Printf(8,"| merge result       | excl  | excl %% | total  |\n");
@@ -43,7 +45,6 @@ void R_Stats_Display(GfxFrontEndStats *param_1)
     ppcVar1 = ppcVar1 + 1;
   } while ((int)ppcVar1 < -0x7d65d118);
   Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  __restgprlr_27();
   return;
 }
 

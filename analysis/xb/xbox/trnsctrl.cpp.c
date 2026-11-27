@@ -84,43 +84,43 @@ LAB_8291d228:
 
 // 8291D248  __FrameUnwindToEmptyState  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:146)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __FrameUnwindToEmptyState(ulong *param_1,_xDISPATCHER_CONTEXT *param_2,_s_FuncInfo *param_3)
 
 {
   _s_TryBlockMapEntry *p_Var1;
-  ulong *puVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
+  uint uVar4;
+  int iVar5;
   
-  puVar2 = (ulong *)__savegprlr_29(param_1);
-  if ((param_3->nTryBlocks != 0) && (puVar2[1] != 0)) {
-    puVar2 = *(ulong **)(puVar2[1] + 4);
+  if ((param_3->nTryBlocks != 0) && (param_1[1] != 0)) {
+    param_1 = *(ulong **)(param_1[1] + 4);
   }
-  iVar3 = __StateFromControlPc(param_3,param_2->ControlPc);
-  uVar5 = param_3->nTryBlocks;
-  if (uVar5 != 0) {
+  iVar2 = __StateFromControlPc(param_3,param_2->ControlPc);
+  uVar4 = param_3->nTryBlocks;
+  if (uVar4 != 0) {
     p_Var1 = param_3->pTryBlockMap;
-    iVar4 = uVar5 * 0x14;
+    iVar3 = uVar4 * 0x14;
     do {
-      iVar6 = (int)&p_Var1[-1].tryLow + iVar4;
-      if ((*(int *)((int)p_Var1 + iVar4 + -0x10) < iVar3) &&
-         (iVar3 <= *(int *)((int)p_Var1 + iVar4 + -0xc))) goto LAB_8291d2d0;
-      uVar5 = uVar5 - 1;
-      iVar4 = iVar4 + -0x14;
-    } while (uVar5 != 0);
+      iVar5 = (int)&p_Var1[-1].tryLow + iVar3;
+      if ((*(int *)((int)p_Var1 + iVar3 + -0x10) < iVar2) &&
+         (iVar2 <= *(int *)((int)p_Var1 + iVar3 + -0xc))) goto LAB_8291d2d0;
+      uVar4 = uVar4 - 1;
+      iVar3 = iVar3 + -0x14;
+    } while (uVar4 != 0);
   }
-  iVar6 = 0;
+  iVar5 = 0;
 LAB_8291d2d0:
-  if (iVar6 == 0) {
-    iVar3 = -1;
+  if (iVar5 == 0) {
+    iVar2 = -1;
   }
   else {
-    iVar3 = *(int *)(iVar6 + 4) + 1;
+    iVar2 = *(int *)(iVar5 + 4) + 1;
   }
-  __FrameUnwindToState(puVar2,param_2,param_3,iVar3);
-  __restgprlr_29();
+  __FrameUnwindToState(param_1,param_2,param_3,iVar2);
   return;
 }
 
@@ -146,59 +146,61 @@ __CxxFrameHandler(EHExceptionRecord *param_1,ulong *param_2,_CONTEXT *param_3,
 
 // 8291D338  __SehTransFilter  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:200)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int __SehTransFilter(_EXCEPTION_POINTERS *param_1,EHExceptionRecord *param_2,ulong *param_3,
                     _CONTEXT *param_4,_xDISPATCHER_CONTEXT *param_5,_s_FuncInfo *param_6,
                     int *param_7)
 
 {
-  undefined4 *puVar1;
-  _tiddata *p_Var2;
-  int iVar3;
+  _tiddata *p_Var1;
   
-  puVar1 = (undefined4 *)__savegprlr_25(param_1);
-  p_Var2 = _getptd();
-  p_Var2->_pForeignException = param_2;
+  p_Var1 = _getptd();
+  p_Var1->_pForeignException = param_2;
   __InternalCxxFrameHandler
-            ((EHExceptionRecord *)*puVar1,param_3,param_4,param_5,param_6,0,(ulong *)0x0,'\x01');
-  p_Var2 = _getptd();
-  p_Var2->_pForeignException = (void *)0x0;
+            ((EHExceptionRecord *)param_1->ExceptionRecord,param_3,param_4,param_5,param_6,0,
+             (ulong *)0x0,'\x01');
+  p_Var1 = _getptd();
+  p_Var1->_pForeignException = (void *)0x0;
   *param_7 = 1;
-  iVar3 = __restgprlr_25(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 8291D3B8  _CallSETranslator  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:222)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 int _CallSETranslator(EHExceptionRecord *param_1,ulong *param_2,_CONTEXT *param_3,
                      _xDISPATCHER_CONTEXT *param_4,_s_FuncInfo *param_5,ulong param_6,ulong *param_7
                      )
 
 {
-  undefined4 *puVar1;
-  _tiddata *p_Var2;
-  int iVar3;
-  undefined4 *puStack00000014;
+  _tiddata *p_Var1;
+  EHExceptionRecord *pEStack00000014;
   ulong *puStack0000001c;
   _CONTEXT *p_Stack00000024;
   _xDISPATCHER_CONTEXT *p_Stack0000002c;
   _s_FuncInfo *p_Stack00000034;
   undefined1 local_28 [40];
   
-  p_Stack00000024 = param_3;
+  pEStack00000014 = param_1;
   puStack0000001c = param_2;
+  p_Stack00000024 = param_3;
   p_Stack0000002c = param_4;
   p_Stack00000034 = param_5;
-  puVar1 = (undefined4 *)__savegprlr_29(param_1);
-  puStack00000014 = puVar1;
-  p_Var2 = _getptd();
-  (*p_Var2->_translator)(*puVar1,local_28);
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  p_Var1 = _getptd();
+  (*p_Var1->_translator)(param_1->ExceptionCode,local_28);
+  return 0;
 }
 
 
 // 8291D478  _GetRangeOfTrysToCheck  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:269)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 _s_TryBlockMapEntry *
 _GetRangeOfTrysToCheck
@@ -206,65 +208,59 @@ _GetRangeOfTrysToCheck
           _xDISPATCHER_CONTEXT *param_6)
 
 {
-  int iVar2;
-  longlong lVar1;
-  _s_TryBlockMapEntry *p_Var3;
-  uint uVar4;
-  int iVar5;
-  int *piVar6;
-  uint uVar7;
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int *piVar4;
+  _s_TryBlockMapEntry *p_Var5;
+  uint uVar6;
   
-  __savegprlr_24(param_1);
-  uVar7 = param_2->nTryBlocks;
-  p_Var3 = (_s_TryBlockMapEntry *)0x0;
-  iVar2 = __StateFromControlPc(param_2,param_6->ControlPc);
-  if (uVar7 == 0) {
+  uVar6 = param_2->nTryBlocks;
+  p_Var5 = (_s_TryBlockMapEntry *)0x0;
+  iVar1 = __StateFromControlPc(param_2,param_6->ControlPc);
+  if (uVar6 == 0) {
                     /* WARNING: Subroutine does not return */
     _inconsistency();
   }
   *param_5 = 0xffffffff;
   *param_4 = 0xffffffff;
-  uVar4 = uVar7;
-  if (uVar7 != 0) {
-    iVar5 = uVar7 * 0x14;
+  uVar2 = uVar6;
+  if (uVar6 != 0) {
+    iVar3 = uVar6 * 0x14;
     do {
-      if ((*(int *)((int)param_2->pTryBlockMap + iVar5 + -0x10) < iVar2) &&
-         (iVar2 <= *(int *)((int)param_2->pTryBlockMap + iVar5 + -0xc))) break;
-      uVar4 = uVar4 - 1;
-      iVar5 = iVar5 + -0x14;
-    } while (uVar4 != 0);
+      if ((*(int *)((int)param_2->pTryBlockMap + iVar3 + -0x10) < iVar1) &&
+         (iVar1 <= *(int *)((int)param_2->pTryBlockMap + iVar3 + -0xc))) break;
+      uVar2 = uVar2 - 1;
+      iVar3 = iVar3 + -0x14;
+    } while (uVar2 != 0);
   }
-  if (uVar4 != 0) {
-    p_Var3 = param_2->pTryBlockMap + (uVar4 - 1);
+  if (uVar2 != 0) {
+    p_Var5 = param_2->pTryBlockMap + (uVar2 - 1);
   }
-  uVar4 = 0;
-  if (uVar7 != 0) {
-    iVar2 = 0;
+  uVar2 = 0;
+  if (uVar6 != 0) {
+    iVar1 = 0;
     do {
-      piVar6 = (int *)((int)&param_2->pTryBlockMap->tryLow + iVar2);
-      if ((((p_Var3 == (_s_TryBlockMapEntry *)0x0) ||
-           ((p_Var3->tryHigh < *piVar6 && (piVar6[1] <= p_Var3->catchHigh)))) &&
-          (*piVar6 <= param_3)) && (param_3 <= piVar6[1])) {
+      piVar4 = (int *)((int)&param_2->pTryBlockMap->tryLow + iVar1);
+      if ((((p_Var5 == (_s_TryBlockMapEntry *)0x0) ||
+           ((p_Var5->tryHigh < *piVar4 && (piVar4[1] <= p_Var5->catchHigh)))) &&
+          (*piVar4 <= param_3)) && (param_3 <= piVar4[1])) {
         if (*param_4 == 0xffffffff) {
-          *param_4 = uVar4;
+          *param_4 = uVar2;
         }
-        *param_5 = uVar4 + 1;
+        *param_5 = uVar2 + 1;
       }
-      uVar4 = uVar4 + 1;
-      iVar2 = iVar2 + 0x14;
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+      uVar2 = uVar2 + 1;
+      iVar1 = iVar1 + 0x14;
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
     if (*param_4 != 0xffffffff) {
-      lVar1 = (ulonglong)*param_4 * 0x14 + ZEXT48(param_2->pTryBlockMap);
-      goto LAB_8291d5c4;
+      return param_2->pTryBlockMap + *param_4;
     }
   }
   *param_4 = 0;
-  lVar1 = 0;
   *param_5 = 0;
-LAB_8291d5c4:
-  p_Var3 = (_s_TryBlockMapEntry *)__restgprlr_24(lVar1);
-  return p_Var3;
+  return (_s_TryBlockMapEntry *)0x0;
 }
 
 

@@ -2,68 +2,64 @@
 
 // 828CD2D0  CalcCostFunc  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/calccost.c:102)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float CalcCostFunc(float param_1,int *param_2,int param_3,float *param_4,int param_5,float param_6)
 
 {
-  int iVar1;
-  float fVar2;
-  uint uVar3;
-  int iVar4;
-  float fVar5;
+  int *piVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
   float fVar6;
   float fVar7;
   float fVar8;
-  longlong lVar9;
-  int *piVar10;
+  int iVar9;
   int in_r7;
+  int iVar10;
   int iVar11;
   int iVar12;
   int iVar13;
   int iVar14;
-  int iVar15;
-  double dVar16;
-  double dVar17;
   
-  dVar17 = (double)param_6;
-  lVar9 = (longlong)param_3;
-  dVar16 = (double)__savegprlr_28((double)param_1,dVar17,param_2,lVar9,param_4);
-  piVar10 = (int *)lVar9;
-  iVar14 = *piVar10;
-  iVar15 = 0x4000;
-  iVar13 = 0;
-  fVar5 = 1e-16;
-  iVar1 = 0x10000000 / (int)(dVar16 * 128.0);
-  trapWord(6,(ulonglong)(uint)(int)(dVar16 * 128.0),0);
-  while (iVar14 = iVar14 * (int)(dVar16 * 64.0), iVar14 < 0x4000) {
-    lVar9 = lVar9 + 4;
-    iVar13 = iVar13 + 1;
-    iVar14 = *(int *)lVar9;
+  iVar13 = *(int *)param_3;
+  iVar14 = 0x4000;
+  iVar12 = 0;
+  fVar3 = 1e-16;
+  iVar2 = 0x10000000 / (int)(param_1 * 128.0);
+  trapWord(6,(ulonglong)(uint)(int)(param_1 * 128.0),0);
+  piVar1 = (int *)param_3;
+  while (iVar13 = iVar13 * (int)(param_1 * 64.0), iVar13 < 0x4000) {
+    piVar1 = piVar1 + 1;
+    iVar12 = iVar12 + 1;
+    iVar13 = *piVar1;
   }
-  fVar7 = fVar5;
-  fVar8 = fVar5;
-  for (iVar11 = iVar1 + 0x800; iVar11 >> 0xc < in_r7; iVar11 = iVar11 + iVar1) {
-    iVar15 = iVar15 + 0x8000;
-    fVar6 = fVar5;
-    if (iVar14 < iVar15) {
-      iVar12 = piVar10[iVar13];
+  fVar7 = fVar3;
+  fVar8 = fVar3;
+  for (iVar10 = iVar2 + 0x800; iVar10 >> 0xc < in_r7; iVar10 = iVar10 + iVar2) {
+    iVar14 = iVar14 + 0x8000;
+    fVar6 = fVar3;
+    if (iVar13 < iVar14) {
+      iVar11 = *(int *)(iVar12 * 4 + param_3);
       do {
-        uVar3 = iVar14 >> 7;
-        iVar4 = iVar12 * 4;
-        iVar13 = iVar13 + 1;
-        iVar12 = piVar10[iVar13];
-        iVar14 = iVar12 * (int)(dVar16 * 64.0);
-        fVar2 = (cosTBL_32[uVar3 & 0xff] + 1.0) * *(float *)(iVar4 + param_5);
-        if (fVar2 - fVar6 < 0.0) {
-          fVar2 = fVar6;
+        uVar5 = iVar13 >> 7;
+        iVar9 = iVar11 * 4;
+        iVar12 = iVar12 + 1;
+        iVar11 = *(int *)(iVar12 * 4 + param_3);
+        iVar13 = iVar11 * (int)(param_1 * 64.0);
+        fVar4 = (cosTBL_32[uVar5 & 0xff] + 1.0) * *(float *)(iVar9 + param_5);
+        if (fVar4 - fVar6 < 0.0) {
+          fVar4 = fVar6;
         }
-        fVar6 = fVar2;
-      } while (iVar14 < iVar15);
+        fVar6 = fVar4;
+      } while (iVar13 < iVar14);
     }
-    fVar2 = *(float *)((iVar11 >> 0xc) * 4 + param_5);
-    fVar7 = fVar2 * fVar6 + fVar7;
-    fVar8 = fVar2 * fVar2 + fVar8;
+    fVar4 = *(float *)((iVar10 >> 0xc) * 4 + param_5);
+    fVar7 = fVar4 * fVar6 + fVar7;
+    fVar8 = fVar4 * fVar4 + fVar8;
   }
-  dVar16 = (double)__restgprlr_28((double)(float)((double)(fVar7 * 0.5 - fVar8 * 0.375) * dVar17));
-  return (float)dVar16;
+  return (fVar7 * 0.5 - fVar8 * 0.375) * param_6;
 }
 

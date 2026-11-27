@@ -26,35 +26,31 @@ void CIN_PlayCinematic(LocalClientNum_t param_1,char *param_2,int param_3,int pa
 
 // 8232D4A8  CIN_PlayMenuVideo  (client/cl_cin.cpp:50)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CIN_PlayMenuVideo(LocalClientNum_t param_1,char *param_2,int param_3,int param_4)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0x33,0,"%s"
                    );
   }
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
                     ,0x4aa,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[uVar1].connectionState == CA_DISCONNECTED) {
+  if (clientUIActives[param_1].connectionState == CA_DISCONNECTED) {
     uVar1 = 1;
-    if ((uVar3 & 2) != 0) {
+    if ((param_4 & 2U) != 0) {
       uVar1 = 3;
     }
-    R_Cinematic_StartPlayback((char *)uVar2,uVar1,param_3);
+    R_Cinematic_StartPlayback(param_2,uVar1,param_3);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -263,6 +259,8 @@ void SCR_StopCinematic_ByUserRequest(LocalClientNum_t param_1)
 
 // 8232D8B8  CIN_PlayAttractModeMovie  (client/cl_cin.cpp:197)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -279,7 +277,6 @@ void CIN_PlayAttractModeMovie(void)
   LargeLocal LStack_138;
   undefined1 auStack_130 [304];
   
-  __savegprlr_28();
   LargeLocal::LargeLocal(&LStack_138,0x18000);
   pcVar3 = LargeLocal::GetBuf(&LStack_138);
   pcVar3 = DB_ReadRawFile("video/cin_playlist.txt",pcVar3,0x18000);
@@ -318,7 +315,6 @@ void CIN_PlayAttractModeMovie(void)
     Cbuf_AddText(LOCAL_CLIENT_0,pcVar3);
   }
   LargeLocal::~LargeLocal(&LStack_138);
-  __restgprlr_28();
   return;
 }
 

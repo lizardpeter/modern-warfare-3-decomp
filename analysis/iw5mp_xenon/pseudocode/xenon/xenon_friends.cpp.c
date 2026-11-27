@@ -100,184 +100,183 @@ int Friends_XFriendPresenceCompare(void *param_1,void *param_2)
 
 // 82640F28  EnumerateFriends  (xenon/xenon_friends.cpp:131)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void EnumerateFriends(int param_1)
 
 {
+  bool bVar4;
   ulong uVar1;
-  bool bVar5;
-  ulong uVar2;
-  overlappedTask *poVar3;
-  _XOVERLAPPED *p_Var4;
-  void **ppvVar6;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  void **ppvVar5;
   uint local_40 [16];
   
-  uVar1 = __savegprlr_27(param_1);
-  bVar5 = Live_UserIsGuest(uVar1);
-  if (!bVar5) {
-    ppvVar6 = &friendLists[uVar1][1].hEnum;
-    if (friendLists[uVar1][1].hEnum == (void *)0x0) {
-      uVar2 = XFriendsCreateEnumerator(uVar1,0,100,local_40,ppvVar6);
-      if (uVar2 == 0) {
+  bVar4 = Live_UserIsGuest(param_1);
+  if (!bVar4) {
+    ppvVar5 = &friendLists[param_1][1].hEnum;
+    if (friendLists[param_1][1].hEnum == (void *)0x0) {
+      uVar1 = XFriendsCreateEnumerator(param_1,0,100,local_40,ppvVar5);
+      if (uVar1 == 0) {
         if (0x4c90 < local_40[0]) {
           va("friendList_t.friends is not large enough: %i > %i\n");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp"
                           ,0x9a,0,"%s\n\t%s");
         }
-        if (*ppvVar6 == (void *)0x0) {
+        if (*ppvVar5 == (void *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp"
                           ,0x9b,0,"%s");
         }
-        poVar3 = TaskManager_GetOpenTaskSlot(&tasks,uVar1,0);
-        p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
-        uVar2 = XEnumerate(*ppvVar6,friendLists[uVar1] + 1,local_40[0],(ulong *)0x0,p_Var4);
-        if (uVar2 == 0x12) {
-          g_friendListGlobal[uVar1].dirty = false;
-          poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
-          TaskManager_ClearTask(poVar3);
-          __restgprlr_27();
+        poVar2 = TaskManager_GetOpenTaskSlot(&tasks,param_1,0);
+        p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+        uVar1 = XEnumerate(*ppvVar5,friendLists[param_1] + 1,local_40[0],(ulong *)0x0,p_Var3);
+        if (uVar1 == 0x12) {
+          g_friendListGlobal[param_1].dirty = false;
+          poVar2 = TaskManager_TaskFromXOverlapped(&tasks,p_Var3);
+          TaskManager_ClearTask(poVar2);
           return;
         }
-        if (uVar2 != 0x3e5) {
-          bVar5 = Live_IsUserSignedInToLive(uVar1);
-          if (bVar5) {
+        if (uVar1 != 0x3e5) {
+          bVar4 = Live_IsUserSignedInToLive(param_1);
+          if (bVar4) {
             Com_PrintError(1,"Microsoft error: enumeration failed with error %llx\n");
           }
-          poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
-          TaskManager_ClearTask(poVar3);
-          __restgprlr_27();
+          poVar2 = TaskManager_TaskFromXOverlapped(&tasks,p_Var3);
+          TaskManager_ClearTask(poVar2);
           return;
         }
-        g_friendListGlobal[uVar1].dirty = false;
+        g_friendListGlobal[param_1].dirty = false;
       }
       else {
-        bVar5 = Live_IsUserSignedInToLive(uVar1);
-        if (bVar5) {
+        bVar4 = Live_IsUserSignedInToLive(param_1);
+        if (bVar4) {
           Com_PrintWarning(1,
                            "Microsoft XFriendsCreateEnumerator failed: Unable to get friend enumerator for local controller %i: %llx\n"
                           );
-          __restgprlr_27();
           return;
         }
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82641120  EnumerateFriendsComplete  (xenon/xenon_friends.cpp:181)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 taskCompleteResults EnumerateFriendsComplete(overlappedTask *param_1)
 
 {
   byte bVar1;
   byte bVar2;
-  overlappedTask *poVar3;
-  _XOVERLAPPED *p_Var4;
-  ulong uVar5;
-  bool bVar7;
-  taskCompleteResults tVar6;
-  FriendStatus *pFVar8;
-  ulong64 *puVar9;
-  FriendStatus FVar10;
-  ulong *puVar11;
-  FriendStatus FVar12;
-  undefined8 uVar13;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
+  bool bVar6;
+  overlappedTask *poVar5;
+  FriendStatus *pFVar7;
+  ulong64 *puVar8;
+  FriendStatus FVar9;
+  ulong *puVar10;
+  FriendStatus FVar11;
+  taskCompleteResults tVar12;
   uint local_50 [20];
   
-  poVar3 = (overlappedTask *)__savegprlr_24(param_1);
-  if (poVar3->type != 0) {
+  if (param_1->type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc0,
                     0,"%s");
   }
-  if (poVar3->active == false) {
+  if (param_1->active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc1,
                     0,"%s");
   }
-  if (3 < poVar3->controllerIndex) {
+  if (3 < param_1->controllerIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc2,
                     0,"task->controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar1 = poVar3->controllerIndex;
+  bVar1 = param_1->controllerIndex;
   CloseHandle(friendLists[bVar1][1].hEnum);
   friendLists[bVar1][1].hEnum = (void *)0x0;
-  bVar2 = poVar3->controllerIndex;
-  p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
-  if (p_Var4 == (_XOVERLAPPED *)0x0) {
+  bVar2 = param_1->controllerIndex;
+  p_Var3 = TaskManager_TaskToXOverlapped(param_1);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xcc,
                     0,"%s");
   }
-  XGetOverlappedResult(p_Var4,local_50,0);
+  XGetOverlappedResult(p_Var3,local_50,0);
   g_friendListGlobal[bVar2].count = local_50[0];
-  uVar5 = XGetOverlappedExtendedError(p_Var4);
-  if ((uVar5 == 0) || (uVar5 == 0x80070012)) {
-    uVar13 = 1;
+  uVar4 = XGetOverlappedExtendedError(p_Var3);
+  if ((uVar4 == 0) || (uVar4 == 0x80070012)) {
+    tVar12 = TASK_COMPLETE;
     memcpy();
-    FVar10 = FRIEND_STATUS_REQUEST_PENDING;
+    FVar9 = FRIEND_STATUS_REQUEST_PENDING;
     if (g_friendListGlobal[bVar2].count != 0) {
-      pFVar8 = g_friendListGlobal[bVar2].status + 99;
-      puVar11 = &friendLists[bVar1][0].friends[0].dwFriendState;
-      puVar9 = g_friendListGlobal[bVar2].friends;
+      pFVar7 = g_friendListGlobal[bVar2].status + 99;
+      puVar10 = &friendLists[bVar1][0].friends[0].dwFriendState;
+      puVar8 = g_friendListGlobal[bVar2].friends;
       do {
-        FVar12 = *puVar11;
-        *puVar9 = ((_XONLINE_FRIEND *)(puVar11 + -6))->xuid;
-        if ((FVar12 & 0x40000000) == FRIEND_STATUS_REQUEST_PENDING) {
-          if ((FVar12 & 0x80000000) == FRIEND_STATUS_REQUEST_PENDING) {
-            if (puVar11[3] == 0x415608cb) {
-              FVar12 = FRIEND_STATUS_PRESENT;
+        FVar11 = *puVar10;
+        *puVar8 = ((_XONLINE_FRIEND *)(puVar10 + -6))->xuid;
+        if ((FVar11 & 0x40000000) == FRIEND_STATUS_REQUEST_PENDING) {
+          if ((FVar11 & 0x80000000) == FRIEND_STATUS_REQUEST_PENDING) {
+            if (puVar10[3] == 0x415608cb) {
+              FVar11 = FRIEND_STATUS_PRESENT;
             }
-            else if ((FVar12 & 0x10000) == FRIEND_STATUS_REQUEST_PENDING) {
-              if ((FVar12 & 0x20000) == FRIEND_STATUS_REQUEST_PENDING) {
-                FVar12 = FVar12 & FRIEND_STATUS_REQUEST_RECEIVED | FRIEND_STATUS_OFFLINE;
+            else if ((FVar11 & 0x10000) == FRIEND_STATUS_REQUEST_PENDING) {
+              if ((FVar11 & 0x20000) == FRIEND_STATUS_REQUEST_PENDING) {
+                FVar11 = FVar11 & FRIEND_STATUS_REQUEST_RECEIVED | FRIEND_STATUS_OFFLINE;
               }
               else {
-                FVar12 = FRIEND_STATUS_BUSY;
+                FVar11 = FRIEND_STATUS_BUSY;
               }
             }
             else {
-              FVar12 = FRIEND_STATUS_AWAY;
+              FVar11 = FRIEND_STATUS_AWAY;
             }
           }
           else {
-            FVar12 = FRIEND_STATUS_REQUEST_RECEIVED;
+            FVar11 = FRIEND_STATUS_REQUEST_RECEIVED;
           }
         }
         else {
-          FVar12 = FRIEND_STATUS_REQUEST_PENDING;
+          FVar11 = FRIEND_STATUS_REQUEST_PENDING;
         }
-        pFVar8[-99] = FVar12;
-        puVar9 = puVar9 + 1;
-        pFVar8 = pFVar8 + 1;
-        *pFVar8 = FVar10;
-        FVar10 = FVar10 + FRIEND_STATUS_REQUEST_RECEIVED;
-        puVar11 = puVar11 + 0x31;
-      } while (FVar10 < g_friendListGlobal[bVar2].count);
+        pFVar7[-99] = FVar11;
+        puVar8 = puVar8 + 1;
+        pFVar7 = pFVar7 + 1;
+        *pFVar7 = FVar9;
+        FVar9 = FVar9 + FRIEND_STATUS_REQUEST_RECEIVED;
+        puVar10 = puVar10 + 0x31;
+      } while (FVar9 < g_friendListGlobal[bVar2].count);
     }
     s_sortFriendList = friendLists[bVar1];
     qsort(g_friendListGlobal[bVar2].sortedFriends,local_50[0],4,Friends_XFriendPresenceCompare);
-    MeetPlayer_RemoveFriends((uint)poVar3->controllerIndex);
+    MeetPlayer_RemoveFriends((uint)param_1->controllerIndex);
   }
   else {
-    bVar7 = Live_IsUserSignedInToLive((uint)poVar3->controllerIndex);
-    if (bVar7) {
+    bVar6 = Live_IsUserSignedInToLive((uint)param_1->controllerIndex);
+    if (bVar6) {
       Com_PrintError(1,
                      "Microsoft error - Async fetch of friends list failed with error code %llx in EnumerateFriendsComplete()\n"
                     );
     }
     g_friendListGlobal[bVar2].count = 0;
-    uVar13 = 2;
+    tVar12 = TASK_ERROR;
     g_friendListGlobal[bVar2].dirty = true;
   }
-  poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
-  TaskManager_ClearTask(poVar3);
-  tVar6 = __restgprlr_24(uVar13);
-  return tVar6;
+  poVar5 = TaskManager_TaskFromXOverlapped(&tasks,p_Var3);
+  TaskManager_ClearTask(poVar5);
+  return tVar12;
 }
 
 
 // 826413C0  Friends_CheckOngoingTasks  (xenon/xenon_friends.cpp:249)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Friends_CheckOngoingTasks(void)
@@ -288,7 +287,6 @@ void Friends_CheckOngoingTasks(void)
   taskCompleteResults tVar3;
   int *piVar4;
   
-  __savegprlr_22();
   piVar4 = &tasks.tasks[0].type;
   do {
     if (*(bool *)(piVar4 + 1) != false) {
@@ -297,7 +295,9 @@ void Friends_CheckOngoingTasks(void)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",
                         0x105,0,"%s");
       }
-      if (p_Var1->InternalLow == 0x3e5) break;
+      if (p_Var1->InternalLow == 0x3e5) {
+        return;
+      }
       if (*piVar4 == 0) {
         tVar3 = EnumerateFriendsComplete((overlappedTask *)(piVar4 + -0x24));
         pcVar2 = "Error enumerating friends\n";
@@ -315,9 +315,10 @@ void Friends_CheckOngoingTasks(void)
       }
     }
     piVar4 = piVar4 + 0x28;
-  } while ((int)piVar4 < -0x7bdb5d68);
-  __restgprlr_22();
-  return;
+    if (-0x7bdb5d69 < (int)piVar4) {
+      return;
+    }
+  } while( true );
 }
 
 
@@ -409,21 +410,18 @@ void Friends_Update_Platform(int param_1)
 
 // 826416A0  Friends_GetPresence_Platform  (xenon/xenon_friends.cpp:346)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Friends_GetPresence_Platform(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
   uint uVar1;
-  uint uVar3;
-  int iVar4;
-  char *pcVar5;
-  longlong lVar2;
-  ulonglong uVar7;
-  char *pcVar8;
-  bool bVar6;
+  int iVar2;
+  char *pcVar3;
+  bool bVar4;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar3 = __savegprlr_26(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15e
                     ,0,"%s");
   }
@@ -431,76 +429,68 @@ void Friends_GetPresence_Platform(int param_1,ulong64 param_2,char *param_3,int 
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15f
                     ,0,"%s");
   }
-  if (3 < uVar3) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = Friends_FindIndex(uVar3,param_2);
-  pcVar8 = (char *)uVar7;
-  if (iVar4 == -1) {
-    *pcVar8 = '\0';
-    __restgprlr_26();
+  iVar2 = Friends_FindIndex(param_1,param_2);
+  if (iVar2 == -1) {
+    *param_3 = '\0';
     return;
   }
-  uVar1 = friendLists[uVar3][0].friends[iVar4].dwFriendState;
-  if ((uVar1 & 0x40000000) == 0) {
-    if ((uVar1 & 0x80000000) == 0) {
-      if (friendLists[uVar3][0].friends[iVar4].dwTitleID == 0x415608cb) {
-        if (friendLists[uVar3][0].friends[iVar4].cchRichPresence != 0) {
-          bVar6 = MakeWideCharNameSafeForAllLanguages
-                            (pcVar8,friendLists[uVar3][0].friends[iVar4].wszRichPresence,param_4);
-          lVar2 = (longlong)bVar6;
-          if (lVar2 != 0) goto LAB_82641870;
-        }
+  uVar1 = friendLists[param_1][0].friends[iVar2].dwFriendState;
+  if ((uVar1 & 0x40000000) != 0) {
+    pcVar3 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
+    goto LAB_82641858;
+  }
+  if ((uVar1 & 0x80000000) != 0) {
+    pcVar3 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
+    goto LAB_82641858;
+  }
+  if (friendLists[param_1][0].friends[iVar2].dwTitleID == 0x415608cb) {
+    if ((friendLists[param_1][0].friends[iVar2].cchRichPresence != 0) &&
+       (bVar4 = MakeWideCharNameSafeForAllLanguages
+                          (param_3,friendLists[param_1][0].friends[iVar2].wszRichPresence,param_4),
+       bVar4)) {
+      return;
+    }
 LAB_826417f0:
-        pcVar5 = "XBOXLIVE_ONLINE";
-      }
-      else {
-        if ((uVar1 & 1) != 0) {
-          if ((uVar1 & 0xf0000) == 0x10000) {
-            pcVar5 = "XBOXLIVE_AWAY";
-            goto LAB_82641858;
-          }
-          if ((uVar1 & 1) != 0) {
-            if ((uVar1 & 0xf0000) == 0x20000) {
-              pcVar5 = "XBOXLIVE_BUSY";
-              goto LAB_82641858;
-            }
-            if ((uVar1 & 1) != 0) goto LAB_826417f0;
-          }
-        }
-        pcVar5 = "XBOXLIVE_OFFLINE";
-      }
-    }
-    else {
-      pcVar5 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
-    }
+    pcVar3 = "XBOXLIVE_ONLINE";
   }
   else {
-    pcVar5 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
+    if ((uVar1 & 1) != 0) {
+      if ((uVar1 & 0xf0000) == 0x10000) {
+        pcVar3 = "XBOXLIVE_AWAY";
+        goto LAB_82641858;
+      }
+      if ((uVar1 & 1) != 0) {
+        if ((uVar1 & 0xf0000) == 0x20000) {
+          pcVar3 = "XBOXLIVE_BUSY";
+          goto LAB_82641858;
+        }
+        if ((uVar1 & 1) != 0) goto LAB_826417f0;
+      }
+    }
+    pcVar3 = "XBOXLIVE_OFFLINE";
   }
 LAB_82641858:
-  SEH_SafeTranslateString(pcVar5);
-  iVar4 = Com_sprintf(pcVar8,param_4,"%s");
-  lVar2 = (longlong)iVar4;
-LAB_82641870:
-  __restgprlr_26(lVar2);
+  SEH_SafeTranslateString(pcVar3);
+  Com_sprintf(param_3,param_4,"%s");
   return;
 }
 
 
 // 82641878  Friends_Gamertag_Platform  (xenon/xenon_friends.cpp:379)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Friends_Gamertag_Platform(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x17f
                     ,0,"%s");
   }
@@ -508,18 +498,16 @@ void Friends_Gamertag_Platform(int param_1,ulong64 param_2,char *param_3,int par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x180
                     ,0,"%s");
   }
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar2 = Friends_FindIndex(uVar1,param_2);
-  if (iVar2 < 0) {
-    *(char *)uVar3 = '\0';
-    __restgprlr_26();
+  iVar1 = Friends_FindIndex(param_1,param_2);
+  if (iVar1 < 0) {
+    *param_3 = '\0';
     return;
   }
-  I_strncpyz((char *)uVar3,friendLists[uVar1][0].friends[iVar2].szGamertag,param_4);
-  __restgprlr_26();
+  I_strncpyz(param_3,friendLists[param_1][0].friends[iVar1].szGamertag,param_4);
   return;
 }
 
@@ -540,30 +528,25 @@ bool Friends_IsConnected_Platform(int param_1)
 
 // 82641978  Friends_GetSessionInfo_Platform  (xenon/xenon_friends.cpp:406)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 XNKID Friends_GetSessionInfo_Platform(int param_1,int param_2)
 
 {
-  uint uVar2;
-  XNKID XVar1;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x199
                     ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)g_friendListGlobal[uVar2].count <= (uVar3 & 0xffffffff)) {
+  if (g_friendListGlobal[param_1].count <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x19d
                     ,0,
                     "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
                    );
   }
-  XVar1.ab = (uchar  [8])
-             __restgprlr_28(*(undefined8 *)friendLists[uVar2][0].friends[(int)uVar3].sessionID.ab);
-  return (XNKID)XVar1.ab;
+  return (XNKID)*&friendLists[param_1][0].friends[param_2].sessionID.ab;
 }
 
 
@@ -631,25 +614,25 @@ int Friends_SendInviteMessage_Platform(int param_1,ulong64 param_2)
 
 // 82641B08  Friends_ShowPlayerCard_Platform  (xenon/xenon_friends.cpp:444)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Friends_ShowPlayerCard_Platform(int param_1,ulong64 param_2)
 
 {
   ulong uVar1;
-  int iVar2;
   
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x1c0
                     ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = XShowGamerCardUI(uVar1,param_2);
+  uVar1 = XShowGamerCardUI(param_1,param_2);
   if (uVar1 != 0) {
     Com_PrintError(0x10,"Microsoft error %i from XShowGamerCardUI()\n");
   }
-  iVar2 = __restgprlr_28(uVar1);
-  return iVar2;
+  return uVar1;
 }
 
 
@@ -777,64 +760,56 @@ bool FriendsMenu_IsAllowedToJoin_Platform(int param_1,char **param_2)
 
 // 82641E08  FriendsMenu_GetIsSessionValid_Platform  (xenon/xenon_friends.cpp:530)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool FriendsMenu_GetIsSessionValid_Platform(int param_1,int param_2)
 
 {
-  uint uVar1;
-  undefined1 uVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  bool bVar1;
   
-  uVar4 = (ulonglong)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x216
                     ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)g_friendListGlobal[uVar1].count <= (uVar4 & 0xffffffff)) {
+  if (g_friendListGlobal[param_1].count <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x21a
                     ,0,
                     "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
                    );
   }
-  if (friendLists[uVar1][0].friends[(int)uVar4].dwTitleID != 0x415608cb) {
-    uVar2 = __restgprlr_28(0);
-    return (bool)uVar2;
+  if (friendLists[param_1][0].friends[param_2].dwTitleID != 0x415608cb) {
+    return false;
   }
-  bVar3 = Friends_IsSessionInfoValid_Platform
-                    ((XNKID)*&friendLists[uVar1][0].friends[(int)uVar4].sessionID.ab);
-  uVar2 = __restgprlr_28(bVar3);
-  return (bool)uVar2;
+  bVar1 = Friends_IsSessionInfoValid_Platform
+                    ((XNKID)*&friendLists[param_1][0].friends[param_2].sessionID.ab);
+  return bVar1;
 }
 
 
 // 82641EF8  FriendsMenu_GetIsSessionFull_Platform  (xenon/xenon_friends.cpp:550)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool FriendsMenu_GetIsSessionFull_Platform(int param_1,int param_2)
 
 {
-  uint uVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x22b
                     ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
                     0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)g_friendListGlobal[uVar1].count <= (uVar3 & 0xffffffff)) {
+  if (g_friendListGlobal[param_1].count <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x22f
                     ,0,
                     "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
                    );
   }
-  uVar2 = __restgprlr_28((friendLists[uVar1][0].friends[(int)uVar3].dwFriendState & 0x110) == 0);
-  return (bool)uVar2;
+  return (friendLists[param_1][0].friends[param_2].dwFriendState & 0x110) == 0;
 }
 
 
