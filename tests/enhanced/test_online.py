@@ -36,7 +36,7 @@ def original_interface_pairs(build):
 def query(ctx, first, second):
     """QueryApiImpl(first, second, &out): (hr, interface)."""
     hr, bufs, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [first, second, b"\xff" * 8], "int")
-    return hr, struct.unpack("<Q", bufs[2])[0]
+    return hr, struct.unpack("<Q", bufs[-1])[0]
 
 
 def check_local_bootstrap(ctx):

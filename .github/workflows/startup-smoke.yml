@@ -8,6 +8,8 @@ on:
       - .github/workflows/startup-smoke.yml
       - enhanced/DW/**
       - enhanced/gdk/**
+      - tools/gdk/audit_isolation.py
+      - tools/build_runtime.py
       - enhanced/win32/win_vendor_network.cpp
       - runtime/loader/**
 
@@ -94,6 +96,8 @@ jobs:
           if test -f "$capture/game.log"; then
             python3 tools/gdk/summarize_rejections.py "$capture/game.log" > "$capture/gdk-rejections.txt"
             cat "$capture/gdk-rejections.txt"
+            python3 tools/gdk/audit_isolation.py "$capture/game.log" > "$capture/gdk-module-audit.txt" || { cat "$capture/gdk-module-audit.txt"; exit 1; }
+            cat "$capture/gdk-module-audit.txt"
           fi
       - uses: actions/upload-artifact@v4
         if: always()

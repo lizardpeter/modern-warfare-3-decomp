@@ -28,6 +28,8 @@ jobs:
             python3 tools/fetch_originals.py "$b" /tmp/originals --only exe
             rm -f /tmp/originals/"$b".*
           done
+      - name: GDK module audit unit tests
+        run: python3 tools/gdk/test_audit_isolation.py
       - name: Records claim only what the evidence shows
         run: python3 tools/check_records.py
       - name: Generated files are current

@@ -52,6 +52,10 @@ def check(exe, out, dll_name):
 
     base, size = exe.OPTIONAL_HEADER.ImageBase, exe.OPTIONAL_HEADER.SizeOfImage
     dll = pefile.PE(str(out / dll_name))
+    from gdk.audit_isolation import check_pe
+    for label, image in ((LOADER_DLL, loader), (dll_name, dll)):
+        imports = check_pe(image, label)
+        print(f"{label}: {len(imports)} import modules; no known GDK runtime imports")
     dbase = dll.OPTIONAL_HEADER.ImageBase
     exports = {(e.name or b"").decode(): dbase + e.address for e in dll.DIRECTORY_ENTRY_EXPORT.symbols}
     by_address = {}
