@@ -1,6 +1,6 @@
 // enhanced/DW/local_demonware.cpp: the local DemonWare service (docs/online.md, "Local DemonWare").
 //
-// - Auth: the game posts {"auth_task":44,"iv_seed":N,"title_id":2310} with its Xbox token. The reply issues the
+// - Auth: the game posts {"auth_task":"44","iv_seed":"N","title_id":"2310"}. The reply issues the
 //   service's own tickets ({"auth_task":45,"code":700,...}, tools/demonware/auth.py): a client ticket the game's
 //   ticket decoder (1404049D0) reads (magic EFBDADDE, title 906, account, name, a fresh 24-byte session key) and a
 //   128-byte server ticket the game hands back to the lobby. The service remembers which session key each server
@@ -322,9 +322,18 @@ struct Records
 bool ReadRecord(SOCKET s, Records &r, u8 *type, u8 *payload, size_t capacity, size_t *size)
 {
 	u8 head[4];
-	if (!ReadAll(s, head, 4))
-		return false;
-	u32 length = Get32(head);
+	u32 length;
+	for (;;)
+	{
+		if (!ReadAll(s, head, sizeof(head)))
+			return false;
+		length = Get32(head);
+		if (length)
+			break;
+		// An unencrypted, empty keepalive does not consume a record sequence number.
+		if (!WriteAll(s, head, sizeof(head)))
+			return false;
+	}
 	if (length < 2 + 4 + 16 + 16 + 8 || length > r.frameLimit || length > 0x10000)
 	{
 		LocalDemonWare::Trace("lobby: record length %u rejected", length);
@@ -404,6 +413,7 @@ void TraceBytes(const char *what, const u8 *p, size_t n)
 // the game hasn't been seen to need answer BD_SERVICE_NOT_AVAILABLE, as an unavailable DemonWare service does.
 
 constexpr u32 kServiceNotAvailable = 108;
+constexpr u32 kHandleTaskFailed = 4;
 
 void Results(u8 *&p, u32 count)
 {
@@ -414,22 +424,38 @@ void Results(u8 *&p, u32 count)
 	p += count ? 10 : 5;
 }
 
-u32 HandleTask(u8 service, u8 task, const u8 *, size_t, u8 *out, size_t capacity, size_t *size)
+u32 HandleTask(u8 service, u8 task, const u8 *input, size_t inputSize, u8 *out, size_t *size)
 {
 	u8 *p = out;
 	*size = 0;
-	if (capacity < 64)
-		return kServiceNotAvailable;
 	if (service == 0x0C && task == 6)  // bdTitleUtilities::getServerTime: one typed uint32, the Unix time
 	{
 		Results(p, 1);
 		p[0] = 8;
 		Put32(p + 1, UnixTime());
 		p += 5;
-		*size = p - out;
-		return 0;
 	}
-	return kServiceNotAvailable;
+	else if (service == 0x1B && task == 2)
+	{
+		// bdDMLInfo::deserialize (1403F6980): four typed strings and two float32s.
+		static constexpr u8 location[] = {16, 'Z', 'Z', 0, 16, 'L', 'o', 'c', 'a', 'l', 0,
+		                                  16, 'L', 'o', 'c', 'a', 'l', 0, 16, 'L', 'o', 'c', 'a', 'l', 0,
+		                                  13, 0, 0, 0, 0, 13, 0, 0, 0, 0};
+		Results(p, 1);
+		Copy(p, location, sizeof(location));
+		p += sizeof(location);
+	}
+	else if (service == 6 && task == 1)
+	{
+		// bdMessaging::getMailHeaders (1403F58D0): start, limit, and a boolean.
+		if (inputSize < 12 || input[0] != 8 || input[5] != 8 || input[10] != 1 || input[11] > 1)
+			return kHandleTaskFailed;
+		Results(p, 0);  // The local account has an empty inbox.
+	}
+	else
+		return kServiceNotAvailable;
+	*size = p - out;
+	return 0;
 }
 
 // The protocol 210 handshake, then records until the game hangs up.
@@ -529,12 +555,16 @@ void Session(SOCKET s, u64 connectionId)
 		o.Unsigned(type, 16, 2);
 		*o.p = 0;
 		TraceBytes(what, payload, size);
-		// A task (0x86, bdLobbyConnection::sendTask210): service id, a typed uint8 (3) task id, the arguments.
-		if (type != 0x86 || size < 3 || payload[1] != 3)
+		if (type != 0x86 || size < 2)
 			continue;
-		u8 service = payload[0], task = payload[2];
+		// The bandwidth probe sends raw IDs and still occupies a slot in the task FIFO.
+		const bool bandwidthProbe = payload[0] == 0x12 && payload[1] == 1;
+		if (!bandwidthProbe && (size < 3 || payload[1] != 3))
+			continue;
+		const size_t argumentOffset = bandwidthProbe ? 2 : 3;
+		const u8 service = payload[0], task = payload[argumentOffset - 1];
 		size_t replySize = 0;
-		u32 status = HandleTask(service, task, payload + 3, size - 3, reply + 16, 0x10000 - 16, &replySize);
+		u32 status = HandleTask(service, task, payload + argumentOffset, size - argumentOffset, reply + 16, &replySize);
 		// The reply (type 1, bdRemoteTask::handleTaskReply 1403F18E0): typed transaction ID, typed error, and on
 		// success the typed task id and the task's results (written by HandleTask after the header).
 		u8 header[16];

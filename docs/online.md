@@ -124,9 +124,9 @@ names. Nothing else to run.
 | Lobby | `BdConnectStream` (140449870) connects 127.0.0.1:3074 to the service's own port (any other address still fails). Protocol 210 (proof check and record keys: `IW5_DemonWare210Verify`, `enhanced/DW/lobby210.cpp`): the 28-byte hello, the challenge, the client auth frame with the server ticket and its proof (which must match that ticket's session key), the server's proof, then records: AES-128-CBC with a fresh IV, HMAC-SHA1 truncated to 8 bytes, a counter per direction (BDDATA keys). |
 | After the handshake | The connection ID header (type 4, a typed uint64; the task manager waits for it, `bdLobbyService::pump` 1403F5370), then a reply per task in order (type 1: typed transaction ID, typed error, typed task ID, results; `bdRemoteTask::handleTaskReply` 1403F18E0). |
 
-Tasks answered so far: `bdTitleUtilities::getServerTime` (service 0x0C, task 6). Every other task gets
-`BD_SERVICE_NOT_AVAILABLE` (108) and is traced (`dw: lobby: message type 86 ...`, `dw: lobby: service ... task ...`),
-so the next ones to implement can be read from a log.
+The local lobby serves time (0x0C/6), synthetic location (0x1B/2), and an empty mailbox (0x06/1).
+It echoes empty keepalives and returns `BD_SERVICE_NOT_AVAILABLE` for the raw bandwidth probe (0x12/1)
+in request order, as BO2 does. The task log reports other unavailable services.
 
 `tests/service/run.py` builds the service into a small console program, runs it under Wine (CI: the
 `local-demonware` job) and plays the game's part with the reference protocol code in `tools/demonware/`: the auth
