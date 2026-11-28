@@ -105,3 +105,10 @@ helpers now execute reconstructed code rather than mocked implementations in the
 The external cancellation API, fatal handler and virtual destructor are modeled. Store-only unknown symbols
 retain address labels; no source-location or original symbol name is inferred. This faithful work does not
 change platform authorization or expose GDK interfaces. Integration and matched status remain gated by CI.
+
+The next faithful pass reconstructs the slot cancellation variants, record-link table and cancellation
+state helpers, registry shutdown, allocation retry and async completion loop from Store instructions.
+The completion fixture models original XAsync status and terminal callbacks, including pending, failure,
+success, and a callback that changes the slot state. The original's authorization/provider logic remains
+unchanged. The reconstructed task lifecycle is a prerequisite to integrating a native provider for
+ordinary non-platform work; it is not itself an enhanced runtime redirect or proof of gameplay.

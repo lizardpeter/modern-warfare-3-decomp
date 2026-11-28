@@ -23,3 +23,38 @@ void sub_14020CC10(TaskRecord *record)
 {
     record->field5C = 0;
 }
+
+// Store 1403F1420: original remote-object cancellation state store.
+void sub_1403F1420(TaskRefObject *object)
+{
+    object->field1C = 5;
+}
+
+// Store 14020CC00: transition the embedded record's two status fields.
+void sub_14020CC00(TaskRecord *record)
+{
+    record->field5C = 2;
+    record->field60 = 4;
+}
+
+// Store 14020CC20: valid link states are exactly 1 through 6 (unsigned compare).
+bool sub_14020CC20(const TaskRecordLink *link)
+{
+    return link->state - 1u <= 5u;
+}
+
+extern TaskRecordLink s_taskRecordLinks[24];
+
+// Store 14020C3D0: detach all active, valid links referencing this record.
+// Do not assume uniqueness or stop after the first match.
+void sub_14020C3D0(TaskRecord *record)
+{
+    for (TaskRecordLink &link : s_taskRecordLinks)
+    {
+        if (!link.active || !sub_14020CC20(&link) || link.record != record)
+            continue;
+        if (sub_14020CC20(&link))
+            sub_14020CC00(link.record);
+        link.active = 0;
+    }
+}

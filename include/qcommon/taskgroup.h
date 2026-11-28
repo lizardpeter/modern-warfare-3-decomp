@@ -13,13 +13,25 @@ struct TaskRefObject
 {
     const TaskRefVtable *vtable;
     unsigned int references;
+    unsigned char opaque0C[0x10];
+    unsigned int field1C;
 };
 struct TaskRecord
 {
     unsigned char opaque00[0x5c];
     unsigned int field5C;
-    unsigned char opaque60[8];
+    unsigned int field60;
+    unsigned char opaque64[4];
     unsigned int category;
+};
+struct TaskRecordLink
+{
+    unsigned char active;
+    unsigned char opaque01[3];
+    unsigned int state;
+    unsigned char opaque08[8];
+    TaskRecord *record;
+    unsigned char opaque18[0x10];
 };
 struct TaskSlot
 {
@@ -53,6 +65,11 @@ struct TaskGroupRegistry
     const char *names[32];
 };
 
+static_assert(sizeof(TaskRecordLink) == 0x28);
+static_assert(__builtin_offsetof(TaskRecordLink, state) == 4);
+static_assert(__builtin_offsetof(TaskRecordLink, record) == 0x10);
+static_assert(__builtin_offsetof(TaskRefObject, field1C) == 0x1c);
+static_assert(__builtin_offsetof(TaskRecord, field60) == 0x60);
 static_assert(sizeof(TaskSlot) == 0xe0);
 static_assert(__builtin_offsetof(TaskSlot, asyncBlock) == 0x10);
 static_assert(__builtin_offsetof(TaskRefObject, references) == 8);
@@ -87,3 +104,15 @@ unsigned long long sub_14027EBE0(const TaskSlot *slot);
 void sub_14027EBF0(TaskSlot *slot, unsigned long long value);
 bool sub_14027EC00(const TaskGroup *group, unsigned int category);
 bool sub_14027EC30(const TaskGroup *group, unsigned int category, unsigned int selector);
+void sub_1403F1420(TaskRefObject *object);
+void sub_14020CC00(TaskRecord *record);
+bool sub_14020CC20(const TaskRecordLink *link);
+void sub_14020C3D0(TaskRecord *record);
+bool sub_14027E4D0(TaskSlot *slot);
+bool sub_14027E520(TaskGroup *group, unsigned int category);
+int sub_14027E540(TaskGroup *group, unsigned int category, unsigned int selector);
+bool sub_14027E630(TaskGroup *group, unsigned char all, unsigned int category);
+void sub_14027E7B0(TaskSlot *slots, unsigned int selector);
+void sub_14027E9E0(TaskGroup *group);
+TaskSlot *sub_14027EAE0(TaskGroup *group, unsigned int selector, unsigned int category);
+void sub_14027EC70(TaskGroup *group);
