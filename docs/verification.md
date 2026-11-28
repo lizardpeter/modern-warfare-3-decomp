@@ -97,3 +97,11 @@ slot stride, conditional original helper calls, cancellation, field writes, and 
 unidentified helpers remain original executable calls; differential fixtures model them and compare call order
 and buffer/global writes. Do not mark this candidate `matches` until the differential CI result is available.
 No task or platform authorization behavior is changed by this faithful candidate.
+
+The subsequent task-group reconstruction reads the original Store disassembly for the reference-release and
+record-reset helpers and nine adjacent task-manager operations: occupancy, whole-group and per-slot reset,
+category counts, first-free allocation, opaque qword accessors, and category/selector predicates. The two
+helpers now execute reconstructed code rather than mocked implementations in the TaskGroup_Init comparison.
+The external cancellation API, fatal handler and virtual destructor are modeled. Store-only unknown symbols
+retain address labels; no source-location or original symbol name is inferred. This faithful work does not
+change platform authorization or expose GDK interfaces. Integration and matched status remain gated by CI.
