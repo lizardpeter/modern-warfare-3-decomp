@@ -28,7 +28,7 @@ jobs:
       - name: Install toolchain and Wine
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick pulseaudio pulseaudio-utils
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick pulseaudio pulseaudio-utils iproute2
           pip install -q -r tests/differential/requirements.txt
       - name: Build and stage the Store multiplayer startup files
         run: |
@@ -60,7 +60,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
           cd "$RUNNER_TEMP/iw5-game"
-          timeout 300s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          timeout 300s sudo unshare --net -- bash -c 'set -e; ip link set lo up; test -z "$(ip route show default)"; exec "$@"' _ runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
           set -eu
           capture="$1/iw5-capture"
           export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll

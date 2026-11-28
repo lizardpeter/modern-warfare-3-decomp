@@ -1,6 +1,7 @@
 // Local profile only. No Xbox identity, token, privilege or entitlement authority.
-// Polling operations complete locally; explicit queue/callback modes are unsupported.
+// Profile results complete locally; completion callbacks use the local queue.
 #include "enhanced/gdk.h"
+#include "enhanced/gdk_local_queue.h"
 HRESULT Gdk_QueryInterface(GdkInterface *, const GdkGuid *, void **);
 u32 Gdk_AddRef(GdkInterface *);
 u32 Gdk_Release(GdkInterface *);
@@ -25,16 +26,36 @@ bool Read(XAsyncBlock *block, Completion &c)
     Gdk_Copy(&c, block->internal, sizeof(c));
     return c.tag == marker && c.identity == identity;
 }
+void AddCompleted(void *ctx, bool)
+{
+    // The profile operation is complete before notification is queued.
+    // Queue termination must not retroactively change its published result.
+    auto *block = static_cast<XAsyncBlock *>(ctx);
+    if (block->callback) block->callback(block);
+}
 HRESULT AddAsync(GdkInterface *, u32 options, XAsyncBlock *block)
 {
     if (!block) return GDK_E_POINTER;
     if ((options & ~7u) || ((options & 1u) && (options & 4u))) return GDK_E_INVALIDARG;
-    if (block->queue || block->callback) return GDK_E_NOTIMPL;
+
     Completion old{};
     if (Read(block, old)) return GDK_E_INVALIDARG;
     Completion c{marker, identity, GDK_S_OK, sizeof(Handle), reinterpret_cast<u64>(&profile)};
+    XTaskQueueHandle queue = nullptr;
+    if (block->queue) {
+        HRESULT hr = LocalQueueDuplicate(nullptr,block->queue,&queue);
+        if (hr < 0) return hr;
+    } else if (block->callback && !LocalQueueCurrent(nullptr,&queue)) {
+        return GDK_E_NOTIMPL;
+    }
     Gdk_Copy(block->internal, &c, sizeof(c));
-    return GDK_S_OK;
+    HRESULT hr = GDK_S_OK;
+    if (block->callback) {
+        hr = LocalQueueSubmit(nullptr,queue,1,block,AddCompleted);
+        if (hr < 0) Gdk_Zero(block->internal,sizeof(block->internal));
+    }
+    if (queue) LocalQueueClose(nullptr,queue);
+    return hr;
 }
 HRESULT Status(GdkInterface *, XAsyncBlock *block, bool)
 {
@@ -52,8 +73,8 @@ HRESULT Size(GdkInterface *, XAsyncBlock *block, size_t *out)
 }
 void Cancel(GdkInterface *, XAsyncBlock *block)
 {
-    Completion c{};
-    if (Read(block, c)) Gdk_Zero(block->internal, sizeof(block->internal));
+    // The operation completed at submission; cancellation is not retroactive.
+    (void)block;
 }
 bool Retain(bool existing)
 {
@@ -73,7 +94,9 @@ HRESULT AddResult(GdkInterface *, XAsyncBlock *block, Handle *out)
     if (!out) return GDK_E_POINTER;
     *out = nullptr;
     Completion c{};
-    if (!Read(block, c) || c.size != sizeof(Handle)) return GDK_E_INVALIDARG;
+    if (!Read(block, c)) return GDK_E_INVALIDARG;
+    if (c.result < 0) { Gdk_Zero(block->internal,sizeof(block->internal)); return c.result; }
+    if (c.size != sizeof(Handle)) return GDK_E_INVALIDARG;
     if (!Retain(false)) return GDK_E_FAIL;
     *out = &profile;
     Gdk_Zero(block->internal, sizeof(block->internal));
@@ -152,31 +175,6 @@ HRESULT Privilege(GdkInterface *, Handle, u32, u32, bool *allowed, u32 *reason)
 HRESULT Unavailable() { return GDK_E_NOINTERFACE; }
 void Noop() {}
 bool False() { return false; }
-HRESULT QueueCreate(GdkInterface *, u32, u32, XTaskQueueHandle *out)
-{
-    if (out) *out = nullptr;
-    return out ? GDK_E_NOTIMPL : GDK_E_POINTER;
-}
-HRESULT QueueComposite(GdkInterface *, XTaskQueuePortHandle, XTaskQueuePortHandle, XTaskQueueHandle *out)
-{
-    if (out) *out = nullptr;
-    return out ? GDK_E_NOTIMPL : GDK_E_POINTER;
-}
-HRESULT QueuePort(GdkInterface *, XTaskQueueHandle, u32, XTaskQueuePortHandle *out)
-{
-    if (out) *out = nullptr;
-    return out ? GDK_E_NOTIMPL : GDK_E_POINTER;
-}
-HRESULT QueueDuplicate(GdkInterface *, XTaskQueueHandle, XTaskQueueHandle *out)
-{
-    if (out) *out = nullptr;
-    return out ? GDK_E_NOTIMPL : GDK_E_POINTER;
-}
-bool QueueCurrent(GdkInterface *, XTaskQueueHandle *out)
-{
-    if (out) *out = nullptr;
-    return false;
-}
 #define V(f) reinterpret_cast<void *>(f)
 #define U V(Unavailable)
 static void *const userSlots[] = {
@@ -191,8 +189,9 @@ static void *const tagSlots[] = {V(Gdk_QueryInterface), V(Gdk_AddRef), V(Gdk_Rel
 static void *const asyncSlots[] = {
     V(Gdk_QueryInterface), V(Gdk_AddRef), V(Gdk_Release),
     V(Status), V(Size), V(Cancel), U, U, U, U, V(Noop), U,
-    V(QueueCreate), V(QueueComposite), V(QueuePort), V(QueueDuplicate), V(False),
-    V(Noop), U, U, U, U, U, U, U, V(QueueCurrent), V(Noop), U, U, V(Noop)
+    V(LocalQueueCreate), V(LocalQueueComposite), V(LocalQueuePort), V(LocalQueueDuplicate), V(LocalQueueDispatch),
+    V(LocalQueueClose), V(LocalQueueSubmit), V(LocalQueueDelay), U, U, V(LocalQueueTerminate), U, U,
+    V(LocalQueueCurrent), V(LocalQueueSetCurrent), U, U, V(Noop)
 };
 static_assert(sizeof(asyncSlots)/sizeof(*asyncSlots) == 0xe8/8+1, "XAsync slot count");
 #undef U

@@ -68,7 +68,7 @@ and repeated sequences. The game still needs a configured service transport and 
   IW5's existing game-folder convention rather than T6's LOCALAPPDATA path.
 - Except for the local user, gamertag and polling completion interface, `QueryApiImpl` rejects interfaces with E_NOINTERFACE and clears the output pointer;
   a null output pointer gets E_POINTER. XStore, XPackage and other external service families remain unavailable. No system runtime or entitlement provider is invoked.
-- The legacy provider is not exposed. The local profile has a session-local ID and name, retained handles, and polling completion. It reports Xbox SignedOut, no XUID or Store user, and no privilege or token authority. Explicit queues and callbacks are not implemented; they fail rather than simulate completion. No sign-in, license or DLC success is fabricated.
+- The legacy provider is not exposed. The local profile has a session-local ID and name, retained handles, and polling completion. It reports Xbox SignedOut, no XUID or Store user, and no privilege or token authority. Local work/completion queues, delayed and immediate callbacks, and the default process queue are implemented. Composite ports and generic XAsync provider operations remain unsupported. No platform authorization is supplied. No sign-in, license or DLC success is fabricated.
 - The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
 ## Engine startup and vendor transport redirects

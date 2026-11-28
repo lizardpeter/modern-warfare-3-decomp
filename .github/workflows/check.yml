@@ -36,6 +36,10 @@ jobs:
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror -pedantic -fsanitize=address,undefined -fno-omit-frame-pointer -I . tests/native/test_task_queue.cpp -o /tmp/iw5-native-task-test
           /tmp/iw5-native-task-test
+      - name: Local GDK queue adapter host tests
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -DIW5_QUEUE_HOST_TEST -I enhanced/include tests/native/test_gdk_local_queue.cpp enhanced/gdk/gdk_local_queue.cpp -o /tmp/iw5-gdk-queue-test
+          /tmp/iw5-gdk-queue-test
       - name: Native local identity and entitlement tests
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror -pedantic -fsanitize=address,undefined -fno-omit-frame-pointer -I . tests/native/test_local_session.cpp -o /tmp/iw5-local-session-test

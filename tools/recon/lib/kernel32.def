@@ -5,3 +5,5 @@ SetProcessInformation
 GetModuleHandleExA
 CreateDirectoryA
 MoveFileExA
+GetTickCount64
+QueueUserWorkItem

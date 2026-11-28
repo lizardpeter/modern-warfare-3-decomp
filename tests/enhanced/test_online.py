@@ -336,12 +336,12 @@ def check_local_user_profile(ctx):
     tag, tv = iface("XUserGetGamertag")
     async_iface, av = iface("XAsyncGetStatus")
     state = {}
-    def invoke(obj, table, slot, args, ret="uint"):
+    def invoke(obj, table, slot, args, ret="uint", fakes=None):
         address, = struct.unpack("<Q", ctx.m.mu.mem_read(table+slot, 8))
         def setup(w):
             for a in sorted(state)[::8]:
                 w.write(a, b"".join(state[a+i] for i in range(8)))
-        hr, buffers, writes, _ = ctx.m.call(address, [obj, *args], ret, setup=setup)
+        hr, buffers, writes, _ = ctx.m.call(address, [obj, *args], ret, setup=setup, fakes=fakes)
         assert not isinstance(hr, str), hr
         state.update(writes)
         return hr, buffers
@@ -368,7 +368,26 @@ def check_local_user_profile(ctx):
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0
     invoke(user, uv, 0x20, [handle], "void")
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0x80070057
-    assert invoke(user, uv, 0x38, [1, struct.pack("<Q", 1)+bytes(48)])[0] == 0x80004001
+    assert invoke(user, uv, 0x38, [1, struct.pack("<Q", 1)+bytes(48)])[0] == 0x80070057
+
+    # Exercise the actual local callback path using an immediate completion port.
+    hr, b = invoke(async_iface, av, 0x60, [0, 3, bytes(8)])
+    assert hr == 0
+    queue, = struct.unpack("<Q", b[0])
+    callbacks = []
+    callback = ctx.original("TaskGroup_Init")
+    def on_completion(mu):
+        ptr = mu.reg_read(ARGS[0])
+        callbacks.append(struct.unpack("<Q", mu.mem_read(ptr, 8))[0])
+    block = struct.pack("<QQQ", queue, 0, callback) + bytes(32)
+    hr, b = invoke(user, uv, 0x38, [1, block], fakes={callback: on_completion})
+    assert hr == 0 and callbacks == [queue]
+    hr, b = invoke(user, uv, 0x40, [b[0], bytes(8)])
+    assert hr == 0
+    handle, = struct.unpack("<Q", b[1])
+    invoke(user, uv, 0x20, [handle], "void")
+    invoke(async_iface, av, 0x88, [queue], "void")
+
 
 
 CHECKS = [check_local_user_profile, check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
