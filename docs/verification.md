@@ -90,3 +90,10 @@ unwind extents, indirect calls and original state writes before authoring the C+
 change the GDK rejection boundary or qualify any function as `matches`.
 
 `enhanced/qcommon/native_task_queue.h` is new, platform-neutral infrastructure, not a reconstructed Store function. It uses a single owner thread, 32 outstanding entries, explicit due ticks, non-reused IDs, separate work and completion dispatch, and queued cancellation. Its host tests run with ASan/UBSan. It is not wired into the original engine; the original task ABI and helper contracts must be recovered before integration. It does not implement GDK interfaces, account sign-in, or entitlement decisions.
+
+The first faithful task-group candidate is `src/qcommon/taskgroup.cpp` with the observed x64 layout in
+`include/qcommon/taskgroup.h`. The function preserves the original registry scan, full-registry fatal path,
+slot stride, conditional original helper calls, cancellation, field writes, and count increment. The two
+unidentified helpers remain original executable calls; differential fixtures model them and compare call order
+and buffer/global writes. Do not mark this candidate `matches` until the differential CI result is available.
+No task or platform authorization behavior is changed by this faithful candidate.
