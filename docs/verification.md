@@ -79,3 +79,12 @@ the PC platform layer), the Store build is the truth.
 Read, not executed: they supply names, types, line order, assert expressions and the original control flow. Unicorn
 runs big-endian PowerPC, so tests against a reference are possible later, with a calling-convention bridge (clang has
 no Xenon MSVC ABI). Add it only if the Store build can't answer a question the reference can.
+
+## Engine task-group evidence
+
+Before reconstructing ordinary task scheduling, `tools/gdk/task_evidence.py` verifies the pinned Store PE,
+counts distinct static caller edges for the scheduling thunk family from the existing Ghidra graph, and emits
+original x64 instructions for the primary unwind extent of `TaskGroup_Init`. The reconstruction job uploads
+`iw5-original-task-evidence`. Static graph edges are candidates, not observed runtime calls; inspect chained
+unwind extents, indirect calls and original state writes before authoring the C++ body. The report does not
+change the GDK rejection boundary or qualify any function as `matches`.

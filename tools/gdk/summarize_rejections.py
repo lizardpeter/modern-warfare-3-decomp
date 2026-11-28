@@ -24,7 +24,7 @@ def summarize(lines, catalogue):
             if pair not in counts:
                 first_seen.append(pair)
             counts[pair] += 1
-    result = [f"Rejected query records: {sum(counts.values())} (bounded to first 256 per process)",
+    result = [f"Raw rejection marker occurrences: {sum(counts.values())} (not unique calls; emitter bounded to first 256 per process)",
               f"Distinct interface/class pairs: {len(counts)}"]
     for pair in first_seen:
         names = ", ".join(sorted(catalogue.get(pair, ()))) or "unknown"
