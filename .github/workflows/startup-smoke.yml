@@ -1,0 +1,76 @@
+name: Multiplayer startup smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/startup-smoke.yml
+      - enhanced/gdk/gdk_startup.cpp
+      - runtime/loader/**
+
+permissions:
+  contents: read
+
+jobs:
+  startup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install toolchain and Wine
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils imagemagick
+          pip install -q -r tests/differential/requirements.txt
+      - name: Build and stage the Store multiplayer startup files
+        run: |
+          game="$RUNNER_TEMP/iw5-game"
+          python3 tools/fetch_originals.py iw5mp_ship "$game" --only exe
+          IW5_ORIGINALS="$game" python3 tools/build_runtime.py
+          cp build/iw5mp_ship/runtime/*.dll "$game/"
+          asset_base="$(python3 -c 'import tomllib; print(tomllib.load(open("target.toml","rb"))["r2_public"])')mw3/DUMP"
+          download() {
+            curl -fsSL --retry 3 --max-time 150 --create-dirs -o "$game/$1" "$asset_base/$1"
+          }
+          for file in XCurl.dll bink2w64.dll localization.txt MicrosoftGame.Config; do
+            download "$file"
+          done
+          for zone in code_pre_gfx_mp localized_code_pre_gfx_mp code_post_gfx_mp localized_code_post_gfx_mp ui_mp localized_ui_mp common_mp localized_common_mp patch_mp; do
+            download "zone/english/$zone.ff"
+          done
+      - name: Launch without network access and capture the window
+        run: |
+          mkdir -p "$RUNNER_TEMP/iw5-capture"
+          cd "$RUNNER_TEMP/iw5-game"
+          timeout 200s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          set -eu
+          capture="$1/iw5-capture"
+          export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh
+          wineboot -i >"$capture/wineboot.log" 2>&1
+          trap 'wineserver -k || true' EXIT
+          WINEDLLOVERRIDES='x3daudio1_7=n,b' wine iw5mp_ship.exe >"$capture/game.log" 2>&1 &
+          game_pid=$!
+          for tick in $(seq 1 30); do
+            xwininfo -root -tree >"$capture/windows.txt"
+            if ! kill -0 "$game_pid" 2>/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          import -window root "$capture/screen.png"
+          if test -f iw5_enhanced.log; then
+            cp iw5_enhanced.log "$capture/"
+          fi
+          grep -F 'enhanced build active' "$capture/iw5_enhanced.log"
+          kill -0 "$game_pid"
+          grep -i 'modern warfare' "$capture/windows.txt"
+          SH
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iw5-startup-smoke
+          path: ${{ runner.temp }}/iw5-capture/
