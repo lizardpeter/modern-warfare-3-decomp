@@ -15,6 +15,7 @@
 //   rest get BD_SERVICE_NOT_AVAILABLE.
 #include "enhanced/local_demonware.h"
 #include "enhanced/local_identity.h"
+#include "enhanced/local_json_number.h"
 
 #include <windows.h>
 
@@ -247,16 +248,7 @@ bool JsonNumber(const char *body, size_t size, const char *key, u64 *value)
 	{
 		if (body[i] != '"' || !Equal(body + i + 1, key, k) || body[i + 1 + k] != '"')
 			continue;
-		size_t j = i + 2 + k;
-		while (j < size && (body[j] == ' ' || body[j] == ':'))
-			++j;
-		u64 v = 0;
-		bool any = false;
-		while (j < size && body[j] >= '0' && body[j] <= '9')
-			v = v * 10 + (body[j++] - '0'), any = true;
-		if (any)
-			*value = v;
-		return any;
+		return iw5::local_json::ReadUnsignedMemberValue(body, size, i + 2 + k, value);
 	}
 	return false;
 }
@@ -698,10 +690,15 @@ u32 Authorize(const char *body, size_t size, const char *authorization, char *re
 {
 	*replySize = 0;
 	u64 task = 0, seed = 0, title = 0;
-	if (!JsonNumber(body, size, "auth_task", &task) || !JsonNumber(body, size, "iv_seed", &seed) ||
-	    !JsonNumber(body, size, "title_id", &title) || task != 44 || title != kTitle)
+	const bool taskOk = JsonNumber(body, size, "auth_task", &task);
+	const bool seedOk = JsonNumber(body, size, "iv_seed", &seed);
+	const bool titleOk = JsonNumber(body, size, "title_id", &title);
+	if (!taskOk || !seedOk || !titleOk || task != 44 || title != kTitle)
 	{
-		Trace("auth: request rejected");
+		// Only report validation categories; never dump request bodies or credentials.
+		Trace("auth: request rejected (task_field=%u seed_field=%u title_field=%u task_match=%u title_match=%u)",
+		      (u32)taskOk, (u32)seedOk, (u32)titleOk, (u32)(taskOk && task == 44),
+		      (u32)(titleOk && title == kTitle));
 		return 400;
 	}
 	(void)authorization;  // the local player's token (enhanced/gdk/gdk_user.cpp); one player, nothing to check

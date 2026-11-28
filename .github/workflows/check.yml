@@ -46,6 +46,10 @@ jobs:
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror -I enhanced/include tests/native/test_local_http_route.cpp -o /tmp/iw5-local-http-route
           /tmp/iw5-local-http-route
+      - name: Bounded JSON integer parsing tests
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror -pedantic -fsanitize=address,undefined -I enhanced/include tests/native/test_local_json_number.cpp -o /tmp/iw5-json-number-test
+          /tmp/iw5-json-number-test
       - name: Test-only synthetic token result ABI
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -DIW5_QUEUE_HOST_TEST -I enhanced/include tests/native/test_token_mock.cpp enhanced/gdk/gdk_local_queue.cpp -o /tmp/iw5-token-mock-test
