@@ -24,7 +24,7 @@ jobs:
       - name: Install toolchain and Wine
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils imagemagick
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick
           pip install -q -r tests/differential/requirements.txt
       - name: Build and stage the Store multiplayer startup files
         run: |
@@ -42,6 +42,16 @@ jobs:
           for zone in code_pre_gfx_mp localized_code_pre_gfx_mp code_post_gfx_mp localized_code_post_gfx_mp ui_mp localized_ui_mp common_mp localized_common_mp patch_mp; do
             download "zone/english/$zone.ff"
           done
+          # The executable requires main/*.iwd even when its startup fastfiles are present.
+          export game asset_base
+          export -f download
+          {
+            printf 'main/iw_%s.iwd\n' {00..19}
+            printf 'main/localized_english_iw%s.iwd\n' {00..03}
+          } | xargs -P 6 -I '{}' bash -c 'download "$1"' _ '{}'
+          mkdir -p "$game/players2/profiles/Local"
+          printf 'Local\n' >"$game/players2/profiles/active.txt"
+          printf 'seta intro "0"\n' >"$game/players2/profiles/Local/config_mp.cfg"
       - name: Launch without network access and capture the window
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
@@ -59,6 +69,9 @@ jobs:
             if ! kill -0 "$game_pid" 2>/dev/null; then
               break
             fi
+            if grep -q '"Error"' "$capture/windows.txt"; then
+              break
+            fi
             sleep 2
           done
           import -window root "$capture/screen.png"
@@ -67,6 +80,7 @@ jobs:
           fi
           grep -F 'enhanced build active' "$capture/iw5_enhanced.log"
           kill -0 "$game_pid"
+          ! grep -q '"Error"' "$capture/windows.txt"
           grep -i 'modern warfare' "$capture/windows.txt"
           SH
       - uses: actions/upload-artifact@v4
