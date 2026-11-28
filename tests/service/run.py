@@ -36,7 +36,8 @@ DEFS = {
     "kernel32.dll": ["GetStdHandle", "WriteFile", "Sleep", "ExitProcess", "CreateFileA", "GetModuleHandleExA",
                      "GetModuleFileNameA", "InitializeCriticalSection", "EnterCriticalSection",
                      "LeaveCriticalSection", "LocalAlloc", "LocalFree", "CreateThread", "CloseHandle",
-                     "GetSystemTimeAsFileTime"],
+                     "GetSystemTimeAsFileTime", "ReadFile", "GetFileSize", "GetLastError", "CreateDirectoryA",
+                     "MoveFileExA", "DeleteFileA"],
     "ws2_32.dll": ["WSAStartup", "socket", "bind", "listen", "accept", "recv", "send", "closesocket", "getsockname",
                    "htons", "ntohs", "WSAGetLastError"],
     "bcrypt.dll": ["BCryptOpenAlgorithmProvider", "BCryptCloseAlgorithmProvider", "BCryptCreateHash",
@@ -156,10 +157,32 @@ def main():
             print("ok   keepalive, raw bandwidth task ordering, location and empty mailbox")
             # a service the game hasn't been seen to need: BD_SERVICE_NOT_AVAILABLE
             s.sendall(records.encode(0x86, b"\x01\x02\x03 task"))
-            s.sendall(records.encode(0x86, b"\x0a\x03\x07args"))
+            s.sendall(records.encode(0x86, b"\xff\x03\x07args"))
             kind, body = read_record()
             assert kind == 1 and len(body) == 14 and struct.unpack_from("<I", body, 10)[0] == 108, body.hex()
             assert struct.unpack_from("<Q", body, 1)[0] == 5, body.hex()
+            def storage(task, request, status, expected=None):
+                s.sendall(records.encode(0x86, bytes((10, 3, task)) + request))
+                kind, body = read_record()
+                assert kind == 1 and struct.unpack_from("<I", body, 10)[0] == status, body.hex()
+                if expected is not None:
+                    assert body[14:32] == bytes((3, task)) + bytes.fromhex("080100000008010000001308") + struct.pack("<I", len(expected)), body.hex()
+                    assert body[32:] == expected, body.hex()
+
+            publisher = work / "publisher"
+            publisher.mkdir()
+            (publisher / "fixture.aggr").write_bytes(b"local publisher fixture")
+            storage(7, b"\x10fixture.aggr\0", 0, b"local publisher fixture")
+            storage(7, b"\x10../fixture.aggr\0", 1000)
+            storage(7, b"\x10LPT1.txt\0", 1000)
+            profile = b"\x10test profile/MP\0"
+            owner = b"\x0a" + bytes(8)
+            storage(3, profile + owner, 1000)
+            storage(1, profile + b"\x01\x01\x13\x08" + struct.pack("<I", 3) + b"abc", 0)
+            storage(3, profile + owner, 0, b"abc")
+            storage(3, profile + b"\x0a" + struct.pack("<Q", 99), 1000)
+            assert [path.read_bytes() for path in (work / "players2" / "demonware").iterdir()] == [b"abc"]
+            print("ok   publisher files, persistent profile storage and account scoping")
             s.sendall(records.encode(0x0C, b""))
             time.sleep(0.5)
             corrupt = bytearray(records.encode(0x86, b"x"))
@@ -179,7 +202,7 @@ def main():
             time.sleep(0.5)
             log = (work / "iw5_enhanced.log").read_text()
             assert "message type 86 (8 bytes): 010203207461736b" in log and "message type 0c (0 bytes)" in log, log
-            assert "service a task 7: status 108" in log and "service c task 6: status 0" in log, log
+            assert "service a task 7: status 0" in log and "service c task 6: status 0" in log, log
             print("ok   records traced")
         finally:
             host.kill()

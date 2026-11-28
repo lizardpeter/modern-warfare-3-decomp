@@ -10,6 +10,9 @@ IMAGE_BASE = 0x140000000
 CONNECTION_STATE = 0x140E1EBEC
 SNAPSHOT_SERVER_TIME = 0x140E2208C
 MAP_NAME = 0x140E22144
+# dwLogOnUpdate and the Store license accessor used by Live_SyncOnlineDataFlags.
+DEMONWARE_STATE = 0x141901020
+STORE_LICENSE = 0x143D60288
 
 
 def main():
@@ -22,7 +25,10 @@ def main():
         state = struct.unpack("<I", os.pread(memory.fileno(), 4, CONNECTION_STATE))[0]
         server_time = struct.unpack("<i", os.pread(memory.fileno(), 4, SNAPSHOT_SERVER_TIME))[0]
         map_name = os.pread(memory.fileno(), 64, MAP_NAME).partition(b"\0")[0].decode("ascii", "replace")
+        demonware = struct.unpack("<I", os.pread(memory.fileno(), 4, DEMONWARE_STATE))[0]
+        store_license = os.pread(memory.fileno(), 1, STORE_LICENSE)[0]
     print(f"state={state} snapshot={server_time} map={map_name}")
+    print(f"demonware_state={demonware} store_license={store_license}")
 
 
 if __name__ == "__main__":

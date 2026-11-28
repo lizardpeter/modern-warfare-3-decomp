@@ -127,6 +127,13 @@ names. Nothing else to run.
 The local lobby serves time (0x0C/6), synthetic location (0x1B/2), and an empty mailbox (0x06/1).
 It echoes empty keepalives and returns `BD_SERVICE_NOT_AVAILABLE` for the raw bandwidth probe (0x12/1)
 in request order, as BO2 does. The task log reports other unavailable services.
+Storage serves user uploads and downloads for the one local account (0x0A/1 and 0x0A/3), with
+atomic file replacement in `players2/demonware`. Publisher requests (0x0A/7) read named local files
+from `publisher` next to the game. A missing file returns `BD_NO_FILE`.
+
+`Live_SyncOnlineDataFlags` (140220CD0) checks `1403386A0` before treating the player as ready.
+That path checks the Store license byte via `1401A43F0` in addition to checking the player and
+controller. A successful local DemonWare handshake does not set that byte or supply a Store license.
 
 `tests/service/run.py` builds the service into a small console program, runs it under Wine (CI: the
 `local-demonware` job) and plays the game's part with the reference protocol code in `tools/demonware/`: the auth

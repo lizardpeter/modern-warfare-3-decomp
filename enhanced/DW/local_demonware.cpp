@@ -23,6 +23,11 @@ WINBASEAPI HANDLE WINAPI CreateFileA(const char *name, DWORD access, DWORD share
                                      DWORD flags, HANDLE templ);
 WINBASEAPI BOOL WINAPI GetModuleHandleExA(DWORD flags, const char *name, HINSTANCE *module);
 WINBASEAPI DWORD WINAPI GetModuleFileNameA(HINSTANCE module, char *path, DWORD size);
+WINBASEAPI BOOL WINAPI ReadFile(HANDLE file, void *buffer, DWORD bytes, DWORD *read, void *overlapped);
+WINBASEAPI DWORD WINAPI GetFileSize(HANDLE file, DWORD *high);
+WINBASEAPI BOOL WINAPI CreateDirectoryA(const char *path, void *security);
+WINBASEAPI BOOL WINAPI MoveFileExA(const char *from, const char *to, DWORD flags);
+WINBASEAPI BOOL WINAPI DeleteFileA(const char *path);
 WINBASEAPI void WINAPI InitializeCriticalSection(LPCRITICAL_SECTION section);
 WINBASEAPI void *WINAPI LocalAlloc(UINT flags, size_t bytes);
 WINBASEAPI void *WINAPI LocalFree(void *mem);
@@ -198,16 +203,27 @@ struct Out
 	}
 };
 
+size_t ModuleDirectory(char (&path)[MAX_PATH])
+{
+	HINSTANCE self = nullptr;
+	if (!GetModuleHandleExA(4 | 2, reinterpret_cast<const char *>(&ModuleDirectory), &self))
+		return 0;
+	DWORD n = GetModuleFileNameA(self, path, MAX_PATH);
+	if (n == MAX_PATH)
+		return 0;
+	while (n && path[n - 1] != '\\' && path[n - 1] != '/')
+		--n;
+	return n;
+}
+
 void OpenLog()
 {
 	if (s_log != INVALID_HANDLE_VALUE)
 		return;
-	HINSTANCE self = nullptr;
-	GetModuleHandleExA(4 | 2, reinterpret_cast<const char *>(&OpenLog), &self);
-	char path[MAX_PATH + 32];
-	DWORD n = GetModuleFileNameA(self, path, MAX_PATH);
-	while (n && path[n - 1] != '\\' && path[n - 1] != '/')
-		--n;
+	char path[MAX_PATH];
+	const size_t n = ModuleDirectory(path);
+	if (!n || n + 17 > sizeof(path))
+		return;
 	Copy(path + n, "iw5_enhanced.log", 17);
 	constexpr DWORD appendData = 4, openAlways = 4;  // FILE_APPEND_DATA, OPEN_ALWAYS
 	s_log = CreateFileA(path, appendData, FILE_SHARE_READ | 2, nullptr, openAlways, 0, nullptr);
@@ -414,6 +430,8 @@ void TraceBytes(const char *what, const u8 *p, size_t n)
 
 constexpr u32 kServiceNotAvailable = 108;
 constexpr u32 kHandleTaskFailed = 4;
+constexpr u32 kNoFile = 1000;
+constexpr size_t kMaxFileSize = 0xF000;
 
 void Results(u8 *&p, u32 count)
 {
@@ -424,7 +442,153 @@ void Results(u8 *&p, u32 count)
 	p += count ? 10 : 5;
 }
 
-u32 HandleTask(u8 service, u8 task, const u8 *input, size_t inputSize, u8 *out, size_t *size)
+bool PublisherName(const char *name)
+{
+	const size_t size = Length(name);
+	if (name[0] == '.' || name[size - 1] == '.')
+		return false;
+	for (const char *c = name; *c; ++c)
+		if (!((*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z') || (*c >= '0' && *c <= '9') ||
+		      *c == '_' || *c == '-' || *c == '.'))
+			return false;
+	// Reject Win32 devices even when they have extensions.
+	static const char *const devices[] = {"con", "prn", "aux", "nul", "com", "lpt"};
+	for (const char *device : devices)
+	{
+		if (!StartsWithText(name, device))
+			continue;
+		const bool numbered = device[2] == 'm' || device[2] == 't';
+		if (!name[3] || name[3] == '.' ||
+		    (numbered && name[3] >= '0' && name[3] <= '9' && (!name[4] || name[4] == '.')))
+			return false;
+	}
+	return true;
+}
+
+bool LocalFileOwner(const u8 *owner, size_t size)
+{
+	if (size < 9 || owner[0] != 10)
+		return false;
+	const u64 id = Get32(owner + 1) | (u64(Get32(owner + 5)) << 32);
+	return id == 0 || id == kAccount;  // The Store client requests its own file with owner zero.
+}
+
+u32 ReadFileResult(const char *path, u8 *out, size_t capacity, size_t *size)
+{
+	constexpr DWORD shareDelete = 4;
+	HANDLE file = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ | shareDelete, nullptr, OPEN_EXISTING, 0, nullptr);
+	if (file == INVALID_HANDLE_VALUE)
+	{
+		const DWORD error = GetLastError();
+		return error == 2 || error == 3 ? kNoFile : kServiceNotAvailable;
+	}
+	DWORD high = 0;
+	const DWORD length = GetFileSize(file, &high);
+	DWORD read = 0;
+	const bool ok = !high && length <= kMaxFileSize && capacity >= 16 + size_t(length) &&
+	                (!length || (ReadFile(file, out + 16, length, &read, nullptr) && read == length));
+	CloseHandle(file);
+	if (!ok)
+		return kServiceNotAvailable;
+	Results(out, 1);
+	out[0] = 19;
+	out[1] = 8;
+	Put32(out + 2, length);
+	*size = 16 + length;
+	return 0;
+}
+
+bool WriteProfileFile(const char *path, size_t pathLength, const u8 *data, DWORD size)
+{
+	char temporary[MAX_PATH];
+	Copy(temporary, path, pathLength);
+	Copy(temporary + pathLength, ".tmp", 5);
+	EnterCriticalSection(&s_lock);
+	HANDLE file = CreateFileA(temporary, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, 0, nullptr);
+	bool ok = false;
+	if (file != INVALID_HANDLE_VALUE)
+	{
+		DWORD written = 0;
+		const bool saved = !size || (WriteFile(file, data, size, &written, nullptr) && written == size);
+		CloseHandle(file);
+		ok = saved && MoveFileExA(temporary, path, 1 | 8);  // Replace existing and write through.
+		if (!ok)
+			DeleteFileA(temporary);
+	}
+	LeaveCriticalSection(&s_lock);
+	return ok;
+}
+
+u32 StorageTask(u8 task, const u8 *input, size_t inputSize, u8 *out, size_t capacity, size_t *size)
+{
+	if (inputSize < 3 || input[0] != 16)
+		return kHandleTaskFailed;
+	size_t nameSize = 0;
+	while (nameSize + 1 < inputSize && nameSize < 128 && input[nameSize + 1])
+		++nameSize;
+	if (!nameSize || nameSize == 128 || nameSize + 1 == inputSize)
+		return kHandleTaskFailed;
+	const char *name = reinterpret_cast<const char *>(input + 1);
+	const u8 *body = input + nameSize + 2;
+	const size_t bodySize = inputSize - nameSize - 2;
+
+	char path[MAX_PATH];
+	const size_t base = ModuleDirectory(path);
+	if (!base)
+		return kServiceNotAvailable;
+	if (task == 7) // bdStorage::getPublisherFile (1403F7F50)
+	{
+		static constexpr char folder[] = "publisher\\";
+		if (!PublisherName(name) || base + sizeof(folder) + nameSize > sizeof(path))
+			return kNoFile;
+		Copy(path + base, folder, sizeof(folder) - 1);
+		Copy(path + base + sizeof(folder) - 1, name, nameSize + 1);
+		return ReadFileResult(path, out, capacity, size);
+	}
+	static constexpr char profileFolder[] = "players2";
+	static constexpr char storageFolder[] = "\\demonware";
+	const size_t filename = base + sizeof(profileFolder) + sizeof(storageFolder) - 1;
+	if (filename + 40 + sizeof(".tmp") > sizeof(path))
+		return kServiceNotAvailable;
+	if (task == 3 && !LocalFileOwner(body, bodySize))
+		return kNoFile;
+
+	// Encode the profile's filename as a fixed-length key, including all original bytes.
+	u8 hash[20];
+	if (!LocalCrypto::Sha1(input + 1, nameSize, hash))
+		return kServiceNotAvailable;
+	Copy(path + base, profileFolder, sizeof(profileFolder));
+	if (task == 1)
+		CreateDirectoryA(path, nullptr);
+	Copy(path + base + sizeof(profileFolder) - 1, storageFolder, sizeof(storageFolder));
+	if (task == 1)
+		CreateDirectoryA(path, nullptr);
+	path[filename - 1] = '\\';
+	static constexpr char hex[] = "0123456789abcdef";
+	for (size_t i = 0; i < sizeof(hash); ++i)
+	{
+		path[filename + 2 * i] = hex[hash[i] >> 4];
+		path[filename + 2 * i + 1] = hex[hash[i] & 15];
+	}
+	const size_t pathLength = filename + 2 * sizeof(hash);
+	path[pathLength] = '\0';
+	if (task == 3) // bdStorage::getFile (1403F7D70)
+		return ReadFileResult(path, out, capacity, size);
+	// bdStorage::uploadFile (1403F8890): visibility, blob, optional owner, trailing padding.
+	if (bodySize < 8 || body[0] != 1 || body[1] > 1 || body[2] != 19 || body[3] != 8)
+		return kHandleTaskFailed;
+	const DWORD length = Get32(body + 4);
+	if (length > kMaxFileSize || length > bodySize - 8 ||
+	    (bodySize - 8 - length >= 9 && !LocalFileOwner(body + 8 + length, bodySize - 8 - length)))
+		return kHandleTaskFailed;
+	if (!WriteProfileFile(path, pathLength, body + 8, length))
+		return kServiceNotAvailable;
+	Results(out, 0);
+	*size = 5;
+	return 0;
+}
+
+u32 HandleTask(u8 service, u8 task, const u8 *input, size_t inputSize, u8 *out, size_t capacity, size_t *size)
 {
 	u8 *p = out;
 	*size = 0;
@@ -452,6 +616,8 @@ u32 HandleTask(u8 service, u8 task, const u8 *input, size_t inputSize, u8 *out, 
 			return kHandleTaskFailed;
 		Results(p, 0);  // The local account has an empty inbox.
 	}
+	else if (service == 0x0A && (task == 1 || task == 3 || task == 7))
+		return StorageTask(task, input, inputSize, out, capacity, size);
 	else
 		return kServiceNotAvailable;
 	*size = p - out;
@@ -554,7 +720,10 @@ void Session(SOCKET s, u64 connectionId)
 		Out o = {what + 20, what + sizeof(what) - 1};
 		o.Unsigned(type, 16, 2);
 		*o.p = 0;
-		TraceBytes(what, payload, size);
+		if (type == 0x86 && size && payload[0] == 0x0A)
+			LocalDemonWare::Trace("%s (storage request, %u bytes)", what, (u32)size);
+		else
+			TraceBytes(what, payload, size);
 		if (type != 0x86 || size < 2)
 			continue;
 		// The bandwidth probe sends raw IDs and still occupies a slot in the task FIFO.
@@ -564,7 +733,9 @@ void Session(SOCKET s, u64 connectionId)
 		const size_t argumentOffset = bandwidthProbe ? 2 : 3;
 		const u8 service = payload[0], task = payload[argumentOffset - 1];
 		size_t replySize = 0;
-		u32 status = HandleTask(service, task, payload + argumentOffset, size - argumentOffset, reply + 16, &replySize);
+		const size_t maxMessage = (r.frameLimit - 30) / 16 * 16 - 5;
+		u32 status = HandleTask(service, task, payload + argumentOffset, size - argumentOffset, reply + 16,
+		                        maxMessage - 16, &replySize);
 		// The reply (type 1, bdRemoteTask::handleTaskReply 1403F18E0): typed transaction ID, typed error, and on
 		// success the typed task id and the task's results (written by HandleTask after the header).
 		u8 header[16];

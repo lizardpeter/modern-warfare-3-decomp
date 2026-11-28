@@ -114,7 +114,7 @@ jobs:
           xdotool windowfocus --sync "$window"
           xdotool mousemove --sync --window "$window" 395 120
           import -window root "$capture/play-hover.png"
-          xdotool click 1
+          xdotool mousedown 1 sleep 0.25 mouseup 1
           sample_client() {
             sudo -n /usr/bin/python3 "$workspace/tools/gdk/store_client_sample.py" "$game_pid" \
               >>"$capture/store-client-state.txt" 2>>"$capture/store-client-state-errors.txt" || true
@@ -135,7 +135,7 @@ jobs:
               return 1
             fi
             read -r x y <<<"$coordinates"
-            xdotool mousemove --sync "$x" "$y" click 1
+            xdotool mousemove --sync "$x" "$y" mousedown 1 sleep 0.25 mouseup 1
             printf 'Selected %s at %s\n' "$label" "$coordinates" >>"$capture/play-status.txt"
           }
           private_opened=0
@@ -155,6 +155,9 @@ jobs:
               private_opened=1
             elif test "$private_opened" -eq 1 && test "$match_started" -eq 0 && click_menu 'START MATCH' "$capture/play-$stamp.png"; then
               match_started=1
+            elif test "$private_opened" -eq 0 && test "$delay" -eq 4; then
+              # Keyboard activation samples a full input frame even if the mouse event was missed.
+              xdotool keydown Return sleep 0.25 keyup Return
             fi
           done
           if test "$match_started" -eq 1; then
