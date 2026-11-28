@@ -85,16 +85,18 @@ def main():
     from harness import original_exe
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--build", choices=TARGETS, default="iw5mp_ship")
+    parser.add_argument("--ci-local-response", action="store_true", help="separate isolated integration-test build, not for distribution")
     args = parser.parse_args()
     build = args.build
     exe = pefile.PE(str(original_exe(build)), fast_load=True)
-    out = ROOT / "build" / build / "runtime"
+    out = ROOT / "build" / build / ("runtime-ci-local" if args.ci_local_response else "runtime")
     dll_name = TARGETS[build]
-    run(sys.executable, ROOT / "tools" / "build_recon.py", "--build", build, "--enhanced")
+    run(sys.executable, ROOT / "tools" / "build_recon.py", "--build", build, "--enhanced",
+        *(["--ci-local-response"] if args.ci_local_response else []))
     out.mkdir(parents=True, exist_ok=True)
     work = out / "obj"
     work.mkdir(exist_ok=True)
-    shutil.copyfile(ROOT / "build" / build / "enhanced" / "recon.dll", out / dll_name)
+    shutil.copyfile(ROOT / "build" / build / ("enhanced-ci-local" if args.ci_local_response else "enhanced") / "recon.dll", out / dll_name)
     build_loader(work, out)
     for line in check(exe, out, dll_name):
         print("redirect", line)

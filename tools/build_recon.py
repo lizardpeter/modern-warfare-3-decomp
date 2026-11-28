@@ -200,7 +200,10 @@ def main():
         sys.exit(f"{build}: {arch} builds aren't linked (only the x64 Store builds are run)")
     triple = ARCH[arch]["triple"]
     enhanced = "--enhanced" in sys.argv
-    BUILD = out_dir(build, enhanced)
+    ci_local = "--ci-local-response" in sys.argv
+    if ci_local and not enhanced:
+        sys.exit("CI response requires enhanced test build")
+    BUILD = out_dir(build, enhanced) if not ci_local else ROOT / "build" / build / "enhanced-ci-local"
     BUILD.mkdir(parents=True, exist_ok=True)
 
     objs, src_objs, enhanced_defs, src_defs = [], [], set(), set()
@@ -217,6 +220,8 @@ def main():
             # enhanced/'s own headers; and one section per function, so the src/ copies an exe-first thunk replaces
             # are dropped from the DLL (/opt:ref), not left as unnamed code
             flags += [f"-I{ROOT / 'enhanced' / 'include'}", "-ffunction-sections"]
+        if ci_local and tree == "enhanced" and src.name == "gdk_local_user.cpp":
+            flags.append("-DIW5_CI_LOCAL_RESPONSE")
         compile_unit(src, obj, arch, flags)
         objs.append(obj)
         defs = {p[2] for p in nm(obj, "--defined-only", "--extern-only") if len(p) == 3 and p[1] in "Tt"}

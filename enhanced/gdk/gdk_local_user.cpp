@@ -33,6 +33,19 @@ Profile profile{};
 using Handle = Profile *;
 constexpr u64 marker = 0x4957354C4F43414Cull;
 const char identity[] = "IW5LocalProfileAdd";
+#ifdef IW5_CI_LOCAL_RESPONSE
+// Explicitly synthetic, non-credential data used only by the isolated
+// runtime integration test. Never compiled into the normal enhanced DLL.
+const char tokenIdentity[] = "IW5CILocalResponse";
+constexpr char tokenText[] = "TEST-ONLY-NOT-A-CREDENTIAL";
+constexpr char signatureText[] = "TEST-ONLY-NOT-A-SIGNATURE";
+struct TokenData {
+    size_t tokenSize, signatureSize;
+    const char *token, *signature;
+};
+static_assert(sizeof(TokenData) == 32, "x64 result header");
+constexpr size_t tokenBytes = sizeof(TokenData) + sizeof(tokenText) + sizeof(signatureText);
+#endif
 struct Completion {
     u64 tag;
     const void *identity;
@@ -46,7 +59,11 @@ bool Read(XAsyncBlock *block, Completion &c)
 {
     if (!block) return false;
     Gdk_Copy(&c, block->internal, sizeof(c));
-    return c.tag == marker && c.identity == identity;
+    return c.tag == marker && (c.identity == identity
+#ifdef IW5_CI_LOCAL_RESPONSE
+                              || c.identity == tokenIdentity
+#endif
+                              );
 }
 void AddCompleted(void *ctx, bool)
 {
@@ -55,15 +72,12 @@ void AddCompleted(void *ctx, bool)
     auto *block = static_cast<XAsyncBlock *>(ctx);
     if (block->callback) block->callback(block);
 }
-HRESULT AddAsyncImpl(GdkInterface *, u32 options, XAsyncBlock *block)
+HRESULT BeginCompletion(XAsyncBlock *block, const void *kind, u32 size, u64 payload)
 {
     if (!block) return GDK_E_POINTER;
-    // Default user silently cannot be combined with guest selection or UI.
-    if ((options & ~7u) || ((options & 1u) && (options & 6u))) return GDK_E_INVALIDARG;
-
     Completion old{};
     if (Read(block, old)) return GDK_E_INVALIDARG;
-    Completion c{marker, identity, GDK_S_OK, sizeof(Handle), reinterpret_cast<u64>(&profile)};
+    Completion c{marker, kind, GDK_S_OK, size, payload};
     XTaskQueueHandle queue = nullptr;
     if (block->queue) {
         HRESULT hr = LocalQueueDuplicate(nullptr,block->queue,&queue);
@@ -79,6 +93,12 @@ HRESULT AddAsyncImpl(GdkInterface *, u32 options, XAsyncBlock *block)
     }
     if (queue) LocalQueueClose(nullptr,queue);
     return hr;
+}
+HRESULT AddAsyncImpl(GdkInterface *, u32 options, XAsyncBlock *block)
+{
+    if (!block) return GDK_E_POINTER;
+    if ((options & ~7u) || ((options & 1u) && (options & 6u))) return GDK_E_INVALIDARG;
+    return BeginCompletion(block, identity, sizeof(Handle), reinterpret_cast<u64>(&profile));
 }
 HRESULT Status(GdkInterface *, XAsyncBlock *block, bool)
 {
@@ -117,7 +137,7 @@ HRESULT AddResultImpl(GdkInterface *, XAsyncBlock *block, Handle *out)
     if (!out) return GDK_E_POINTER;
     *out = nullptr;
     Completion c{};
-    if (!Read(block, c)) return GDK_E_INVALIDARG;
+    if (!Read(block, c) || c.identity != identity) return GDK_E_INVALIDARG;
     if (c.result < 0) { Gdk_Zero(block->internal,sizeof(block->internal)); return c.result; }
     if (c.size != sizeof(Handle)) return GDK_E_INVALIDARG;
     if (!Retain(false)) return GDK_E_FAIL;
@@ -251,20 +271,61 @@ HRESULT Privilege(GdkInterface *i, Handle h, u32 options, u32 privilege, bool *a
 {
     return Trace(6, "XUserCheckPrivilege", PrivilegeImpl(i,h,options,privilege,allowed,reason));
 }
-HRESULT TokenAsync(GdkInterface *, Handle, u32, const char *, const char *, size_t, const void *, size_t, const void *, XAsyncBlock *)
+HRESULT TokenAsync(GdkInterface *, Handle h, u32, const char *method, const char *url, size_t, const void *, size_t, const void *, XAsyncBlock *block)
 {
+#ifdef IW5_CI_LOCAL_RESPONSE
+    // This exact request is serviced in-process in the isolated test runtime.
+    // Do not produce a credential or allow any other destination.
+    const char target[] = "https://auth3.prod.demonware.net";
+    if (Valid(h) && method && url && Gdk_StrLen(method)==4 &&
+        Gdk_StartsWith(method,"POST") && Gdk_StrLen(url)==sizeof(target)-1 &&
+        Gdk_StartsWith(url,target))
+        return Trace(7, "XUserGetTokenAndSignatureAsync",
+                     BeginCompletion(block,tokenIdentity,static_cast<u32>(tokenBytes),0));
+#else
+    (void)h; (void)method; (void)url; (void)block;
+#endif
     return Trace(7, "XUserGetTokenAndSignatureAsync", GDK_E_NOINTERFACE);
 }
-HRESULT TokenSize(GdkInterface *, XAsyncBlock *, size_t *out)
+HRESULT TokenSize(GdkInterface *, XAsyncBlock *block, size_t *out)
 {
     if (out) *out = 0;
+#ifdef IW5_CI_LOCAL_RESPONSE
+    Completion c{};
+    if (!out) return GDK_E_POINTER;
+    if (!Read(block,c) || c.identity != tokenIdentity) return GDK_E_INVALIDARG;
+    *out = c.size;
+    return Trace(8, "XUserGetTokenAndSignatureResultSize", c.result);
+#else
+    (void)block;
     return Trace(8, "XUserGetTokenAndSignatureResultSize", GDK_E_NOINTERFACE);
+#endif
 }
-HRESULT TokenResult(GdkInterface *, XAsyncBlock *, size_t, void *, void **out, size_t *used)
+HRESULT TokenResult(GdkInterface *, XAsyncBlock *block, size_t capacity, void *buffer, void **out, size_t *used)
 {
     if (out) *out = nullptr;
     if (used) *used = 0;
+#ifdef IW5_CI_LOCAL_RESPONSE
+    Completion c{};
+    if (!out) return GDK_E_POINTER;
+    if (!Read(block,c) || c.identity != tokenIdentity) return GDK_E_INVALIDARG;
+    if (c.result != GDK_S_OK) return c.result;
+    if (capacity < tokenBytes) return GDK_E_NOT_SUFFICIENT_BUFFER;
+    if (!buffer) return GDK_E_POINTER;
+    char *bytes = static_cast<char *>(buffer);
+    char *t = bytes + sizeof(TokenData), *s = t + sizeof(tokenText);
+    TokenData data{sizeof(tokenText),sizeof(signatureText),t,s};
+    Gdk_Copy(bytes,&data,sizeof(data));
+    Gdk_Copy(t,tokenText,sizeof(tokenText));
+    Gdk_Copy(s,signatureText,sizeof(signatureText));
+    *out = buffer;
+    if (used) *used = tokenBytes;
+    Gdk_Zero(block->internal,sizeof(block->internal));
+    return Trace(9, "XUserGetTokenAndSignatureResult", GDK_S_OK);
+#else
+    (void)block; (void)capacity; (void)buffer;
     return Trace(9, "XUserGetTokenAndSignatureResult", GDK_E_NOINTERFACE);
+#endif
 }
 HRESULT RegisterChange(GdkInterface *, XTaskQueueHandle, void *, void *, XTaskQueueRegistrationToken *out)
 {

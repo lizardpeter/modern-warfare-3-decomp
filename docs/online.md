@@ -162,3 +162,7 @@ The actual Store multiplayer run recorded XUserAddAsync and XUserAddResult retur
 ### Synthetic token ABI fixture
 
 `tests/native/test_token_mock.cpp` is a standalone host-only fixture with unmistakably synthetic strings. It uses the real local queue adapter and checks the 32-byte x64 result header, string lengths including terminators, result-buffer bounds, callback dispatch, cancellation and one-shot retrieval. It is built only as a separate CI test executable. No game DLL, runtime vtable, token service, network request or entitlement decision uses this fixture. The production token APIs remain unavailable.
+
+### Game-facing local response integration test
+
+The startup smoke workflow now builds a separate `runtime-ci-local` variant and runs the actual game in a fresh network namespace containing only loopback. The test-only XUser response is available only for the observed POST token request to the local service adapter, with clearly synthetic strings that are not credentials. The original normal runtime build still reports token APIs unavailable. No Store or privilege result is modified; the normal enhanced artifact does not contain the CI response. The workflow collects each observed API result and requires independent client activation evidence. A token result or service handshake alone is not map-entry proof.

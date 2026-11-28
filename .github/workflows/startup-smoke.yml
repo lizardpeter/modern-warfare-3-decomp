@@ -34,8 +34,9 @@ jobs:
         run: |
           game="$RUNNER_TEMP/iw5-game"
           python3 tools/fetch_originals.py iw5mp_ship "$game" --only exe
-          IW5_ORIGINALS="$game" python3 tools/build_runtime.py
-          cp build/iw5mp_ship/runtime/*.dll "$game/"
+          IW5_ORIGINALS="$game" python3 tools/build_runtime.py --ci-local-response
+          cp build/iw5mp_ship/runtime-ci-local/*.dll "$game/"
+          printf "CI-only local response variant; external network disabled at execution\n" > "$game/ci-build.txt"
           asset_base="$(python3 -c 'import tomllib; print(tomllib.load(open("target.toml","rb"))["r2_public"])')mw3/DUMP"
           download() {
             curl -fsSL --retry 3 --max-time 150 --create-dirs -o "$game/$1" "$asset_base/$1"
@@ -60,7 +61,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
           cd "$RUNNER_TEMP/iw5-game"
-          timeout 300s sudo unshare --net -- bash -c 'set -e; ip link set lo up; test -z "$(ip route show default)"; exec "$@"' _ runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          timeout 300s sudo unshare --net -- bash -c 'set -e; ip link set lo up; test -z "$(ip route show default)"; test -z "$(ip -6 route show default)"; test "$(ip -o link show | wc -l)" -eq 1; exec "$@"' _ runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
           set -eu
           capture="$1/iw5-capture"
           export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll
@@ -133,6 +134,10 @@ jobs:
             cp "$file" "$capture/engine-console-$i.log"
           done < <(find "$PWD" "$WINEPREFIX/drive_c/users" -type f -iname 'console*.log' -print0 2>/dev/null)
           cat "$capture/play-status.txt"
+          cp ci-build.txt "$capture/"
+          grep -F "iw5_local_api " "$capture/game.log" > "$capture/local-api-results.txt" || true
+          cat "$capture/local-api-results.txt"
+          cat "$capture/iw5_enhanced.log"
           SH
       - name: Summarize rejected GDK interface queries
         if: always()
