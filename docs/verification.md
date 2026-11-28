@@ -88,3 +88,5 @@ original x64 instructions for the primary unwind extent of `TaskGroup_Init`. The
 `iw5-original-task-evidence`. Static graph edges are candidates, not observed runtime calls; inspect chained
 unwind extents, indirect calls and original state writes before authoring the C++ body. The report does not
 change the GDK rejection boundary or qualify any function as `matches`.
+
+`enhanced/qcommon/native_task_queue.h` is new, platform-neutral infrastructure, not a reconstructed Store function. It uses a single owner thread, 32 outstanding entries, explicit due ticks, non-reused IDs, separate work and completion dispatch, and queued cancellation. Its host tests run with ASan/UBSan. It is not wired into the original engine; the original task ABI and helper contracts must be recovered before integration. It does not implement GDK interfaces, account sign-in, or entitlement decisions.
