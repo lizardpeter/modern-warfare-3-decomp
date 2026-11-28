@@ -10,6 +10,7 @@ from unicorn import x86_const as X
 
 from tools.demonware.auth import encode_auth_reply
 from tools.demonware.lobby210 import ClientAuth, ClientHello, _expand, server_challenge, verify_client_auth
+from tools.demonware.records210 import ServerRecords
 
 
 def check_lobby_v210(expand):
@@ -89,7 +90,31 @@ def check_auth_ticket_decoder():
     assert ticket[104:128] == session_key
 
 
+def check_record_directions_and_replay():
+    material = bytes(range(72))
+    server = ServerRecords(material, 65535)
+    client = ServerRecords(material[20:40] + material[:20] + material[56:] + material[40:56], 65535)
+    request = client.encode(0x86, b"task")
+    corrupt = request[:-1] + bytes((request[-1] ^ 1,))
+    for invalid in (corrupt, request[:-1]):
+        try:
+            server.decode(invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("invalid lobby record was accepted")
+    assert server.decode(request) == (0x86, b"task")
+    try:
+        server.decode(request)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("replayed lobby record was accepted")
+    assert client.decode(server.encode(1, b"reply")) == (1, b"reply")
+
+
 if __name__ == "__main__":
     check_lobby_v210(native_expander())
     check_auth_ticket_decoder()
-    print("MW3 lobby v210 handshake vectors, native key expansion and native ticket decoding passed")
+    check_record_directions_and_replay()
+    print("MW3 lobby v210 handshake vectors, native ticket and key checks, and record round trips passed")

@@ -54,9 +54,11 @@ client unchanged. MW3's client explicitly rejects the legacy reply while waiting
 
 `tools/demonware/auth.py` encodes the Store auth response and packed title `0x906` client ticket.
 `tools/demonware/lobby210.py` decodes the 210 hello and client proof, constructs the server challenge,
-and derives the verification and record key material. The differential check runs the original Store
-ticket deserializer at `1404049D0` and key expansion at `140406B40` with modeled HMAC-SHA1 primitives.
-The game still needs a configured service transport, encrypted record processing and the native Online task handlers.
+and derives the verification and record key material. `tools/demonware/records210.py` uses the
+directional AES-CBC and HMAC keys from the Store record paths at `140408BB0` and `140406E20`.
+The differential check runs the original Store ticket deserializer at `1404049D0` and key expansion
+at `140406B40` with modeled HMAC-SHA1 primitives. Record tests cover both directions, invalid MACs
+and repeated sequences. The game still needs a configured service transport and the native Online task handlers.
 
 ## Enhanced build: fail-closed GDK boundary
 
