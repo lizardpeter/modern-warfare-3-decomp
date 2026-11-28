@@ -33,9 +33,25 @@ def original_interface_pairs(build):
     return [(row["name"], guid(row["iid"]), guid(row["class"])) for row in rows]
 
 
-def query(ctx, first, second):
-    """QueryApiImpl(first, second, &out): (hr, interface)."""
-    hr, bufs, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [first, second, b"\xff" * 8], "int")
+def query(ctx, first, second, state=None):
+    """QueryApiImpl(first, second, &out): (hr, interface).
+
+    The differential harness rolls back image writes after every invocation.
+    Replay only this test's captured DLL writes to model a single process,
+    while retaining the default isolated behavior for unrelated checks.
+    """
+    def setup(w):
+        for addr in sorted(state)[::8]:
+            w.write(addr, b"".join(state[addr + i] for i in range(8)))
+
+    hr, bufs, writes, _ = ctx.m.call(
+        ctx.enhanced("QueryApiImpl"), [first, second, b"\xff" * 8], "int",
+        setup=setup if state is not None else None)
+    assert isinstance(hr, int), f"QueryApiImpl did not return: {hr}"
+    if state is not None:
+        assert all(ctx.recon.base <= addr < ctx.recon.base + ctx.recon.size
+                   for addr in writes), "unexpected non-DLL state mutation"
+        state.update(writes)
     return hr, struct.unpack("<Q", bufs[-1])[0]
 
 
@@ -87,14 +103,15 @@ def check_gdk_isolation(ctx):
     pairs = original_interface_pairs(ctx.build)
     # A busy async interface must not exhaust the budget for later Store/user queries.
     _, first_iid, first_cls = pairs[0]
-    for _ in range(300):
-        hr, out = query(ctx, first_iid, first_cls)
-        assert (hr & 0xffffffff) == 0x80004002 and out == 0
-    assert len(trace) == 1
+    state = {}
+    for i in range(300):
+        hr, out = query(ctx, first_iid, first_cls, state)
+        assert (hr & 0xffffffff) == 0x80004002 and out == 0, (i, hr, out)
+        assert len(trace) == 1, f"duplicate trace at query {i}: {len(trace)}"
     seen = {(first_iid, first_cls)}
     for name, first, second in pairs + [("unknown", bytes(16), bytes(16))]:
         before = len(trace)
-        hr, out = query(ctx, first, second)
+        hr, out = query(ctx, first, second, state)
         assert (hr & 0xffffffff) == 0x80004002 and out == 0, f"{name}: {hr:#x}, {out:#x}"
         expected = f"iw5_gdk_rejected iid_le={first.hex()} class_le={second.hex()}\n".encode()
         if (first, second) in seen:
@@ -105,7 +122,7 @@ def check_gdk_isolation(ctx):
     before = len(trace)
     hr, _, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [0, 0, 0], "uint")
     assert hr == 0x80004003 and len(trace) == before, f"null output: {hr:#x}"
-    hr, out = query(ctx, 0, 0)
+    hr, out = query(ctx, 0, 0, state)
     assert (hr & 0xffffffff) == 0x80004002 and out == 0
     assert trace[-1] == b"iw5_gdk_rejected iid_le=" + b"-" * 32 + b" class_le=" + b"-" * 32 + b"\n"
 
