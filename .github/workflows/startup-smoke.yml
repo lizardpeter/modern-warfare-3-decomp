@@ -28,7 +28,7 @@ jobs:
       - name: Install toolchain and Wine
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils imagemagick pulseaudio pulseaudio-utils
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick pulseaudio pulseaudio-utils
           pip install -q -r tests/differential/requirements.txt
       - name: Build and stage the Store multiplayer startup files
         run: |
@@ -60,7 +60,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
           cd "$RUNNER_TEMP/iw5-game"
-          timeout 200s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          timeout 240s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
           set -eu
           capture="$1/iw5-capture"
           export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll
@@ -88,6 +88,45 @@ jobs:
           kill -0 "$game_pid"
           ! grep -Eq '"(Program )?Error"' "$capture/windows.txt"
           grep -i 'modern warfare' "$capture/windows.txt"
+          # The menu is not proof of match entry. Exercise its normal PLAY action
+          # with real X11 input, at the fixed 1280x720 geometry of this smoke test.
+          # Preserve the original startup screenshot and capture subsequent states.
+          window="$(xdotool search --onlyvisible --pid "$game_pid" --name 'Modern Warfare.*3 Multiplayer' | head -n 1 || true)"
+          if test -z "$window"; then
+            window="$(xdotool search --onlyvisible --name 'Modern Warfare.*3 Multiplayer' | head -n 1 || true)"
+          fi
+          if test -z "$window"; then
+            printf 'PLAY not attempted: multiplayer window not found\n' > "$capture/play-status.txt"
+            exit 1
+          fi
+          {
+            printf 'Window: %s\n' "$window"
+            printf 'Before PLAY: %s\n' "$(date -u +%FT%TZ)"
+            printf 'Game log bytes before PLAY: %s\n' "$(wc -c < "$capture/game.log")"
+          } > "$capture/play-status.txt"
+          # On the observed multiplayer menu PLAY is at (395,120).
+          xdotool windowfocus --sync "$window"
+          xdotool mousemove --sync --window "$window" 395 120
+          import -window root "$capture/play-hover.png"
+          xdotool click 1
+          for delay in 1 4 10 15; do
+            sleep "$delay"
+            stamp="$(date -u +%H%M%S)"
+            xwininfo -root -tree > "$capture/play-$stamp-windows.txt"
+            import -window root "$capture/play-$stamp.png"
+            printf 'After PLAY %s: log bytes=%s\n' "$(date -u +%FT%TZ)" "$(wc -c < "$capture/game.log")" >> "$capture/play-status.txt"
+            if ! kill -0 "$game_pid" 2>/dev/null; then
+              printf 'Game exited after PLAY\n' >> "$capture/play-status.txt"
+              break
+            fi
+          done
+          if kill -0 "$game_pid" 2>/dev/null; then
+            printf 'Game still running after PLAY observation\n' >> "$capture/play-status.txt"
+          fi
+          if test -f iw5_enhanced.log; then
+            cp iw5_enhanced.log "$capture/"
+          fi
+          cat "$capture/play-status.txt"
           SH
       - name: Summarize rejected GDK interface queries
         if: always()
