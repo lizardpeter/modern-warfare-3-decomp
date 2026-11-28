@@ -158,3 +158,7 @@ identity, token or privilege authorization has been added or modified in this pa
 ### Observed retail user setup (CI 46124549841)
 
 The actual Store multiplayer run recorded XUserAddAsync and XUserAddResult returning S_OK, followed by XUserGetId returning E_NOINTERFACE. No token request was observed. The original user setup callback rejects a failed Xbox ID lookup; a local identity is not an Xbox account. The subsequent compatibility update supplies the private account key at the numeric ID boundary, without changing the token, privilege, Store or sign-in-state results. The new behavior is pending a live run. The original retail session is still unavailable in the isolated environment. Local lookup, capacity, name components and invalid options are tested independently.
+
+### Synthetic token ABI fixture
+
+`tests/native/test_token_mock.cpp` is a standalone host-only fixture with unmistakably synthetic strings. It uses the real local queue adapter and checks the 32-byte x64 result header, string lengths including terminators, result-buffer bounds, callback dispatch, cancellation and one-shot retrieval. It is built only as a separate CI test executable. No game DLL, runtime vtable, token service, network request or entitlement decision uses this fixture. The production token APIs remain unavailable.
