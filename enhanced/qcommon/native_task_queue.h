@@ -63,6 +63,8 @@ public:
 
     // Dispatch one callback. Ready completions precede work, both in stable ID
     // order for equal deadlines. Reentrant dispatch is explicitly refused.
+    // Exceptions propagate to the caller. A throwing work callback becomes
+    // a Failed completion; a throwing completion has already consumed its slot.
     bool Dispatch(Tick now)
     {
         if (dispatching_)
@@ -77,9 +79,8 @@ public:
             auto context = selected->context;
             auto result = selected->result;
             *selected = {};
-            dispatching_ = true;
+            DispatchGuard guard{dispatching_};
             complete(context, result);
-            dispatching_ = false;
             return true;
         }
         for (auto &slot : slots_)
@@ -93,10 +94,9 @@ public:
         if (!selected)
             return false;
         selected->state = State::Running;
-        dispatching_ = true;
+        selected->result = Result::Failed;
+        DispatchGuard guard{dispatching_, selected};
         selected->result = selected->work(selected->context);
-        selected->state = State::Ready;
-        dispatching_ = false;
         return true;
     }
 
@@ -120,6 +120,23 @@ private:
         void *context{};
         State state{};
         Result result{};
+    };
+    // Scope exit releases the dispatch lock even during exception unwinding.
+    // A running slot must become Ready before dispatch can resume.
+    struct DispatchGuard
+    {
+        bool &dispatching;
+        Slot *running;
+        explicit DispatchGuard(bool &flag, Slot *slot = nullptr) noexcept
+            : dispatching(flag), running(slot) { dispatching = true; }
+        ~DispatchGuard() noexcept
+        {
+            if (running)
+                running->state = State::Ready;
+            dispatching = false;
+        }
+        DispatchGuard(const DispatchGuard &) = delete;
+        DispatchGuard &operator=(const DispatchGuard &) = delete;
     };
     Slot slots_[Capacity]{};
     TaskId next_ = 1;

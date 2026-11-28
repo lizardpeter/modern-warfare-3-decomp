@@ -1,6 +1,7 @@
 #include "enhanced/qcommon/native_task_queue.h"
 #include <cassert>
 #include <vector>
+#include <stdexcept>
 using namespace iw5::native;
 
 struct Event { int id; Result result; };
@@ -37,8 +38,101 @@ static void Done(void *opaque, Result result)
         assert(!f.queue->Dispatch(1000));
 }
 
+struct ThrowingFixture
+{
+    TaskQueue *queue;
+    TaskId handle = 0;
+    TaskId replacement = 0;
+    unsigned work = 0;
+    unsigned done = 0;
+    bool throw_work = false;
+    bool throw_done = false;
+    bool replace_on_throw = false;
+    Result observed = Result::Completed;
+};
+
+static Result ThrowingWork(void *opaque)
+{
+    auto &f = *static_cast<ThrowingFixture *>(opaque);
+    ++f.work;
+    assert(!f.queue->Dispatch(0));
+    assert(!f.queue->Cancel(f.handle));
+    if (f.throw_work)
+        throw std::runtime_error("work");
+    return Result::Completed;
+}
+
+static void ThrowingDone(void *opaque, Result result)
+{
+    auto &f = *static_cast<ThrowingFixture *>(opaque);
+    ++f.done;
+    f.observed = result;
+    assert(!f.queue->Dispatch(0));
+    assert(!f.queue->Cancel(f.handle));
+    if (f.throw_done)
+    {
+        if (f.replace_on_throw)
+        {
+            f.replacement = f.queue->Submit(0, ThrowingWork, ThrowingDone, &f);
+            assert(f.replacement && f.replacement != f.handle);
+        }
+        throw std::runtime_error("completion");
+    }
+}
+
+static void TestCallbackExceptions()
+{
+    TaskQueue queue;
+    ThrowingFixture f{&queue};
+    f.throw_work = true;
+    f.handle = queue.Submit(0, ThrowingWork, ThrowingDone, &f);
+    assert(f.handle);
+    bool caught = false;
+    try { queue.Dispatch(0); }
+    catch (const std::runtime_error &) { caught = true; }
+    assert(caught && f.work == 1 && f.done == 0 && queue.Outstanding() == 1);
+    assert(!queue.Cancel(f.handle));
+    assert(queue.Dispatch(0) && f.done == 1 && f.observed == Result::Failed);
+    assert(queue.Outstanding() == 0 && !queue.Dispatch(0));
+
+    // A completion may submit replacement work before throwing. Its old
+    // slot is consumed, and the new work remains independently dispatchable.
+    f.throw_work = false;
+    f.throw_done = true;
+    f.replace_on_throw = true;
+    f.handle = queue.Submit(0, ThrowingWork, ThrowingDone, &f);
+    assert(f.handle && queue.Dispatch(0));
+    caught = false;
+    try { queue.Dispatch(0); }
+    catch (const std::runtime_error &) { caught = true; }
+    assert(caught && f.work == 2 && f.done == 2 && queue.Outstanding() == 1);
+    assert(!queue.Cancel(f.handle));
+    f.handle = f.replacement;
+    f.throw_done = false;
+    assert(queue.Dispatch(0) && queue.Dispatch(0));
+    assert(f.work == 3 && f.done == 3 && f.observed == Result::Completed);
+    assert(queue.Outstanding() == 0 && !queue.Dispatch(0));
+
+    // A cancellation completion throwing after Close must not block draining.
+    f.handle = queue.Submit(99, ThrowingWork, ThrowingDone, &f);
+    assert(f.handle);
+    ThrowingFixture other{&queue};
+    other.handle = queue.Submit(99, ThrowingWork, ThrowingDone, &other);
+    assert(other.handle);
+    queue.Close();
+    f.throw_done = true;
+    f.replace_on_throw = false;
+    caught = false;
+    try { queue.Dispatch(0); }
+    catch (const std::runtime_error &) { caught = true; }
+    assert(caught && f.observed == Result::Cancelled && queue.Outstanding() == 1);
+    assert(queue.Dispatch(0) && other.observed == Result::Cancelled);
+    assert(queue.Outstanding() == 0);
+}
+
 int main()
 {
+    TestCallbackExceptions();
     std::vector<int> work;
     std::vector<Event> done;
     TaskQueue q;
