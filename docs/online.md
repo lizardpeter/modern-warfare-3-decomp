@@ -62,3 +62,19 @@ callers.
 This is a GDK-boundary change, not proof of process-wide network isolation. Independent
 WinHTTP, DemonWare, STUN and other native networking paths require separate auditing.
 Neither offline gameplay nor Windows runtime validation is established by this change.
+
+
+## Faithful reconstruction and verification
+
+The first faithful loader candidate lives in `src/gdk/xgameruntime_thunks.cpp`; its
+enhanced override remains separate. The candidate restores the original lazy loader
+and HRESULT behavior described in records/names.tsv, not any local service policy.
+It is not marked matched pending the original-vs-reconstruction differential results.
+The test models the Win32 load API and compares the call arguments, returned HRESULT
+and writes to the original module global over cached, successful and failed loads.
+
+The CI job also exports the pinned original instructions for the three loader/query
+functions and all named thunks as an artifact using `tools/gdk/disassemble_runtime.py`.
+This is evidence for reconstructing the remaining bodies rather than assuming that
+matching a GUID and slot proves complete control flow. The enhanced rejection test
+reads every actual IID/class pair from the generated thunk catalogue.

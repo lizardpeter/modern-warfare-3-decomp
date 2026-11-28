@@ -54,6 +54,12 @@ jobs:
           for b in $(python3 -c "import tomllib; print(' '.join(b['id'] for b in tomllib.load(open('target.toml','rb'))['build'] if b.get('kind') == 'retail' and b['id'].startswith('iw5mp')))"); do
             python3 tools/fetch_originals.py "$b" /tmp/originals --only exe
           done
+      - name: Original GDK instruction evidence
+        run: python3 tools/gdk/disassemble_runtime.py /tmp/originals/iw5mp_ship.exe > /tmp/iw5-gdk-disassembly.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iw5-original-gdk-disassembly
+          path: /tmp/iw5-gdk-disassembly.txt
       - name: Build (compiles)
         run: IW5_ORIGINALS=/tmp/originals python3 tools/build_recon.py
       - name: Differential tests (matches)
