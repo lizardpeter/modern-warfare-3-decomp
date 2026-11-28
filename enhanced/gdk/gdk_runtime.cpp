@@ -232,11 +232,27 @@ void TraceRejectedQuery(const GdkGuid *iid, const GdkGuid *cls)
 }
 }  // namespace
 
+// Only offline profile and polling completion interfaces are exposed.
+extern GdkInterface g_iw5LocalUser, g_iw5LocalGamertag, g_iw5LocalAsync;
+namespace {
+constexpr GdkGuid userIid = {0x01acd177,0x91f9,0x4763,{0xa3,0x8e,0xcc,0xbb,0x55,0xce,0x32,0xe0}};
+constexpr GdkGuid userClass = {0x079415e3,0x6727,0x437f,{0x8e,0x9d,0x8f,0x8f,0x9b,0x24,0x39,0xf7}};
+constexpr GdkGuid tagClass = {0xcef4fac0,0x7676,0x4a94,{0xa1,0x19,0x4c,0x43,0xf9,0xeb,0x5b,0x74}};
+constexpr GdkGuid asyncIid = {0x073b7dcb,0x1fcf,0x4030,{0x94,0xbe,0xe3,0xc9,0xeb,0x62,0x34,0x28}};
+}
+
 extern "C" HRESULT QueryApiImpl(const GdkGuid *iid, const GdkGuid *cls, void **result)
 {
 	if (!result)
 		return GDK_E_POINTER;
 	*result = nullptr;
+	if (EqualGuid(userIid, iid, true) && EqualGuid(userClass, cls, true))
+        *result = &g_iw5LocalUser;
+    else if (EqualGuid(userIid, iid, true) && EqualGuid(tagClass, cls, true))
+        *result = &g_iw5LocalGamertag;
+    else if (EqualGuid(asyncIid, iid, true) && EqualGuid(asyncIid, cls, true))
+        *result = &g_iw5LocalAsync;
+    if (*result) return GDK_S_OK;
 	TraceRejectedQuery(iid, cls);
 	return GDK_E_NOINTERFACE;
 }

@@ -1,8 +1,7 @@
 # Online services in the Store build and enhanced isolation
 
 The faithful Store multiplayer executable uses GDK and DemonWare. The enhanced build now
-uses BO2-style self-module bootstrap and local filesystem initialization, while every GDK
-interface is unavailable. It never loads or forwards to the system runtime, even when Gaming
+uses BO2-style self-module bootstrap and local filesystem initialization. The local profile and polling completion interfaces are available; the other GDK families remain unavailable. It never loads or forwards to the system runtime, even when Gaming
 Services is installed. No authorization is fabricated; a game feature requiring unavailable
 authorization can still fail. Playable offline mode is not claimed by this change.
 
@@ -67,11 +66,9 @@ and repeated sequences. The game still needs a configured service transport and 
   module's filename, or return an error if that fails. Shutdown is a no-op.
 - This mirrors BO2's split between local startup and rejected interface queries, while retaining
   IW5's existing game-folder convention rather than T6's LOCALAPPDATA path.
-- `QueryApiImpl` rejects every interface with E_NOINTERFACE and clears the output pointer;
-  a null output pointer gets E_POINTER. This applies to XUser, XAsync, XTaskQueue, XStore,
-  XPackage and every other GDK family. No system runtime or entitlement provider is invoked.
-- Existing local provider source is retained for linkage and research, but not exposed by
-  this boundary. No sign-in, license or DLC success is fabricated.
+- Except for the local user, gamertag and polling completion interface, `QueryApiImpl` rejects interfaces with E_NOINTERFACE and clears the output pointer;
+  a null output pointer gets E_POINTER. XStore, XPackage and other external service families remain unavailable. No system runtime or entitlement provider is invoked.
+- The legacy provider is not exposed. The local profile has a session-local ID and name, retained handles, and polling completion. It reports Xbox SignedOut, no XUID or Store user, and no privilege or token authority. Explicit queues and callbacks are not implemented; they fail rather than simulate completion. No sign-in, license or DLC success is fabricated.
 - The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
 ## Engine startup and vendor transport redirects

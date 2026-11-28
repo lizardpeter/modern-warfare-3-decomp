@@ -102,7 +102,7 @@ def check_gdk_isolation(ctx):
     ctx.imports({"kernel32.dll!OutputDebugStringA": (debug_string, 0)})
     pairs = original_interface_pairs(ctx.build)
     # A busy async interface must not exhaust the budget for later Store/user queries.
-    _, first_iid, first_cls = pairs[0]
+    _, first_iid, first_cls = next(p for p in pairs if p[0] == "XStoreCreateContext")
     state = {}
     for i in range(300):
         hr, out = query(ctx, first_iid, first_cls, state)
@@ -112,6 +112,9 @@ def check_gdk_isolation(ctx):
     for name, first, second in pairs + [("unknown", bytes(16), bytes(16))]:
         before = len(trace)
         hr, out = query(ctx, first, second, state)
+        if name.startswith(("XUser", "XAsync", "XTaskQueue", "XThread")):
+            assert hr == 0 and out != 0 and len(trace) == before, name
+            continue
         assert (hr & 0xffffffff) == 0x80004002 and out == 0, f"{name}: {hr:#x}, {out:#x}"
         expected = f"iw5_gdk_rejected iid_le={first.hex()} class_le={second.hex()}\n".encode()
         if (first, second) in seen:
@@ -321,7 +324,54 @@ def check_failed_connection_submission(ctx):
                     assert after == expected, (previous, result, changed, after, expected)
 
 
-CHECKS = [check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
+
+def check_local_user_profile(ctx):
+    pairs = {name: (first, second) for name, first, second in original_interface_pairs(ctx.build)}
+    def iface(name):
+        hr, ptr = query(ctx, *pairs[name])
+        assert hr == 0 and ptr
+        table, = struct.unpack("<Q", ctx.m.mu.mem_read(ptr, 8))
+        return ptr, table
+    user, uv = iface("XUserAddAsync")
+    tag, tv = iface("XUserGetGamertag")
+    async_iface, av = iface("XAsyncGetStatus")
+    state = {}
+    def invoke(obj, table, slot, args, ret="uint"):
+        address, = struct.unpack("<Q", ctx.m.mu.mem_read(table+slot, 8))
+        def setup(w):
+            for a in sorted(state)[::8]:
+                w.write(a, b"".join(state[a+i] for i in range(8)))
+        hr, buffers, writes, _ = ctx.m.call(address, [obj, *args], ret, setup=setup)
+        assert not isinstance(hr, str), hr
+        state.update(writes)
+        return hr, buffers
+    hr, b = invoke(user, uv, 0x38, [1, bytes(56)])
+    assert hr == 0
+    block = b[0]
+    assert invoke(async_iface, av, 0x18, [block, 0])[0] == 0
+    hr, b = invoke(user, uv, 0x40, [block, bytes(8)])
+    assert hr == 0
+    handle, = struct.unpack("<Q", b[1])
+    assert handle
+    assert invoke(user, uv, 0x40, [b[0], bytes(8)])[0] == 0x80070057
+    hr, b = invoke(user, uv, 0x48, [handle, bytes(8)])
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == 1
+    hr, b = invoke(user, uv, 0x70, [handle, bytes(4)])
+    assert hr == 0 and struct.unpack("<I", b[0])[0] == 2
+    hr, b = invoke(user, uv, 0x58, [handle, b"\xff"*8])
+    assert hr == 0x80004002 and b[0] == bytes(8)
+    hr, b = invoke(tag, tv, 0x18, [handle, 0, 16, bytes(16), bytes(8)])
+    assert hr == 0 and b[0].split(b"\0")[0] == b"Unknown Soldier"
+    hr, b = invoke(user, uv, 0x18, [handle, bytes(8)])
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == handle
+    invoke(user, uv, 0x20, [handle], "void")
+    assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0
+    invoke(user, uv, 0x20, [handle], "void")
+    assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0x80070057
+    assert invoke(user, uv, 0x38, [1, struct.pack("<Q", 1)+bytes(48)])[0] == 0x80004001
+
+
+CHECKS = [check_local_user_profile, check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
           check_perform_sends_nothing, check_engine_startup_without_xbox_live,
           check_demonware_dns_fails_locally, check_vendor_socket_calls_fail_locally,
           check_vendor_http_calls_fail_locally, check_failed_connection_submission]
