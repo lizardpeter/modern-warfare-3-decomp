@@ -240,7 +240,7 @@ size_t Base64(const u8 *in, size_t n, char *out)
 	return o;
 }
 
-// The number after "key": in a flat JSON object, or false.
+// The unsigned decimal value after "key": in the Store auth JSON object.
 bool JsonNumber(const char *body, size_t size, const char *key, u64 *value)
 {
 	size_t k = Length(key);
@@ -691,7 +691,7 @@ u32 Authorize(const char *body, size_t size, const char *authorization, char *re
 	*replySize = 0;
 	u64 task = 0, seed = 0, title = 0;
 	const bool taskOk = JsonNumber(body, size, "auth_task", &task);
-	const bool seedOk = JsonNumber(body, size, "iv_seed", &seed);
+	const bool seedOk = JsonNumber(body, size, "iv_seed", &seed) && seed <= 0xffffffffu;
 	const bool titleOk = JsonNumber(body, size, "title_id", &title);
 	if (!taskOk || !seedOk || !titleOk || task != 44 || title != kTitle)
 	{

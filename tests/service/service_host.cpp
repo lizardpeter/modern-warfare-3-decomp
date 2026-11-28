@@ -46,7 +46,7 @@ extern "C" int mainCRTStartup()
 	PrintText("port ");
 	Print(port, k);
 	PrintText("\n");
-	static const char request[] = "{\"auth_task\":44,\"iv_seed\":305419896,\"title_id\":2310}";
+	static const char request[] = "{\"auth_task\":\"44\",\"iv_seed\":\"305419896\",\"title_id\":\"2310\"}";
 	static char reply[0x1400];
 	size_t size = 0;
 	unsigned code = LocalDemonWare::Authorize(request, sizeof(request) - 1, "XBL3.0 x=0009000000000001;iw5-local",
