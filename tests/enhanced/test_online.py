@@ -1,10 +1,11 @@
-"""P0003: fail-closed GDK isolation; P0004: no Xbox Live HTTP (docs/online.md).
+"""GDK isolation, local engine startup and vendor transport (docs/online.md).
 
 The runtime bootstrap is local-only. Every interface query fails, including Store and
 user interfaces. No authorization is fabricated. HTTP provider behavior remains offline.
 """
 import csv
 import struct
+from contextlib import contextmanager
 from pathlib import Path
 
 from unicorn import x86_const as X
@@ -86,6 +87,83 @@ def check_gdk_isolation(ctx):
     assert hr == 0x80004003, f"null output: {hr:#x}"
 
 
+@contextmanager
+def installed_redirect(ctx, entry):
+    table = ctx.recon.exports["iw5_redirects"]
+    count, = struct.unpack("<Q", ctx.m.mu.mem_read(table, 8))
+    rva = entry - 0x140000000
+    for i in range(count):
+        record = table + 8 + i * 32
+        address, target, head = struct.unpack("<QQ16s", ctx.m.mu.mem_read(record, 32))
+        if address == rva:
+            break
+    else:
+        raise AssertionError(f"entry {entry:#x} is missing from the redirect table")
+    assert bytes(ctx.m.mu.mem_read(entry, 16)) == head
+    try:
+        ctx.m.patch_code(entry, bytes.fromhex("ff2500000000") + struct.pack("<Q", target))
+        yield
+    finally:
+        ctx.m.patch_code(entry, head)
+
+
+def check_engine_startup_without_xbox_live(ctx):
+    """P0005: reach the local startup branch even when there is no Xbox Live queue."""
+    entry = ctx.original("Gdk_InitEngineTasks")
+    task_init = ctx.original("TaskGroup_Init")
+    calls = []
+
+    def init_group(mu):
+        group = mu.reg_read(ARGS[0])
+        name = ctx.m.read_cstr(mu.reg_read(ARGS[1]))
+        calls.append((group, name))
+
+    def xbox_live_unavailable(mu):
+        calls.append("Xbox Live")
+        return 0x800701AB
+
+    def init_local_runtime(mu):
+        calls.append("local runtime")
+        return local_result
+
+    local_result = 0
+    fakes = {
+        task_init: init_group,
+        0x140369F20: xbox_live_unavailable,
+        ctx.enhanced("InitializeApiImpl"): init_local_runtime,
+    }
+    native_groups = ("Gdk_InitUserTasks", "Gdk_InitPartyTasks", "Gdk_InitStoreTasks")
+    for name in native_groups:
+        fakes[ctx.original(name)] = lambda mu, group=name: calls.append(group)
+
+    general_tasks = (0x143D5A8D0, b"GDK tasks.")
+    save_tasks = (0x143D58CB0, b"GDK gamesave tasks.")
+    status, _, _, _ = ctx.m.call(entry, [], "bool", fakes=fakes)
+    assert status == 0 and calls == [general_tasks, "Xbox Live"], (status, calls)
+
+    with installed_redirect(ctx, entry):
+        calls.clear()
+        status, _, _, _ = ctx.m.call(entry, [], "bool", fakes=fakes)
+        assert status == 1 and calls == ["local runtime", general_tasks, save_tasks, *native_groups], (
+            status, calls)
+
+        local_result = 0x89240101
+        calls.clear()
+        status, _, _, _ = ctx.m.call(entry, [], "bool", fakes=fakes)
+        assert status == 0 and calls == ["local runtime"], (status, calls)
+
+
+def check_demonware_dns_fails_locally(ctx):
+    entry = ctx.original("BdGetHostByName")
+    output = b"\xA5" * 0x210
+    with installed_redirect(ctx, entry):
+        for host in (b"auth3.prod.demonware.net", b"lsg.2310.prod.demonware.net",
+                     b"mw3-stun.us.demonware.net", b"stun.eu.demonware.net"):
+            count, buffers, writes, _ = ctx.m.call(entry, [host + b"\0", output, 4], "uint")
+            assert count == 0 and buffers[1] == output and not writes, (host, count, writes)
+            assert not ctx.m.imports_called, (host, ctx.m.imports_called)
+
+
 ALLOC = SCRATCH + 0x8000
 
 
@@ -126,4 +204,5 @@ def check_perform_sends_nothing(ctx):
 
 
 CHECKS = [check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
-          check_perform_sends_nothing]
+          check_perform_sends_nothing, check_engine_startup_without_xbox_live,
+          check_demonware_dns_fails_locally]

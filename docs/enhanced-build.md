@@ -62,18 +62,15 @@ reach anything not identified in the exe yet.
   more frames (higher polling and frame rates) ends at the same angle, and the yaw is kept within +-180 degrees, so
   small movements stay exact however long you play (B0003).
 
-**P0003, the local player and the local GDK** (docs/online.md):
-- **Signed in as "Unknown Soldier"** with no Xbox account. To use another name (15 characters at most), put
-  `name=Your Name` in a file `iw5_enhanced.ini` next to the DLLs.
-- **Saves in the game folder:** the profile (settings, binds, the online profile) is kept in `players\` next to the
-  exe instead of the Xbox app's cloud saves. A profile you had in the Xbox app isn't carried over.
-- **The licence and DLC are checked by Microsoft as before** (Gaming Services); without Gaming Services the game
-  doesn't start, as the original.
+**P0003 and P0005, local startup** (docs/online.md). The DLL initializes the local game directory and the engine's
+task groups. The Store executable can proceed past the startup check that previously exited if Xbox Live SDK
+initialization failed. GDK service queries return unavailable, including sign-in, cloud saves and Store entitlements.
 
-**P0004, no Xbox Live:** the Xbox services (achievements, presence, friends) start but never send anything.
+**P0004 and P0006, vendor services** (docs/online.md). The Xbox HTTP provider reports no network. The DemonWare
+resolver reports zero addresses without attempting DNS. The engine's own network address parser is separate.
 
-Online play needs the local DemonWare, which is next (docs/online.md): until then Play reaches "The Call of Duty:
-Modern Warfare 3 server is not available at this time".
+A complete Windows launch and entry into a local match remain to be verified. Online matchmaking is unavailable
+with this build.
 
 ## Testing
 

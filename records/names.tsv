@@ -184,3 +184,11 @@ iw5mp_ship	1404CA740	data	xbox::httpclient::CurlProvider_vftable	CurlProvider_vf
 iw5mp_ship	14054A120	data	xbox::httpclient::bad_alloc_ThrowInfo	bad_alloc_ThrowInfo@httpclient@xbox	vcruntime	semantic	the ThrowInfo CurlProvider::Initialize passes _CxxThrowException with a std::bad_alloc	0.85
 iw5mp_ship	1404C2AF8	data	std::bad_alloc::vftable	bad_alloc_vftable@std	vcruntime	string	RTTI std::bad_alloc's vftable; the std::bad_alloc constructor (140363F70) stores it with "bad allocation" (1404C2B08)	0.95
 iw5mp_ship	1404C2B08	data	std::bad_alloc message	bad_alloc_message@std	vcruntime	string	"bad allocation", stored by the std::bad_alloc constructor (140363F70)	0.95
+iw5mp_ship	1401A2CA0	function	Gdk_InitEngineTasks		gdk/gdk_startup.cpp	semantic	Store engine startup calls this before loading code_pre_gfx_mp; initializes Xbox Live followed by the five engine task groups, returns false on Xbox Live initialization failure. Name describes the recovered role.	0.99
+iw5mp_ship	14027E8C0	function	TaskGroup_Init		qcommon/taskgroup.cpp	semantic	registers a task group pointer with its diagnostic name and initializes its 32 task slots; called at the engine and platform task-group initialization sites.	0.99
+iw5mp_ship	1401A5600	function	Gdk_InitUserTasks		gdk/gdk_startup.cpp	semantic	initializes the default user state and registers GDK users tasks; called by 1401A2CA0.	0.99
+iw5mp_ship	1401A3460	function	Gdk_InitPartyTasks		gdk/gdk_startup.cpp	semantic	registers GDK party tasks and the accept_crossexe_invite command; called by 1401A2CA0.	0.99
+iw5mp_ship	1401A43D0	function	Gdk_InitStoreTasks		gdk/gdk_startup.cpp	string	registers the GDK store tasks group by name; called by 1401A2CA0.	0.99
+iw5mp_ship	143D5A8D0	data	g_gdkTasks		gdk/gdk_startup.cpp	semantic	the GDK tasks group passed to 14027E8C0 by 1401A2CA0 and to the original per-frame and shutdown functions.	0.99
+iw5mp_ship	143D58CB0	data	g_gdkGameSaveTasks		gdk/gdk_startup.cpp	semantic	the GDK gamesave tasks group passed to 14027E8C0 by 1401A28B0 and to the original per-frame and shutdown functions.	0.99
+iw5mp_ship	1404148F0	function	BdGetHostByName	BdGetHostByName	DW/bd_platform_socket.cpp	string	bdPlatformSocket::getHostByName in the log at 1404148F0; invokes getaddrinfo and returns the count of socket addresses written; used by the DemonWare DNS worker at 1404108E0.	0.99

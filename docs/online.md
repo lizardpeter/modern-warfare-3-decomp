@@ -59,9 +59,22 @@ callers.
   this boundary. No sign-in, license or DLC success is fabricated.
 - The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
-This is a GDK-boundary change, not proof of process-wide network isolation. Independent
-WinHTTP, DemonWare, STUN and other native networking paths require separate auditing.
-Neither offline gameplay nor Windows runtime validation is established by this change.
+## Engine startup and DemonWare DNS
+
+The Store engine's initialization at `14026D290` calls `1401A2CA0` before loading
+`code_pre_gfx_mp`. The latter calls `XblInitialize` with no explicit task queue.
+With the GDK boundary active, the process task queue is unavailable, so the Xbox Live
+SDK returns `0x800701AB` and the engine takes its shutdown path.
+
+The enhanced replacement initializes the game directory and the same five engine
+task groups with native helpers. The platform queues remain absent and the Store's
+sign-in and entitlement paths continue to receive unavailable results. If local
+initialization itself fails, the startup routine still reports failure.
+
+The DemonWare DNS worker calls `bdPlatformSocket::getHostByName` at `1404148F0`.
+The enhanced routine returns the original no-address result before Winsock, including
+for the official authentication, lobby and STUN names. Independent WinHTTP and
+numeric-address paths still need auditing for process-wide isolation.
 
 
 ## Faithful reconstruction and verification
