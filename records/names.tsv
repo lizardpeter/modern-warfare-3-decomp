@@ -223,3 +223,6 @@ iw5mp_ship	14027E9E0	function	sub_14027E9E0		qcommon/taskgroup.cpp	semantic	Canc
 iw5mp_ship	14027EAE0	function	sub_14027EAE0		qcommon/taskgroup.cpp	semantic	Allocates a state-1 slot via 14027EB30, retries the same allocation once on null. Store disassembly; original name unresolved.	0.99
 iw5mp_ship	14027EC70	function	sub_14027EC70		qcommon/taskgroup.cpp	semantic	Polls original async status, leaves E_PENDING untouched, atomically sets terminal result, calls selected callback, then resets the slot. Store disassembly; original name unresolved.	0.99
 iw5mp_ship	14489C380	data	s_taskRecordLinks		qcommon/taskgroup.cpp	semantic	14020C3D0 iterates 24 entries of size 0x28 at this address; active byte +0, state dword +4, record pointer +0x10. Descriptive name.	0.99
+iw5mp_ship	1403390D0	function	sub_1403390D0			semantic	Store wrapper writes state 1 to 1448DA8F4 and calls 1401A4DC0 with the original ECX controller argument; zero extends AL. Original symbol unresolved.	0.99
+iw5mp_ship	1401A4DC0	function	sub_1401A4DC0			semantic	Original controller sign-in submission; returns a low-byte status; releases a claimed slot on failed asynchronous submission. Original symbol unresolved.	0.99
+iw5mp_ship	1448DA8F4	data	s_connectionState			semantic	32-bit connection state written by 1403390D0 and read and updated by 1402202B0. Descriptive name.	0.99

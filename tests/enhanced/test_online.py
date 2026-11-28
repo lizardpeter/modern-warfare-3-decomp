@@ -288,7 +288,40 @@ def check_perform_sends_nothing(ctx):
     assert not writes, "PerformAsync wrote memory"
 
 
+
+def check_failed_connection_submission(ctx):
+    """P0009: failed original sign-in submission cannot manufacture a pending state."""
+    entry = ctx.original("sub_1403390D0")
+    submit = ctx.original("sub_1401A4DC0")
+    state = 0x1448DA8F4
+    for previous in (0, 1, 2):
+        for result in (0, 1):
+            for changed in (None, 0, 2):
+                for controller in (0, 7):
+                    calls = []
+                    def setup(w):
+                        w.write(state, struct.pack("<I", previous))
+                    def original_submission(mu):
+                        assert mu.reg_read(ARGS[0]) & 0xffffffff == controller
+                        assert struct.unpack("<I", mu.mem_read(state, 4))[0] == 1
+                        calls.append(controller)
+                        if changed is not None:
+                            ctx.m.program_write(state, struct.pack("<I", changed))
+                        return result
+                    with installed_redirect(ctx, entry):
+                        got, _, writes, _ = ctx.m.call(
+                            entry, [controller], "uint", setup=setup,
+                            fakes={submit: original_submission})
+                    assert got == result and calls == [controller], (previous, result, changed, got, calls)
+                    expected = (changed if changed is not None else
+                                (1 if result else previous))
+                    after = struct.unpack("<I", b"".join(
+                        writes.get(state+i, struct.pack("<I", previous)[i:i+1])
+                        for i in range(4)))[0]
+                    assert after == expected, (previous, result, changed, after, expected)
+
+
 CHECKS = [check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
           check_perform_sends_nothing, check_engine_startup_without_xbox_live,
           check_demonware_dns_fails_locally, check_vendor_socket_calls_fail_locally,
-          check_vendor_http_calls_fail_locally]
+          check_vendor_http_calls_fail_locally, check_failed_connection_submission]
