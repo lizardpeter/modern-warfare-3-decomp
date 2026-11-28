@@ -1,6 +1,7 @@
 // enhanced/win32/win_vendor_network.cpp: vendor HTTP, nothing leaves the machine; the DemonWare auth request goes to
 // the local DemonWare (docs/online.md).
 #include "enhanced/local_demonware.h"
+#include "enhanced/local_http_route.h"
 
 extern "C" void BdCompleteWinHttpRequest(void *request, long result);
 
@@ -23,23 +24,10 @@ struct Request
 	bool &HaveStatus() { return *reinterpret_cast<bool *>(raw + 0x50); }
 	unsigned &Received() { return *reinterpret_cast<unsigned *>(raw + 0x60); }
 	const wchar_t *Url() { return reinterpret_cast<const wchar_t *>(raw + 0x88); }
+	const wchar_t *Method() { return reinterpret_cast<const wchar_t *>(raw + 0x1088); }
+	void *CompletionStream() { return *reinterpret_cast<void **>(raw + 0x48); }
 };
 
-bool Prefix(const wchar_t *s, const char *p)
-{
-	for (; *p; ++s, ++p)
-		if (*s != *p)
-			return false;
-	return true;
-}
-
-bool Contains(const wchar_t *s, const char *p)
-{
-	for (; *s; ++s)
-		if (Prefix(s, p))
-			return true;
-	return false;
-}
 }  // namespace
 
 // 1403E9FE0: the auth request to the address the resolver gave for auth3 (https://127.0.0.1:443/auth/) is answered
@@ -48,8 +36,14 @@ bool Contains(const wchar_t *s, const char *p)
 extern "C" void BdBeginWinHttpRequest(void *, void *requestObject)
 {
 	Request *request = static_cast<Request *>(requestObject);
-	if (!Prefix(request->Url(), "https://127.0.0.1:") || !Contains(request->Url(), "/auth/") || !request->Body() ||
-	    !request->ResponseBuffer() || request->Stream())
+	bool route = iw5::local_http::Equal(request->Url(),"https://127.0.0.1:443/auth/");
+#ifdef IW5_CI_LOCAL_RESPONSE
+    route = iw5::local_http::IsAuthRoute(request->Url());
+    LocalDemonWare::Trace("http: local route %u",route ? 1u : 0u);
+#endif
+    if (!route || !iw5::local_http::Equal(request->Method(),"POST") || !request->Body() ||
+        !request->ResponseBuffer() || !request->ResponseCapacity() || request->Stream() ||
+        request->CompletionStream())
 	{
 		BdCompleteWinHttpRequest(request, cannotConnect);
 		return;
@@ -62,6 +56,9 @@ extern "C" void BdBeginWinHttpRequest(void *, void *requestObject)
 	request->HttpCode() = code;
 	request->HaveStatus() = true;
 	request->Received() = (unsigned)size;
+#ifdef IW5_CI_LOCAL_RESPONSE
+    LocalDemonWare::Trace("http: completed in-process status %u bytes %u",code,(unsigned)size);
+#endif
 	BdCompleteWinHttpRequest(request, 0);
 }
 

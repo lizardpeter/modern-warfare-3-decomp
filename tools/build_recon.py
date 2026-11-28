@@ -220,7 +220,7 @@ def main():
             # enhanced/'s own headers; and one section per function, so the src/ copies an exe-first thunk replaces
             # are dropped from the DLL (/opt:ref), not left as unnamed code
             flags += [f"-I{ROOT / 'enhanced' / 'include'}", "-ffunction-sections"]
-        if ci_local and tree == "enhanced" and src.name == "gdk_local_user.cpp":
+        if ci_local and tree == "enhanced" and src.name in ("gdk_local_user.cpp", "gdk_runtime.cpp", "win_vendor_network.cpp"):
             flags.append("-DIW5_CI_LOCAL_RESPONSE")
         compile_unit(src, obj, arch, flags)
         objs.append(obj)

@@ -3,6 +3,7 @@
 #include "enhanced/gdk.h"
 #include "enhanced/gdk_local_queue.h"
 #include "enhanced/local_identity.h"
+#include "enhanced/local_http_route.h"
 HRESULT Gdk_QueryInterface(GdkInterface *, const GdkGuid *, void **);
 u32 Gdk_AddRef(GdkInterface *);
 u32 Gdk_Release(GdkInterface *);
@@ -37,6 +38,7 @@ const char identity[] = "IW5LocalProfileAdd";
 // Explicitly synthetic, non-credential data used only by the isolated
 // runtime integration test. Never compiled into the normal enhanced DLL.
 const char tokenIdentity[] = "IW5CILocalResponse";
+const char securityIdentity[] = "IW5CIInProcessTransport";
 constexpr char tokenText[] = "TEST-ONLY-NOT-A-CREDENTIAL";
 constexpr char signatureText[] = "TEST-ONLY-NOT-A-SIGNATURE";
 struct TokenData {
@@ -61,7 +63,7 @@ bool Read(XAsyncBlock *block, Completion &c)
     Gdk_Copy(&c, block->internal, sizeof(c));
     return c.tag == marker && (c.identity == identity
 #ifdef IW5_CI_LOCAL_RESPONSE
-                              || c.identity == tokenIdentity
+                              || c.identity == tokenIdentity || c.identity == securityIdentity
 #endif
                               );
 }
@@ -327,6 +329,36 @@ HRESULT TokenResult(GdkInterface *, XAsyncBlock *block, size_t capacity, void *b
     return Trace(9, "XUserGetTokenAndSignatureResult", GDK_E_NOINTERFACE);
 #endif
 }
+#ifdef IW5_CI_LOCAL_RESPONSE
+// The private route has no TLS connection, peer certificate or thumbprints.
+// Return an empty local metadata result only for the exact route serviced
+// by the in-process handler. All other URLs and verification calls fail.
+HRESULT SecurityBegin(GdkInterface *, const wchar_t *url, XAsyncBlock *block)
+{
+    if (!iw5::local_http::IsAuthRoute(url))
+        return Trace(12,"LocalHttpSecurityQuery",GDK_E_NOINTERFACE);
+    return Trace(12,"LocalHttpSecurityQuery",
+                 BeginCompletion(block,securityIdentity,0,0));
+}
+HRESULT SecuritySize(GdkInterface *, XAsyncBlock *block, size_t *out)
+{
+    if (!out) return GDK_E_POINTER;
+    *out = 0;
+    Completion c{};
+    if (!Read(block,c) || c.identity != securityIdentity) return GDK_E_INVALIDARG;
+    return Trace(13,"LocalHttpSecurityResultSize",c.result);
+}
+HRESULT SecurityResult(GdkInterface *, XAsyncBlock *block, size_t, size_t *used, void *, void **out)
+{
+    if (used) *used = 0;
+    if (!out) return GDK_E_POINTER;
+    *out = nullptr;
+    Completion c{};
+    if (!Read(block,c) || c.identity != securityIdentity) return GDK_E_INVALIDARG;
+    Gdk_Zero(block->internal,sizeof(block->internal));
+    return Trace(14,"LocalHttpSecurityResult",c.result);
+}
+#endif
 HRESULT RegisterChange(GdkInterface *, XTaskQueueHandle, void *, void *, XTaskQueueRegistrationToken *out)
 {
     if (out) out->token = 0;
@@ -359,9 +391,22 @@ static void *const asyncSlots[] = {
     V(LocalQueueCurrent), V(LocalQueueSetCurrent), U, U, V(Noop)
 };
 static_assert(sizeof(asyncSlots)/sizeof(*asyncSlots) == 0xe8/8+1, "XAsync slot count");
+#ifdef IW5_CI_LOCAL_RESPONSE
+static void *const localNetworkSlots[] = {
+    V(Gdk_QueryInterface), V(Gdk_AddRef), V(Gdk_Release),
+    U, U, U, U, U, U, U, U,
+    V(SecurityBegin), V(SecuritySize), V(SecurityResult), U, U, U, V(False)
+};
+static_assert(sizeof(localNetworkSlots)/sizeof(*localNetworkSlots) == 0x88/8+1,
+              "network interface slots");
+#endif
 #undef U
 #undef V
 }
 GdkInterface g_iw5LocalUser = {userSlots};
 GdkInterface g_iw5LocalGamertag = {tagSlots};
 GdkInterface g_iw5LocalAsync = {asyncSlots};
+
+#ifdef IW5_CI_LOCAL_RESPONSE
+GdkInterface g_iw5CiLocalNetwork = {localNetworkSlots};
+#endif
