@@ -326,6 +326,8 @@ def check_failed_connection_submission(ctx):
 
 
 def check_local_user_profile(ctx):
+    calls = []
+    ctx.imports({"kernel32.dll!OutputDebugStringA": (lambda m, mu: calls.append(m.read_cstr(mu.reg_read(ARGS[0]))), 0)})
     pairs = {name: (first, second) for name, first, second in original_interface_pairs(ctx.build)}
     def iface(name):
         hr, ptr = query(ctx, *pairs[name])
@@ -358,8 +360,13 @@ def check_local_user_profile(ctx):
     assert hr == 0 and struct.unpack("<Q", b[0])[0] == 1
     hr, b = invoke(user, uv, 0x70, [handle, bytes(4)])
     assert hr == 0 and struct.unpack("<I", b[0])[0] == 2
+    assert b"iw5_local_api XUserGetState result=0x00000000\n" in calls
     hr, b = invoke(user, uv, 0x58, [handle, b"\xff"*8])
     assert hr == 0x80004002 and b[0] == bytes(8)
+    assert b"iw5_local_api XUserGetId result=0x80004002\n" in calls
+    hr, _ = invoke(user, uv, 0xb8, [handle, 0, 0, 0, 0, 0, 0, 0, bytes(56)])
+    assert hr == 0x80004002
+    assert b"iw5_local_api XUserGetTokenAndSignatureAsync result=0x80004002\n" in calls
     hr, b = invoke(tag, tv, 0x18, [handle, 0, 16, bytes(16), bytes(8)])
     assert hr == 0 and b[0].split(b"\0")[0] == b"Unknown Soldier"
     hr, b = invoke(user, uv, 0x18, [handle, bytes(8)])

@@ -8,7 +8,7 @@ on:
       - .github/workflows/startup-smoke.yml
       - enhanced/DW/**
       - enhanced/gdk/**
-      - tools/gdk/audit_isolation.py
+      - tools/gdk/**
       - tools/build_runtime.py
       - enhanced/win32/win_vendor_network.cpp
       - runtime/loader/**
@@ -68,7 +68,7 @@ jobs:
           pactl set-default-sink iw5
           wineboot -i >"$capture/wineboot.log" 2>&1
           trap 'wineserver -k || true; pulseaudio --kill || true' EXIT
-          WINEDLLOVERRIDES='x3daudio1_7=n,b' wine iw5mp_ship.exe >"$capture/game.log" 2>&1 &
+          WINEDLLOVERRIDES='x3daudio1_7=n,b' wine iw5mp_ship.exe +set logfile 2 +set cl_activeAction 'echo IW5_CI_ACTIVE' >"$capture/game.log" 2>&1 &
           game_pid=$!
           for tick in $(seq 1 30); do
             xwininfo -root -tree >"$capture/windows.txt"
@@ -126,6 +126,12 @@ jobs:
           if test -f iw5_enhanced.log; then
             cp iw5_enhanced.log "$capture/"
           fi
+          # Collect actual engine logs; do not mistake Wine's process log for a map.
+          i=0
+          while IFS= read -r -d '' file; do
+            i=$((i+1))
+            cp "$file" "$capture/engine-console-$i.log"
+          done < <(find "$PWD" "$WINEPREFIX/drive_c/users" -type f -iname 'console*.log' -print0 2>/dev/null)
           cat "$capture/play-status.txt"
           SH
       - name: Summarize rejected GDK interface queries
@@ -138,6 +144,13 @@ jobs:
             python3 tools/gdk/audit_isolation.py "$capture/game.log" > "$capture/gdk-module-audit.txt" || { cat "$capture/gdk-module-audit.txt"; exit 1; }
             cat "$capture/gdk-module-audit.txt"
           fi
+      - name: Require client activation evidence (not just menu startup)
+        if: always()
+        run: |
+          capture="$RUNNER_TEMP/iw5-capture"
+          mkdir -p "$capture"
+          set -o pipefail
+          python3 tools/gdk/map_entry_gate.py "$capture" | tee "$capture/map-entry-status.txt"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -30,6 +30,8 @@ jobs:
           done
       - name: GDK module audit unit tests
         run: python3 tools/gdk/test_audit_isolation.py
+      - name: Map entry gate unit tests
+        run: python3 tools/gdk/test_map_entry_gate.py
       - name: Task evidence tooling unit tests
         run: python3 tools/gdk/test_task_evidence.py
       - name: Native task queue host tests
@@ -72,6 +74,12 @@ jobs:
           done
       - name: Original GDK instruction evidence
         run: python3 tools/gdk/disassemble_runtime.py /tmp/originals/iw5mp_ship.exe > /tmp/iw5-gdk-disassembly.txt
+      - name: Original sign-in and connection branch evidence
+        run: python3 tools/gdk/connection_evidence.py /tmp/originals/iw5mp_ship.exe > /tmp/iw5-connection-evidence.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iw5-connection-evidence
+          path: /tmp/iw5-connection-evidence.txt
       - name: Original engine task-group and scheduling evidence
         run: python3 tools/gdk/task_evidence.py /tmp/originals/iw5mp_ship.exe > /tmp/iw5-task-evidence.txt
       - uses: actions/upload-artifact@v4

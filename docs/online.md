@@ -141,3 +141,16 @@ sign anyone in, so it never reaches the service. Signing in is also where the St
 (the Store context is created for the signed-in player and the licence queried, `1401A5A10`, `1401A4400`), so the
 player has to sign in through a runtime whose Store interface is Microsoft's own. Until then the service is
 exercised by `tests/service/run.py`, and the task list it must answer comes from a log on a PC with Gaming Services.
+
+
+## Connection evidence and map-entry gate
+
+The smoke test logs bounded per-API local XUser return values, without logging identity or token data.
+The read-only pinned-PE report `tools/gdk/connection_evidence.py` lists original direct callers and
+instructions of the connection functions. Neither static call graphs nor interface GUID queries prove an API ran.
+The smoke run now enables original engine logging and an active-action echo, and fails unless both the original
+client initialization completion and the active-action echo appear in order. The active-action mechanism comes
+from the Xbox reference; absence of these markers on Store means **unverified**, not a diagnosis of the failure.
+A passing marker gate still needs screenshot and input review for playable gameplay. The existing local service
+protocol tests exercise an isolated synthetic client, not an authenticated retail game session. No Store, Xbox
+identity, token or privilege authorization has been added or modified in this pass.
