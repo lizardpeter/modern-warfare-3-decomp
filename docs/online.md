@@ -45,6 +45,19 @@ Log-on is `dwLogOnFrame` (1401145C0) per controller, from `Live_ControllerFrame`
 Other hosts: `mw3-stun.us/eu.demonware.net` and `stun.{us,eu,jp,au}.demonware.net` (NAT discovery), XCurl and WinHTTP
 callers.
 
+### Emulated online protocol
+
+The Store log-on path at `140114B7C` calls `bdLobbyService::connect` at `1403F3980`. Its constructor
+sets the flag at connection offset `0x98`, so the connect callback sends the 28-byte protocol 210
+hello at `1404087F0`. BO2's emulated lobby uses the legacy 200 handshake and cannot serve this
+client unchanged. MW3's client explicitly rejects the legacy reply while waiting for the 210 server header.
+
+`tools/demonware/auth.py` encodes the Store auth response and packed title `0x906` client ticket.
+`tools/demonware/lobby210.py` decodes the 210 hello and client proof, constructs the server challenge,
+and derives the verification and record key material. The differential check runs the original Store
+ticket deserializer at `1404049D0` and key expansion at `140406B40` with modeled HMAC-SHA1 primitives.
+The game still needs a configured service transport, encrypted record processing and the native Online task handlers.
+
 ## Enhanced build: fail-closed GDK boundary
 
 - `XGameRuntimeLoadModule` resolves the enhanced DLL itself by address, never a system DLL.

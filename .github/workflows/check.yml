@@ -56,6 +56,8 @@ jobs:
           done
       - name: Original GDK instruction evidence
         run: python3 tools/gdk/disassemble_runtime.py /tmp/originals/iw5mp_ship.exe > /tmp/iw5-gdk-disassembly.txt
+      - name: Store DemonWare auth and lobby 210 records
+        run: IW5_ORIGINALS=/tmp/originals PYTHONPATH=. python3 tests/differential/test_lobby210.py
       - uses: actions/upload-artifact@v4
         with:
           name: iw5-original-gdk-disassembly
