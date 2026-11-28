@@ -1,6 +1,6 @@
 // Enhanced GDK ABI declarations (docs/online.md).
-// The enhanced loader resolves itself; all interface queries fail closed. Legacy local provider
-// definitions remain for linkage/research but are not exposed through the runtime boundary.
+// The enhanced loader resolves itself; local profile and scheduling interfaces are exposed.
+// Platform authentication and other service queries fail closed; legacy providers are not exposed.
 #pragma once
 
 typedef long HRESULT;

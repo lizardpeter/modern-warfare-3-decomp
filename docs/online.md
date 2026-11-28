@@ -68,7 +68,7 @@ and repeated sequences. The game still needs a configured service transport and 
   IW5's existing game-folder convention rather than T6's LOCALAPPDATA path.
 - Except for the local user, gamertag and polling completion interface, `QueryApiImpl` rejects interfaces with E_NOINTERFACE and clears the output pointer;
   a null output pointer gets E_POINTER. XStore, XPackage and other external service families remain unavailable. No system runtime or entitlement provider is invoked.
-- The legacy provider is not exposed. The local profile has a session-local ID and name, retained handles, and polling completion. It reports Xbox SignedOut, no XUID or Store user, and no privilege or token authority. Local work/completion queues, delayed and immediate callbacks, and the default process queue are implemented. Composite ports and generic XAsync provider operations remain unsupported. No platform authorization is supplied. No sign-in, license or DLC success is fabricated.
+- The legacy provider is not exposed. The local profile has a session-local ID and name, retained handles, local-ID lookup, one-user capacity and polling completion. Lookup by Xbox ID does not match local IDs. Classic and modern name queries support the local name with an empty modern suffix. It reports Xbox SignedOut, no XUID or Store user, and no privilege or token authority. Local work/completion queues, delayed and immediate callbacks, and the default process queue are implemented. Composite ports and generic XAsync provider operations remain unsupported. No platform authorization is supplied. No sign-in, license or DLC success is fabricated.
 - The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
 ## Engine startup and vendor transport redirects
@@ -154,3 +154,7 @@ from the Xbox reference; absence of these markers on Store means **unverified**,
 A passing marker gate still needs screenshot and input review for playable gameplay. The existing local service
 protocol tests exercise an isolated synthetic client, not an authenticated retail game session. No Store, Xbox
 identity, token or privilege authorization has been added or modified in this pass.
+
+### Observed retail user setup (CI 46124549841)
+
+The actual Store multiplayer run recorded XUserAddAsync and XUserAddResult returning S_OK, followed by XUserGetId returning E_NOINTERFACE. No token request was observed. The original user setup callback rejects a failed Xbox ID lookup; a local identity is not an Xbox account. The local-only implementation deliberately does not change that contract. The original retail session is still unavailable in the isolated environment. Local lookup, capacity, name components and invalid options are tested independently.

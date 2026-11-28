@@ -347,6 +347,13 @@ def check_local_user_profile(ctx):
         assert not isinstance(hr, str), hr
         state.update(writes)
         return hr, buffers
+    hr, b = invoke(user, uv, 0x30, [bytes(4)])
+    assert hr == 0 and struct.unpack("<I", b[0])[0] == 1
+    assert invoke(user, uv, 0x30, [0])[0] == 0x80004003
+    for flags in (3, 5, 7, 8, 0xffffffff):
+        assert invoke(user, uv, 0x38, [flags, bytes(56)])[0] == 0x80070057
+    hr, b = invoke(user, uv, 0x50, [1, b"\xff"*8])
+    assert hr == 0x80070490 and b[0] == bytes(8)
     hr, b = invoke(user, uv, 0x38, [1, bytes(56)])
     assert hr == 0
     block = b[0]
@@ -358,6 +365,14 @@ def check_local_user_profile(ctx):
     assert invoke(user, uv, 0x40, [b[0], bytes(8)])[0] == 0x80070057
     hr, b = invoke(user, uv, 0x48, [handle, bytes(8)])
     assert hr == 0 and struct.unpack("<Q", b[0])[0] == 1
+    hr, b = invoke(user, uv, 0x50, [1, bytes(8)])
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == handle
+    invoke(user, uv, 0x20, [handle], "void")
+    for ident in (0, 2, 0x0009000000000001):
+        hr, b = invoke(user, uv, 0x50, [ident, b"\xff"*8])
+        assert hr == 0x80070490 and b[0] == bytes(8)
+    hr, b = invoke(user, uv, 0x60, [1, b"\xff"*8])
+    assert hr == 0x80070490 and b[0] == bytes(8)
     hr, b = invoke(user, uv, 0x70, [handle, bytes(4)])
     assert hr == 0 and struct.unpack("<I", b[0])[0] == 2
     assert b"iw5_local_api XUserGetState result=0x00000000\n" in calls
@@ -369,12 +384,22 @@ def check_local_user_profile(ctx):
     assert b"iw5_local_api XUserGetTokenAndSignatureAsync result=0x80004002\n" in calls
     hr, b = invoke(tag, tv, 0x18, [handle, 0, 16, bytes(16), bytes(8)])
     assert hr == 0 and b[0].split(b"\0")[0] == b"Unknown Soldier"
+    for kind in (1, 3):
+        hr, b = invoke(tag, tv, 0x18, [handle, kind, 16, bytes(16), bytes(8)])
+        assert hr == 0 and b[0].split(b"\0")[0] == b"Unknown Soldier"
+    hr, b = invoke(tag, tv, 0x18, [handle, 2, 1, b"\xff", bytes(8)])
+    assert hr == 0 and b[0] == bytes(1) and struct.unpack("<Q", b[1])[0] == 1
+    hr, b = invoke(tag, tv, 0x18, [handle, 0, 2, b"\xff"*2, bytes(8)])
+    assert hr == 0x8007007a and struct.unpack("<Q", b[1])[0] == 16
+    assert invoke(tag, tv, 0x18, [handle, 4, 16, bytes(16), bytes(8)])[0] == 0x80070057
     hr, b = invoke(user, uv, 0x18, [handle, bytes(8)])
     assert hr == 0 and struct.unpack("<Q", b[0])[0] == handle
     invoke(user, uv, 0x20, [handle], "void")
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0
     invoke(user, uv, 0x20, [handle], "void")
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0x80070057
+    hr, b = invoke(user, uv, 0x50, [1, b"\xff"*8])
+    assert hr == 0x80070490 and b[0] == bytes(8)
     assert invoke(user, uv, 0x38, [1, struct.pack("<Q", 1)+bytes(48)])[0] == 0x80070057
 
     # Exercise the actual local callback path using an immediate completion port.

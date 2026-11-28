@@ -26,6 +26,7 @@ HRESULT Trace(u32 api, const char *name, HRESULT hr)
     return hr;
 }
 
+constexpr u64 localId = 1; // unique within this one-profile game session, never an XUID
 struct Profile { u32 references; };
 Profile profile{};
 using Handle = Profile *;
@@ -56,7 +57,8 @@ void AddCompleted(void *ctx, bool)
 HRESULT AddAsyncImpl(GdkInterface *, u32 options, XAsyncBlock *block)
 {
     if (!block) return GDK_E_POINTER;
-    if ((options & ~7u) || ((options & 1u) && (options & 4u))) return GDK_E_INVALIDARG;
+    // Default user silently cannot be combined with guest selection or UI.
+    if ((options & ~7u) || ((options & 1u) && (options & 6u))) return GDK_E_INVALIDARG;
 
     Completion old{};
     if (Read(block, old)) return GDK_E_INVALIDARG;
@@ -147,8 +149,28 @@ HRESULT LocalIdImpl(GdkInterface *, Handle h, u64 *out)
     if (!out) return GDK_E_POINTER;
     *out = 0;
     if (!Valid(h)) return GDK_E_INVALIDARG;
+    *out = localId;
+    return GDK_S_OK;
+}
+HRESULT MaxUsers(GdkInterface *, u32 *out)
+{
+    if (!out) return GDK_E_POINTER;
     *out = 1;
     return GDK_S_OK;
+}
+HRESULT FindLocal(GdkInterface *, u64 id, Handle *out)
+{
+    if (!out) return GDK_E_POINTER;
+    *out = nullptr;
+    if (id != localId || !Retain(true)) return GDK_E_NOT_FOUND;
+    *out = &profile;
+    return GDK_S_OK;
+}
+HRESULT FindXbox(GdkInterface *, u64, Handle *out)
+{
+    if (!out) return GDK_E_POINTER;
+    *out = nullptr;
+    return GDK_E_NOT_FOUND;
 }
 HRESULT XboxIdImpl(GdkInterface *, Handle h, u64 *out)
 {
@@ -178,7 +200,8 @@ HRESULT GamertagImpl(GdkInterface *, Handle h, u32 kind, size_t capacity, char *
 {
     if (used) *used = 0;
     if (!Valid(h) || kind > 3) return GDK_E_INVALIDARG;
-    const char *name = Gdk_Gamertag();
+    // This local classic name has no modern suffix; kind 2 requests only that suffix.
+    const char *name = kind == 2 ? "" : Gdk_Gamertag();
     size_t count = Gdk_StrLen(name) + 1;
     if (used) *used = count;
     if (capacity < count) return GDK_E_NOT_SUFFICIENT_BUFFER;
@@ -224,16 +247,20 @@ HRESULT TokenAsync(GdkInterface *, Handle, u32, const char *, const char *, size
 {
     return Trace(7, "XUserGetTokenAndSignatureAsync", GDK_E_NOINTERFACE);
 }
-HRESULT TokenSize(GdkInterface *, XAsyncBlock *, size_t *)
+HRESULT TokenSize(GdkInterface *, XAsyncBlock *, size_t *out)
 {
+    if (out) *out = 0;
     return Trace(8, "XUserGetTokenAndSignatureResultSize", GDK_E_NOINTERFACE);
 }
-HRESULT TokenResult(GdkInterface *, XAsyncBlock *, size_t, void *, void **, size_t *)
+HRESULT TokenResult(GdkInterface *, XAsyncBlock *, size_t, void *, void **out, size_t *used)
 {
+    if (out) *out = nullptr;
+    if (used) *used = 0;
     return Trace(9, "XUserGetTokenAndSignatureResult", GDK_E_NOINTERFACE);
 }
-HRESULT RegisterChange(GdkInterface *, XTaskQueueHandle, void *, void *, XTaskQueueRegistrationToken *)
+HRESULT RegisterChange(GdkInterface *, XTaskQueueHandle, void *, void *, XTaskQueueRegistrationToken *out)
 {
+    if (out) out->token = 0;
     return Trace(10, "XUserRegisterForChangeEvent", GDK_E_NOINTERFACE);
 }
 bool StoreUser(GdkInterface *, Handle)
@@ -248,8 +275,8 @@ bool False() { return false; }
 #define U V(Unavailable)
 static void *const userSlots[] = {
     V(Gdk_QueryInterface), V(Gdk_AddRef), V(Gdk_Release),
-    V(Duplicate), V(Close), V(Compare), U, V(AddAsync), V(AddResult),
-    V(LocalId), U, V(XboxId), U, V(Guest), V(State), U,
+    V(Duplicate), V(Close), V(Compare), V(MaxUsers), V(AddAsync), V(AddResult),
+    V(LocalId), V(FindLocal), V(XboxId), V(FindXbox), V(Guest), V(State), U,
     U, U, U, V(Age), V(Privilege), U, U, V(TokenAsync), V(TokenSize), V(TokenResult),
     U, U, U, U, U, U, U, V(RegisterChange), V(False), U, U, U, U, U, U, U, V(StoreUser)
 };
