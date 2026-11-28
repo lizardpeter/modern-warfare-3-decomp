@@ -13,8 +13,21 @@ def active(text):
         return False
     return bool(re.search(r"(?m)^\s*IW5_CI_ACTIVE\s*$",text[init.end():]))
 
+def advancing_snapshots(text):
+    times = {}
+    for snapshot, level in re.findall(r"(?m)^state=9 snapshot=(\d+) map=(mp_[a-z0-9_]+)$", text):
+        current = int(snapshot)
+        if level in times and current > times[level]:
+            return True
+        times[level] = current
+    return False
+
 def main():
     root=Path(sys.argv[1])
+    store = root / "store-client-state.txt"
+    if store.is_file() and advancing_snapshots(store.read_text(encoding="utf-8")):
+        print("CLIENT ACTIVE: Store client received advancing snapshots on a multiplayer map")
+        return 0
     files=sorted(root.glob("engine-console-*.log"))
     for f in files:
         if active(f.read_text(encoding="utf-8",errors="replace")):

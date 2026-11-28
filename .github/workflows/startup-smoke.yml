@@ -8,6 +8,7 @@ on:
       - .github/workflows/startup-smoke.yml
       - enhanced/DW/**
       - enhanced/gdk/**
+      - enhanced/include/enhanced/local_*.h
       - tools/gdk/**
       - tools/build_runtime.py
       - enhanced/win32/win_vendor_network.cpp
@@ -28,7 +29,7 @@ jobs:
       - name: Install toolchain and Wine
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick pulseaudio pulseaudio-utils iproute2
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick pulseaudio pulseaudio-utils iproute2 tesseract-ocr
           pip install -q -r tests/differential/requirements.txt
       - name: Build and stage the Store multiplayer startup files
         run: |
@@ -47,6 +48,9 @@ jobs:
           for zone in code_pre_gfx_mp localized_code_pre_gfx_mp code_post_gfx_mp localized_code_post_gfx_mp ui_mp localized_ui_mp common_mp localized_common_mp patch_mp; do
             download "zone/english/$zone.ff"
           done
+          for zone in mp_alpha mp_alpha_load mp_dome mp_dome_load patch_mp_dome; do
+            download "zone/english/$zone.ff"
+          done
           # The executable requires main/*.iwd even when its startup fastfiles are present.
           export game asset_base
           export -f download
@@ -61,9 +65,10 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
           cd "$RUNNER_TEMP/iw5-game"
-          timeout 300s sudo unshare --net -- bash -c 'set -e; ip link set lo up; test -z "$(ip route show default)"; test -z "$(ip -6 route show default)"; test "$(ip -o link show | wc -l)" -eq 1; exec "$@"' _ runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          timeout 300s sudo unshare --net -- bash -c 'set -e; ip link set lo up; test -z "$(ip route show default)"; test -z "$(ip -6 route show default)"; test "$(ip -o link show | wc -l)" -eq 1; exec "$@"' _ runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" "$GITHUB_WORKSPACE" <<'SH'
           set -eu
           capture="$1/iw5-capture"
+          workspace="$2"
           export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll
           pulseaudio --start --exit-idle-time=-1 --load='module-null-sink sink_name=iw5'
           pactl set-default-sink iw5
@@ -110,6 +115,31 @@ jobs:
           xdotool mousemove --sync --window "$window" 395 120
           import -window root "$capture/play-hover.png"
           xdotool click 1
+          sample_client() {
+            sudo -n /usr/bin/python3 "$workspace/tools/gdk/store_client_sample.py" "$game_pid" \
+              >>"$capture/store-client-state.txt" 2>>"$capture/store-client-state-errors.txt" || true
+          }
+          click_menu() {
+            # Read the visible labels before clicking the normal private-match controls.
+            local label="$1" shot="$2" coordinates x y
+            coordinates="$(tesseract "$shot" stdout --psm 11 tsv 2>/dev/null |
+              awk -F '\t' -v expected="$label" '
+                $1 == 5 && $7 < 455 {
+                  key = $3 FS $4 FS $5
+                  if (!(key in menu)) { menu[key] = ""; x[key] = $7; y[key] = $8 + int($10 / 2) }
+                  menu[key] = menu[key] (menu[key] == "" ? "" : " ") toupper($12)
+                }
+                END { for (key in menu) if (menu[key] == expected) { print x[key] + 5, y[key]; exit } }
+              ')"
+            if test -z "$coordinates"; then
+              return 1
+            fi
+            read -r x y <<<"$coordinates"
+            xdotool mousemove --sync "$x" "$y" click 1
+            printf 'Selected %s at %s\n' "$label" "$coordinates" >>"$capture/play-status.txt"
+          }
+          private_opened=0
+          match_started=0
           for delay in 1 4 10 15 35 15; do
             sleep "$delay"
             stamp="$(date -u +%H%M%S)"
@@ -120,7 +150,20 @@ jobs:
               printf 'Game exited after PLAY\n' >> "$capture/play-status.txt"
               break
             fi
+            sample_client
+            if test "$private_opened" -eq 0 && click_menu 'PRIVATE MATCH' "$capture/play-$stamp.png"; then
+              private_opened=1
+            elif test "$private_opened" -eq 1 && test "$match_started" -eq 0 && click_menu 'START MATCH' "$capture/play-$stamp.png"; then
+              match_started=1
+            fi
           done
+          if test "$match_started" -eq 1; then
+            for tick in $(seq 1 10); do
+              sleep 3
+              sample_client
+            done
+            import -window root "$capture/match.png"
+          fi
           if kill -0 "$game_pid" 2>/dev/null; then
             printf 'Game still running after PLAY observation\n' >> "$capture/play-status.txt"
           fi
