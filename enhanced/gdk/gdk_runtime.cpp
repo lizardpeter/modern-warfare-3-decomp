@@ -138,11 +138,51 @@ extern "C" void XErrorReport(HRESULT hr, const char *message)
 	}
 }
 
-extern "C" HRESULT QueryApiImpl(const GdkGuid *, const GdkGuid *, void **result)
+namespace
+{
+// Bounded, debugger-only telemetry: no account identifiers, tokens, file paths or
+// network operations. The GUID bytes are in Windows memory order, not text order.
+u32 s_queryTraceCount;
+constexpr u32 kQueryTraceLimit = 256;
+
+char *TraceGuid(char *out, const GdkGuid *guid)
+{
+	const char hex[] = "0123456789abcdef";
+	const u8 *bytes = reinterpret_cast<const u8 *>(guid);
+	for (u32 i = 0; i < sizeof(GdkGuid); ++i)
+	{
+		*out++ = bytes ? hex[bytes[i] >> 4] : '-';
+		*out++ = bytes ? hex[bytes[i] & 15] : '-';
+	}
+	return out;
+}
+
+void TraceRejectedQuery(const GdkGuid *iid, const GdkGuid *cls)
+{
+	if (__atomic_fetch_add(&s_queryTraceCount, 1, __ATOMIC_RELAXED) >= kQueryTraceLimit)
+		return;
+	const char prefix[] = "iw5_gdk_rejected iid_le=";
+	const char separator[] = " class_le=";
+	char line[sizeof(prefix) + 32 + sizeof(separator) + 32 + 1];
+	char *p = line;
+	for (const char *s = prefix; *s; ++s)
+		*p++ = *s;
+	p = TraceGuid(p, iid);
+	for (const char *s = separator; *s; ++s)
+		*p++ = *s;
+	p = TraceGuid(p, cls);
+	*p++ = '\n';
+	*p = '\0';
+	Gdk_Log(line);
+}
+}  // namespace
+
+extern "C" HRESULT QueryApiImpl(const GdkGuid *iid, const GdkGuid *cls, void **result)
 {
 	if (!result)
 		return GDK_E_POINTER;
 	*result = nullptr;
+	TraceRejectedQuery(iid, cls);
 	return GDK_E_NOINTERFACE;
 }
 

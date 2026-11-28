@@ -7,7 +7,7 @@ on:
     paths:
       - .github/workflows/startup-smoke.yml
       - enhanced/DW/**
-      - enhanced/gdk/gdk_startup.cpp
+      - enhanced/gdk/**
       - enhanced/win32/win_vendor_network.cpp
       - runtime/loader/**
 
@@ -87,6 +87,14 @@ jobs:
           ! grep -Eq '"(Program )?Error"' "$capture/windows.txt"
           grep -i 'modern warfare' "$capture/windows.txt"
           SH
+      - name: Summarize rejected GDK interface queries
+        if: always()
+        run: |
+          capture="$RUNNER_TEMP/iw5-capture"
+          if test -f "$capture/game.log"; then
+            python3 tools/gdk/summarize_rejections.py "$capture/game.log" > "$capture/gdk-rejections.txt"
+            cat "$capture/gdk-rejections.txt"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

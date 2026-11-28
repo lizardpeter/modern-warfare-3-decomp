@@ -80,11 +80,21 @@ def check_local_bootstrap(ctx):
 
 def check_gdk_isolation(ctx):
     # Test every exact IID/class pair recovered from the original, not hand-copied GUIDs.
+    trace = []
+    def debug_string(m, mu):
+        trace.append(m.read_cstr(mu.reg_read(ARGS[0])))
+    ctx.imports({"kernel32.dll!OutputDebugStringA": (debug_string, 0)})
     for name, first, second in original_interface_pairs(ctx.build) + [("unknown", bytes(16), bytes(16))]:
         hr, out = query(ctx, first, second)
         assert (hr & 0xffffffff) == 0x80004002 and out == 0, f"{name}: {hr:#x}, {out:#x}"
+        expected = f"iw5_gdk_rejected iid_le={first.hex()} class_le={second.hex()}\n".encode()
+        assert trace[-1] == expected, (name, trace[-1], expected)
+    before = len(trace)
     hr, _, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [0, 0, 0], "uint")
-    assert hr == 0x80004003, f"null output: {hr:#x}"
+    assert hr == 0x80004003 and len(trace) == before, f"null output: {hr:#x}"
+    hr, out = query(ctx, 0, 0)
+    assert (hr & 0xffffffff) == 0x80004002 and out == 0
+    assert trace[-1] == b"iw5_gdk_rejected iid_le=" + b"-" * 32 + b" class_le=" + b"-" * 32 + b"\n"
 
 
 @contextmanager
