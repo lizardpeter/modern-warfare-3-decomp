@@ -2,6 +2,9 @@
 #include <cassert>
 #include <vector>
 #include <stdexcept>
+#include <deque>
+#include <map>
+#include <iterator>
 using namespace iw5::native;
 
 struct Event { int id; Result result; };
@@ -130,9 +133,145 @@ static void TestCallbackExceptions()
     assert(queue.Outstanding() == 0);
 }
 
+// Independent ordered-map model: never uses native queue slots or state.
+struct ModelTask
+{
+    Tick due;
+    int token;
+    Result result;
+    bool ready;
+};
+
+static unsigned NextRandom(unsigned &state)
+{
+    state ^= state << 13;
+    state ^= state >> 17;
+    state ^= state << 5;
+    return state;
+}
+
+static void TestModel(unsigned seed)
+{
+    TaskQueue queue;
+    std::vector<int> work;
+    std::vector<Event> done;
+    std::deque<Fixture> fixtures;
+    std::map<TaskId, ModelTask> model;
+    TaskId last_id = 0;
+    Tick now = 0;
+    bool closed = false;
+    int token = 0;
+
+    auto dispatch = [&]()
+    {
+        auto selected = model.end();
+        // Map traversal is in ID order. The first ready result wins.
+        for (auto it = model.begin(); it != model.end(); ++it)
+            if (it->second.ready)
+            {
+                selected = it;
+                break;
+            }
+        if (selected == model.end())
+        {
+            for (auto it = model.begin(); it != model.end(); ++it)
+                if (it->second.due <= now &&
+                    (selected == model.end() || it->second.due < selected->second.due))
+                    selected = it;
+        }
+        auto w = work.size();
+        auto d = done.size();
+        assert(queue.Dispatch(now) == (selected != model.end()));
+        if (selected == model.end())
+            assert(work.size() == w && done.size() == d);
+        else if (selected->second.ready)
+        {
+            assert(work.size() == w && done.size() == d + 1);
+            assert(done.back().id == selected->second.token);
+            assert(done.back().result == selected->second.result);
+            model.erase(selected);
+        }
+        else
+        {
+            assert(work.size() == w + 1 && done.size() == d);
+            assert(work.back() == selected->second.token);
+            selected->second.ready = true;
+        }
+        assert(queue.Outstanding() == model.size());
+    };
+
+    assert(!queue.Submit(0, nullptr, Done, nullptr));
+    assert(!queue.Submit(0, Run, nullptr, nullptr));
+    for (unsigned step = 0; step < 2048; ++step)
+    {
+        unsigned op = NextRandom(seed) % 100;
+        if (op < 44)
+        {
+            Tick due = now + NextRandom(seed) % 64;
+            Result result = NextRandom(seed) % 2 ? Result::Completed : Result::Failed;
+            fixtures.push_back({++token, &work, &done, result});
+            auto id = queue.Submit(due, Run, Done, &fixtures.back());
+            if (closed || model.size() == TaskQueue::Capacity)
+                assert(id == 0);
+            else
+            {
+                assert(id > last_id);
+                last_id = id;
+                assert(model.emplace(id, ModelTask{due, token, result, false}).second);
+            }
+        }
+        else if (op < 69)
+        {
+            dispatch();
+        }
+        else if (op < 90)
+        {
+            // Exercise live handles as well as stale, zero and future IDs.
+            TaskId id = NextRandom(seed) % (last_id + 2);
+            if (!model.empty() && (NextRandom(seed) & 1))
+            {
+                auto it = model.begin();
+                std::advance(it, NextRandom(seed) % model.size());
+                id = it->first;
+            }
+            auto it = model.find(id);
+            bool can_cancel = it != model.end() && !it->second.ready;
+            assert(queue.Cancel(id) == can_cancel);
+            if (can_cancel)
+            {
+                it->second.ready = true;
+                it->second.result = Result::Cancelled;
+            }
+        }
+        else
+            now += NextRandom(seed) % 16;
+
+        if (step == 1984)
+        {
+            queue.Close();
+            queue.Close(); // idempotent
+            closed = true;
+            for (auto &entry : model)
+                if (!entry.second.ready)
+                {
+                    entry.second.ready = true;
+                    entry.second.result = Result::Cancelled;
+                }
+        }
+        assert(queue.Outstanding() == model.size());
+    }
+    while (!model.empty())
+        dispatch();
+    dispatch();
+    assert(queue.Outstanding() == 0);
+    assert(!queue.Submit(now, Run, Done, nullptr));
+}
+
 int main()
 {
     TestCallbackExceptions();
+    for (unsigned seed = 1; seed <= 8; ++seed)
+        TestModel(seed * 0x9e3779b9u);
     std::vector<int> work;
     std::vector<Event> done;
     TaskQueue q;
