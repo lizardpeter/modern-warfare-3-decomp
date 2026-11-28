@@ -2,6 +2,7 @@
 // Profile results complete locally; completion callbacks use the local queue.
 #include "enhanced/gdk.h"
 #include "enhanced/gdk_local_queue.h"
+#include "enhanced/local_identity.h"
 HRESULT Gdk_QueryInterface(GdkInterface *, const GdkGuid *, void **);
 u32 Gdk_AddRef(GdkInterface *);
 u32 Gdk_Release(GdkInterface *);
@@ -26,7 +27,7 @@ HRESULT Trace(u32 api, const char *name, HRESULT hr)
     return hr;
 }
 
-constexpr u64 localId = 1; // unique within this one-profile game session, never an XUID
+constexpr u64 localId = iw5::local_identity::LocalId;
 struct Profile { u32 references; };
 Profile profile{};
 using Handle = Profile *;
@@ -166,17 +167,24 @@ HRESULT FindLocal(GdkInterface *, u64 id, Handle *out)
     *out = &profile;
     return GDK_S_OK;
 }
-HRESULT FindXbox(GdkInterface *, u64, Handle *out)
+// XUserGetId's numeric ABI is used by the original game as a player key.
+// Only this process-local compatibility handle is recognized. The value is
+// the private service's existing account key, never an Xbox credential.
+HRESULT FindAccount(GdkInterface *, u64 id, Handle *out)
 {
     if (!out) return GDK_E_POINTER;
     *out = nullptr;
-    return GDK_E_NOT_FOUND;
+    if (id != iw5::local_identity::AccountId || !Retain(true)) return GDK_E_NOT_FOUND;
+    *out = &profile;
+    return GDK_S_OK;
 }
-HRESULT XboxIdImpl(GdkInterface *, Handle h, u64 *out)
+HRESULT AccountIdImpl(GdkInterface *, Handle h, u64 *out)
 {
     if (!out) return GDK_E_POINTER;
     *out = 0;
-    return Valid(h) ? GDK_E_NOINTERFACE : GDK_E_INVALIDARG;
+    if (!Valid(h)) return GDK_E_INVALIDARG;
+    *out = iw5::local_identity::AccountId;
+    return GDK_S_OK;
 }
 HRESULT Guest(GdkInterface *, Handle h, bool *out)
 {
@@ -227,9 +235,9 @@ HRESULT LocalId(GdkInterface *i, Handle h, u64 *out)
 {
     return Trace(2, "XUserGetLocalId", LocalIdImpl(i,h,out));
 }
-HRESULT XboxId(GdkInterface *i, Handle h, u64 *out)
+HRESULT AccountId(GdkInterface *i, Handle h, u64 *out)
 {
-    return Trace(3, "XUserGetId", XboxIdImpl(i,h,out));
+    return Trace(3, "XUserGetId", AccountIdImpl(i,h,out));
 }
 HRESULT State(GdkInterface *i, Handle h, u32 *out)
 {
@@ -276,7 +284,7 @@ bool False() { return false; }
 static void *const userSlots[] = {
     V(Gdk_QueryInterface), V(Gdk_AddRef), V(Gdk_Release),
     V(Duplicate), V(Close), V(Compare), V(MaxUsers), V(AddAsync), V(AddResult),
-    V(LocalId), V(FindLocal), V(XboxId), V(FindXbox), V(Guest), V(State), U,
+    V(LocalId), V(FindLocal), V(AccountId), V(FindAccount), V(Guest), V(State), U,
     U, U, U, V(Age), V(Privilege), U, U, V(TokenAsync), V(TokenSize), V(TokenResult),
     U, U, U, U, U, U, U, V(RegisterChange), V(False), U, U, U, U, U, U, U, V(StoreUser)
 };

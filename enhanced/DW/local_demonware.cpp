@@ -14,6 +14,7 @@
 //   order, every record traced to iw5_enhanced.log. Tasks are answered as they're identified (HandleTask); the
 //   rest get BD_SERVICE_NOT_AVAILABLE.
 #include "enhanced/local_demonware.h"
+#include "enhanced/local_identity.h"
 
 #include <windows.h>
 
@@ -70,7 +71,7 @@ constexpr u32 kProtocol = 210;
 constexpr size_t kTicketSize = 128;
 constexpr size_t kAuthBody = (83 + kTicketSize * 8 + 7) / 8;  // 139
 constexpr int kMaxTickets = 64;
-constexpr u64 kAccount = 0x0009000000000001ull;  // the local player (the XUID the local XUser reports)
+constexpr u64 kAccount = iw5::local_identity::AccountId;  // private service account, not an Xbox identity
 
 CRITICAL_SECTION s_lock;
 bool s_started;

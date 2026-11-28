@@ -376,9 +376,22 @@ def check_local_user_profile(ctx):
     hr, b = invoke(user, uv, 0x70, [handle, bytes(4)])
     assert hr == 0 and struct.unpack("<I", b[0])[0] == 2
     assert b"iw5_local_api XUserGetState result=0x00000000\n" in calls
+    # Private account key must match the local DemonWare ticket account.
+    account = 0x0009000000000001
     hr, b = invoke(user, uv, 0x58, [handle, b"\xff"*8])
-    assert hr == 0x80004002 and b[0] == bytes(8)
-    assert b"iw5_local_api XUserGetId result=0x80004002\n" in calls
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == account
+    assert b"iw5_local_api XUserGetId result=0x00000000\n" in calls
+    assert invoke(user, uv, 0x58, [handle, 0])[0] == 0x80004003
+    for bad in (0, 1, 0xffffffffffffffff):
+        hr, b = invoke(user, uv, 0x58, [bad, b"\xff"*8])
+        assert hr == 0x80070057 and b[0] == bytes(8)
+    hr, b = invoke(user, uv, 0x60, [account, bytes(8)])
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == handle
+    invoke(user, uv, 0x20, [handle], "void")
+    assert invoke(user, uv, 0x60, [account, 0])[0] == 0x80004003
+    for bad in (0, account + 1, 0xffffffffffffffff):
+        hr, b = invoke(user, uv, 0x60, [bad, b"\xff"*8])
+        assert hr == 0x80070490 and b[0] == bytes(8)
     hr, _ = invoke(user, uv, 0xb8, [handle, 0, 0, 0, 0, 0, 0, 0, bytes(56)])
     assert hr == 0x80004002
     assert b"iw5_local_api XUserGetTokenAndSignatureAsync result=0x80004002\n" in calls
@@ -398,6 +411,8 @@ def check_local_user_profile(ctx):
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0
     invoke(user, uv, 0x20, [handle], "void")
     assert invoke(user, uv, 0x48, [handle, bytes(8)])[0] == 0x80070057
+    hr, b = invoke(user, uv, 0x60, [account, b"\xff"*8])
+    assert hr == 0x80070490 and b[0] == bytes(8)
     hr, b = invoke(user, uv, 0x50, [1, b"\xff"*8])
     assert hr == 0x80070490 and b[0] == bytes(8)
     assert invoke(user, uv, 0x38, [1, struct.pack("<Q", 1)+bytes(48)])[0] == 0x80070057
@@ -417,6 +432,8 @@ def check_local_user_profile(ctx):
     hr, b = invoke(user, uv, 0x40, [b[0], bytes(8)])
     assert hr == 0
     handle, = struct.unpack("<Q", b[1])
+    hr, b = invoke(user, uv, 0x58, [handle, bytes(8)])
+    assert hr == 0 and struct.unpack("<Q", b[0])[0] == account
     invoke(user, uv, 0x20, [handle], "void")
     invoke(async_iface, av, 0x88, [queue], "void")
 
