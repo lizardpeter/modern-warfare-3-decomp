@@ -60,7 +60,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/iw5-capture"
           cd "$RUNNER_TEMP/iw5-game"
-          timeout 240s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
+          timeout 300s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
           set -eu
           capture="$1/iw5-capture"
           export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll
@@ -109,7 +109,7 @@ jobs:
           xdotool mousemove --sync --window "$window" 395 120
           import -window root "$capture/play-hover.png"
           xdotool click 1
-          for delay in 1 4 10 15; do
+          for delay in 1 4 10 15 35 15; do
             sleep "$delay"
             stamp="$(date -u +%H%M%S)"
             xwininfo -root -tree > "$capture/play-$stamp-windows.txt"

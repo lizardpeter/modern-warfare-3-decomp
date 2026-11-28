@@ -84,11 +84,24 @@ def check_gdk_isolation(ctx):
     def debug_string(m, mu):
         trace.append(m.read_cstr(mu.reg_read(ARGS[0])))
     ctx.imports({"kernel32.dll!OutputDebugStringA": (debug_string, 0)})
-    for name, first, second in original_interface_pairs(ctx.build) + [("unknown", bytes(16), bytes(16))]:
+    pairs = original_interface_pairs(ctx.build)
+    # A busy async interface must not exhaust the budget for later Store/user queries.
+    _, first_iid, first_cls = pairs[0]
+    for _ in range(300):
+        hr, out = query(ctx, first_iid, first_cls)
+        assert (hr & 0xffffffff) == 0x80004002 and out == 0
+    assert len(trace) == 1
+    seen = {(first_iid, first_cls)}
+    for name, first, second in pairs + [("unknown", bytes(16), bytes(16))]:
+        before = len(trace)
         hr, out = query(ctx, first, second)
         assert (hr & 0xffffffff) == 0x80004002 and out == 0, f"{name}: {hr:#x}, {out:#x}"
         expected = f"iw5_gdk_rejected iid_le={first.hex()} class_le={second.hex()}\n".encode()
-        assert trace[-1] == expected, (name, trace[-1], expected)
+        if (first, second) in seen:
+            assert len(trace) == before, name
+        else:
+            assert len(trace) == before + 1 and trace[-1] == expected, name
+            seen.add((first, second))
     before = len(trace)
     hr, _, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [0, 0, 0], "uint")
     assert hr == 0x80004003 and len(trace) == before, f"null output: {hr:#x}"

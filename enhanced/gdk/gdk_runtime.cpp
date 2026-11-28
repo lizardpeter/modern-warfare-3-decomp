@@ -142,8 +142,63 @@ namespace
 {
 // Bounded, debugger-only telemetry: no account identifiers, tokens, file paths or
 // network operations. The GUID bytes are in Windows memory order, not text order.
+// Repeated status polls must not consume the budget before a different
+// interface is first encountered. Retain the first occurrence of each pair.
+struct QueryPair
+{
+    GdkGuid iid, cls;
+    bool hasIid, hasClass;
+};
+constexpr u32 kQueryTraceLimit = 128;
+QueryPair s_seenQueries[kQueryTraceLimit];
 u32 s_queryTraceCount;
-constexpr u32 kQueryTraceLimit = 256;
+u32 s_queryTraceLock;
+
+bool EqualGuid(const GdkGuid &saved, const GdkGuid *incoming, bool present)
+{
+    if (present != (incoming != nullptr))
+        return false;
+    if (!present)
+        return true;
+    const u8 *a = reinterpret_cast<const u8 *>(&saved);
+    const u8 *b = reinterpret_cast<const u8 *>(incoming);
+    for (u32 i = 0; i < sizeof(GdkGuid); ++i)
+        if (a[i] != b[i])
+            return false;
+    return true;
+}
+
+bool RememberQuery(const GdkGuid *iid, const GdkGuid *cls)
+{
+    while (__atomic_exchange_n(&s_queryTraceLock, 1u, __ATOMIC_ACQUIRE))
+    {
+    }
+    bool first = false;
+    if (s_queryTraceCount < kQueryTraceLimit)
+    {
+        u32 i = 0;
+        for (; i < s_queryTraceCount; ++i)
+        {
+            const auto &pair = s_seenQueries[i];
+            if (EqualGuid(pair.iid, iid, pair.hasIid) &&
+                EqualGuid(pair.cls, cls, pair.hasClass))
+                break;
+        }
+        if (i == s_queryTraceCount)
+        {
+            auto &pair = s_seenQueries[s_queryTraceCount++];
+            pair.hasIid = iid != nullptr;
+            pair.hasClass = cls != nullptr;
+            if (iid)
+                Gdk_Copy(&pair.iid, iid, sizeof(GdkGuid));
+            if (cls)
+                Gdk_Copy(&pair.cls, cls, sizeof(GdkGuid));
+            first = true;
+        }
+    }
+    __atomic_store_n(&s_queryTraceLock, 0u, __ATOMIC_RELEASE);
+    return first;
+}
 
 char *TraceGuid(char *out, const GdkGuid *guid)
 {
@@ -159,7 +214,7 @@ char *TraceGuid(char *out, const GdkGuid *guid)
 
 void TraceRejectedQuery(const GdkGuid *iid, const GdkGuid *cls)
 {
-	if (__atomic_fetch_add(&s_queryTraceCount, 1, __ATOMIC_RELAXED) >= kQueryTraceLimit)
+	if (!RememberQuery(iid, cls))
 		return;
 	const char prefix[] = "iw5_gdk_rejected iid_le=";
 	const char separator[] = " class_le=";
