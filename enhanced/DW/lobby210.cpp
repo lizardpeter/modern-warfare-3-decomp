@@ -1,3 +1,6 @@
+// enhanced/DW/lobby210.cpp: the protocol 210 handshake's proof check and record keys, for the local DemonWare
+// (local_demonware.cpp). Mirrors tools/demonware/lobby210.py; checked against the pinned Store-client vectors in
+// tests/enhanced/test_demonware210.py.
 #include <windows.h>
 
 WINBASEAPI LONG WINAPI BCryptOpenAlgorithmProvider(void **, const wchar_t *, const wchar_t *, ULONG);

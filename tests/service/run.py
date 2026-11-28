@@ -47,7 +47,8 @@ DEFS = {
 
 def build(work):
     objs = []
-    for src in ("tests/service/service_host.cpp", "enhanced/DW/local_demonware.cpp", "enhanced/DW/local_crypto.cpp"):
+    for src in ("tests/service/service_host.cpp", "enhanced/DW/local_demonware.cpp", "enhanced/DW/local_crypto.cpp",
+                "enhanced/DW/lobby210.cpp"):
         obj = work / (Path(src).stem + ".obj")
         subprocess.run(["clang", TRIPLE, "-O1", "-ffreestanding", "-fno-builtin", "-fno-exceptions", "-fno-rtti",
                         "-fno-stack-protector", "-mno-stack-arg-probe", "-std=c++20", "-I", ROOT / "enhanced/include",

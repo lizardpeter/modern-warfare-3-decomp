@@ -56,6 +56,12 @@ extern "C" __declspec(dllimport) unsigned short __stdcall htons(unsigned short);
 extern "C" __declspec(dllimport) unsigned short __stdcall ntohs(unsigned short);
 extern "C" __declspec(dllimport) int __stdcall WSAGetLastError();
 
+extern "C" bool IW5_DemonWare210Verify(const unsigned char *hello, unsigned helloLength,
+                                      const unsigned char *challenge, unsigned challengeLength,
+                                      const unsigned char *auth, unsigned authLength,
+                                      const unsigned char *sessionKey, unsigned char *reply,
+                                      unsigned char *recordKeys);
+
 namespace
 {
 constexpr SOCKET kInvalidSocket = ~SOCKET(0);
@@ -312,23 +318,6 @@ bool WriteAll(SOCKET s, const u8 *p, size_t n)
 	return true;
 }
 
-// P_SHA1-style expansion: HMAC(secret, previous || label || counter), counters from 1.
-void Expand(const u8 secret[20], const char *label, u8 *out, size_t length)
-{
-	u8 previous[20];
-	size_t have = 0, previousSize = 0;
-	for (u8 counter = 1; have < length; ++counter)
-	{
-		const u8 *parts[] = {previous, reinterpret_cast<const u8 *>(label), &counter};
-		size_t sizes[] = {previousSize, Length(label), 1};
-		LocalCrypto::HmacSha1Parts(secret, 20, parts, sizes, 3, previous);
-		previousSize = 20;
-		size_t take = length - have < 20 ? length - have : 20;
-		Copy(out + have, previous, take);
-		have += take;
-	}
-}
-
 struct Records
 {
 	u8 receiveMac[20], sendMac[20], receiveKey[16], sendKey[16];
@@ -509,32 +498,17 @@ void Session(SOCKET s, u64 connectionId)
 		LocalDemonWare::Trace("lobby: ticket not issued by this service");
 		return;
 	}
-	// transcript: (210, 210, frame limit, client nonce) || challenge || auth frame without its proof
-	u8 transcript[20 + sizeof(challenge) + sizeof(auth) - 8];
-	Put32(transcript, kProtocol);
-	Put32(transcript + 4, kProtocol);
-	Put32(transcript + 8, r.frameLimit);
-	Copy(transcript + 12, hello + 20, 8);
-	Copy(transcript + 20, challenge, sizeof(challenge));
-	Copy(transcript + 20 + sizeof(challenge), auth, sizeof(auth) - 8);
-	u8 digest[20], secret[20], proof[16];
-	LocalCrypto::Sha1(transcript, sizeof(transcript), digest);
-	LocalCrypto::HmacSha1(digest, 20, sessionKey, 24, secret);
-	Expand(secret, "CLIENTCHAL", proof, 16);
-	if (!Equal(proof, auth + sizeof(auth) - 8, 8))
+	// The proof check and the record keys: IW5_DemonWare210Verify (lobby210.cpp), checked against the pinned
+	// Store-client vectors (tests/enhanced/test_demonware210.py).
+	u8 done[14], material[72];
+	if (!IW5_DemonWare210Verify(hello, sizeof(hello), challenge, sizeof(challenge), auth, sizeof(auth), sessionKey,
+	                            done, material))
 	{
 		LocalDemonWare::Trace("lobby: client proof doesn't match the ticket's session key");
 		return;
 	}
-	u8 done[14];
-	Put32(done, 10);
-	done[4] = 0xAB;
-	done[5] = 0x83;
-	Copy(done + 6, proof + 8, 8);
 	if (!WriteAll(s, done, sizeof(done)))
 		return;
-	u8 material[72];
-	Expand(secret, "BDDATA", material, sizeof(material));
 	Copy(r.receiveMac, material, 20);
 	Copy(r.sendMac, material + 20, 20);
 	Copy(r.receiveKey, material + 40, 16);
