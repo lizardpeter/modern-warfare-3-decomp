@@ -1319,6 +1319,7 @@
 {"path": "vehicle/vehicle_ugv_mp.cpp", "subsystem": "vehicle"}
 {"path": "vehicle/vehicle_util.cpp", "subsystem": "vehicle"}
 {"path": "win32/win_input.cpp", "subsystem": "win32"}
+{"path": "win32/win_vendor_network.cpp", "subsystem": "win32"}
 {"path": "xanim/dobj.cpp", "subsystem": "xanim"}
 {"path": "xanim/dobj_skel.cpp", "subsystem": "xanim"}
 {"path": "xanim/dobj_utils.cpp", "subsystem": "xanim"}

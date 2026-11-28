@@ -164,6 +164,40 @@ def check_demonware_dns_fails_locally(ctx):
             assert not ctx.m.imports_called, (host, ctx.m.imports_called)
 
 
+def check_vendor_socket_calls_fail_locally(ctx):
+    entry = ctx.original("BdSendTo")
+    with installed_redirect(ctx, entry):
+        for socket, family, expected in ((-1, 2, -10), (9, 2, -5), (9, 23, -5), (9, 0, -1)):
+            address = bytes(0x80) + struct.pack("<H", family)
+            count, _, writes, _ = ctx.m.call(entry, [socket, address, 3074, b"data", 4], "int")
+            assert count == expected and not writes and not ctx.m.imports_called, (socket, family, count)
+
+    entry = ctx.original("BdConnectStream")
+    with installed_redirect(ctx, entry):
+        for ip in (b"\x7f\0\0\x01", b"\xc0\0\x02\x01"):
+            status, _, writes, _ = ctx.m.call(entry, [9, ip, 3074], "int")
+            assert status == -5 and not writes and not ctx.m.imports_called, (ip, status)
+
+
+def check_vendor_http_calls_fail_locally(ctx):
+    cannot_connect = 0x80072EFD
+    calls = []
+
+    def finalize(mu):
+        calls.append((mu.reg_read(ARGS[0]), mu.reg_read(ARGS[1]) & 0xffffffff))
+
+    entry = ctx.original("BdBeginWinHttpRequest")
+    with installed_redirect(ctx, entry):
+        ctx.m.call(entry, [SCRATCH, SCRATCH + 0x100], "void",
+                   fakes={ctx.original("BdCompleteWinHttpRequest"): finalize})
+        assert calls == [(SCRATCH + 0x100, cannot_connect)] and not ctx.m.imports_called, calls
+
+    entry = ctx.original("WinHttpInitializeRequest")
+    with installed_redirect(ctx, entry):
+        status, _, writes, _ = ctx.m.call(entry, [SCRATCH], "uint")
+        assert status == cannot_connect and not writes and not ctx.m.imports_called, status
+
+
 ALLOC = SCRATCH + 0x8000
 
 
@@ -205,4 +239,5 @@ def check_perform_sends_nothing(ctx):
 
 CHECKS = [check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
           check_perform_sends_nothing, check_engine_startup_without_xbox_live,
-          check_demonware_dns_fails_locally]
+          check_demonware_dns_fails_locally, check_vendor_socket_calls_fail_locally,
+          check_vendor_http_calls_fail_locally]

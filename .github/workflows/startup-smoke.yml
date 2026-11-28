@@ -6,7 +6,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/startup-smoke.yml
+      - enhanced/DW/**
       - enhanced/gdk/gdk_startup.cpp
+      - enhanced/win32/win_vendor_network.cpp
       - runtime/loader/**
 
 permissions:
@@ -24,7 +26,7 @@ jobs:
       - name: Install toolchain and Wine
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils xdotool imagemagick
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64 xvfb xauth x11-utils imagemagick pulseaudio pulseaudio-utils
           pip install -q -r tests/differential/requirements.txt
       - name: Build and stage the Store multiplayer startup files
         run: |
@@ -59,9 +61,11 @@ jobs:
           timeout 200s sudo unshare --net -- runuser -u "$(id -un)" -- xvfb-run -a -s '-screen 0 1280x720x24' bash -s -- "$RUNNER_TEMP" <<'SH'
           set -eu
           capture="$1/iw5-capture"
-          export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh
+          export WINEPREFIX="$1/iw5-prefix" WINEARCH=win64 WINEDEBUG=+debugstr,+seh,+loaddll
+          pulseaudio --start --exit-idle-time=-1 --load='module-null-sink sink_name=iw5'
+          pactl set-default-sink iw5
           wineboot -i >"$capture/wineboot.log" 2>&1
-          trap 'wineserver -k || true' EXIT
+          trap 'wineserver -k || true; pulseaudio --kill || true' EXIT
           WINEDLLOVERRIDES='x3daudio1_7=n,b' wine iw5mp_ship.exe >"$capture/game.log" 2>&1 &
           game_pid=$!
           for tick in $(seq 1 30); do
@@ -69,7 +73,7 @@ jobs:
             if ! kill -0 "$game_pid" 2>/dev/null; then
               break
             fi
-            if grep -q '"Error"' "$capture/windows.txt"; then
+            if grep -Eq '"(Program )?Error"' "$capture/windows.txt"; then
               break
             fi
             sleep 2
@@ -80,7 +84,7 @@ jobs:
           fi
           grep -F 'enhanced build active' "$capture/iw5_enhanced.log"
           kill -0 "$game_pid"
-          ! grep -q '"Error"' "$capture/windows.txt"
+          ! grep -Eq '"(Program )?Error"' "$capture/windows.txt"
           grep -i 'modern warfare' "$capture/windows.txt"
           SH
       - uses: actions/upload-artifact@v4

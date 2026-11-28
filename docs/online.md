@@ -59,7 +59,7 @@ callers.
   this boundary. No sign-in, license or DLC success is fabricated.
 - The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
-## Engine startup and DemonWare DNS
+## Engine startup and vendor transport redirects
 
 The Store engine's initialization at `14026D290` calls `1401A2CA0` before loading
 `code_pre_gfx_mp`. The latter calls `XblInitialize` with no explicit task queue.
@@ -71,10 +71,16 @@ task groups with native helpers. The platform queues remain absent and the Store
 sign-in and entitlement paths continue to receive unavailable results. If local
 initialization itself fails, the startup routine still reports failure.
 
-The DemonWare DNS worker calls `bdPlatformSocket::getHostByName` at `1404148F0`.
-The enhanced routine returns the original no-address result before Winsock, including
-for the official authentication, lobby and STUN names. Independent WinHTTP and
-numeric-address paths still need auditing for process-wide isolation.
+| Store entry | Enhanced behavior |
+|---|---|
+| `1404148F0` DemonWare DNS | Returns zero addresses before Winsock, including for official authentication, lobby and STUN names. |
+| `140414D00` DemonWare datagram | Returns the vendor socket's normal failure result before `sendto` or `WSASendTo`. |
+| `140449870` DemonWare TCP connect | Returns the vendor socket's connection-failure result before Winsock, including for numeric addresses. |
+| `1403E9FE0` DemonWare WinHTTP start | Completes the original request with `ERROR_WINHTTP_CANNOT_CONNECT` before opening a connection. |
+| `1403DF670` libHttpClient WinHTTP start | Returns the connection-failure HRESULT before opening the request. |
+
+The engine's own UDP paths remain available. These redirects cover the identified
+vendor call paths. Process-wide isolation requires a network trace.
 
 
 ## Faithful reconstruction and verification

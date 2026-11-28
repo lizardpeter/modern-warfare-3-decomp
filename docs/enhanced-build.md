@@ -66,8 +66,9 @@ reach anything not identified in the exe yet.
 task groups. The Store executable can proceed past the startup check that previously exited if Xbox Live SDK
 initialization failed. GDK service queries return unavailable, including sign-in, cloud saves and Store entitlements.
 
-**P0004 and P0006, vendor services** (docs/online.md). The Xbox HTTP provider reports no network. The DemonWare
-resolver reports zero addresses without attempting DNS. The engine's own network address parser is separate.
+**P0004, P0006 and P0007, vendor services** (docs/online.md). The Xbox HTTP provider reports no network.
+DemonWare DNS, UDP, TCP, and vendor WinHTTP requests fail at their respective entry points. The engine's own
+UDP networking remains available.
 
 A complete Windows launch and entry into a local match remain to be verified. Online matchmaking is unavailable
 with this build.
