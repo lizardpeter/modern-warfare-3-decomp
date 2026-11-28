@@ -112,3 +112,35 @@ functions and all named thunks as an artifact using `tools/gdk/disassemble_runti
 This is evidence for reconstructing the remaining bodies rather than assuming that
 matching a GUID and slot proves complete control flow. The enhanced rejection test
 reads every actual IID/class pair from the generated thunk catalogue.
+
+
+## Local DemonWare (P0008)
+
+`enhanced/DW/local_demonware.cpp`, inside `iw5_enhanced.dll`, loopback only, started by the first lookup of its host
+names. Nothing else to run.
+
+| Step | How the game reaches it |
+|---|---|
+| Resolve | `BdGetHostByName` (1404148F0): `auth3.prod.demonware.net` and `lsg.*.prod.demonware.net` give 127.0.0.1; every other name (the STUN hosts included) still finds nothing. |
+| Auth | The log-on posts `{"auth_task":44,"iv_seed":N,"title_id":2310}` to `https://127.0.0.1:443/auth/` (`makeAuthForXBoxOne` builds the URL from the resolved address). `BdBeginWinHttpRequest` (1403E9FE0) hands that one request to the service and delivers the reply as the WinHTTP path would (response buffer, status 200, finalized BD_DONE). The game only speaks HTTPS, and a loopback HTTPS endpoint would need a certificate installed in Windows, so the auth endpoint is answered in process. |
+| Tickets | `{"auth_task":45,"code":700,...}`: a client ticket the game's decoder (1404049D0) reads (title 906, account 0009000000000001, "Unknown Soldier", a fresh 24-byte session key) and a random 128-byte server ticket; the service keeps the session key issued with each server ticket. |
+| Lobby | `BdConnectStream` (140449870) connects 127.0.0.1:3074 to the service's own port (any other address still fails). Protocol 210: the 28-byte hello, the challenge, the client auth frame with the server ticket and its proof (which must match that ticket's session key), the server's proof, then records: AES-128-CBC with a fresh IV, HMAC-SHA1 truncated to 8 bytes, a counter per direction (BDDATA keys). |
+| After the handshake | The connection ID header (type 4, a typed uint64; the task manager waits for it, `bdLobbyService::pump` 1403F5370), then a reply per task in order (type 1: typed transaction ID, typed error, typed task ID, results; `bdRemoteTask::handleTaskReply` 1403F18E0). |
+
+Tasks answered so far: `bdTitleUtilities::getServerTime` (service 0x0C, task 6). Every other task gets
+`BD_SERVICE_NOT_AVAILABLE` (108) and is traced (`dw: lobby: message type 86 ...`, `dw: lobby: service ... task ...`),
+so the next ones to implement can be read from a log.
+
+`tests/service/run.py` builds the service into a small console program, runs it under Wine (CI: the
+`local-demonware` job) and plays the game's part with the reference protocol code in `tools/demonware/`: the auth
+reply and client ticket, the handshake with the issued ticket, the connection ID, the server-time reply, a
+service-not-available reply, refusal of a corrupt record, a proof from another key and a ticket it didn't issue.
+
+### What a log-on still needs
+
+The log-on (`dwLogOnFrame`) starts only for a signed-in player, and the auth request carries that player's token
+from `XUserGetTokenAndSignatureAsync`. With the current GDK boundary (every interface unavailable) the game can't
+sign anyone in, so it never reaches the service. Signing in is also where the Store build checks the game licence
+(the Store context is created for the signed-in player and the licence queried, `1401A5A10`, `1401A4400`), so the
+player has to sign in through a runtime whose Store interface is Microsoft's own. Until then the service is
+exercised by `tests/service/run.py`, and the task list it must answer comes from a log on a PC with Gaming Services.

@@ -1,0 +1,7 @@
+; Winsock functions the enhanced build's local DemonWare uses that the Store exe doesn't import (see user32.def).
+LIBRARY ws2_32.dll
+EXPORTS
+listen
+accept
+getsockname
+shutdown

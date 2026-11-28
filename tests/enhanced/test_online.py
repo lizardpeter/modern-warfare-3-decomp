@@ -154,14 +154,24 @@ def check_engine_startup_without_xbox_live(ctx):
 
 
 def check_demonware_dns_fails_locally(ctx):
+    """STUN and every other DemonWare name find nothing; the auth and lobby names resolve to the local DemonWare
+    (127.0.0.1), starting it."""
     entry = ctx.original("BdGetHostByName")
     output = b"\xA5" * 0x210
+    started = []
+    fakes = ctx.hooks({"Start@LocalDemonWare": lambda mu: started.append(1) or 1,
+                       "Trace@LocalDemonWare": lambda mu: None})
     with installed_redirect(ctx, entry):
-        for host in (b"auth3.prod.demonware.net", b"lsg.2310.prod.demonware.net",
-                     b"mw3-stun.us.demonware.net", b"stun.eu.demonware.net"):
-            count, buffers, writes, _ = ctx.m.call(entry, [host + b"\0", output, 4], "uint")
+        for host in (b"mw3-stun.us.demonware.net", b"stun.eu.demonware.net", b"auth3.prod.demonware.net.evil",
+                     b"lsg.2310.prod.demonware.net.example", b"demonware.net"):
+            count, buffers, writes, _ = ctx.m.call(entry, [host + b"\0", output, 4], "uint", fakes=fakes)
             assert count == 0 and buffers[1] == output and not writes, (host, count, writes)
+            assert not ctx.m.imports_called and not started, (host, ctx.m.imports_called)
+        for host in (b"auth3.prod.demonware.net", b"lsg.2310.prod.demonware.net", b"LSG.2310.PROD.DEMONWARE.NET"):
+            count, buffers, _, _ = ctx.m.call(entry, [host + b"\0", output, 4], "uint", fakes=fakes)
+            assert count == 1 and buffers[1][:4] == b"\x7f\0\0\x01" and buffers[1][4:] == output[4:], (host, count)
             assert not ctx.m.imports_called, (host, ctx.m.imports_called)
+        assert len(started) == 3
 
 
 def check_vendor_socket_calls_fail_locally(ctx):
@@ -174,9 +184,10 @@ def check_vendor_socket_calls_fail_locally(ctx):
 
     entry = ctx.original("BdConnectStream")
     with installed_redirect(ctx, entry):
-        for ip in (b"\x7f\0\0\x01", b"\xc0\0\x02\x01"):
-            status, _, writes, _ = ctx.m.call(entry, [9, ip, 3074], "int")
-            assert status == -5 and not writes and not ctx.m.imports_called, (ip, status)
+        # only 127.0.0.1:3074, once the local DemonWare listens (not here), connects anywhere
+        for ip, port in ((b"\x7f\0\0\x01", 3074), (b"\xc0\0\x02\x01", 3074), (b"\x7f\0\0\x01", 443)):
+            status, _, writes, _ = ctx.m.call(entry, [9, ip, port], "int")
+            assert status == -5 and not writes and not ctx.m.imports_called, (ip, port, status)
 
 
 def check_vendor_http_calls_fail_locally(ctx):

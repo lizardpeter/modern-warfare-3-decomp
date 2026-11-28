@@ -78,3 +78,20 @@ jobs:
           path: |
             build/iw5mp_ship/runtime/X3DAudio1_7.dll
             build/iw5mp_ship/runtime/iw5_enhanced.dll
+
+  local-demonware:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install toolchain and Wine
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends clang lld llvm wine wine64
+          pip install -q -r tests/differential/requirements.txt
+      - name: The local DemonWare end to end (tests/service/run.py)
+        run: |
+          export WINEPREFIX="$RUNNER_TEMP/wine"
+          python3 tests/service/run.py
